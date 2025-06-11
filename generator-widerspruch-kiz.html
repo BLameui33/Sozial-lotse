@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch gegen Kinderzuschlag-Bescheid | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen fehlerhaften Bescheid zum Kinderzuschlag (KiZ). Für Ablehnung oder falsche Berechnung durch die Familienkasse.">
+  <meta name="keywords" content="Widerspruch Kinderzuschlag, KiZ, Familienkasse, Bescheid, Ablehnung, Berechnung, Einkommen, Wohnkosten, Generator, Vorlage, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="kiz_widerspruch_script.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #16a085; text-align: center; }
+    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: background-color 0.2s, transform 0.1s; margin: 0 0.5rem; }
+    button:hover { transform: translateY(-1px); }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .button-danger { background-color: #d9534f; color: white; }
+    .button-danger:hover { background-color: #c9302c; }
+    .warning-box { font-size: 0.95em; padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+    .popup-overlay, .popup-content, .popup-close-button { /* Stile für das Popup */ }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { /* Standard Media Queries */
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; } legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch gegen einen Bescheid zum Kinderzuschlag (KiZ)</h1>
+  <div class="warning-box">
+    <p><strong>Wichtiger Hinweis:</strong> Ein Widerspruch gegen einen Bescheid der Familienkasse muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt schriftlich eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Für die Erstellung des finalen PDF-Dokuments wird eine einmalige Gebühr von 0,99 € fällig.</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchKizForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben (Antragsteller:in)</legend>
+      <label for="personName">Vor- und Nachname des/der Antragsteller:in:</label>
+      <input type="text" id="personName" required>
+      <label for="kindergeldnummer">Ihre Kindergeldnummer:</label>
+      <input type="text" id="kindergeldnummer" required>
+      <label for="anzahlPersonenKiz">Legen Sie Widerspruch für sich allein oder als Elternpaar ein?</label>
+      <select id="anzahlPersonenKiz" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für uns als Eltern / Bedarfsgemeinschaft</option>
+      </select>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zur Familienkasse</legend>
+        <label for="familienkasseName">Name der zuständigen Familienkasse (laut Bescheid):</label>
+        <input type="text" id="familienkasseName" required placeholder="z.B. Familienkasse Niedersachsen-Bremen">
+        <label for="familienkasseAdresse">Anschrift der Familienkasse:</label>
+        <textarea id="familienkasseAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Bescheid</legend>
+        <label for="bescheidDatum">Datum des Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides (falls vorhanden):</label>
+        <input type="text" id="bescheidAktenzeichen">
+        <label for="bescheidInhalt">Was hat die Familienkasse entschieden? <small>(z.B. Ablehnung des Antrags, zu geringe Höhe des Kinderzuschlags)</small></label>
+        <textarea id="bescheidInhalt" rows="2" required placeholder="z.B. Vollständige Ablehnung meines Antrags auf Kinderzuschlag."></textarea>
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Gründe für Ihren Widerspruch</legend>
+        <p class="info-box">Wählen Sie die zutreffenden Gründe aus, warum die Entscheidung falsch ist, und erläutern Sie diese so genau wie möglich.</p>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrundKiz" value="ablehnung"> Der Antrag wurde zu Unrecht vollständig abgelehnt, obwohl die Voraussetzungen erfüllt sind.</label>
+        </div>
+        <div id="detailsAblehnung" class="sub-details">
+            <label for="textAblehnung">Begründung: <small>(Warum sind die Voraussetzungen für den Kinderzuschlag Ihrer Meinung nach erfüllt? Wurde z.B. fälschlicherweise Hilfebedürftigkeit nach SGB II unterstellt, obwohl diese mit dem KiZ vermieden würde?)</small></label>
+            <textarea id="textAblehnung" rows="4" placeholder="z.B. Sie gehen von einer Hilfebedürftigkeit nach SGB II aus. Mit dem Kinderzuschlag würde unser Einkommen jedoch ausreichen, um den Bedarf unserer Familie zu decken."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundKiz" value="einkommen"> Das zu berücksichtigende Einkommen wurde falsch berechnet.</label>
+        </div>
+        <div id="detailsEinkommen" class="sub-details">
+            <label for="textEinkommen">Erläuterung: <small>(Wurde Einkommen falsch bewertet, z.B. schwankendes Einkommen, einmalige Einnahmen? Wurden bestimmte Einkommensarten (z.B. Elterngeld bis 300€) fälschlicherweise angerechnet?)</small></label>
+            <textarea id="textEinkommen" rows="4" placeholder="z.B. Sie haben mein Einkommen aus selbstständiger Tätigkeit zu hoch angesetzt. / Sie haben das Elterngeld über dem Freibetrag hinaus falsch angerechnet."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundKiz" value="vermoegen"> Das zu berücksichtigende Vermögen wurde falsch bewertet.</label>
+        </div>
+        <div id="detailsVermoegen" class="sub-details">
+            <label for="textVermoegen">Erläuterung: <small>(Wurde Vermögen angerechnet, das unter die Freibeträge fällt oder als Schonvermögen geschützt ist?)</small></label>
+            <textarea id="textVermoegen" rows="3" placeholder="z.B. Unser Vermögen liegt unterhalb der gesetzlichen Freibeträge."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundKiz" value="wohnkosten"> Die Wohnkosten wurden nicht oder nicht in korrekter Höhe berücksichtigt.</label>
+        </div>
+        <div id="detailsWohnkosten" class="sub-details">
+            <label for="textWohnkosten">Erläuterung: <small>(Die Höhe des Kinderzuschlags hängt auch von Ihren Wohnkosten ab. Wurden diese korrekt erfasst?)</small></label>
+            <textarea id="textWohnkosten" rows="3" placeholder="z.B. Sie haben in Ihrer Berechnung eine zu niedrige Miete zugrunde gelegt. Unsere tatsächliche Miete beträgt [Betrag] € (siehe Mietvertrag)."></textarea>
+        </div>
+
+        <label for="ergaenzendeArgumenteKiz" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente zu Ihrem Widerspruch:</label>
+        <textarea id="ergaenzendeArgumenteKiz" rows="5" placeholder="Hier können Sie weitere wichtige Aspekte anführen, die für Ihren Widerspruch relevant sind."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungKiz">Was fordern Sie von der Familienkasse?</label>
+        <textarea id="forderungKiz" rows="3" required placeholder="z.B. Ich beantrage die Aufhebung des Bescheides und die Bewilligung von Kinderzuschlag in gesetzlicher Höhe ab dem Antragsmonat."></textarea>
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download dieses Widerspruchs wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnKiz" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnKiz" class="button-secondary">Laden</button>
+    </div>
+
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+</body>
+</html>

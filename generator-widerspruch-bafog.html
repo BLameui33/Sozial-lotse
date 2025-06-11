@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch gegen BAföG-Bescheid | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen fehlerhaften BAföG-Bescheid. Für Studenten-BAföG, Schüler-BAföG und mehr. Schritt-für-Schritt-Generator für Ihren Widerspruch.">
+  <meta name="keywords" content="Widerspruch BAföG, BAföG Bescheid, Studenten-BAföG, Schüler-BAföG, Amt für Ausbildungsförderung, Widerspruch, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script> <script defer src="bafog_widerspruch_script.js"></script>
+
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 0.8rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; }
+    textarea { min-height: 100px; resize: vertical; }
+    .checkbox-group label, .radio-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"], .radio-group input[type="radio"] { width: auto; margin-right: 8px; vertical-align: middle;}
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: background-color 0.2s, transform 0.1s; margin: 0 0.5rem; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .info-box, .payment-notice { font-size: 0.95em; padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch gegen BAföG-Bescheid</h1>
+  
+  <div class="info-box">
+    <p><strong>Wichtige Frist:</strong> Ein Widerspruch gegen einen BAföG-Bescheid muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt des Bescheides schriftlich beim zuständigen Amt für Ausbildungsförderung eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
+  </div>
+
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchBafogForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname des/der Antragstellenden:</label>
+      <input type="text" id="personName" required>
+      <label for="foerderungsnummer">Ihre Förderungsnummer:</label>
+      <input type="text" id="foerderungsnummer" required>
+
+      <label for="bafogArt">Art der Förderung:</label>
+      <select id="bafogArt" required>
+        <option value="">Bitte wählen...</option>
+        <option value="studenten">Studenten-BAföG</option>
+        <option value="schueler">Schüler-BAföG</option>
+        <option value="aufstieg">Aufstiegs-BAföG (früher Meister-BAföG)</option>
+        <option value="sonstige">Sonstige Art der Förderung</option>
+      </select>
+
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zum Amt für Ausbildungsförderung</legend>
+        <label for="amtName">Name des zuständigen Amtes (laut Bescheid):</label>
+        <input type="text" id="amtName" required placeholder="z.B. Studierendenwerk Hamburg - Amt für Ausbildungsförderung">
+        <label for="amtAdresse">Anschrift des Amtes:</label>
+        <textarea id="amtAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Bescheid</legend>
+        <label for="bescheidDatum">Datum des Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen des Bescheides (falls abweichend von Förderungsnummer):</label>
+        <input type="text" id="bescheidAktenzeichen">
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Gründe für Ihren Widerspruch</legend>
+        <p class="info-box" style="background-color: #e6f7ff; border-left-color: #3498db;">Wählen Sie die zutreffenden Gründe aus, warum die Entscheidung falsch ist, und erläutern Sie diese so genau wie möglich.</p>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrundBafog" value="ablehnung"> Der Antrag wurde zu Unrecht vollständig abgelehnt.</label>
+        </div>
+        <div id="detailsAblehnung" class="sub-details">
+            <label for="textAblehnung">Begründung:</label>
+            <textarea id="textAblehnung" rows="4" placeholder="z.B. Die Anspruchsvoraussetzungen liegen meiner Meinung nach vor, weil..."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundBafog" value="einkommenEltern"> Das Einkommen meiner Eltern wurde falsch berechnet/angerechnet.</label>
+        </div>
+        <div id="detailsEinkommenEltern" class="sub-details">
+            <label for="textEinkommenEltern">Erläuterung:</label>
+            <textarea id="textEinkommenEltern" rows="4" placeholder="z.B. Das Einkommen aus dem vorletzten Kalenderjahr wurde falsch zugrunde gelegt. / Ein Aktualisierungsantrag wurde nicht berücksichtigt. / Außergewöhnliche Belastungen wurden nicht abgezogen."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundBafog" value="eigenesEinkommen"> Mein eigenes Einkommen wurde falsch berechnet/angerechnet.</label>
+        </div>
+        <div id="detailsEigenesEinkommen" class="sub-details">
+            <label for="textEigenesEinkommen">Erläuterung:</label>
+            <textarea id="textEigenesEinkommen" rows="3" placeholder="z.B. Einkommen aus einem Minijob wurde falsch angerechnet. / Werbungskosten wurden nicht berücksichtigt."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundBafog" value="vermoegen"> Mein Vermögen wurde falsch bewertet/angerechnet.</label>
+        </div>
+        <div id="detailsVermoegen" class="sub-details">
+            <label for="textVermoegen">Erläuterung:</label>
+            <textarea id="textVermoegen" rows="3" placeholder="z.B. Das Vermögen liegt unterhalb des Freibetrags. / Ein unangemessenes Kfz wurde fälschlicherweise als verwertbares Vermögen eingestuft."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundBafog" value="freibetraege"> Freibeträge (z.B. für Geschwister) wurden nicht oder falsch berücksichtigt.</label>
+        </div>
+        <div id="detailsFreibetraege" class="sub-details">
+            <label for="textFreibetraege">Erläuterung:</label>
+            <textarea id="textFreibetraege" rows="3" placeholder="z.B. Meine Schwester befindet sich ebenfalls in einer Ausbildung, dies wurde bei der Einkommensberechnung meiner Eltern nicht berücksichtigt."></textarea>
+        </div>
+        
+        <label for="ergaenzendeArgumenteBafog" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente zu Ihrem Widerspruch:</label>
+        <textarea id="ergaenzendeArgumenteBafog" rows="5" placeholder="Hier können Sie weitere wichtige Aspekte anführen, die für Ihren Widerspruch relevant sind."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungBafog">Was fordern Sie vom BAföG-Amt?</label>
+        <textarea id="forderungBafog" rows="3" required placeholder="z.B. Ich beantrage, den Bescheid aufzuheben und mir Ausbildungsförderung in der gesetzlich korrekten Höhe ab dem Antragsmonat zu gewähren."></textarea>
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download dieses Widerspruchs wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnBafog" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnBafog" class="button-secondary">Laden</button>
+    </div>
+    <div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

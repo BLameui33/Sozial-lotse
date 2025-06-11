@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Vielen Dank! | Sozial-Lotse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="pdf-generators.js"></script>
+
+    <style>
+        /* Allgemeine Stile */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Der Hauptcontainer in der Mitte */
+        .page-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem 3rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border-top: 5px solid #27ae60;
+        }
+
+        /* Das grüne Erfolgs-Häkchen */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Der Download-Hinweis */
+        .download-notice {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .download-notice small {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.85em;
+            color: #777;
+        }
+
+        /* Die Spenden-Box */
+        .donation-box {
+            background-color: #fff9e6;
+            border: 1px solid #ffecb3;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+
+        .donation-box h2 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .donation-box p {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Der Spenden-Button */
+        .donation-button {
+            display: inline-block;
+            background-color: #ffc107;
+            color: #212529;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .donation-button:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="25" fill="#27ae60"/>
+            <path fill="#fff" d="M14.1 27.2l7.1 7.2 16.7-16.8L36.6 16l-15.4 15.5-5.8-5.9z"/>
+        </svg>
+
+        <h1>Zahlung erfolgreich!</h1>
+        <p class="download-notice">
+            Ihr personalisiertes Dokument wird jetzt automatisch heruntergeladen.
+            <small>Sollte der Download nicht starten, prüfen Sie bitte, ob Ihr Browser eventuell Pop-ups blockiert.</small>
+        </p>
+
+        <div class="donation-box">
+            <h2>Unterstützen Sie Sozial-Lotse</h2>
+            <p>
+                Diese Webseite wird kostenlos und ohne Werbung betrieben. Wenn Ihnen dieses Tool geholfen hat, können Sie die Weiterentwicklung und den Betrieb mit einer freiwilligen Spende unterstützen.
+            </p>
+            
+            <form action="https://www.paypal.com/donate" method="post" target="_blank">
+                <input type="hidden" name="business" value="info@kassen-lotse.de" />
+                
+                <input type="hidden" name="item_name" value="Freiwillige Spende für Sozial-Lotse" />
+                <input type="hidden" name="currency_code" value="EUR" />
+                
+                <input type="submit" value="Freiwillig spenden via PayPal" class="donation-button" />
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dokumentTyp = urlParams.get('typ');
+
+            const rezeptBuch = {
+                'kiz': generateKizWiderspruchPDF,
+                'but': generateButWiderspruchPDF,
+                'wohngeld': generateWohngeldWiderspruchPDF,
+                'sozialhilfe': generateSozialhilfeWiderspruchPDF,
+                'alg1': generateAlg1AblehnungWiderspruchPDF,
+                'alg1bescheid': generateAlg1BescheidWiderspruchPDF,
+                'alg1sperrzeit': generateAlg1SperrzeitWiderspruchPDF,
+                'vermoegen': generateVermoegenWiderspruchPDF,
+                'mehrbedarf': generateMehrbedarfWiderspruchPDF,
+                'einkommen': generateEinkommenWiderspruchPDF,
+                'kdu': generateKduWiderspruchPDF,
+                'ueberpruefung': generateUeberpruefungPDF,
+                'sanktion': generateSanktionWiderspruchPDF,
+                'buergergeld': generateBuergergeldWiderspruchPDF,
+	        'bafog': generateBafogWiderspruchPDF,
+            };
+            const pdfFunktion = rezeptBuch[dokumentTyp];
+
+            const lagerPlatz = `pendingPaymentData-${dokumentTyp}`;
+            const zutatenJson = localStorage.getItem(lagerPlatz);
+
+            if (pdfFunktion && zutatenJson) {
+                try {
+                    const zutaten = JSON.parse(zutatenJson);
+                    pdfFunktion(zutaten);
+                } catch (e) {
+                    console.error("FEHLER BEIM VERARBEITEN DER DATEN:", e);
+                    // Optional: Zeige eine Fehlermeldung im Dokument an
+                    document.querySelector('.page-container').innerHTML = '<h1>Fehler</h1><p>Leider ist bei der PDF-Erstellung ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</p>';
+                } finally {
+                    localStorage.removeItem(lagerPlatz);
+                }
+            } else {
+                 document.querySelector('.page-container').innerHTML = '<h1>Fehler</h1><p>Es konnten keine Daten für die PDF-Erstellung gefunden werden. Die Sitzung ist möglicherweise abgelaufen.</p>';
+            }
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch gegen Bürgergeld-Sanktion erstellen | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen Sanktionsbescheid vom Jobcenter. Fundierte Vorlage für Leistungsminderungen beim Bürgergeld.">
+  <meta name="keywords" content="Widerspruch Sanktion, Bürgergeld, Jobcenter, Sanktionsbescheid, Leistungsminderung, Pflichtverletzung, SGB II, Generator, Vorlage, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="buergergeld_sanktion_widerspruch_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0;
+    }
+    .page-container {
+        max-width: 800px; margin: 2rem auto; background-color: #fff;
+        padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #c0392b; /* Roter Akzent für dieses Thema */ text-align: center; }
+    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select {
+      width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem;}
+    .button-group {
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+      text-align: center;
+    }
+    button {
+      padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer;
+      border: none; font-weight: bold; 
+      transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+      margin: 0 0.5rem;
+    }
+    button:hover { transform: translateY(-1px); }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .button-danger { background-color: #d9534f; color: white; }
+    .button-danger:hover { background-color: #c9302c; }
+    .info-box, .warning-box, .payment-notice {
+      font-size: 0.95em; padding: 1rem 1.5rem;
+      border-radius: 5px; margin: 1.5rem 0;
+    }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+     @media (max-width: 600px) {
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; }
+      legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch gegen einen Sanktionsbescheid (Bürgergeld)</h1>
+  <div class="warning-box">
+    <p><strong>Wichtiger Hinweis:</strong> Gegen einen Sanktionsbescheid vom Jobcenter muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt Widerspruch eingelegt werden. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides! Ein Widerspruch hat oft eine **aufschiebende Wirkung**, d.h., die Sanktion darf bis zur Entscheidung über den Widerspruch meist nicht vollzogen werden.</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Die Nutzung der Formulare ist kostenlos. Für die Erstellung des finalen, personalisierten PDF-Dokuments wird eine einmalige Gebühr von 0,99 € fällig.</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchSanktionForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben (Widerspruchsführer:in)</legend>
+      <label for="bgNummer">Bedarfsgemeinschafts-Nummer (BG-Nummer):</label>
+      <input type="text" id="bgNummer" required>
+      <label for="personName">Vor- und Nachname (Person, die von der Sanktion betroffen ist):</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+      <label for="anzahlPersonenWiderspruchSanktion">Für wie viele Personen legen Sie Widerspruch ein? <small>(Wenn die Sanktion die gesamte BG betrifft, "Für mehrere Personen" wählen.)</small></label>
+      <select id="anzahlPersonenWiderspruchSanktion" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+      </select>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zum Jobcenter</legend>
+        <label for="jcNameSanktion">Name des Jobcenters (laut Bescheid):</label>
+        <input type="text" id="jcNameSanktion" required>
+        <label for="jcAdresseSanktion">Anschrift des Jobcenters:</label>
+        <textarea id="jcAdresseSanktion" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Sanktionsbescheid</legend>
+        <label for="bescheidDatumSanktion">Datum des Sanktionsbescheides:</label>
+        <input type="date" id="bescheidDatumSanktion" required>
+        <label for="bescheidAktenzeichenSanktion">Aktenzeichen / Geschäftszeichen des Bescheides:</label>
+        <input type="text" id="bescheidAktenzeichenSanktion">
+        <label for="sanktionGrund">Was ist der Grund für die Sanktion laut Jobcenter? <small>(z.B. Meldeversäumnis, Ablehnung eines Arbeitsangebots, Nichtantritt einer Maßnahme)</small></label>
+        <textarea id="sanktionGrund" rows="3" required placeholder="z.B. Nichtwahrnehmung eines Termins am TT.MM.JJJJ"></textarea>
+        <label for="sanktionHoeheDauer">Wie hoch (in %) und wie lange ist die Leistungsminderung?</label>
+        <input type="text" id="sanktionHoeheDauer" required placeholder="z.B. 10% des Regelbedarfs für einen Monat">
+    </fieldset>
+
+    <fieldset>
+        <legend>4. Gründe für Ihren Widerspruch</legend>
+        <p class="info-box">Wählen Sie einen oder mehrere Gründe aus und erläutern Sie diese so genau wie möglich. Belegen Sie Ihre Angaben, wenn möglich, mit Nachweisen.</p>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrund" value="keinePflichtverletzung"> Es liegt keine Pflichtverletzung vor.</label>
+        </div>
+        <div id="detailsKeinePflichtverletzung" class="sub-details">
+            <label for="textKeinePflichtverletzung">Begründung, warum keine Pflichtverletzung vorliegt: <small>(Haben Sie die geforderte Handlung (z.B. Bewerbung) doch vorgenommen? War der Termin nicht verbindlich? War das Arbeitsangebot unzumutbar?)</small></label>
+            <textarea id="textKeinePflichtverletzung" rows="4" placeholder="z.B. Ich habe mich nachweislich auf die Stelle beworben (siehe Anlage). / Das Arbeitsangebot war unzumutbar, weil es mit der Pflege meiner Angehörigen nicht vereinbar ist."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrund" value="wichtigerGrund"> Für mein Handeln (bzw. Nichthandeln) lag ein wichtiger Grund vor.</label>
+        </div>
+        <div id="detailsWichtigerGrund" class="sub-details">
+            <label for="textWichtigerGrund">Begründung, welcher wichtige Grund vorlag: <small>(z.B. Krankheit, unvorhergesehene Betreuung von Kindern/Angehörigen, Verkehrsprobleme, die nicht selbst verschuldet waren)</small></label>
+            <textarea id="textWichtigerGrund" rows="4" placeholder="z.B. Ich konnte den Termin am TT.MM.JJJJ nicht wahrnehmen, da ich an diesem Tag krank war, was durch die beiliegende ärztliche Bescheinigung nachgewiesen wird. Ich habe dies dem Jobcenter unverzüglich mitgeteilt."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrund" value="anhaerungFehlte"> Es gab keine oder eine fehlerhafte Anhörung vor Erlass des Sanktionsbescheides.</label>
+        </div>
+        <div id="detailsAnhaerungFehlte" class="sub-details">
+            <label for="textAnhaerungFehlte">Erläuterung zur fehlenden/fehlerhaften Anhörung: <small>(Vor einer Sanktion muss Ihnen das Jobcenter die Möglichkeit geben, sich zu den Vorwürfen zu äußern.)</small></label>
+            <textarea id="textAnhaerungFehlte" rows="3" placeholder="z.B. Ich habe vor Erlass des Sanktionsbescheides kein Anhörungsschreiben erhalten und konnte mich daher nicht zu den Vorwürfen äußern."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrund" value="formelleFehler"> Der Sanktionsbescheid enthält sonstige formelle Fehler.</label>
+        </div>
+        <div id="detailsFormelleFehlerSanktion" class="sub-details">
+            <label for="textFormelleFehlerSanktion">Erläuterung der formellen Fehler: <small>(z.B. Dauer/Höhe der Sanktion falsch angegeben/berechnet, falsche Rechtsgrundlage genannt, Rechtsbehelfsbelehrung fehlt/ist falsch)</small></label>
+            <textarea id="textFormelleFehlerSanktion" rows="3"></textarea>
+        </div>
+
+        <label for="ergaenzendeArgumenteSanktion" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente und Erläuterungen:</label>
+        <textarea id="ergaenzendeArgumenteSanktion" rows="5" placeholder="Hier können Sie spezifisch auf einzelne Punkte des Bescheids eingehen oder weitere wichtige Aspekte anführen."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungWiderspruchSanktion">Was fordern Sie vom Jobcenter?</label>
+        <textarea id="forderungWiderspruchSanktion" rows="3" required placeholder="z.B. Ich beantrage die vollumfängliche Rücknahme des Sanktionsbescheides vom [Datum] und die Nachzahlung der zu Unrecht gekürzten Leistungen."></textarea>
+        <label><input type="checkbox" id="bitteUmAkteneinsichtSanktion" name="bitteUmAkteneinsichtSanktion" value="ja"> Ich beantrage zusätzlich Akteneinsicht gemäß § 25 SGB X, um meine Rechte besser wahrnehmen zu können.</label>
+    </fieldset>
+
+     <fieldset>
+        <legend>6. Beizufügende Anlagen (Kopien sind ausreichend)</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="anlagenSanktion" value="Kopie des angefochtenen Sanktionsbescheides"> Kopie des angefochtenen Sanktionsbescheides</label>
+            <label><input type="checkbox" name="anlagenSanktion" value="Nachweise für den wichtigen Grund (z.B. ärztliches Attest, Fahrkarten, etc.)"> Nachweise für den wichtigen Grund (z.B. ärztliches Attest)</label>
+            <label><input type="checkbox" name="anlagenSanktion" value="Nachweise über durchgeführte Bewerbungen (falls relevant)"> Nachweise über durchgeführte Bewerbungen</label>
+            <label><input type="checkbox" name="anlagenSanktion" value="Kopie des Kooperationsplans / der Eingliederungsvereinbarung"> Kopie des Kooperationsplans / der EGV</label>
+            <label><input type="checkbox" name="anlagenSanktion" value="Sonstiger relevanter Schriftverkehr mit dem Jobcenter"> Sonstiger relevanter Schriftverkehr</label>
+        </div>
+        <label for="anlageSonstigesSanktion">Sonstige Anlagen:</label>
+        <input type="text" id="anlageSonstigesSanktion">
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download des vollständigen, personalisierten PDF-Widerspruchsschreibens wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnSanktionWiderspruch" class="button-secondary">Eingaben speichern</button>
+      <button type="button" id="loadBtnSanktionWiderspruch" class="button-secondary">Gespeicherte Eingaben laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="info-buergergeld-sanktionen.html">Infos zu Sanktionen</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

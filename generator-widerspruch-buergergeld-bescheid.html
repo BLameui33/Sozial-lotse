@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch Bürgergeld-Bescheid (Leistungshöhe/Ablehnung) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen fehlerhaften Bürgergeld-Bescheid (z.B. falsche Berechnung der Leistungshöhe, Ablehnung des Antrags). Schritt-für-Schritt-Anleitung und PDF-Generator.">
+  <meta name="keywords" content="Widerspruch Bürgergeld, Bürgergeld Bescheid, Jobcenter Widerspruch, Leistungshöhe Bürgergeld, Ablehnung Bürgergeld, SGB II, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="buergergeld_widerspruch_leistungsbescheid_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script> <style>
+    /* Basis-CSS (ähnlich wie bei den anderen Lotse-Seiten) */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0;
+    }
+    .page-container {
+        max-width: 800px; margin: 2rem auto; background-color: #fff;
+        padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center;
+    }
+    h2 { /* Für Fieldset-Legends oder Zwischenüberschriften im Formular */
+      font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.8rem; color: #2980b9;
+      border-bottom: 1px solid #bdc3c7; padding-bottom: 0.3rem;
+    }
+    label { display: block; margin-top: 0.8rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select {
+      width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    .checkbox-group label, .radio-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"], .radio-group input[type="radio"] { width: auto; margin-right: 8px; vertical-align: middle;}
+
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    
+    .button-group {
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+      text-align: center; /* Knöpfe zentrieren */
+    }
+    button {
+      padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer;
+      border: none; font-weight: bold; 
+      transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+      margin: 0 0.5rem;
+    }
+    button:hover { transform: translateY(-1px); }
+    .button-primary { background-color: #27ae60; color: white; } /* Grüner Akzent für Sozial-Lotse */
+    .button-primary:hover { background-color: #229954; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+
+    .info-box, .warning-box, .payment-notice { /* Einheitliche Info-Boxen */
+      font-size: 0.95em; padding: 1rem 1.5rem;
+      border-radius: 5px; margin: 1.5rem 0;
+    }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    
+    /* Stile für das Spenden-Pop-up können wir aus Kassen-Lotse übernehmen */
+    .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem; box-sizing: border-box;}
+    .popup-content { background: white; padding: 2rem; border-radius: 10px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.25);}
+    .popup-content h2 { font-size: 1.5em; margin-top: 0; margin-bottom: 1rem; color: #333; border-bottom: none; padding-bottom: 0;}
+    .popup-content p { margin-bottom: 1.5rem; color: #444; }
+    .popup-content form input[type="submit"] { background:#ffc107; border:none; padding:0.9rem 1.8rem; font-weight:bold; border-radius:5px; cursor: pointer; color: #383d41; font-size: 1em;}
+    .popup-content form input[type="submit"]:hover { background-color: #e0a800; }
+    .popup-close-button { margin-top: 1.5rem; background: none; border: 1px solid #ccc; color: #555; font-weight: normal; cursor: pointer; padding: 0.6rem 1.2rem; border-radius: 5px; font-size: 0.9em;}
+    .popup-close-button:hover { background-color: #f0f0f0; }
+
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; } legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch gegen Bürgergeld-Bescheid (Leistungshöhe / Ablehnung)</h1>
+  
+  <div class="info-box">
+    <p><strong>Wichtig:</strong> Ein Widerspruch gegen einen Bescheid des Jobcenters muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt des Bescheides schriftlich beim Jobcenter eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Alle Eingaben bleiben nur in Ihrem Browser. Vor der Erstellung des finalen PDF-Dokuments wird eine einmalige Gebühr von 0,99 € für diesen Generator fällig.</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchBuergergeldForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben (Widerspruchsführer:in)</legend>
+      <label for="bgBedarfsgemeinschaft">Name der Bedarfsgemeinschaft (BG-Nummer):</label>
+      <input type="text" id="bgBedarfsgemeinschaft" required placeholder="z.B. 123BG0045678">
+      <label for="bgVorname">Vorname (Hauptantragsteller:in der BG):</label>
+      <input type="text" id="bgVorname" required>
+      <label for="bgNachname">Nachname:</label>
+      <input type="text" id="bgNachname" required>
+      
+      <label for="anzahlPersonenWiderspruch">Für wie viele Personen legen Sie Widerspruch ein? <small>(Beeinflusst die Formulierungen "ich/wir", "mein/unser" im Schreiben)</small></label>
+      <select id="anzahlPersonenWiderspruch" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson / Hauptantragsteller:in</option>
+        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+      </select>
+      <label for="bgStrasseNr">Straße und Hausnummer:</label>
+      <input type="text" id="bgStrasseNr" required>
+      <label for="bgPlz">Postleitzahl:</label>
+      <input type="text" id="bgPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="bgOrt">Wohnort:</label>
+      <input type="text" id="bgOrt" required>
+      <label for="bgTelefon">Telefonnummer (für evtl. Rückfragen, optional):</label>
+      <input type="text" id="bgTelefon">
+      <label for="bgEmail">E-Mail-Adresse (optional):</label>
+      <input type="text" id="bgEmail">
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zum Jobcenter (Empfänger des Widerspruchs)</legend>
+        <label for="jcName">Name des Jobcenters (laut Bescheid):</label>
+        <input type="text" id="jcName" required placeholder="z.B. Jobcenter Musterstadt">
+        <label for="jcStrasseNr">Straße und Hausnummer des Jobcenters:</label>
+        <input type="text" id="jcStrasseNr" required>
+        <label for="jcPlz">Postleitzahl des Jobcenters:</label>
+        <input type="text" id="jcPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+        <label for="jcOrt">Ort des Jobcenters:</label>
+        <input type="text" id="jcOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Bescheid</legend>
+        <label for="bescheidDatum">Datum des Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides (falls vorhanden):</label>
+        <input type="text" id="bescheidAktenzeichen">
+        <label for="bescheidBetreff">Kurzer Betreff des Bescheides (z.B. "Bescheid über Leistungen zur Sicherung des Lebensunterhalts nach dem SGB II"):</label>
+        <textarea id="bescheidBetreff" rows="2" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>4. Hauptgrund Ihres Widerspruchs</legend>
+        <div class="radio-group">
+            <label><input type="radio" name="hauptgrundWiderspruch" value="leistungshoehe" required> Die Höhe der bewilligten Leistungen ist falsch berechnet.</label>
+            <label><input type="radio" name="hauptgrundWiderspruch" value="ablehnung"> Mein Antrag auf Bürgergeld wurde ganz oder teilweise abgelehnt, obwohl ich Anspruch habe.</label>
+            <label><input type="radio" name="hauptgrundWiderspruch" value="formell"> Der Bescheid enthält formelle Fehler (z.B. fehlende Begründung, falsche Rechtsbehelfsbelehrung).</label>
+            <label><input type="radio" name="hauptgrundWiderspruch" value="sonstiges"> Sonstiger Grund (bitte unten erläutern).</label>
+        </div>
+    </fieldset>
+
+    <fieldset id="detailsLeistungshoehe" class="sub-details">
+        <h2>4a. Details zur falschen Berechnung der Leistungshöhe</h2>
+        <p>Bitte wählen Sie aus, welche Bereiche Ihrer Meinung nach falsch berechnet wurden, und geben Sie eine kurze Begründung an.</p>
+        
+        <label><input type="checkbox" id="fehlerRegelbedarf" name="fehlerBerechnung" value="regelbedarf"> <strong>Regelbedarf:</strong></label>
+        <textarea id="begruendungRegelbedarf" rows="3" placeholder="Begründung, warum der Regelbedarf falsch ist (z.B. falsche Regelbedarfsstufe, Anzahl Personen in BG nicht korrekt berücksichtigt)."></textarea>
+
+        <label><input type="checkbox" id="fehlerMehrbedarfe" name="fehlerBerechnung" value="mehrbedarfe"> <strong>Mehrbedarfe:</strong></label>
+        <textarea id="begruendungMehrbedarfe" rows="4" placeholder="Begründung, warum Mehrbedarfe nicht oder falsch berücksichtigt wurden (z.B. für Schwangerschaft, Alleinerziehende, kostenaufwändige Ernährung, unabweisbarer laufender besonderer Bedarf, Behinderung). Bitte Nachweise (Atteste etc.) beifügen!"></textarea>
+
+        <label><input type="checkbox" id="fehlerKdu" name="fehlerBerechnung" value="kdu"> <strong>Kosten der Unterkunft und Heizung (KdU):</strong></label>
+        <textarea id="begruendungKdu" rows="4" placeholder="Begründung, warum die KdU falsch berechnet wurden (z.B. tatsächliche Miete/Nebenkosten/Heizkosten nicht oder nur teilweise anerkannt, Angemessenheitsprüfung fehlerhaft, falsche Kopfanteile). Bitte Mietvertrag und aktuelle Nebenkostenabrechnung beifügen!"></textarea>
+        
+        <label><input type="checkbox" id="fehlerEinkommen" name="fehlerBerechnung" value="einkommen"> <strong>Anrechnung von Einkommen:</strong></label>
+        <textarea id="begruendungEinkommen" rows="4" placeholder="Begründung, warum Einkommen falsch angerechnet wurde (z.B. Einkommen falsch berechnet, Freibeträge nicht oder falsch berücksichtigt, einmaliges Einkommen falsch verteilt, nicht anrechenbares Einkommen berücksichtigt). Bitte Einkommensnachweise beifügen!"></textarea>
+
+        <label><input type="checkbox" id="fehlerVermoegen" name="fehlerBerechnung" value="vermoegen"> <strong>Anrechnung von Vermögen:</strong></label>
+        <textarea id="begruendungVermoegen" rows="4" placeholder="Begründung, warum Vermögen falsch angerechnet wurde (z.B. Vermögen falsch bewertet, Freibeträge/Schonvermögen nicht oder falsch berücksichtigt, Verwertung unzumutbar). Bitte Nachweise zum Vermögen beifügen!"></textarea>
+    </fieldset>
+
+    <fieldset id="detailsAblehnung" class="sub-details">
+        <h2>4b. Details zur Ablehnung des Antrags</h2>
+        <p>Bitte erläutern Sie, warum Sie die Ablehnung für nicht gerechtfertigt halten.</p>
+        <label for="begruendungAblehnung">Ausführliche Begründung der Fehlerhaftigkeit der Ablehnung:</label>
+        <textarea id="begruendungAblehnung" rows="6" placeholder="Erläutern Sie hier, warum Sie trotzdem Anspruch auf Bürgergeld haben (z.B. Erwerbsfähigkeit falsch beurteilt, Hilfebedürftigkeit trotz Einkommen/Vermögen vorhanden, Bedarfsgemeinschaft falsch bewertet)."></textarea>
+    </fieldset>
+    
+    <fieldset id="detailsFormell" class="sub-details">
+        <h2>4c. Details zu formellen Fehlern im Bescheid</h2>
+        <label for="begruendungFormell">Welche formellen Fehler enthält der Bescheid Ihrer Meinung nach?</label>
+        <textarea id="begruendungFormell" rows="4" placeholder="z.B. Bescheid nicht ausreichend begründet (§ 35 SGB X), falsche oder fehlende Rechtsbehelfsbelehrung, Bescheid nicht unterschrieben oder maschinell ohne Hinweis erstellt."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ausführliche Begründung Ihres Widerspruchs</legend>
+        <label for="ausfuehrlicheBegruendung">Hier können Sie Ihre Widerspruchsgründe detailliert darlegen, insbesondere wenn Sie "Sonstiger Grund" gewählt haben oder Ihre Argumente oben nicht vollständig passten:</label>
+        <textarea id="ausfuehrlicheBegruendung" rows="8" placeholder="Schildern Sie genau, was Sie an dem Bescheid beanstanden und warum. Belegen Sie Ihre Aussagen möglichst mit Fakten und verweisen Sie auf ggf. beigefügte Anlagen."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>6. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="antragImWiderspruch">Was fordern Sie vom Jobcenter?</label>
+        <select id="antragImWiderspruch" required>
+            <option value="">Bitte wählen...</option>
+            <option value="neuberechnung">Ich beantrage, den Bescheid vom [Datum Bescheid] aufzuheben und über meinen Leistungsanspruch unter Beachtung meiner dargelegten Gründe neu zu entscheiden und die Leistungen korrekt zu berechnen und zu bewilligen.</option>
+            <option value="bewilligung">Ich beantrage, den Ablehnungsbescheid vom [Datum Bescheid] aufzuheben und mir die beantragten Leistungen in gesetzlicher Höhe zu bewilligen.</option>
+            <option value="korrektur_formell">Ich beantrage, den formell fehlerhaften Bescheid vom [Datum Bescheid] aufzuheben und einen korrekten, begründeten Bescheid zu erlassen.</option>
+        </select>
+        <label for="zusatzforderungText">Ergänzende Forderung (optional):</label>
+        <textarea id="zusatzforderungText" rows="2" placeholder="z.B. ... und mir die zustehenden Leistungen ab dem [Datum] nachzuzahlen."></textarea>
+        <label><input type="checkbox" id="bitteUmAkteneinsicht" name="bitteUmAkteneinsicht" value="ja"> Ich beantrage Akteneinsicht gemäß § 25 SGB X, um meine Rechte besser wahrnehmen zu können.</label>
+    </fieldset>
+
+    <fieldset>
+        <legend>7. Anlagen (Kopien sind ausreichend)</legend>
+        <p><small>Wichtige Nachweise, die Ihren Widerspruch stützen (Mehrfachauswahl möglich).</small></p>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="anlagen" value="Kopie des angefochtenen Bescheides"> Kopie des angefochtenen Bescheides</label>
+            <label><input type="checkbox" name="anlagen" value="Mietvertrag und aktuelle Nebenkostenabrechnung (bei KdU-Problemen)"> Mietvertrag und aktuelle Nebenkostenabrechnung</label>
+            <label><input type="checkbox" name="anlagen" value="Einkommensnachweise der letzten Monate (bei Einkommensanrechnung)"> Einkommensnachweise der letzten Monate</label>
+            <label><input type="checkbox" name="anlagen" value="Vermögensnachweise (z.B. Kontoauszüge mit geschwärzten Umsätzen, die nur den Saldo zeigen)"> Vermögensnachweise (z.B. Kontoauszüge)</label>
+            <label><input type="checkbox" name="anlagen" value="Ärztliche Atteste / Gutachten (z.B. für Mehrbedarfe, Erwerbsfähigkeit)"> Ärztliche Atteste / Gutachten</label>
+            <label><input type="checkbox" name="anlagen" value="Nachweise über Bewerbungsbemühungen (falls relevant)"> Nachweise über Bewerbungsbemühungen</label>
+            <label><input type="checkbox" name="anlagen" value="Sonstige relevante Unterlagen"> Sonstige relevante Unterlagen (bitte unten spezifizieren)</label>
+        </div>
+        <label for="anlageSonstigesText">Spezifizierung "Sonstige relevante Unterlagen":</label>
+        <input type="text" id="anlageSonstigesText" placeholder="z.B. Schreiben vom Vermieter, Kostenvoranschläge">
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Das Ausfüllen dieses Formulars ist kostenlos. Für die Erstellung und den Download des vollständigen, personalisierten PDF-Widerspruchsschreibens wird eine einmalige Gebühr von 0,99 € fällig. Sie werden vor der PDF-Generierung zur Bezahlung weitergeleitet.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnBuergergeldWiderspruch" class="button-secondary">Eingaben speichern</button>
+      <button type="button" id="loadBtnBuergergeldWiderspruch" class="button-secondary">Gespeicherte Eingaben laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

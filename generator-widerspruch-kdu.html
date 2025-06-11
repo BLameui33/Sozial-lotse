@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch Kosten der Unterkunft (KdU) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen Bescheid zu den Kosten der Unterkunft und Heizung (KdU). Für unangemessene Miete, Heizkosten und Kostensenkungsaufforderungen vom Jobcenter.">
+  <meta name="keywords" content="Widerspruch KdU, Kosten der Unterkunft, Bürgergeld, Jobcenter, Miete, Heizkosten, Angemessenheit, Kostensenkungsaufforderung, § 22 SGB II, Generator, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="widerspruch_kdu_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #8e44ad; /* Lila Akzent für dieses Thema */ text-align: center; }
+    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: background-color 0.2s, transform 0.1s; margin: 0 0.5rem; }
+    button:hover { transform: translateY(-1px); }
+    .button-primary { background-color: #8e44ad; color: white; }
+    .button-primary:hover { background-color: #7d3c98; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .info-box, .warning-box { font-size: 0.95em; padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+    .popup-overlay, .popup-content, .popup-close-button { /* Stile für das Popup */ }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch: Kosten der Unterkunft & Heizung (KdU)</h1>
+  <div class="warning-box">
+    <p><strong>Wichtiger Hinweis:</strong> Auch für diesen Widerspruch gilt die Frist von <strong>einem Monat</strong> nach Erhalt des Bescheides. Wenn das Jobcenter Sie auffordert, Ihre Wohnkosten zu senken, haben Sie in der Regel **bis zu sechs Monate** Zeit, dies zu tun, bevor die Leistungen tatsächlich gekürzt werden.</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchKduForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname (des Hauptantragstellers):</label>
+      <input type="text" id="personName" required>
+      <label for="bgNummer">Ihre BG-Nummer / Aktenzeichen:</label>
+      <input type="text" id="bgNummer" required>
+      <label for="anzahlPersonenKdu">Für wie viele Personen legen Sie Widerspruch ein?</label>
+      <select id="anzahlPersonenKdu" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+      </select>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zum Jobcenter</legend>
+        <label for="jcName">Name des Jobcenters:</label>
+        <input type="text" id="jcName" required>
+        <label for="jcAdresse">Anschrift des Jobcenters:</label>
+        <textarea id="jcAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Bescheid</legend>
+        <label for="bescheidDatum">Datum des Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen:</label>
+        <input type="text" id="bescheidAktenzeichen">
+        <label for="bescheidInhalt">Was hat das Jobcenter entschieden? <small>(z.B. Aufforderung zur Kostensenkung, Bewilligung nur eines Teils der Miete)</small></label>
+        <textarea id="bescheidInhalt" rows="2" required placeholder="z.B. Aufforderung zur Kostensenkung ab dem TT.MM.JJJJ"></textarea>
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Angaben zu Ihrer Wohnung und Miete</legend>
+        <label for="wohnflaeche">Wohnfläche in Quadratmetern (m²):</label>
+        <input type="number" id="wohnflaeche" required>
+        <label for="personenImHaushalt">Anzahl der Personen in der Bedarfsgemeinschaft:</label>
+        <input type="number" id="personenImHaushalt" required>
+        <label for="kaltmiete">Grundmiete (Kaltmiete) in Euro:</label>
+        <input type="number" step="0.01" id="kaltmiete" required>
+        <label for="nebenkosten">Kalte Betriebskosten (ohne Heizung) in Euro:</label>
+        <input type="number" step="0.01" id="nebenkosten" required>
+        <label for="heizkosten">Heizkosten in Euro:</label>
+        <input type="number" step="0.01" id="heizkosten" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Gründe für Ihren Widerspruch</legend>
+        <p class="info-box">Wählen Sie einen oder mehrere Gründe aus, warum die Entscheidung des Jobcenters falsch ist. Erläutern Sie die Punkte so genau wie möglich.</p>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrundKdu" value="angemessenheit"> Die vom Jobcenter angenommene "angemessene" Miete ist zu niedrig und auf dem lokalen Wohnungsmarkt nicht realistisch.</label>
+        </div>
+        <div id="detailsAngemessenheit" class="sub-details">
+            <label for="textAngemessenheit">Begründung/Recherche: <small>(Haben Sie versucht, eine günstigere Wohnung zu finden? Was kosten vergleichbare Wohnungen? Verweisen Sie auf Mietspiegel oder eigene Suchen.)</small></label>
+            <textarea id="textAngemessenheit" rows="4" placeholder="z.B. Eine Wohnung für [Anzahl] Personen bis zu dem vom Jobcenter genannten Betrag von [Betrag] € ist in [Ort] nachweislich nicht zu finden. Eigene Recherchen bei [Immobilienportal/Zeitung] haben ergeben, dass die günstigsten Angebote bei [Betrag] € beginnen (siehe Anlagen)."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundKdu" value="unzumutbarkeit"> Ein Umzug ist mir/uns aus persönlichen Gründen nicht zumutbar.</label>
+        </div>
+        <div id="detailsUnzumutbarkeit" class="sub-details">
+            <label for="textUnzumutbarkeit">Begründung der Unzumutbarkeit: <small>(z.B. schwere Krankheit, Pflege von Angehörigen im Haus, fortgeschrittenes Alter, Schwangerschaft, Kinder sind fest im sozialen Umfeld verwurzelt (Schule/Kita), Nähe zum Arbeitsplatz/Ausbildungsort)</small></label>
+            <textarea id="textUnzumutbarkeit" rows="4" placeholder="z.B. Aufgrund meiner chronischen Erkrankung [Name der Krankheit] bin ich auf die Barrierefreiheit und die Nähe zu meiner Arztpraxis angewiesen, die bei einem Umzug nicht mehr gewährleistet wäre (siehe Attest). / Unsere Kinder besuchen die Grundschule [Name der Schule], ein Schulwechsel wäre für ihre Entwicklung schädlich."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundKdu" value="absehbaresEnde"> Der Leistungsbezug wird nur von kurzer Dauer sein, was einen Umzug unwirtschaftlich macht.</label>
+        </div>
+        <div id="detailsAbsehbaresEnde" class="sub-details">
+            <label for="textAbsehbaresEnde">Begründung: <small>(Haben Sie eine feste Jobzusage? Beginnt bald eine Ausbildung? Endet der Leistungsbezug aus anderen Gründen in Kürze?)</small></label>
+            <textarea id="textAbsehbaresEnde" rows="3" placeholder="z.B. Ich habe eine feste Zusage für eine Arbeitsstelle ab dem TT.MM.JJJJ (siehe Arbeitsvertrag in Kopie). Der Leistungsbezug endet daher in [Anzahl] Monaten, weshalb die Kosten für einen Umzug und die soziale Belastung in keinem Verhältnis stehen."></textarea>
+        </div>
+
+        <label for="ergaenzendeArgumenteKdu" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente und Erläuterungen:</label>
+        <textarea id="ergaenzendeArgumenteKdu" rows="5" placeholder="Hier können Sie weitere wichtige Aspekte anführen, z.B. fehlerhafte Berechnungen der Heizkosten, eine falsche Anzahl an Personen wurde berücksichtigt etc."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>6. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungKdu">Was fordern Sie vom Jobcenter?</label>
+        <textarea id="forderungKdu" rows="3" required placeholder="z.B. Ich beantrage die Aufhebung des genannten Bescheides und die Übernahme der vollen, tatsächlichen Kosten für Unterkunft und Heizung."></textarea>
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download des vollständigen, personalisierten PDF-Widerspruchsschreibens wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnKdu" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnKdu" class="button-secondary">Laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<div id="spendenPopupKdu" class="popup-overlay" style="display:none; position: fixed; ...">
+  </div>
+
+<footer>
+     <div class="button-group">
+      <button type="button" id="saveBtnSanktionWiderspruch" class="button-secondary">Eingaben speichern</button>
+      <button type="button" id="loadBtnSanktionWiderspruch" class="button-secondary">Gespeicherte Eingaben laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="info-buergergeld-sanktionen.html">Infos zu Sanktionen</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

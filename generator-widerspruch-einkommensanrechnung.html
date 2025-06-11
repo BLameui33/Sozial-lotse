@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch fehlerhafte Einkommensanrechnung (Bürgergeld) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen fehlerhaften Bürgergeld-Bescheid wegen falscher Einkommensanrechnung. Für Jobcenter-Bescheide, die Freibeträge oder Absetzungen nicht korrekt berücksichtigen.">
+  <meta name="keywords" content="Widerspruch Einkommensanrechnung, Bürgergeld, Jobcenter, Freibetrag, Einkommen, Mehrbedarf, § 11b SGB II, SGB II, Generator, Vorlage, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="einkommensanrechnung_widerspruch_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #2c3e50; text-align: center; }
+    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea, select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: background-color 0.2s, transform 0.1s; margin: 0 0.5rem; }
+    button:hover { transform: translateY(-1px); }
+    .button-primary { background-color: #27ae60; color: white; }
+    .button-primary:hover { background-color: #229954; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .info-box, .warning-box { font-size: 0.95em; padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+    .popup-overlay, .popup-content, .popup-close-button { /* Stile für das Popup */ }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { /* Standard Media Queries */
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; } legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch wegen fehlerhafter Einkommensanrechnung (Bürgergeld)</h1>
+  <div class="info-box">
+    <p><strong>Worum geht es hier?</strong> Dieses Tool hilft Ihnen, Widerspruch einzulegen, wenn das Jobcenter Ihr Einkommen falsch auf Ihre Bürgergeld-Leistungen angerechnet hat. Typische Fehler sind vergessene oder falsch berechnete Freibeträge und Absetzbeträge.</p>
+    <p><strong>Wichtig:</strong> Legen Sie Widerspruch immer schriftlich und innerhalb eines Monats nach Erhalt des Bescheides ein!</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchEinkommenForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname (des Hauptantragstellers der BG):</label>
+      <input type="text" id="personName" required>
+      <label for="bgNummer">Ihre BG-Nummer / Kundennummer:</label>
+      <input type="text" id="bgNummer" required>
+      <label for="anzahlPersonenEinkommen">Für wie viele Personen legen Sie Widerspruch ein?</label>
+      <select id="anzahlPersonenEinkommen" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+      </select>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zum Jobcenter</legend>
+        <label for="jcName">Name des Jobcenters (laut Bescheid):</label>
+        <input type="text" id="jcName" required>
+        <label for="jcAdresse">Anschrift des Jobcenters:</label>
+        <textarea id="jcAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Bescheid</legend>
+        <label for="bescheidDatum">Datum des Berechnungs-/Leistungsbescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides:</label>
+        <input type="text" id="bescheidAktenzeichen">
+        <label for="leistungszeitraum">Betroffener Leistungszeitraum laut Bescheid:</label>
+        <input type="text" id="leistungszeitraum" required placeholder="z.B. 01.07.2025 - 31.12.2025">
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Angaben zum Einkommen und Fehler in der Anrechnung</legend>
+        <label for="einkommensart">Um welche Art von Einkommen geht es hauptsächlich?</label>
+        <input type="text" id="einkommensart" required placeholder="z.B. Einkommen aus Erwerbstätigkeit, Minijob, einmalige Einnahme">
+        <label for="einkommenshoeheBrutto">Höhe des Bruttoeinkommens im betreffenden Monat/Zeitraum (in EUR):</label>
+        <input type="number" step="0.01" id="einkommenshoeheBrutto" placeholder="z.B. 850,00" required>
+        <label for="berechnungJobcenter">Welches Einkommen hat das Jobcenter laut Bescheid angerechnet (in EUR)?</label>
+        <input type="number" step="0.01" id="berechnungJobcenter" placeholder="Betrag, der von den Leistungen abgezogen wurde" required>
+        
+        <h2>Worin genau liegt der Fehler? (Mehrfachauswahl möglich)</h2>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrundEinkommen" value="freibetrag"> Freibeträge für Erwerbstätige (§ 11b SGB II) wurden nicht oder falsch berücksichtigt.</label>
+        </div>
+        <div id="detailsFreibetrag" class="sub-details">
+            <label for="textFreibetrag">Erläuterung:</label>
+            <textarea id="textFreibetrag" rows="3" placeholder="z.B. Der Grundfreibetrag von 100 € wurde nicht gewährt. / Der prozentuale Freibetrag für mein Einkommen über 100 € wurde falsch berechnet. / Die Beiträge für meine Kfz-Haftpflichtversicherung wurden nicht vom Einkommen abgesetzt."></textarea> </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundEinkommen" value="absetzungen"> Notwendige Ausgaben (Absetzbeträge) wurden nicht vom Einkommen abgezogen.</label>
+        </div>
+        <div id="detailsAbsetzungen" class="sub-details">
+            <label for="textAbsetzungen">Welche Ausgaben wurden nicht berücksichtigt? <small>(z.B. Fahrtkosten zur Arbeit, Beiträge für private Versicherungen wie Kfz-Haftpflicht, Riester-Rente, Kosten für Arbeitsmittel)</small></label>
+            <textarea id="textAbsetzungen" rows="4" placeholder="z.B. Meine Fahrtkosten zur Arbeit in Höhe von XX EUR pro Monat wurden nicht abgesetzt (Nachweise liegen bei)."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundEinkommen" value="einmaleinnahme"> Eine einmalige Einnahme wurde falsch (z.B. komplett in einem Monat) angerechnet.</label>
+        </div>
+        <div id="detailsEinmaleinnahme" class="sub-details">
+            <label for="textEinmaleinnahme">Erläuterung: <small>(Eine einmalige Einnahme, z.B. eine Steuererstattung, muss in der Regel auf 6 Monate verteilt werden.)</small></label>
+            <textarea id="textEinmaleinnahme" rows="3" placeholder="z.B. Die Steuererstattung von XXX EUR wurde komplett im Monat Mai angerechnet, anstatt sie auf 6 Monate zu verteilen."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundEinkommen" value="zuordnung"> Einkommen wurde der falschen Person in der Bedarfsgemeinschaft zugeordnet.</label>
+        </div>
+        <div id="detailsZuordnung" class="sub-details">
+            <label for="textZuordnung">Erläuterung:</label>
+            <textarea id="textZuordnung" rows="2" placeholder="z.B. Das Einkommen meines Kindes (Kindergeld/Unterhalt) wurde fälschlicherweise vollständig auf meinen Bedarf angerechnet. / Das Einkommen meines Partners wurde falsch zugeordnet."></textarea> </div>
+
+        <label for="ergaenzendeArgumenteEinkommen" style="margin-top: 1.5rem;">Weitere/ergänzende Begründung zu den Fehlern in der Einkommensanrechnung:</label>
+        <textarea id="ergaenzendeArgumenteEinkommen" rows="5" placeholder="Hier können Sie Ihren Fall detaillierter schildern, z.B. wenn mehrere Fehler zusammenkommen oder Sie die Berechnung des Jobcenters nicht nachvollziehen können und eine detaillierte Aufschlüsselung fordern."></textarea> </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungEinkommen">Was fordern Sie vom Jobcenter?</label>
+        <textarea id="forderungEinkommen" rows="3" required placeholder="z.B. Ich beantrage die Aufhebung des genannten Bescheides und eine Neuberechnung meiner Leistungen unter korrekter Berücksichtigung meines anrechenbaren Einkommens sowie die Nachzahlung der Differenzbeträge."></textarea>
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download dieses Widerspruchs wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnEinkommen" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnEinkommen" class="button-secondary">Laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<div id="spendenPopupEinkommen" class="popup-overlay" style="display:none;">
+  </div>
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

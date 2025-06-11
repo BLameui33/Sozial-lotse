@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch Sperrzeit-Bescheid (ALG I) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen Sperrzeitbescheid der Agentur für Arbeit. Für unberechtigte Sperrzeiten beim Arbeitslosengeld I.">
+  <meta name="keywords" content="Widerspruch Sperrzeit, ALG I, Arbeitslosengeld, Agentur für Arbeit, Sperrzeitbescheid, wichtiger Grund, § 159 SGB III, Generator, Vorlage, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="alg1_sperrzeit_widerspruch_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #d35400; /* Orange Akzent für dieses Thema */ text-align: center; }
+    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], textarea, select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; transition: background-color 0.2s, transform 0.1s; margin: 0 0.5rem; }
+    button:hover { transform: translateY(-1px); }
+    .button-primary { background-color: #27ae60; color: white; }
+    .button-primary:hover { background-color: #229954; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+    .info-box, .warning-box { font-size: 0.95em; padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .sub-details { display: none; margin-left: 20px; border-left: 3px solid #eee; padding-left: 15px; margin-top:0.8rem; margin-bottom:1rem; }
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+    .popup-overlay, .popup-content, .popup-close-button { /* Stile für das Popup */ }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    @media (max-width: 600px) { /* Standard Media Queries */
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; } legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Widerspruch gegen Sperrzeit-Bescheid (ALG I)</h1>
+  <div class="warning-box">
+    <p><strong>Wichtiger Hinweis:</strong> Ein Widerspruch gegen einen Sperrzeit-Bescheid muss <strong>innerhalb eines Monats</strong> nach Erhalt schriftlich bei der Agentur für Arbeit eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Die Nutzung der Formulare ist kostenlos. Für die Erstellung des finalen, personalisierten PDF-Dokuments wird eine einmalige Gebühr von 0,99 € fällig.</p>
+  </div>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerspruchAlg1SperrzeitForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="kundenNummer">Ihre Kundennummer bei der Agentur für Arbeit:</label>
+      <input type="text" id="kundenNummer" required>
+      <label for="anzahlPersonenSperrzeit">Legen Sie Widerspruch nur für sich ein? <small>(Normalerweise ja, die Option "Wir" ist für Vertreter oder besondere Fälle gedacht)</small></label>
+      <select id="anzahlPersonenSperrzeit" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für uns (z.B. als Bevollmächtigter)</option>
+      </select>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlz">Postleitzahl:</label>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="personOrt">Wohnort:</label>
+      <input type="text" id="personOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zur Agentur für Arbeit</legend>
+        <label for="agenturName">Name der Agentur für Arbeit (laut Bescheid):</label>
+        <input type="text" id="agenturName" required placeholder="z.B. Agentur für Arbeit Musterstadt">
+        <label for="agenturAdresse">Anschrift der Agentur für Arbeit:</label>
+        <textarea id="agenturAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum angefochtenen Sperrzeit-Bescheid</legend>
+        <label for="bescheidDatum">Datum des Sperrzeit-Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides:</label>
+        <input type="text" id="bescheidAktenzeichen">
+        <label for="sperrzeitGrund">Was ist der Grund für die Sperrzeit laut Bescheid? <small>(z.B. Arbeitsaufgabe, Ablehnung eines Arbeitsangebots, unzureichende Eigenbemühungen, Meldeversäumnis)</small></label>
+        <textarea id="sperrzeitGrund" rows="3" required placeholder="z.B. Arbeitsaufgabe ohne wichtigen Grund zum TT.MM.JJJJ"></textarea>
+        <label for="sperrzeitDauer">Wie lange dauert die verhängte Sperrzeit?</label>
+        <input type="text" id="sperrzeitDauer" required placeholder="z.B. 12 Wochen, vom TT.MM.JJJJ bis TT.MM.JJJJ">
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Gründe für Ihren Widerspruch</legend>
+        <p class="info-box">Wählen Sie einen oder mehrere Gründe aus, warum die Sperrzeit zu Unrecht verhängt wurde. Erläutern Sie die Punkte so genau wie möglich und fügen Sie Nachweise bei!</p>
+        
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="widerspruchsgrundSperrzeit" value="wichtigerGrund"> Für mein Handeln lag ein wichtiger Grund vor (§ 159 Abs. 1 SGB III).</label>
+        </div>
+        <div id="detailsWichtigerGrund" class="sub-details">
+            <label for="textWichtigerGrund">Begründung, welcher wichtige Grund vorlag: <small>(z.B. gesundheitliche Gründe für die Kündigung, unzumutbare Arbeitsbedingungen, Mobbing, Pflege von Angehörigen)</small></label>
+            <textarea id="textWichtigerGrund" rows="4" placeholder="z.B. Ich musste das Arbeitsverhältnis kündigen, da die Arbeitsbedingungen nachweislich gesundheitsgefährdend waren (siehe Attest). / Die angebotene Stelle war unzumutbar, weil sie eine tägliche Pendelzeit von über 2,5 Stunden erfordert hätte."></textarea>
+        </div>
+
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundSperrzeit" value="sachverhaltFalsch"> Der vom Amt angenommene Sachverhalt ist falsch dargestellt.</label>
+        </div>
+        <div id="detailsSachverhaltFalsch" class="sub-details">
+            <label for="textSachverhaltFalsch">Stellen Sie den Sachverhalt aus Ihrer Sicht korrekt dar: <small>(z.B. der Arbeitgeber hat gekündigt, nicht Sie; Sie haben sich beworben; Sie haben das Meldeversäumnis rechtzeitig entschuldigt)</small></label>
+            <textarea id="textSachverhaltFalsch" rows="4" placeholder="z.B. Entgegen Ihrer Darstellung habe ich das Arbeitsverhältnis nicht selbst gelöst, sondern wurde betriebsbedingt gekündigt (siehe Kündigungsschreiben)."></textarea>
+        </div>
+        
+        <div class="checkbox-group" style="margin-top: 1rem;">
+            <label><input type="checkbox" name="widerspruchsgrundSperrzeit" value="anhaerungFehlte"> Es gab keine oder eine fehlerhafte Anhörung vor Erlass des Bescheides.</label>
+        </div>
+        <div id="detailsAnhaerungFehlte" class="sub-details">
+            <label for="textAnhaerungFehlte">Erläuterung zur fehlenden/fehlerhaften Anhörung: <small>(Vor einer Sperrzeit muss Ihnen die Agentur für Arbeit die Möglichkeit geben, sich zu den Vorwürfen zu äußern.)</small></label>
+            <textarea id="textAnhaerungFehlte" rows="3" placeholder="z.B. Ich habe vor Erlass des Sperrzeitbescheides kein Anhörungsschreiben erhalten und konnte mich daher nicht zu den Vorwürfen äußern."></textarea>
+        </div>
+
+        <label for="ergaenzendeArgumenteSperrzeit" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente und Erläuterungen:</label>
+        <textarea id="ergaenzendeArgumenteSperrzeit" rows="5" placeholder="Hier können Sie weitere wichtige Aspekte anführen."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
+        <label for="forderungSperrzeit">Was fordern Sie von der Agentur für Arbeit?</label>
+        <textarea id="forderungSperrzeit" rows="3" required placeholder="z.B. Ich beantrage die vollumfängliche Rücknahme des Sperrzeitbescheides vom [Datum] und die Gewährung von Arbeitslosengeld ohne Minderung ab Beginn meines Anspruchs."></textarea>
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download dieses Widerspruchs wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnSperrzeit" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnSperrzeit" class="button-secondary">Laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<div id="spendenPopupSperrzeit" class="popup-overlay" style="display:none;">
+  </div>
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+</body>
+</html>

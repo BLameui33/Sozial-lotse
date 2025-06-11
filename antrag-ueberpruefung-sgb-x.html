@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Antrag auf Überprüfung eines Bescheides (§ 44 SGB X) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie Ihren Antrag auf Überprüfung eines bestandskräftigen Bescheides nach § 44 SGB X. Für fehlerhafte Bescheide vom Jobcenter (Bürgergeld) oder anderen Sozialbehörden.">
+  <meta name="keywords" content="Überprüfungsantrag, § 44 SGB X, Antrag, Widerspruch, Bürgergeld, Jobcenter, Bescheid, Korrektur, Sozialrecht, Generator, Vorlage, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="ueberpruefung_sgb_x_script.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0;
+    }
+    .page-container {
+        max-width: 800px; margin: 2rem auto; background-color: #fff;
+        padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 2.2rem; margin-bottom: 1.5rem; color: #2c3e50;
+      text-align: center;
+    }
+    h2 { 
+      font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; 
+      border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem;
+    }
+    label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], textarea, select {
+      width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; margin-bottom:0.8rem;}
+    
+    .button-group {
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;
+      text-align: center;
+    }
+    button {
+      padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer;
+      border: none; font-weight: bold; 
+      transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+      margin: 0 0.5rem;
+    }
+    button:hover { transform: translateY(-1px); }
+    .button-primary { background-color: #27ae60; color: white; }
+    .button-primary:hover { background-color: #229954; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .button-secondary:hover { background-color: #626f70; }
+
+    .info-box, .warning-box, .payment-notice {
+      font-size: 0.95em; padding: 1rem 1.5rem;
+      border-radius: 5px; margin: 1.5rem 0;
+    }
+    .info-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .payment-notice { background-color: #fff3cd; border-left: 5px solid #ffc107; font-weight: bold; text-align: center;}
+    .checkbox-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .checkbox-group input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle;}
+
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+     @media (max-width: 600px) {
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      h1 { font-size: 1.7rem; }
+      legend { font-size: 1.3em; }
+      .button-group { flex-direction: column; }
+      button { width: 100%; margin: 0.5rem 0;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-container">
+  <h1>Antrag auf Überprüfung eines Bescheides nach § 44 SGB X</h1>
+  <div class="info-box">
+    <p><strong>Wann ist dieser Antrag sinnvoll?</strong> Wenn die einmonatige Widerspruchsfrist für einen Bescheid bereits abgelaufen ist und Sie nachträglich feststellen, dass der Bescheid von Anfang an fehlerhaft war (z.B. weil das Recht falsch angewendet wurde oder von einem falschen Sachverhalt ausgegangen wurde).</p>
+    <p>Die Behörde ist dann verpflichtet, den Bescheid noch einmal zu überprüfen und ggf. zu korrigieren. Leistungen können so bis zu vier Jahre rückwirkend nachgezahlt werden.</p>
+  </div>
+  <p class="warning-box"><strong>Wichtig:</strong> Dieser Antrag ist kein Ersatz für einen fristgerechten Widerspruch! Wenn die Widerspruchsfrist noch läuft, sollten Sie immer den normalen Widerspruch einlegen.</p>
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="ueberpruefungsantragForm">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben (Antragsteller:in)</legend>
+      <label for="antragstellerName">Vor- und Nachname (des Hauptantragstellers):</label>
+      <input type="text" id="antragstellerName" required>
+      <label for="bgNummer">Ihre BG-Nummer / Kundennummer / Aktenzeichen bei der Behörde:</label>
+      <input type="text" id="bgNummer" required>
+
+      <label for="anzahlPersonenUeberpruefung">Für wie viele Personen stellen Sie diesen Antrag? <small>(Beeinflusst die Formulierungen "ich/wir", "mein/unser" im Schreiben)</small></label>
+      <select id="anzahlPersonenUeberpruefung" required>
+        <option value="einzelperson" selected>Für mich als Einzelperson</option>
+        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+      </select>
+      <label for="antragstellerAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="antragstellerAdresse" required>
+      <label for="antragstellerPlz">Postleitzahl:</label>
+      <input type="text" id="antragstellerPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <label for="antragstellerOrt">Wohnort:</label>
+      <input type="text" id="antragstellerOrt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Angaben zur Behörde (Jobcenter, Sozialamt etc.)</legend>
+        <label for="behoerdeName">Name der Behörde (laut Bescheid):</label>
+        <input type="text" id="behoerdeName" required placeholder="z.B. Jobcenter Musterstadt">
+        <label for="behoerdeAdresse">Anschrift der Behörde:</label>
+        <textarea id="behoerdeAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Angaben zum Bescheid, der überprüft werden soll</legend>
+        <p class="info-box"><small>Geben Sie hier die Daten des Bescheides an, den Sie für fehlerhaft halten und der überprüft werden soll. Sie können auch mehrere Bescheide für einen Zeitraum angeben.</small></p>
+        <label for="bescheidDatum">Datum des zu überprüfenden Bescheides:</label>
+        <input type="date" id="bescheidDatum" required>
+        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides:</label>
+        <input type="text" id="bescheidAktenzeichen" required>
+        <label for="bescheidBetreff">Kurzer Betreff des Bescheides (z.B. "Bescheid über Leistungen...", "Sanktionsbescheid", "Rückforderungsbescheid"):</label>
+        <input type="text" id="bescheidBetreff" required>
+        <label for="weitereBescheide">Weitere Bescheide oder gesamter Bewilligungszeitraum, der überprüft werden soll (optional):</label>
+        <textarea id="weitereBescheide" rows="2" placeholder="z.B. alle Bescheide für den Zeitraum 01.01.2024 bis 30.06.2024"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>4. Begründung des Überprüfungsantrags</legend>
+        <label for="fehlerBeschreibung">Beschreibung des Fehlers: In welchen Punkten war der Bescheid Ihrer Meinung nach von Anfang an rechtswidrig/falsch?</label>
+        <textarea id="fehlerBeschreibung" rows="8" required placeholder="Beschreiben Sie hier detailliert den Fehler. z.B. Falsche Berechnung der Kosten der Unterkunft, Nichtanerkennung eines Mehrbedarfs, falsche Anrechnung von Einkommen, fehlerhafte rechtliche Grundlage..."></textarea>
+        <label for="fehlerBegruendung">Warum ist die Entscheidung falsch? <small>(Beziehen Sie sich auf Fakten, Gesetze (falls bekannt) oder neue Erkenntnisse, die belegen, dass die ursprüngliche Entscheidung falsch war. Verweisen Sie auf beigefügte Nachweise.)</small></label>
+        <textarea id="fehlerBegruendung" rows="6" placeholder="z.B. Mein Einkommen wurde falsch berechnet, da Freibetrag XY nicht berücksichtigt wurde (siehe beiliegende Lohnabrechnung). / Der Mehrbedarf für kostenaufwändige Ernährung wurde zu Unrecht abgelehnt (siehe beiliegendes Attest)."></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ihr Antrag</legend>
+        <label for="forderungUeberpruefung">Was fordern Sie von der Behörde?</label>
+        <textarea id="forderungUeberpruefung" rows="3" required placeholder="z.B. Ich beantrage, den Bescheid vom [Datum] zurückzunehmen, die Leistungen korrekt neu zu berechnen und die zu wenig gezahlten Beträge nachzuzahlen."></textarea>
+    </fieldset>
+
+     <fieldset>
+        <legend>6. Beizufügende Anlagen (Kopien sind ausreichend)</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="anlagenUeberpruefung" value="Kopie des zu überprüfenden Bescheides"> Kopie des zu überprüfenden Bescheides</label>
+            <label><input type="checkbox" name="anlagenUeberpruefung" value="Neue Nachweise, die den Fehler belegen (z.B. Atteste, Abrechnungen, Kontoauszüge)"> Neue Nachweise, die den Fehler belegen</label>
+            <label><input type="checkbox" name="anlagenUeberpruefung" value="Relevante Unterlagen, die bereits früher eingereicht, aber nicht berücksichtigt wurden"> Relevante Unterlagen, die bereits früher eingereicht wurden</label>
+        </div>
+        <label for="anlageSonstigesUeberpruefung">Sonstige Anlagen:</label>
+        <input type="text" id="anlageSonstigesUeberpruefung">
+    </fieldset>
+
+    <div class="payment-notice">
+        <p>Für die Erstellung und den Download dieses Antrags wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnUeberpruefung" class="button-secondary">Eingaben speichern</button>
+      <button type="button" id="loadBtnUeberpruefung" class="button-secondary">Gespeicherte Eingaben laden</button>
+    </div>
+<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
+  </form>
+</div> 
+
+<footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Sozial-Lotse: Ihr Wegweiser für Bürgergeld, ALG I & Sozialhilfe</title>
+  
+  <meta name="description" content="Kostenlose Infos und hochwertige Widerspruchs-Generatoren (0,99€/PDF) für Bürgergeld (SGB II), ALG I (SGB III) und Sozialhilfe (SGB XII). Ihr digitaler Helfer für Sozialleistungen.">
+  
+  <meta name="keywords" content="Sozial-Lotse, Bürgergeld, ALG II, Hartz IV, ALG I, Arbeitslosengeld, Sozialhilfe, Grundsicherung, Widerspruch, Antrag, Jobcenter, Agentur für Arbeit, Sozialamt, Bafög, SGB II, SGB III, SGB XII, Wohngeld, Kinderzuschlag, Bildung und Teilhabe, Vorlage, Generator, Hilfe">
+  
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Das CSS wird ähnlich sein wie bei Kassen-Lotse / Mieter-Lotse.
+       Wir können es später in eine zentrale Datei auslagern, wenn du für
+       jedes Projekt eine eigene CSS-Datei haben möchtest, oder einen gemeinsamen Stil nutzen.
+       Für diesen Entwurf übernehme ich die Basis-Stile. */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0;
+    }
+    .page-container { /* oder .content-wrapper, wie du es nanntest */
+        max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem;
+        border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 2.2rem; margin-bottom: 1.5rem; color: #2c3e50; /* Dunkleres Blau/Grau */
+      text-align: center; overflow-wrap: break-word; word-wrap: break-word;
+    }
+    h1 .logo-part { color: #27ae60; } /* Grüner Akzent für Sozial-Lotse? */
+
+    h2 { 
+      font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1.2rem; color: #1a5276; 
+      border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem;
+    }
+    h3 {
+        font-size: 1.4em; color: #2980b9; /* Blau für Unterüberschriften */
+        margin-top: 1.5rem; margin-bottom: 0.8rem;
+    }
+    .intro-text, .model-info, .privacy-short-info {
+        font-size: 1.05em; line-height: 1.75; margin-bottom: 2rem;
+        padding: 1.2rem 1.5rem; background-color: #eafaf1; /* Heller Grünton */
+        border-left: 5px solid #2ecc71; /* Kräftigerer Grünton */
+        border-radius: 6px;
+    }
+    .model-info strong, .privacy-short-info strong { color: #1e8449; }
+
+    .category-section { margin-bottom: 2.5rem; }
+    .tool-list { list-style: none; padding-left: 0; }
+    .tool-list li {
+      margin-bottom: 0.9rem; padding: 0.85rem 1rem; background-color: #ffffff;
+      border: 1px solid #dee2e6; border-radius: 6px;
+      transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+    .tool-list li:hover { box-shadow: 0 5px 10px rgba(0,0,0,0.12); transform: translateY(-2px); }
+    .tool-list li a { text-decoration: none; color: #0070f3; font-weight: 500; display: block; }
+    .tool-list li a:hover { color: #005bb5; text-decoration: underline; }
+    .tool-list li small { display: block; font-size: 0.88em; color: #555; margin-top: 0.3rem; }
+    .tool-list li .price-tag { /* Für den Preis-Hinweis */
+        font-weight: bold;
+        color: #e74c3c; /* Roter Akzent für Preis */
+        margin-left: 8px;
+        font-size: 0.9em;
+    }
+
+    .spendenhinweis { /* Etwas dezenter, da es auch Bezahl-Optionen gibt */
+      background: #f4f6f6; 
+      border-left: 5px solid #7f8c8d; 
+      padding: 1.5rem; margin-top: 2rem; margin-bottom: 2.5rem; 
+      border-radius: 8px; text-align: center;
+    }
+    .spendenhinweis h2 { 
+        font-size: 1.5rem !important; border-bottom: none !important;
+        margin-top: 0 !important; color: #34495e !important; padding-bottom: 0.5rem !important;
+    }
+    .spendenhinweis input[type="submit"] {
+  background: linear-gradient(to right, #7f8c8d, #95a5a6);
+  color: white;
+  padding: 0.6em 1.4em;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.spendenhinweis input[type="submit"]:hover {
+  background: linear-gradient(to right, #95a5a6, #7f8c8d);
+  transform: scale(1.03);
+}
+    
+    footer { 
+      text-align: center; padding: 2rem 0; margin-top: 2rem;
+      font-size: 0.9em; color: #666;
+    }
+    footer a { color: #555; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) { /* Standard Media Queries */
+      h1 { font-size: 1.9rem; -webkit-hyphens: auto; hyphens: auto; }
+      h2 { font-size: 1.6rem; }
+      h3 { font-size: 1.25rem; }
+      .page-container { padding: 1rem; margin: 1rem auto; }
+      .tool-list li { padding: 0.7rem; }
+      .intro-text, .model-info, .privacy-short-info { font-size: 0.95em; padding: 1rem; }
+    }
+
+.how-it-works-section {
+  padding: 3rem 1rem;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.how-it-works-section h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap; /* Für mobile Ansicht */
+}
+
+.step {
+  flex-basis: 30%;
+  min-width: 250px;
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 1rem auto;
+}
+
+.step h3 {
+  font-size: 1.2rem;
+  color: #1a5276;
+  margin-bottom: 0.5rem;
+}
+
+.example-document img {
+  max-width: 100%;
+  width: 500px; /* Oder eine passende Breite */
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+}
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    <h1>Sozial-Lotse: Ihr Wegweiser zu Bürgergeld, ALG I & Co.</h1>
+
+    <div class="intro-text">
+      <h3>Willkommen bei Sozial-Lotse!</h3>
+      <p>Sie benötigen Unterstützung bei Anträgen oder Widersprüchen im Bereich Bürgergeld, Arbeitslosengeld oder Sozialhilfe? <strong>Sozial-Lotse</strong> ist Ihr digitaler Partner, der Ihnen hilft, sich im komplexen System der Sozialleistungen zurechtzufinden und Ihre Anliegen formgerecht und wirkungsvoll zu vertreten.</p>
+    </div>
+
+    <div class="model-info">
+        <h3>Unser Angebot: Kostenlose Informationen & Günstige Widerspruchs-Generatoren</h3>
+        <p>Wir möchten Ihnen bestmöglich helfen. Deshalb bieten wir Ihnen:</p>
+        <ul>
+    <li><strong>Umfangreiche Info-Seiten:</strong> Zu allen wichtigen Themen rund um Bürgergeld, ALG I und Sozialhilfe finden Sie bei uns verständliche Erklärungen, Tipps und Checklisten – komplett kostenlos.</li>
+    <li><strong>Hochwertige Widerspruchs-Generatoren:</strong> Für die oft sehr komplexen und individuellen Widerspruchsverfahren stellen wir Ihnen spezialisierte Generatoren zur Verfügung. Diese führen Sie Schritt für Schritt durch die erforderlichen Angaben und erstellen ein fundiertes, auf Ihren Fall zugeschnittenes PDF-Schreiben. Für die Nutzung dieser aufwendig erstellten und gepflegten Generatoren fällt eine geringe Gebühr von <strong>nur 0,99 € pro erstelltem PDF</strong> an. Damit finanzieren wir die kontinuierliche Pflege und Aktualisierung unserer Inhalte im sich ständig wandelnden Sozialrecht.</li>
+</ul>
+<p><strong>Der Ablauf ist transparent:</strong> Sie füllen das Formular vollständig aus und prüfen Ihre Angaben in Ruhe. Erst wenn Sie mit dem Ergebnis zufrieden sind und das PDF herunterladen möchten, wird die Gebühr fällig.</p>
+</div>
+
+
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+
+<section class="how-it-works-section">
+  <div class="container">
+    <h2>In 3 einfachen Schritten zu Ihrem fertigen Widerspruch</h2>
+    <div class="steps-container">
+      
+      <div class="step">
+        <div class="step-icon">1</div>
+        <h3>Formular ausfüllen</h3>
+        <p>Unser intelligenter Generator fragt alle relevanten Daten für Ihren Fall ab.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-icon">2</div>
+        <h3>Sicher bezahlen</h3>
+        <p>Für nur 0,99 € die Erstellung via PayPal abschließen.</p>
+      </div>
+      
+      <div class="step">
+        <div class="step-icon">3</div>
+        <h3>PDF herunterladen</h3>
+        <p>Sie erhalten sofort ein formales, fertiges PDF zum Ausdrucken und Versenden.</p>
+      </div>
+
+    </div>
+
+    <div class="example-document">
+      <h3>So sieht Ihr Ergebnis aus:</h3>
+      <p class="example-notice">(Dargestellt ist nur ein Ausschnitt, um den professionellen Aufbau zu zeigen.)</p>
+      <img src="bilder/muster-widerspruch.png" alt="Beispiel eines Widerspruchsschreibens erstellt mit Sozial-Lotse">
+    </div>
+
+  </div>
+</section>
+
+    <section id="buergergeld" class="category-section">
+      <h2><span aria-hidden="true">📄</span> Bürgergeld (SGB II)</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-buergergeld-anspruch.html">Bürgergeld: Anspruch & Voraussetzungen</a>
+            <small>Kostenlose Informationen: Wer hat Anspruch? Wie wird es berechnet? Regelbedarfe, Mehrbedarfe.</small>
+        </li>
+        <li>
+            <a href="info-buergergeld-antrag.html">Bürgergeld beantragen: Anleitung & Tipps</a>
+            <small>Kostenlose Informationen: So stellen Sie den Erstantrag oder Weiterbewilligungsantrag.</small>
+        </li>
+        <li>
+            <a href="info-buergergeld-kdu.html">Kosten der Unterkunft (KdU) beim Bürgergeld</a>
+            <small>Kostenlose Informationen: Was zählt zu den KdU? Angemessenheit, Umzug.</small>
+        </li>
+        <li>
+            <a href="info-buergergeld-sanktionen.html">Sanktionen & Leistungsminderungen beim Bürgergeld</a>
+            <small>Kostenlose Informationen: Wann drohen Sanktionen? Ihre Rechte.</small>
+        </li>
+	<li>
+            <a href="info-einkommen-vermoegen-buergergeld.html">Einkommens- und Vermögensanrechnung beim Bürgergeld</a>
+            <small>Kostenlose Informationen: Alles zu Einkommens- und Vermögensanrechnung.</small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-buergergeld-bescheid.html">Widerspruch gegen Bürgergeld-Bescheid (Leistungshöhe, Ablehnung)</a>
+            <small>Erstellen Sie Ihren Widerspruch.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-buergergeld-sanktion.html">Widerspruch gegen Sanktionsbescheid (Bürgergeld)</a>
+            <small>Wehren Sie sich gegen eine Leistungsminderung.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+         <li>
+            <a href="generator-ueberpruefungsantrag-sgb-x.html">Antrag auf Überprüfung eines Bescheides (§ 44 SGB X)</a>
+            <small>Für die nachträgliche Korrektur von Bescheiden.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+	<li>
+            <a href="generator-widerspruch-kdu.html">Widerspruch gegen KDu Bescheid </a>
+            <small>Für die nachträgliche Korrektur von Bescheiden.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+	<li>
+            <a href="generator-widerspruch-einkommensanrechnung.html">Widerspruch wegen fehlerhafter Einkommensanrechnung</a>
+            <small>Wenn das Jobcenter Einkommen falsch berechnet, Freibeträge (z.B. für Erwerbstätigkeit, Fahrtkosten, Versicherungen) nicht oder falsch berücksichtigt oder einmalige Einnahmen nicht korrekt verteilt.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+	<li>
+            <a href="generator-widerspruch-mehrbedarf.html">Widerspruch wegen nicht anerkanntem Mehrbedarf</a>
+            <small>Unterstützung, wenn Anträge auf Mehrbedarfe (z.B. für kostenaufwändige Ernährung bei Krankheit, für Schwangere, für Alleinerziehende, für Warmwasseraufbereitung) abgelehnt werden.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+	<li>
+            <a href="generator-widerspruch-vermoegen.html">Widerspruch wegen fehlerhafter Vermögensanrechnung</a>
+            <small>Hilft darzulegen, dass ihr Vermögen unter die Freibeträge fällt oder als "Schonvermögen" (z.B. angemessenes Auto, geschützte Altersvorsorge) nicht angerechnet werden darf.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+    <section id="alg1" class="category-section">
+      <h2><span aria-hidden="true">🏃‍♂️</span> Arbeitslosengeld I (SGB III)</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-alg1-anspruch.html">Arbeitslosengeld I: Anspruch & Voraussetzungen</a>
+            <small>Kostenlose Informationen: Anwartschaftszeit, Dauer, Höhe, Pflichten.</small>
+        </li>
+        <li>
+            <a href="info-alg1-sperrzeit.html">Sperrzeit beim Arbeitslosengeld I</a>
+            <small>Kostenlose Informationen: Gründe, Dauer und was Sie tun können.</small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-alg1-sperrzeit.html">Widerspruch gegen Sperrzeitbescheid (ALG I)</a>
+            <small>Formulieren Sie Ihren Widerspruch.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-alg1-bescheid.html">Widerspruch gegen ALG I-Bescheid (Höhe, Dauer, Ablehnung)</a>
+            <small>Setzen Sie sich zur Wehr.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+	<li>
+            <a href="generator-widerspruch-alg1-ablehnung.html">Widerspruch gegen ALG I-Bescheid-Ablehnung (Ablehnung)</a>
+            <small>Setzen Sie sich zur Wehr.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+    <section id="sozialhilfe" class="category-section">
+      <h2><span aria-hidden="true">🤝</span> Sozialhilfe (SGB XII) & Grundsicherung</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-sozialhilfe-grundsicherung-anspruch.html">Sozialhilfe & Grundsicherung: Anspruch und Leistungen</a>
+            <small>Kostenlose Informationen: Hilfe zum Lebensunterhalt, Grundsicherung im Alter und bei Erwerbsminderung.</small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-sozialhilfe.html">Widerspruch gegen Sozialhilfebescheid / Grundsicherungsbescheid</a>
+            <small>Widerspruch gegen Ablehnung oder Berechnung.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+    <section id="wohngeld-kiz" class="category-section">
+      <h2><span aria-hidden="true">🏠</span> Wohngeld & Kinderzuschlag (KiZ)</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-wohngeld.html">Wohngeld: Anspruch, Berechnung & Antrag</a>
+            <small>Kostenlose Informationen zum Mietzuschuss und Lastenzuschuss.</small>
+        </li>
+         <li>
+            <a href="generator-widerspruch-wohngeld.html">Widerspruch gegen Wohngeldbescheid</a>
+            <small>Formulieren Sie Ihren Widerspruch.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+        <li>
+            <a href="info-kiz.html">Kinderzuschlag (KiZ): Voraussetzungen & Antrag</a>
+            <small>Kostenlose Informationen für Familien mit geringem Einkommen.</small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-kiz.html">Widerspruch gegen Kinderzuschlag-Bescheid</a>
+            <small>Bei Ablehnung oder falscher Berechnung.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+     <section id="but" class="category-section">
+      <h2><span aria-hidden="true">📚</span> Bildung und Teilhabe (BuT)</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-but.html">Leistungen für Bildung und Teilhabe: Überblick & Anspruch</a>
+            <small>Kostenlose Informationen: Unterstützung für Kinder, Jugendliche und junge Erwachsene.</small>
+        </li>
+        <li>
+            <a href="generator-antrag-but.html">Allgemeiner Antrag auf BuT-Leistungen (Mustervorlage)</a>
+            <small>Eine allgemeine Vorlage zur Beantragung verschiedener BuT-Leistungen.</small>
+        </li>
+         <li>
+            <a href="generator-widerspruch-but.html">Widerspruch gegen BuT-Bescheid</a>
+            <small>Wenn Leistungen für Bildung und Teilhabe abgelehnt wurden.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+<section id="but" class="category-section">
+      <h2><span aria-hidden="true">🧑‍🎓</span> Bafög</h2>
+      <ul class="tool-list">
+        <li>
+            <a href="info-widerspruch-bafog.html">BAföG-Antrag und Widerspruch Überblick</a>
+            <small>BAföG-Antrag und Widerspruch: Dein kompletter Leitfaden 2025</small>
+        </li>
+        <li>
+            <a href="generator-widerspruch-bafog.html">Widerspruchsgenerator Bafög</a>
+            <small>Widerspruch gegen Ablehnung oder Berechnung.<span class="price-tag">0,99 €/PDF</span></small>
+        </li>
+      </ul>
+    </section>
+
+
+    <div class="privacy-short-info"> 
+        <h3>🔒 Ihr Datenschutz ist uns wichtig!</h3>
+        <p>Bei Sozial-Lotse (und allen unseren "Lotse"-Projekten) werden <strong>alle Ihre Eingaben ausschließlich lokal in Ihrem Browser verarbeitet</strong> und nicht auf unseren Servern gespeichert oder an Dritte weitergegeben. Die PDF-Erstellung erfolgt ebenfalls direkt auf Ihrem Gerät. Mehr dazu finden Sie in unserer ausführlichen <a href="datenschutz-sozial-lotse.html">Datenschutzerklärung</a>.</p>
+    </div>
+
+    <div class="spendenhinweis"> <h2>💡 Unterstützen Sie auch die kostenlosen Info-Bereiche!</h2>
+      <p>Die Entwicklung und Pflege der umfangreichen, kostenlosen Informationsseiten erfordert ebenfalls viel Zeit und Engagement. Wenn Ihnen diese Informationen helfen, freuen wir uns über eine freiwillige Spende.</p>
+      <form action="https://www.paypal.com/donate" method="post" target="_blank">
+        <input type="hidden" name="business" value="info@kassen-lotse.de" /> 
+        <input type="hidden" name="charset" value="utf-8">
+        <input type="hidden" name="item_name" value="Unterstützung für das Projekt Sozial-Lotse (Info-Bereiche)" />
+        <input type="hidden" name="currency_code" value="EUR" />
+        <input type="submit" value="Infos mit Spende unterstützen" />
+      </form>
+    </div>
+
+  </div> 
+  
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="spenden.html">Unterstützen</a> | | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+  </footer>
+</body>
+</html>
