@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sozialrecht-lotse.de/sitemap.xml
