@@ -77,48 +77,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // START: NEUE PAYPAL-LOGIK (ersetzt den alten form.addEventListener)
     // ===========================================================================
 
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: 'PDF-Dokument: Widerspruch Sperrzeit ALG 1', // Angepasste Beschreibung
-                    amount: {
-                        value: '0.99',
-                        currency_code: 'EUR'
-                    }
-                }]
-            });
-        },
+ if (form) {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Verhindert, dass die Seite neu geladen wird
 
-        onApprove: function(data, actions) {
-            console.log("Zahlung erfolgreich! Bereite Sperrzeit-Dokument vor...");
-
-            // Wir führen die Validierung für dieses Formular durch
-            const formData = getFormData();
-            if (formData.widerspruchsgruende.length === 0 && document.getElementById("ergaenzendeArgumenteSperrzeit").value.trim() === "" ) {
-                alert("Bitte wählen Sie mindestens einen Widerspruchsgrund aus, bevor Sie die Erstellung abschließen.");
-                return;
-            }
-             if (document.getElementById("forderungSperrzeit").value.trim() === "") {
-                alert("Bitte formulieren Sie Ihre Forderung an die Agentur für Arbeit.");
-                return;
-            }
-
-            // Daten für die Danke-Seite speichern (mit neuem Schlüssel!)
-            localStorage.setItem('pendingPaymentData-alg1sperrzeit', JSON.stringify(formData));
-
-            // Zur Danke-Seite weiterleiten (mit neuem Typ!)
-            window.location.href = "danke.html?typ=alg1sperrzeit";
-        },
-
-        onCancel: function(data) {
-            alert("Die Zahlung wurde abgebrochen.");
-        },
-        onError: function(err) {
-            console.error('PayPal-Fehler:', err);
-            alert('Ein technischer Fehler ist bei der Bezahlung aufgetreten.');
+        // 1. Daten aus dem Formular holen und validieren
+        const formData = getFormData();
+        if (formData.widerspruchsgruende.length === 0 && document.getElementById("ergaenzendeArgumenteAlg1").value.trim() === "" ) {
+            alert("Bitte wählen Sie mindestens einen Widerspruchsgrund aus oder füllen Sie die ergänzenden Argumente aus.");
+            return;
+        }
+         if (document.getElementById("forderungAlg1").value.trim() === "") {
+            alert("Bitte formulieren Sie Ihre Forderung an die Agentur für Arbeit.");
+            return;
         }
 
-    }).render('#paypal-button-container');
+        // 2. Die validierten Daten im Browser-Speicher ablegen
+        localStorage.setItem('pendingPaymentData-alg1bescheid', JSON.stringify(formData));
 
-}); // Ende DOMContentLoaded
+        // 3. Den Nutzer zur Danke-Seite weiterleiten
+        window.location.href = "danke.html?typ=alg1bescheid";
+    });
+}
