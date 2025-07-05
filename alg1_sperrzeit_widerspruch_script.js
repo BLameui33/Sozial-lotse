@@ -78,25 +78,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===========================================================================
 
  if (form) {
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Verhindert, dass die Seite neu geladen wird
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        // 1. Daten aus dem Formular holen und validieren
-        const formData = getFormData();
-        if (formData.widerspruchsgruende.length === 0 && document.getElementById("ergaenzendeArgumenteAlg1").value.trim() === "" ) {
-            alert("Bitte wählen Sie mindestens einen Widerspruchsgrund aus oder füllen Sie die ergänzenden Argumente aus.");
-            return;
-        }
-         if (document.getElementById("forderungAlg1").value.trim() === "") {
-            alert("Bitte formulieren Sie Ihre Forderung an die Agentur für Arbeit.");
-            return;
-        }
+            // 1. Validierung für das Sperrzeit-Formular
+            const formData = getFormData();
+            // Führe hier deine Validierungs-Checks durch
+            // z.B. if (!formData.bescheidDatum) { alert(...); return; }
 
-        // 2. Die validierten Daten im Browser-Speicher ablegen
-        localStorage.setItem('pendingPaymentData-alg1sperrzeit', JSON.stringify(formData));
+            // 2. Daten im localStorage speichern
+            // WICHTIG: Den Schlüssel an den Generator anpassen!
+            localStorage.setItem('pendingPaymentData-alg1sperrzeit', JSON.stringify(formData));
 
-        // 3. Den Nutzer zur Danke-Seite weiterleiten
-        window.location.href = "danke.html?typ=alg1sperrzeit";
-    });
-}
-    });
+            // 3. Zur Danke-Seite weiterleiten
+            // WICHTIG: Den 'typ' an den Generator anpassen!
+            window.location.href = "danke.html?typ=alg1sperrzeit";
+        });
+    }
+
+});
