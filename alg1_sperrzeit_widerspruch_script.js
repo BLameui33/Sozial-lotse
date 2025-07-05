@@ -99,3 +99,4 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = "danke.html?typ=alg1sperrzeit";
     });
 }
+    });
