@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="buergergeld_sanktion_widerspruch_script.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
   <style>
     /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
     body {
@@ -74,7 +73,7 @@
   <h1>Widerspruch gegen einen Sanktionsbescheid (Bürgergeld)</h1>
   <div class="warning-box">
     <p><strong>Wichtiger Hinweis:</strong> Gegen einen Sanktionsbescheid vom Jobcenter muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt Widerspruch eingelegt werden. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides! Ein Widerspruch hat oft eine **aufschiebende Wirkung**, d.h., die Sanktion darf bis zur Entscheidung über den Widerspruch meist nicht vollzogen werden.</p>
-    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Die Nutzung der Formulare ist kostenlos. Für die Erstellung des finalen, personalisierten PDF-Dokuments wird eine einmalige Gebühr von 0,99 € fällig.</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Die Nutzung der Formulare ist kostenlos.</p>
   </div>
 <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
   <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
@@ -183,15 +182,11 @@
         <input type="text" id="anlageSonstigesSanktion">
     </fieldset>
 
-    <div class="payment-notice">
-        <p>Für die Erstellung und den Download des vollständigen, personalisierten PDF-Widerspruchsschreibens wird eine einmalige Gebühr von 0,99 € fällig.</p>
-    </div>
-
     <div class="button-group">
       <button type="button" id="saveBtnSanktionWiderspruch" class="button-secondary">Eingaben speichern</button>
       <button type="button" id="loadBtnSanktionWiderspruch" class="button-secondary">Gespeicherte Eingaben laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF erstellen und weiter</button>
     </div>
-<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
   </form>
 </div> 
 
