@@ -91,60 +91,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // START: NEUE PAYPAL-LOGIK (ersetzt den alten form.addEventListener)
     // ===========================================================================
 
-    paypal.Buttons({
-        // 1. Definiert, was verkauft wird, wenn der Nutzer klickt.
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: 'PDF-Dokument: Widerspruch Kinderzuschlag', // Produktbeschreibung
-                    amount: {
-                        value: '0.99', // Preis
-                        currency_code: 'EUR'
-                    }
-                }]
-            });
-        },
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        // 2. Wird ausgeführt, NACHDEM der Nutzer die Zahlung im PayPal-Fenster bestätigt hat.
-        onApprove: function(data, actions) {
-            console.log("Zahlung erfolgreich! Bereite Dokument vor...");
-
-            // Wir prüfen zuerst, ob das Formular gültig ist (Ihre alte Validierung)
+            // 1. Validierung für das Sperrzeit-Formular
             const formData = getFormData();
-            if (formData.widerspruchsgruende.length === 0 && getElementValue("ergaenzendeArgumenteKiz").trim() === "" ) {
-                alert("Bitte wählen Sie mindestens einen Widerspruchsgrund aus, bevor Sie die Erstellung abschließen.");
-                return; // Bricht ab, wenn die Validierung fehlschlägt.
-            }
-            if (getElementValue("forderungKiz").trim() === "") {
-                alert("Bitte formulieren Sie Ihre Forderung an die Familienkasse.");
-                return; // Bricht ab, wenn die Validierung fehlschlägt.
-            }
+            // Führe hier deine Validierungs-Checks durch
+            // z.B. if (!formData.bescheidDatum) { alert(...); return; }
 
-            // Wenn alles ok ist, speichern wir die Daten für die Danke-Seite
+            // 2. Daten im localStorage speichern
+            // WICHTIG: Den Schlüssel an den Generator anpassen!
             localStorage.setItem('pendingPaymentData-kiz', JSON.stringify(formData));
 
-            // Und leiten den Nutzer zur Danke-Seite weiter
+            // 3. Zur Danke-Seite weiterleiten
+            // WICHTIG: Den 'typ' an den Generator anpassen!
             window.location.href = "danke.html?typ=kiz";
-        },
+        });
+    }
 
-        // 3. Optional: Was passiert, wenn der Nutzer das PayPal-Fenster schließt.
-        onCancel: function(data) {
-            alert("Die Zahlung wurde abgebrochen.");
-        },
-
-        // 4. Optional: Fängt technische Fehler ab.
-        onError: function(err) {
-            console.error('PayPal-Fehler:', err);
-            alert('Ein technischer Fehler ist bei der Bezahlung aufgetreten.');
-        }
-
-    }).render('#paypal-button-container'); // Sagt PayPal, wo die Buttons angezeigt werden sollen
-
-}); // Ende DOMContentLoaded
-
-
-// ===========================================================================
-// HINWEIS: Die Funktion "generateKizWiderspruchPDF(data)" wurde aus dieser 
-// Datei entfernt und gehört jetzt in die zentrale "pdf-generators.js"-Datei.
-// ===========================================================================
+});
 
