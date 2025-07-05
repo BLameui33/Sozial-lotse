@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="ueberpruefung_sgb_x_script.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -157,13 +156,10 @@
         <input type="text" id="anlageSonstigesUeberpruefung">
     </fieldset>
 
-    <div class="payment-notice">
-        <p>Für die Erstellung und den Download dieses Antrags wird eine einmalige Gebühr von 0,99 € fällig.</p>
-    </div>
-
     <div class="button-group">
       <button type="button" id="saveBtnUeberpruefung" class="button-secondary">Eingaben speichern</button>
       <button type="button" id="loadBtnUeberpruefung" class="button-secondary">Gespeicherte Eingaben laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF erstellen und weiter</button>
     </div>
 <div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
   </form>
