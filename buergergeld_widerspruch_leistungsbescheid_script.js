@@ -114,48 +114,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // START: PAYPAL-LOGIK
     // ===========================================================================
 
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: 'PDF-Dokument: Widerspruch Bürgergeld-Bescheid',
-                    amount: {
-                        value: '0.99',
-                        currency_code: 'EUR'
-                    }
-                }]
-            });
-        },
+if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        onApprove: function(data, actions) {
-            console.log("Zahlung erfolgreich! Bereite Bürgergeld-Widerspruch vor...");
-
-            // Wir führen die Validierung für dieses Formular durch
+            // 1. Validierung für das Sperrzeit-Formular
             const formData = getFormData();
-            if (!formData.hauptgrundWiderspruch) {
-                alert("Bitte wählen Sie einen Hauptgrund für Ihren Widerspruch.");
-                return;
-            }
-            if (document.getElementById("antragImWiderspruch").value.trim() === "") {
-                 alert("Bitte geben Sie an, was Sie mit dem Widerspruch erreichen möchten.");
-                 return;
-            }
+            // Führe hier deine Validierungs-Checks durch
+            // z.B. if (!formData.bescheidDatum) { alert(...); return; }
 
-            // Daten für die Danke-Seite speichern (mit neuem Schlüssel!)
+            // 2. Daten im localStorage speichern
+            // WICHTIG: Den Schlüssel an den Generator anpassen!
             localStorage.setItem('pendingPaymentData-buergergeld', JSON.stringify(formData));
 
-            // Zur Danke-Seite weiterleiten (mit neuem Typ!)
+            // 3. Zur Danke-Seite weiterleiten
+            // WICHTIG: Den 'typ' an den Generator anpassen!
             window.location.href = "danke.html?typ=buergergeld";
-        },
+        });
+    }
 
-        onCancel: function(data) {
-            alert("Die Zahlung wurde abgebrochen.");
-        },
-        onError: function(err) {
-            console.error('PayPal-Fehler:', err);
-            alert('Ein technischer Fehler ist bei der Bezahlung aufgetreten.');
-        }
-
-    }).render('#paypal-button-container');
-
-}); // Ende DOMContentLoaded
+});
