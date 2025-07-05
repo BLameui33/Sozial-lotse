@@ -93,9 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // 2. Die validierten Daten im Browser-Speicher ablegen
-        localStorage.setItem('pendingPaymentData-alg1bescheid', JSON.stringify(formData));
+        localStorage.setItem('pendingPaymentData-alg1sperrzeit', JSON.stringify(formData));
 
         // 3. Den Nutzer zur Danke-Seite weiterleiten
-        window.location.href = "danke.html?typ=alg1bescheid";
+        window.location.href = "danke.html?typ=alg1sperrzeit";
     });
 }
