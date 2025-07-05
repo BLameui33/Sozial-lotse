@@ -11,6 +11,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // --- Alle Ihre bestehenden Elemente und Logik ---
     const form = document.getElementById('widerspruchBafogForm');
+    console.log('Suche nach Formular:', form);
     const saveBtn = document.getElementById('saveBtnBafog');
     const loadBtn = document.getElementById('loadBtnBafog');
     const storageKey = 'widerspruchBafogFormData_v1';
