@@ -78,48 +78,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // START: NEUE PAYPAL-LOGIK (ersetzt den alten form.addEventListener)
     // ===========================================================================
 
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: 'PDF-Dokument: Widerspruch Kosten der Unterkunft (KdU)', // Angepasste Beschreibung
-                    amount: {
-                        value: '0.99',
-                        currency_code: 'EUR'
-                    }
-                }]
-            });
-        },
+  if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        onApprove: function(data, actions) {
-            console.log("Zahlung erfolgreich! Bereite KdU-Dokument vor...");
-
-            // Wir führen die Validierung für dieses Formular durch
+            // 1. Validierung für das Sperrzeit-Formular
             const formData = getFormData();
-            if (formData.widerspruchsgruende.length === 0 && document.getElementById("ergaenzendeArgumenteKdu").value.trim() === "" ) {
-                alert("Bitte wählen Sie mindestens einen Widerspruchsgrund aus, bevor Sie die Erstellung abschließen.");
-                return;
-            }
-             if (document.getElementById("forderungKdu").value.trim() === "") {
-                alert("Bitte formulieren Sie Ihre Forderung an das Jobcenter.");
-                return;
-            }
+            // Führe hier deine Validierungs-Checks durch
+            // z.B. if (!formData.bescheidDatum) { alert(...); return; }
 
-            // Daten für die Danke-Seite speichern (mit neuem Schlüssel!)
+            // 2. Daten im localStorage speichern
+            // WICHTIG: Den Schlüssel an den Generator anpassen!
             localStorage.setItem('pendingPaymentData-kdu', JSON.stringify(formData));
 
-            // Zur Danke-Seite weiterleiten (mit neuem Typ!)
+            // 3. Zur Danke-Seite weiterleiten
+            // WICHTIG: Den 'typ' an den Generator anpassen!
             window.location.href = "danke.html?typ=kdu";
-        },
+        });
+    }
 
-        onCancel: function(data) {
-            alert("Die Zahlung wurde abgebrochen.");
-        },
-        onError: function(err) {
-            console.error('PayPal-Fehler:', err);
-            alert('Ein technischer Fehler ist bei der Bezahlung aufgetreten.');
-        }
-
-    }).render('#paypal-button-container');
-
-}); // Ende DOMContentLoaded
+});
