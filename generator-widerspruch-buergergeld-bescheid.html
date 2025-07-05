@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="buergergeld_widerspruch_leistungsbescheid_script.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=ARQClumeuTroTnUagY3lzjwHOZ1C8im5s2_h7C7MGpPOfyHUeGL-VHi9HV1KOXySQBU1MhjW4G2yP80L&currency=EUR"></script> <style>
+  
     /* Basis-CSS (ähnlich wie bei den anderen Lotse-Seiten) */
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -94,7 +94,7 @@
   
   <div class="info-box">
     <p><strong>Wichtig:</strong> Ein Widerspruch gegen einen Bescheid des Jobcenters muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt des Bescheides schriftlich beim Jobcenter eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
-    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Alle Eingaben bleiben nur in Ihrem Browser. Vor der Erstellung des finalen PDF-Dokuments wird eine einmalige Gebühr von 0,99 € für diesen Generator fällig.</p>
+    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren. Alle Eingaben bleiben nur in Ihrem Browser.</p>
   </div>
 <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
   <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
@@ -231,15 +231,12 @@
         <input type="text" id="anlageSonstigesText" placeholder="z.B. Schreiben vom Vermieter, Kostenvoranschläge">
     </fieldset>
 
-    <div class="payment-notice">
-        <p>Das Ausfüllen dieses Formulars ist kostenlos. Für die Erstellung und den Download des vollständigen, personalisierten PDF-Widerspruchsschreibens wird eine einmalige Gebühr von 0,99 € fällig. Sie werden vor der PDF-Generierung zur Bezahlung weitergeleitet.</p>
-    </div>
 
     <div class="button-group">
       <button type="button" id="saveBtnBuergergeldWiderspruch" class="button-secondary">Eingaben speichern</button>
       <button type="button" id="loadBtnBuergergeldWiderspruch" class="button-secondary">Gespeicherte Eingaben laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF erstellen und weiter</button>
     </div>
-<div id="paypal-button-container" style="margin-top: 1.5rem;"></div>
   </form>
 </div> 
 
