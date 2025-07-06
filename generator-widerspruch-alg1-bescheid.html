@@ -44,9 +44,35 @@
       .button-group { flex-direction: column; }
       button { width: 100%; margin: 0.5rem 0;}
     }
+    /* Stil für den Header-Container */
+.site-header {
+    background-color: #ffffff; /* Weißer Hintergrund */
+    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
+    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
+    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
+    text-align: center;
+}
+
+/* Stil für das Logo bzw. den Seitennamen */
+.site-logo {
+    color: #1a5276; /* Deine dunkle Akzentfarbe */
+    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
+    font-weight: bold;
+    text-decoration: none; /* Entfernt die Link-Unterstreichung */
+    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
+}
+
+.site-logo:hover {
+    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
+}
   </style>
 </head>
 <body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
 
 <div class="page-container">
   <h1>Widerspruch gegen ALG I-Bescheid (Höhe / Dauer)</h1>
