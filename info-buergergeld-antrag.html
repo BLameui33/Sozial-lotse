@@ -29,33 +29,38 @@
       h3 { font-size: 1.2rem; }
       .page-container { padding: 1rem; margin: 1rem auto; }
     }
-    .button-zum-generator {
-    /* Grundform und Farbe */
-    display: inline-block; /* Wichtig für korrekte Abstände und Padding */
-    background-color: #d35400; /* Hauptfarbe deiner Generatoren */
-    color: #ffffff; /* Weißer Text für besten Kontrast */
-    border-radius: 8px; /* Leicht abgerundete Ecken, passend zu deinem Design */
-    padding: 15px 30px; /* Großzügiges Padding für eine gute Klickfläche */
-    
-    /* Schrift und Text */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 1.2rem; /* Etwas größer, um aufzufallen */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Standard-Unterstreichung von Links */
+ .button-container {
+    /* Zentriert den Button innerhalb des Containers */
     text-align: center;
-
-    /* Effekte für ein modernes Gefühl */
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Subtiler Schatten für mehr Tiefe */
-    transition: all 0.2s ease-in-out; /* Weiche Übergänge für alle Änderungen */
+    /* Fügt etwas Abstand nach oben und unten hinzu */
+    margin: 2.5rem 0;
 }
 
-/* Hover-Effekt: Was passiert, wenn man mit der Maus darüberfährt */
-.button-zum-generator:hover {
-    background-color: #a94400; /* Etwas dunklere Variante der Hauptfarbe */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* Hebt den Schatten leicht an */
-    transform: translateY(-2px); /* Lässt den Button leicht nach oben schweben */
+.button-primary {
+    /* Farben und Form */
+    display: inline-block;
+    background-color: #d35400; /* Deine Hauptfarbe */
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    
+    /* Schrift und Text */
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none; /* Wichtig, um die Link-Unterstreichung zu entfernen */
+    
+    /* Moderne Effekte */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover-Effekt für Interaktivität */
+.button-primary:hover {
+    background-color: #a94400; /* Dunklere Variante deiner Hauptfarbe */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
   </style>
 </head>
