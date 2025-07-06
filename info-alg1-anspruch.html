@@ -31,6 +31,55 @@
       h3 { font-size: 1.2rem; }
       .page-container { padding: 1rem; margin: 1rem auto; }
     }
+    /* Der Container für den gesamten Info-Block */
+.info-section {
+    background-color: #f8f9fa; /* Sehr helles Grau als Hintergrund */
+    border: 1px solid #e9ecef;  /* Passender heller Rahmen */
+    border-left: 5px solid #1a5276; /* Deine Akzentfarbe für Überschriften */
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    margin: 2rem 0; /* Abstand nach oben und unten */
+}
+
+/* Die Liste selbst */
+.info-section ul {
+    list-style-type: none; /* Entfernt die Standard-Aufzählungspunkte */
+    padding-left: 0;
+    margin-top: 1.5rem; /* Etwas mehr Abstand zum Absatz darüber */
+}
+
+/* Die einzelnen Listeneinträge */
+.info-section li {
+    margin-bottom: 0.75rem; /* Abstand zwischen den Links */
+}
+
+/* Die Links in der Liste */
+.info-section a {
+    display: block; /* Macht den gesamten Bereich klickbar, nicht nur den Text */
+    padding: 12px 16px;
+    color: #1a5276; /* Deine Akzentfarbe als Textfarbe */
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 6px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Fügt ein kleines Pfeil-Icon vor jedem Link hinzu */
+.info-section a::before {
+    content: '→ ';
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Hover-Effekt für die Links */
+.info-section a:hover {
+    background-color: #eef5fa; /* Sehr heller Blauton als Hover-Effekt */
+    border-color: #aed6f1;
+    color: #1a5276;
+    transform: translateX(5px); /* Bewegt den Link beim Hovern leicht nach rechts */
+}
   </style>
 </head>
 <body>
@@ -141,7 +190,7 @@
         <li><strong>Meldepflicht:</strong> Sie müssen Termine bei der Agentur für Arbeit wahrnehmen.</li>
     </ul>
     <p>Verletzen Sie diese Pflichten ohne wichtigen Grund, kann die Agentur für Arbeit eine **Sperrzeit** verhängen, in der Sie keine Leistungen erhalten.</p>
-
+<div class="info-section">
     <h2>Was tun bei Problemen mit dem Bescheid?</h2>
     <p>Wenn Ihr Antrag auf ALG I abgelehnt wurde oder Sie mit der Berechnung der Höhe oder Dauer nicht einverstanden sind, sollten Sie Widerspruch einlegen. Unsere Generatoren helfen Ihnen dabei:</p>
     <ul>
@@ -149,6 +198,7 @@
         <li><a href="generator-widerspruch-alg1-bescheid.html">Widerspruch gegen Höhe oder Dauer des ALG I</a></li>
         <li><a href="generator-widerspruch-alg1-sperrzeit.html">Widerspruch gegen einen Sperrzeit-Bescheid</a></li>
     </ul>
+  </div>
     
   </div> <footer>
     <p>&copy; 2025 Sozial-Lotse | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
