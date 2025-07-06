@@ -29,38 +29,54 @@
       h3 { font-size: 1.2rem; }
       .page-container { padding: 1rem; margin: 1rem auto; }
     }
- .button-container {
-    /* Zentriert den Button innerhalb des Containers */
-    text-align: center;
-    /* Fügt etwas Abstand nach oben und unten hinzu */
-    margin: 2.5rem 0;
+/* Der Container für den gesamten Info-Block */
+.info-section {
+    background-color: #f8f9fa; /* Sehr helles Grau als Hintergrund */
+    border: 1px solid #e9ecef;  /* Passender heller Rahmen */
+    border-left: 5px solid #1a5276; /* Deine Akzentfarbe für Überschriften */
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    margin: 2rem 0; /* Abstand nach oben und unten */
 }
 
-.button-primary {
-    /* Farben und Form */
-    display: inline-block;
-    background-color: #d35400; /* Deine Hauptfarbe */
-    color: #ffffff;
-    padding: 14px 28px;
-    border-radius: 8px;
-    
-    /* Schrift und Text */
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none; /* Wichtig, um die Link-Unterstreichung zu entfernen */
-    
-    /* Moderne Effekte */
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Die Liste selbst */
+.info-section ul {
+    list-style-type: none; /* Entfernt die Standard-Aufzählungspunkte */
+    padding-left: 0;
+    margin-top: 1.5rem; /* Etwas mehr Abstand zum Absatz darüber */
+}
+
+/* Die einzelnen Listeneinträge */
+.info-section li {
+    margin-bottom: 0.75rem; /* Abstand zwischen den Links */
+}
+
+/* Die Links in der Liste */
+.info-section a {
+    display: block; /* Macht den gesamten Bereich klickbar, nicht nur den Text */
+    padding: 12px 16px;
+    color: #1a5276; /* Deine Akzentfarbe als Textfarbe */
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 6px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
     transition: all 0.2s ease-in-out;
 }
 
-/* Hover-Effekt für Interaktivität */
-.button-primary:hover {
-    background-color: #a94400; /* Dunklere Variante deiner Hauptfarbe */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+/* Fügt ein kleines Pfeil-Icon vor jedem Link hinzu */
+.info-section a::before {
+    content: '→ ';
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Hover-Effekt für die Links */
+.info-section a:hover {
+    background-color: #eef5fa; /* Sehr heller Blauton als Hover-Effekt */
+    border-color: #aed6f1;
+    color: #1a5276;
+    transform: translateX(5px); /* Bewegt den Link beim Hovern leicht nach rechts */
 }
   </style>
 </head>
@@ -106,6 +122,7 @@
     <p>Im WBA müssen Sie hauptsächlich Angaben zu Änderungen in Ihren persönlichen und finanziellen Verhältnissen machen (z.B. geändertes Einkommen, Umzug, neue Person in der Bedarfsgemeinschaft). Wenn sich nichts geändert hat, können Sie dies entsprechend ankreuzen.</p>
     <p class="warning-box"><strong>Wichtig:</strong> Stellen Sie den Weiterbewilligungsantrag unbedingt **frühzeitig vor Ablauf** des aktuellen Bewilligungsabschnitts, um Zahlungsausfälle zu vermeiden!</p>
 
+    <div class="info-section">
     <h2>Was tun bei Problemen oder Ablehnung?</h2>
     <p>Sollte Ihr Antrag abgelehnt werden oder die berechneten Leistungen zu niedrig sein, haben Sie das Recht, Widerspruch einzulegen. Unsere Generatoren können Sie dabei unterstützen:</p>
     <ul>
@@ -116,6 +133,7 @@
         <li><a href="generator-widerspruch-mehrbedarf.html">Widerspruch wegen nicht anerkanntem Mehrbedarf</a></li>
         <li><a href="generator-widerspruch-buergergeld-sanktion.html">Widerspruch gegen Sanktionsbescheid</a></li>
     </ul>
+      </div>
     
   </div> <footer>
     <p>&copy; 2025 Sozial-Lotse | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
