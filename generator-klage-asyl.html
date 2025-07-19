@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Generator: Klage gegen Asyl-Ablehnung | Sozial-Lotse</title>
+    <meta name="description" content="Erstellen Sie hier Ihr fristwahrendes Klageschreiben an das Verwaltungsgericht gegen die Ablehnung Ihres Asylantrags durch das BAMF.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Dein komplettes Generator-CSS hier einfügen */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+        .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #d35400; text-align: center; }
+        fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+        legend { font-weight: bold; font-size: 1.2em; padding: 0 0.5em; color: #333; }
+        label { display: block; margin-top: 1rem; font-weight: 500; color: #444; }
+        label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+        input[type="text"], input[type="date"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        textarea { min-height: 80px; resize: vertical; }
+        .warning-box { background-color: #fcf8e3; border-left: 5px solid #e53935; padding: 15px; margin: 1.5rem 0; font-size: 0.95em;}
+        .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; padding: 15px; margin: 1.5rem 0; font-size: 0.95em;}
+        .button-group { margin-top: 2.5rem; text-align: center; }
+        .button-primary { display: inline-block; background-color: #d35400; color: #ffffff; padding: 14px 28px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out; }
+        .button-primary:hover { background-color: #a94400; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); transform: translateY(-2px); }
+        footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+        footer a { color: #555; text-decoration: none; }
+        .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+        .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; transition: color 0.2s; }
+        .site-logo:hover { color: #d35400; }
+    </style>
+</head>
+<body>
+    <header class="site-header"><a href="index.html" class="site-logo">Sozial-Lotse</a></header>
+
+    <div class="page-container">
+        <h1>Generator: Klage gegen Asyl-Ablehnung</h1>
+        <div class="warning-box">
+            <p><strong>EXTREM WICHTIG:</strong> Handeln Sie sofort! Nach Erhalt eines negativen Bescheids vom BAMF haben Sie oft nur <strong>eine Woche</strong> Zeit, um Klage einzureichen. Dieses Tool hilft, die Frist zu wahren.</p>
+        </div>
+
+<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+        
+        <form id="formKlageAsyl">
+            <fieldset>
+                <legend>1. Ihre Persönlichen Angaben (Kläger/in)</legend>
+                <label for="personName">Vor- und Nachname:<small>Wie es in Ihrem Pass oder Ausweisdokument steht.</small></label>
+                <input type="text" id="personName" required>
+                
+                <label for="geburtsdatum">Geburtsdatum:</label>
+                <input type="date" id="geburtsdatum" required>
+                
+                <label for="staatsangehoerigkeit">Staatsangehörigkeit:</label>
+                <input type="text" id="staatsangehoerigkeit" required>
+                
+                <label for="personAdresse">Aktuelle Anschrift (Straße, Hausnummer, PLZ, Ort):<small>Die Adresse, an der Sie Post empfangen können.</small></label>
+                <textarea id="personAdresse" rows="3" required></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>2. Angaben zum abgelehnten Bescheid</legend>
+                <label for="bescheidDatum">Datum des BAMF-Bescheides:<small>Dieses Datum steht meist oben rechts auf dem Brief.</small></label>
+                <input type="date" id="bescheidDatum" required>
+                
+                <label for="bamfAktenzeichen">Aktenzeichen des BAMF:<small>Das Geschäftszeichen finden Sie ebenfalls oben rechts auf dem Bescheid.</small></label>
+                <input type="text" id="bamfAktenzeichen" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>3. Zuständiges Verwaltungsgericht</legend>
+                <label for="gerichtName">Name des Verwaltungsgerichts:<small>Steht in der Rechtsbehelfsbelehrung am Ende Ihres Bescheids.</small></label>
+                <input type="text" id="gerichtName" required placeholder="z.B. Verwaltungsgericht Lüneburg">
+                
+                <label for="gerichtAdresse">Vollständige Anschrift des Gerichts:<small>Straße, Hausnummer, PLZ und Ort des Gerichts.</small></label>
+                <textarea id="gerichtAdresse" rows="3" required></textarea>
+            </fieldset>
+
+            <div class="button-group">
+                <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+            </div>
+        </form>
+    </div>
+
+    <footer><p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p></footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="pdf-generators.js"></script>
+    <script src="klage-asyl-script.js"></script>
+</body>
+</html>
