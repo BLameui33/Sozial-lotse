@@ -62,46 +62,106 @@
             color: #777;
         }
 
-        /* Die Spenden-Box */
-        .donation-box {
-            background-color: #fff9e6;
-            border: 1px solid #ffecb3;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 2.5rem;
-            text-align: center;
-        }
+        /* Die neue, verbesserte Spenden-Box */
+.donation-box-improved {
+    background-color: #eaf2f8; /* Heller, freundlicher Blauton */
+    border: 1px solid #aed6f1;
+    border-top: 5px solid #3498db; /* Starke Akzentlinie oben */
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 3rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
 
-        .donation-box h2 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 0.75rem;
-        }
+.donation-box-improved h2 {
+    font-size: 1.5rem; /* Größere Überschrift */
+    color: #1a5276;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
 
-        .donation-box p {
-            color: #555;
-            margin-bottom: 1.5rem;
-        }
+.donation-box-improved p {
+    color: #34495e;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem; /* Etwas größerer Text für bessere Lesbarkeit */
+}
 
-        /* Der Spenden-Button */
-        .donation-button {
-            display: inline-block;
-            background-color: #ffc107;
-            color: #212529;
-            border: none;
-            border-radius: 6px;
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+/* Container für die Spenden-Vorschläge */
+.donation-amounts {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; /* Wichtig für mobile Ansicht */
+}
 
-        .donation-button:hover {
-            background-color: #e0a800;
-        }
+/* Die einzelnen Spenden-Vorschlags-Buttons */
+.amount-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #2c3e50;
+    border: 2px solid #aed6f1;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    flex-grow: 1; /* Lässt die Buttons den Platz füllen */
+    min-width: 120px;
+}
+
+.amount-button:hover {
+    background-color: #3498db;
+    color: #ffffff;
+    border-color: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.amount-button small {
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* Aufklapp-Bereich für den freien Betrag */
+.custom-amount-details summary {
+    color: #3498db;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+.custom-amount-details summary:hover {
+    text-decoration: underline;
+}
+
+/* Der Button für den freien Betrag */
+.donation-button-custom {
+    /* Ähnlich wie dein alter Button, aber in deiner Hauptfarbe */
+    display: inline-block;
+    background-color: #d35400;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.donation-button-custom:hover {
+    background-color: #a94400;
+}
     </style>
 </head>
 <body>
@@ -119,21 +179,31 @@
             <small>Sollte der Download nicht starten, prüfen Sie bitte, ob Ihr Browser eventuell Pop-ups blockiert.</small>
         </p>
 
-        <div class="donation-box">
-            <h2>Unterstützen Sie Sozial-Lotse</h2>
-            <p>
-                Diese Webseite wird kostenlos und ohne Werbung betrieben. Wenn Ihnen dieses Tool geholfen hat, können Sie die Weiterentwicklung und den Betrieb mit einer freiwilligen Spende unterstützen.
-            </p>
-            
-            <form action="https://www.paypal.com/donate" method="post" target="_blank">
-                <input type="hidden" name="business" value="info@kassen-lotse.de" />
-                
-                <input type="hidden" name="item_name" value="Freiwillige Spende für Sozial-Lotse" />
-                <input type="hidden" name="currency_code" value="EUR" />
-                
-                <input type="submit" value="Freiwillig spenden via PayPal" class="donation-button" />
-            </form>
-        </div>
+        <div class="donation-box-improved">
+    <h2>Hat Ihnen der Sozial-Lotse geholfen? <br>Helfen Sie jetzt anderen!</h2>
+    <p>
+        Jeder Generator auf dieser Seite ist und bleibt <strong>kostenlos, werbefrei und ohne Datensammelei</strong>. Damit das so bleiben kann, ist dieses Projekt auf die freiwillige Unterstützung von Menschen wie Ihnen angewiesen.
+    </p>
+    <p>
+        Ihre Spende hilft direkt, die Serverkosten zu decken und neue, wichtige Generatoren für Menschen in Not zu entwickeln. <strong>Jeder Beitrag zählt!</strong>
+    </p>
+    
+    <div class="donation-amounts">
+        <a href="https://www.paypal.com/donate/?business=info@kassen-lotse.de&no_recurring=0&item_name=Freiwillige+Spende+(3+Euro)+fuer+Sozial-Lotse&amount=3&currency_code=EUR" target="_blank" class="amount-button">3 € <small>(ein Kaffee)</small></a>
+        <a href="https://www.paypal.com/donate/?business=info@kassen-lotse.de&no_recurring=0&item_name=Freiwillige+Spende+(5+Euro)+fuer+Sozial-Lotse&amount=5&currency_code=EUR" target="_blank" class="amount-button">5 € <small>(eine Busfahrt)</small></a>
+        <a href="https://www.paypal.com/donate/?business=info@kassen-lotse.de&no_recurring=0&item_name=Freiwillige+Spende+(10+Euro)+fuer+Sozial-Lotse&amount=10&currency_code=EUR" target="_blank" class="amount-button">10 € <small>(eine Hilfe)</small></a>
+    </div>
+
+    <details class="custom-amount-details">
+        <summary>Oder einen anderen Betrag spenden</summary>
+        <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-top: 1rem;">
+            <input type="hidden" name="business" value="info@kassen-lotse.de" />
+            <input type="hidden" name="item_name" value="Freiwillige Spende für Sozial-Lotse" />
+            <input type="hidden" name="currency_code" value="EUR" />
+            <input type="submit" value="Freien Betrag via PayPal spenden" class="donation-button-custom" />
+        </form>
+    </details>
+</div>
 
     </div>
 
@@ -159,10 +229,10 @@
                 'buergergeld': generateBuergergeldWiderspruchPDF,
 	        'bafog': generateBafogWiderspruchPDF,
 	        'klage-asyl': generateKlageAsylPDF,
-		'fiktionsbescheinigung': generateBafogWiderspruchPDF,
-		'untaetigkeitsklage': generateBafogWiderspruchPDF,
-		'erstausstattung': generateBafogWiderspruchPDF,
-		'deckblatt-aufenthalt': generateBafogWiderspruchPDF,
+    'fiktionsbescheinigung': generateFiktionsbescheinigungPDF,
+    'untaetigkeitsklage': generateUntaetigkeitsklagePDF,
+    'erstausstattung': generateErstausstattungPDF, 
+    'deckblatt-aufenthalt': generateDeckblattAufenthaltPDF,
 
 		
 
