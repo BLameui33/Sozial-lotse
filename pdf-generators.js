@@ -3019,86 +3019,107 @@ function generateKlageAsylPDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-    // Layout und Schreibfunktionen
+    // ==================================================================
+    // START: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
     const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    let y = margin;
     const pageHeight = doc.internal.pageSize.getHeight();
-    let y = 30;
-    
-    const writeLine = (text, options = {}) => {
-        if (y > pageHeight - margin) {
-            doc.addPage();
-            y = margin;
-        }
-        const fontSize = options.fontSize || 11;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, options = {}) {
+        const currentLineHeight = options.lineHeight || defaultLineHeight;
         const fontStyle = options.fontStyle || "normal";
+        const fontSize = options.fontSize || textFontSize;
         const align = options.align || "left";
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        
         doc.setFontSize(fontSize);
         doc.setFont("times", fontStyle);
-        doc.text(text, align === 'right' ? doc.internal.pageSize.getWidth() - margin : margin, y, { align: align });
-        y += options.lineHeight || 7;
-    };
+        
+        const xPos = align === 'right' ? pageWidth - margin : margin;
+        doc.text(textToWrite, xPos, y, { align: align });
+        
+        y += currentLineHeight;
+    }
 
-    const writeParagraph = (text) => {
-        const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 2 * margin);
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+
+        const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
         lines.forEach(line => {
-            writeLine(line);
+            writeLine(line, { lineHeight: paragraphLineHeight });
         });
-    };
 
-    const { personName, geburtsdatum, staatsangehoerigkeit, personAdresse, bescheidDatum, bamfAktenzeichen, gerichtName, gerichtAdresse } = data;
+        if (lines.length > 0) {
+            y += extraSpacing;
+        }
+    }
+    // ==================================================================
+    // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
+    
+    y = 30; // Startpunkt
+
+    const { personName, geburtsdatum, staatsangehoerigkeit, personAdresse, bescheidDatum, bamfAktenzeichen, gerichtName, gerichtAdresse, kurzeBegruendung } = data;
 
     // Absenderblock
-    const absenderText = `${personName}\n${personAdresse.replace(/\n/g, '\n')}`;
-    doc.setFontSize(9);
-    doc.text(absenderText, margin, y - 15);
-    
+    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
+    doc.setFontSize(8);
+    doc.text(absenderText, margin, y);
+    y += 10;
+
     // Empfänger
-    writeLine("An das");
-    writeLine(gerichtName);
-    gerichtAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    writeParagraph(gerichtName, { fontStyle: "bold" });
+    writeParagraph(gerichtAdresse);
     y += 14;
     
-    // Datum rechtsbündig
-    const datumHeute = new Date().toLocaleDateString("de-DE");
-    writeLine(datumHeute, { align: 'right' });
+    // Datum
+    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
     y += 7;
 
     // Betreff
     writeLine(`Klage`, { fontStyle: "bold", lineHeight: 10 });
-    writeLine(`des Herrn/der Frau ${personName},`, { lineHeight: 7 });
-    writeLine(`geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")}, Staatsangehörigkeit: ${staatsangehoerigkeit},`, { lineHeight: 7 });
-    writeLine(`wohnhaft: ${personAdresse.replace(/\n/g, ', ')},`, { lineHeight: 10 });
+    writeParagraph(`des Herrn/der Frau ${personName}, geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")}, Staatsangehörigkeit: ${staatsangehoerigkeit}, wohnhaft: ${personAdresse.replace(/\n/g, ', ')},`);
     writeLine(`- Kläger/in -`, { fontStyle: "bold", lineHeight: 10 });
-    writeLine(`gegen`, { lineHeight: 10 });
-    writeLine(`die Bundesrepublik Deutschland, vertreten durch das`, { lineHeight: 7 });
-    writeLine(`Bundesamt für Migration und Flüchtlinge (BAMF),`, { lineHeight: 10 });
+    writeLine(`gegen`, {});
+    writeParagraph(`die Bundesrepublik Deutschland, vertreten durch das Bundesamt für Migration und Flüchtlinge (BAMF),`);
     writeLine(`- Beklagte -`, { fontStyle: "bold", lineHeight: 10 });
     writeLine(`wegen: Asylrecht`, { fontStyle: "bold", lineHeight: 14 });
     
     // Haupttext
-    writeParagraph(`Hiermit erhebe ich Klage gegen den Bescheid des Bundesamtes für Migration und Flüchtlinge vom ${new Date(bescheidDatum).toLocaleDateString("de-DE")}, Aktenzeichen ${bamfAktenzeichen}.`);
-    y += 7;
-    writeParagraph(`Eine Kopie des angefochtenen Bescheids liegt bei.`);
-    y += 7;
-    writeParagraph(`Ich beantrage,`);
+    writeParagraph(`hiermit erhebe ich Klage gegen den Bescheid des Bundesamtes für Migration und Flüchtlinge vom ${new Date(bescheidDatum).toLocaleDateString("de-DE")}, Aktenzeichen ${bamfAktenzeichen}.`);
     y += 7;
     
-    // Anträge als eingerückte Liste
-    doc.text("1.", margin + 5, y);
-    doc.text("den Bescheid des Bundesamtes für Migration und Flüchtlinge vom " + new Date(bescheidDatum).toLocaleDateString("de-DE") + " aufzuheben.", margin + 10, y);
-    y += 10;
-    doc.text("2.", margin + 5, y);
-    doc.text("die Beklagte zu verpflichten, mich als asylberechtigt anzuerkennen,", margin + 10, y);
+    // Anträge
+    writeParagraph(`Ich beantrage,`);
+    const antragText = `1. den Bescheid des Bundesamtes für Migration und Flüchtlinge vom ${new Date(bescheidDatum).toLocaleDateString("de-DE")} aufzuheben.\n2. die Beklagte zu verpflichten, mich als asylberechtigt anzuerkennen, hilfsweise mir die Flüchtlingseigenschaft zuzuerkennen, höchst hilfsweise mir subsidiären Schutz zu gewähren, äußerst hilfsweise festzustellen, dass Abschiebungsverbote nach § 60 Abs. 5 und 7 des Aufenthaltsgesetzes vorliegen.`;
+    const antragLines = doc.splitTextToSize(antragText, pageWidth - (2 * margin) - 10);
+    antragLines.forEach(line => {
+        doc.text(line, margin + 5, y);
+        y += defaultLineHeight;
+    });
     y += 7;
-    doc.text("hilfsweise mir die Flüchtlingseigenschaft zuzuerkennen,", margin + 10, y);
-    y += 7;
-    doc.text("höchst hilfsweise mir subsidiären Schutz zu gewähren,", margin + 10, y);
-    y += 7;
-    doc.text("äußerst hilfsweise festzustellen, dass Abschiebungsverbote nach § 60 Abs. 5 und 7", margin + 10, y);
-    y += 7;
-    doc.text("des Aufenthaltsgesetzes vorliegen.", margin + 10, y);
-    y += 14;
 
+    // Optionale Begründung
+    if (kurzeBegruendung && kurzeBegruendung.trim() !== "") {
+        writeLine("Zur vorläufigen Begründung wird ausgeführt:", { fontStyle: "bold", lineHeight: 10 });
+        writeParagraph(kurzeBegruendung);
+    }
+    
     writeParagraph(`Eine ausführliche Klagebegründung erfolgt nach Beauftragung eines Rechtsanwalts und erfolgter Akteneinsicht.`);
     y += 14;
 
@@ -3124,57 +3145,71 @@ function generateFiktionsbescheinigungPDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-    // Layout und Schreibfunktionen (kopiere deine Standardfunktionen hierher)
+    // ==================================================================
+    // START: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
     const margin = 25;
-    let y = 30;
-    const writeLine = (text, options = {}) => { /* ... deine Funktion ... */ };
-    const writeParagraph = (text) => { /* ... deine Funktion ... */ };
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
 
-    const { personName, geburtsdatum, staatsangehoerigkeit, personAdresse, artTitel, ablaufDatum, aktenzeichen, terminNachweis, behoerdeName, behoerdeAdresse } = data;
+    function writeLine(text, options = {}) { /* ... Kopiere die komplette Funktion von oben hierher ... */ }
+    function writeParagraph(text, options = {}) { /* ... Kopiere die komplette Funktion von oben hierher ... */ }
+    // ==================================================================
+    // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
+
+    y = 30; // Startpunkt
+
+    const { personName, geburtsdatum, personAdresse, artTitel, ablaufDatum, aktenzeichen, terminNachweis, behoerdeName, behoerdeAdresse } = data;
 
     // Absenderblock
-    const absenderText = `${personName}\n${personAdresse.replace(/\n/g, '\n')}`;
-    doc.setFontSize(9);
-    doc.text(absenderText, margin, y - 15);
+    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
+    doc.setFontSize(8);
+    doc.text(absenderText, margin, y);
+    y += 10;
 
     // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    writeParagraph(behoerdeName, { fontStyle: "bold" });
+    writeParagraph(behoerdeAdresse);
     y += 14;
     
-    // Datum rechtsbündig
-    const datumHeute = new Date().toLocaleDateString("de-DE");
-    writeLine(datumHeute, { align: 'right' });
+    // Datum
+    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
     y += 7;
 
     // Betreff
     let betreff = `Antrag auf Ausstellung einer Fiktionsbescheinigung nach § 81 Abs. 3 AufenthG`;
+    writeLine(betreff, { fontStyle: "bold", lineHeight: 8 });
     if (aktenzeichen && aktenzeichen.trim() !== "") {
-        betreff += `\nIhr Aktenzeichen: ${aktenzeichen}`;
+        let zeichen = `Ihr Aktenzeichen: ${aktenzeichen}`;
+        writeLine(zeichen, { fontStyle: "bold", lineHeight: 10 });
     }
-    writeLine(betreff, { fontStyle: "bold", lineHeight: 10 });
     y += 7;
     
     // Haupttext
     writeLine("Sehr geehrte Damen und Herren,", { lineHeight: 14 });
     writeParagraph(`hiermit beantrage ich, ${personName}, geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")}, die Ausstellung einer Fiktionsbescheinigung.`);
-    y += 7;
     writeParagraph(`Mein aktueller Aufenthaltstitel (${artTitel}) ist bis zum ${new Date(ablaufDatum).toLocaleDateString("de-DE")} gültig.`);
     y += 7;
     writeParagraph(`Ich habe bereits fristgerecht versucht, einen Antrag auf Verlängerung zu stellen und einen hierfür erforderlichen Termin bei Ihnen zu vereinbaren. Meine bisherigen Bemühungen sahen wie folgt aus:`);
-    y += 7;
+    y += 5;
     
-    // Begründung mit leichtem Einzug
+    // Begründung mit Einzug
     doc.setFont("times", "italic");
-    const beweisLines = doc.splitTextToSize(terminNachweis, doc.internal.pageSize.getWidth() - 2 * margin - 5);
+    const beweisLines = doc.splitTextToSize(terminNachweis, pageWidth - 2 * margin - 5);
     beweisLines.forEach(line => {
         doc.text(line, margin + 5, y);
-        y += 7;
+        y += defaultLineHeight;
     });
     doc.setFont("times", "normal");
     y += 7;
 
-    writeParagraph(`Da über meinen Verlängerungsantrag offensichtlich nicht vor Ablauf der Gültigkeit meines aktuellen Aufenthaltstitels entschieden werden kann und die fehlende Vorsprache nicht von mir zu vertreten ist, beantrage ich die umgehende Ausstellung einer Fiktionsbescheinigung gemäß § 81 Abs. 3 des Aufenthaltsgesetzes. Diese benötige ich dringend als Nachweis meines fortbestehenden legalen Aufenthalts gegenüber meinem Arbeitgeber und anderen Stellen.`);
+    writeParagraph(`Da über meinen Verlängerungsantrag offensichtlich nicht vor Ablauf der Gültigkeit meines aktuellen Aufenthaltstitels entschieden werden kann und die fehlende Vorsprache nicht von mir zu vertreten ist, beantrage ich die umgehende Ausstellung einer Fiktionsbescheinigung gemäß § 81 Abs. 3 des Aufenthaltsgesetzes. Diese benötige ich dringend als Nachweis meines fortbestehenden legalen Aufenthalts.`);
     y += 14;
 
     // Grußformel
@@ -3199,57 +3234,62 @@ function generateUntaetigkeitsklagePDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-    // Layout und Schreibfunktionen (kopiere deine Standardfunktionen hierher)
+    // ==================================================================
+    // START: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
     const margin = 25;
-    let y = 30;
-    const writeLine = (text, options = {}) => { /* ... deine Funktion ... */ };
-    const writeParagraph = (text) => { /* ... deine Funktion ... */ };
+    const defaultLineHeight = 7;
+    // ... (Rest der Schreibfunktionen wie oben hier einfügen) ...
+    function writeLine(text, options = {}) { /* ... */ }
+    function writeParagraph(text, options = {}) { /* ... */ }
+    // ==================================================================
+    // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
+    
+    y = 30; // Startpunkt
 
     const { personName, geburtsdatum, personAdresse, antragDatum, antragArt, antragAktenzeichen, verklagteBehoerdeName, verklagteBehoerdeAdresse, gerichtName, gerichtAdresse } = data;
 
     // Absenderblock
-    const absenderText = `${personName}\n${personAdresse.replace(/\n/g, '\n')}`;
-    doc.setFontSize(9);
-    doc.text(absenderText, margin, y - 15);
+    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
+    doc.setFontSize(8);
+    doc.text(absenderText, margin, y);
+    y += 10;
 
     // Empfänger
-    writeLine(gerichtName);
-    gerichtAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    writeParagraph(gerichtName, { fontStyle: "bold" });
+    writeParagraph(gerichtAdresse);
     y += 14;
     
-    // Datum rechtsbündig
-    const datumHeute = new Date().toLocaleDateString("de-DE");
-    writeLine(datumHeute, { align: 'right' });
+    // Datum
+    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
     y += 7;
 
     // Betreff
     writeLine(`Untätigkeitsklage gemäß § 75 VwGO`, { fontStyle: "bold", lineHeight: 10 });
-    writeLine(`des Herrn/der Frau ${personName},`, { lineHeight: 7 });
-    writeLine(`geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")},`, { lineHeight: 7 });
-    writeLine(`wohnhaft: ${personAdresse.replace(/\n/g, ', ')},`, { lineHeight: 10 });
+    writeParagraph(`des Herrn/der Frau ${personName}, geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")}, wohnhaft: ${personAdresse.replace(/\n/g, ', ')},`);
     writeLine(`- Kläger/in -`, { fontStyle: "bold", lineHeight: 10 });
-    writeLine(`gegen`, { lineHeight: 10 });
-    writeLine(`die ${verklagteBehoerdeName},`, { lineHeight: 7 });
-    writeLine(`${verklagteBehoerdeAdresse.replace(/\n/g, ', ')},`, { lineHeight: 10 });
+    writeLine(`gegen`, {});
+    writeParagraph(`die ${verklagteBehoerdeName}, ${verklagteBehoerdeAdresse.replace(/\n/g, ', ')},`);
     writeLine(`- Beklagte -`, { fontStyle: "bold", lineHeight: 14 });
     
     // Haupttext
-    writeParagraph(`Hiermit erhebe ich Untätigkeitsklage gegen die Beklagte.`);
+    writeParagraph(`hiermit erhebe ich Untätigkeitsklage gegen die Beklagte.`);
     y += 7;
     writeParagraph(`Ich habe am ${new Date(antragDatum).toLocaleDateString("de-DE")} einen ${antragArt} bei der Beklagten gestellt. Das Aktenzeichen lautet, soweit bekannt: ${antragAktenzeichen || "nicht bekannt"}.`);
     y += 7;
     writeParagraph(`Über diesen Antrag wurde bis zum heutigen Tage ohne Mitteilung eines zureichenden Grundes sachlich nicht entschieden, obwohl die gesetzliche Frist von drei Monaten verstrichen ist.`);
     y += 7;
     writeParagraph(`Ich beantrage daher,`);
-    y += 7;
+    y += 5;
     
     // Antrag als eingerückter Text
     doc.setFont("times", "bold");
-    const antragText = `die Beklagte zu verpflichten, über meinen Antrag vom ${new Date(antragDatum).toLocaleDateString("de-DE")} auf ${antragArt} unter Beachtung der Rechtsauffassung des Gerichts zu entscheiden.`;
-    const antragLines = doc.splitTextToSize(antragText, doc.internal.pageSize.getWidth() - 2 * margin - 5);
+    const antragText = `die Beklagte zu verpflichten, über meinen Antrag vom ${new Date(antragDatum).toLocaleDateString("de-DE")} auf "${antragArt}" zu entscheiden.`;
+    const antragLines = doc.splitTextToSize(antragText, pageWidth - 2 * margin - 5);
     antragLines.forEach(line => {
         doc.text(line, margin + 5, y);
-        y += 7;
+        y += defaultLineHeight;
     });
     doc.setFont("times", "normal");
     y += 14;
@@ -3274,31 +3314,39 @@ function generateErstausstattungPDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-    // Layout und Schreibfunktionen (kopiere deine Standardfunktionen hierher)
+    // ==================================================================
+    // START: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
     const margin = 25;
-    let y = 30;
-    const writeLine = (text, options = {}) => { /* ... deine Funktion ... */ };
-    const writeParagraph = (text) => { /* ... deine Funktion ... */ };
+    // ... (Rest der Schreibfunktionen wie oben hier einfügen) ...
+    function writeLine(text, options = {}) { /* ... */ }
+    function writeParagraph(text, options = {}) { /* ... */ }
+    // ==================================================================
+    // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
+
+    y = 30; // Startpunkt
 
     const { personName, personAdresse, kundennummer, adresseNeueWohnung, mietbeginn, begruendung, bedarf, bedarfSonstiges, behoerdeName, behoerdeAdresse } = data;
 
     // Absenderblock
-    const absenderText = `${personName}\n${personAdresse.replace(/\n/g, '\n')}`;
-    doc.setFontSize(9);
-    doc.text(absenderText, margin, y - 15);
+    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
+    doc.setFontSize(8);
+    doc.text(absenderText, margin, y);
+    y += 10;
 
     // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    writeParagraph(behoerdeName, { fontStyle: "bold" });
+    writeParagraph(behoerdeAdresse);
     y += 14;
     
-    // Datum rechtsbündig
-    const datumHeute = new Date().toLocaleDateString("de-DE");
-    writeLine(datumHeute, { align: 'right' });
+    // Datum
+    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
     y += 7;
 
     // Betreff
-    writeLine(`Antrag auf Leistungen für die Erstausstattung der Wohnung nach § 24 Abs. 3 S. 1 Nr. 1 SGB II / § 31 SGB XII`, { fontStyle: "bold", lineHeight: 8 });
+    writeLine(`Antrag auf Leistungen für die Erstausstattung der Wohnung`, { fontStyle: "bold", lineHeight: 8 });
+    writeLine(`gemäß § 24 Abs. 3 S. 1 Nr. 1 SGB II / § 31 SGB XII`, { fontStyle: "bold", lineHeight: 8 });
     writeLine(`BG-Nummer / Kundennummer: ${kundennummer}`, { fontStyle: "bold", lineHeight: 10 });
     y += 7;
     
@@ -3311,7 +3359,7 @@ function generateErstausstattungPDF(data) {
     writeParagraph(begruendung);
     y += 7;
 
-    writeParagraph(`Da ich über keine ausreichende Möblierung und keine notwendigen Haushaltsgegenstände verfüge, um eine geordnete Haushaltsführung zu gewährleisten, beantrage ich folgende Erstausstattung:`);
+    writeParagraph(`Da ich über keine ausreichende Möblierung und keine notwendigen Haushaltsgegenstände verfüge, beantrage ich folgende Erstausstattung:`);
     y += 7;
 
     // Bedarfsliste
@@ -3323,7 +3371,7 @@ function generateErstausstattungPDF(data) {
     }
     y += 10;
     
-    writeParagraph(`Ich bitte Sie, meinen Bedarf zu prüfen und mir schriftlich mitzuteilen, in welcher Höhe und Form (Geld-, Sach- oder Gutscheinleistung) die Hilfe gewährt wird. Ich weise darauf hin, dass ich Anschaffungen erst nach Erhalt Ihres Bewilligungsbescheides tätigen werde.`);
+    writeParagraph(`Ich bitte um eine Prüfung meines Bedarfs und eine schriftliche Entscheidung über meinen Antrag. Bitte teilen Sie mir mit, in welcher Form (Geld-, Sach- oder Gutscheinleistung) die Hilfe gewährt wird.`);
     y += 14;
 
     // Grußformel
@@ -3347,22 +3395,72 @@ function generateDeckblattAufenthaltPDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-    // Layout und Schreibfunktionen (kopiere deine Standardfunktionen hierher)
+    // ==================================================================
+    // START: KORRIGIERTE SCHREIBFUNKTIONEN (HIER WAR DER FEHLER)
+    // ==================================================================
     const margin = 25;
-    let y = 30;
-    const writeLine = (text, options = {}) => { /* ... deine Funktion ... */ };
-    const writeParagraph = (text) => { /* ... deine Funktion ... */ };
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, options = {}) {
+        const currentLineHeight = options.lineHeight || defaultLineHeight;
+        const fontStyle = options.fontStyle || "normal";
+        const fontSize = options.fontSize || textFontSize;
+        const align = options.align || "left";
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        
+        const xPos = align === 'right' ? pageWidth - margin : margin;
+        doc.text(textToWrite, xPos, y, { align: align });
+        
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+
+        const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            writeLine(line, { lineHeight: paragraphLineHeight });
+        });
+
+        if (lines.length > 0) {
+            y += extraSpacing;
+        }
+    }
+    // ==================================================================
+    // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
+    // ==================================================================
+    
+    y = 30; // Setzen den Startpunkt nach dem Header
 
     const { personName, personAdresse, aktenzeichen, antragArt, anlagen, anlagenSonstige, behoerdeName, behoerdeAdresse } = data;
 
-    // Absenderblock
-    const absenderText = `${personName}\n${personAdresse.replace(/\n/g, '\n')}`;
-    doc.setFontSize(9);
-    doc.text(absenderText, margin, y - 15);
+    // Absenderblock (klein über der Anschrift)
+    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
+    doc.setFontSize(8);
+    doc.text(absenderText, margin, y);
+    y += 10;
 
     // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    writeParagraph(behoerdeName, { fontStyle: "bold" });
+    writeParagraph(behoerdeAdresse);
     y += 14;
     
     // Datum rechtsbündig
@@ -3372,23 +3470,21 @@ function generateDeckblattAufenthaltPDF(data) {
 
     // Betreff
     let betreff = `Betreff: ${antragArt}`;
+    writeLine(betreff, { fontStyle: "bold", lineHeight: 8 });
     if (aktenzeichen && aktenzeichen.trim() !== "") {
-        betreff += `\nIhr Aktenzeichen: ${aktenzeichen}`;
+        let zeichen = `Ihr Aktenzeichen: ${aktenzeichen}`;
+        writeLine(zeichen, { fontStyle: "bold", lineHeight: 10 });
     }
-    writeLine(betreff, { fontStyle: "bold", lineHeight: 10 });
     y += 7;
     
     // Haupttext
     writeLine("Sehr geehrte Damen und Herren,", { lineHeight: 14 });
     writeParagraph(`hiermit überreiche ich Ihnen meinen oben genannten Antrag.`);
-    y += 7;
     writeParagraph(`Zur Prüfung der Voraussetzungen füge ich diesem Schreiben die folgenden Unterlagen in Kopie bei:`);
-    y += 10;
+    y += 5;
 
     // Anlagenliste
-    doc.setFont("times", "bold");
-    writeLine("Anlagen:", { lineHeight: 8 });
-    doc.setFont("times", "normal");
+    writeLine("Anlagen:", { fontStyle: "bold", lineHeight: 8 });
 
     anlagen.forEach(item => {
         writeLine(`- ${item}`, { lineHeight: 6 });
