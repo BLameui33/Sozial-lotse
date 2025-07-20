@@ -3157,8 +3157,43 @@ function generateFiktionsbescheinigungPDF(data) {
     const pageWidth = doc.internal.pageSize.getWidth();
     const usableHeight = pageHeight - margin;
 
-    function writeLine(text, options = {}) { /* ... Kopiere die komplette Funktion von oben hierher ... */ }
-    function writeParagraph(text, options = {}) { /* ... Kopiere die komplette Funktion von oben hierher ... */ }
+    function writeLine(text, options = {}) {
+        const currentLineHeight = options.lineHeight || defaultLineHeight;
+        const fontStyle = options.fontStyle || "normal";
+        const fontSize = options.fontSize || textFontSize;
+        const align = options.align || "left";
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        
+        const xPos = align === 'right' ? pageWidth - margin : margin;
+        doc.text(textToWrite, xPos, y, { align: align });
+        
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+
+        const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            writeLine(line, { lineHeight: paragraphLineHeight });
+        });
+
+        if (lines.length > 0) {
+            y += extraSpacing;
+        }
+    }
     // ==================================================================
     // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
     // ==================================================================
@@ -3237,11 +3272,52 @@ function generateUntaetigkeitsklagePDF(data) {
     // ==================================================================
     // START: KORRIGIERTE SCHREIBFUNKTIONEN
     // ==================================================================
-    const margin = 25;
+   const margin = 25;
     const defaultLineHeight = 7;
-    // ... (Rest der Schreibfunktionen wie oben hier einfügen) ...
-    function writeLine(text, options = {}) { /* ... */ }
-    function writeParagraph(text, options = {}) { /* ... */ }
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, options = {}) {
+        const currentLineHeight = options.lineHeight || defaultLineHeight;
+        const fontStyle = options.fontStyle || "normal";
+        const fontSize = options.fontSize || textFontSize;
+        const align = options.align || "left";
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        
+        const xPos = align === 'right' ? pageWidth - margin : margin;
+        doc.text(textToWrite, xPos, y, { align: align });
+        
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+
+        const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            writeLine(line, { lineHeight: paragraphLineHeight });
+        });
+
+        if (lines.length > 0) {
+            y += extraSpacing;
+        }
+    }
     // ==================================================================
     // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
     // ==================================================================
@@ -3318,9 +3394,51 @@ function generateErstausstattungPDF(data) {
     // START: KORRIGIERTE SCHREIBFUNKTIONEN
     // ==================================================================
     const margin = 25;
-    // ... (Rest der Schreibfunktionen wie oben hier einfügen) ...
-    function writeLine(text, options = {}) { /* ... */ }
-    function writeParagraph(text, options = {}) { /* ... */ }
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, options = {}) {
+        const currentLineHeight = options.lineHeight || defaultLineHeight;
+        const fontStyle = options.fontStyle || "normal";
+        const fontSize = options.fontSize || textFontSize;
+        const align = options.align || "left";
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        
+        const xPos = align === 'right' ? pageWidth - margin : margin;
+        doc.text(textToWrite, xPos, y, { align: align });
+        
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        const textToWrite = text === undefined || text === null ? "" : String(text);
+
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+
+        const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            writeLine(line, { lineHeight: paragraphLineHeight });
+        });
+
+        if (lines.length > 0) {
+            y += extraSpacing;
+        }
+    }
     // ==================================================================
     // ENDE: KORRIGIERTE SCHREIBFUNKTIONEN
     // ==================================================================
