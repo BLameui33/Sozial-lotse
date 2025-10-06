@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Bitte um Zahlungsaufschub (Fristverlängerung) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie eine freundliche Bitte um Zahlungsaufschub für eine Rechnung. Bitten Sie um eine Fristverlängerung, bevor Mahngebühren entstehen.">
+  <meta name="keywords" content="Zahlungsaufschub, Fristverlängerung, Rechnung, Zahlung, Aufschub, Bitte, Vorlage, Generator, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="zahlungsaufschub_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    textarea { min-height: 80px; resize: vertical; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Freundliche Bitte um Zahlungsaufschub</h1>
+  <div class="info-box">
+    <p>Manchmal kommt eine Rechnung zu einem ungünstigen Zeitpunkt. Proaktiv und höflich um einen kurzen Aufschub zu bitten, ist oft die beste Lösung. Es zeigt dem Gläubiger, dass Sie zahlungswillig sind und verhindert in der Regel Mahngebühren und weiteren Ärger.</p>
+  </div>
+
+  <form id="zahlungsaufschubForm">
+    <fieldset>
+      <legend>1. Ihre Angaben</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+      <label for="kundennummer">Ihre Kunden- oder Vertragsnummer (falls bekannt):</label>
+      <input type="text" id="kundennummer">
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Angaben zum Empfänger (Rechnungsaussteller)</legend>
+      <label for="empfaengerName">Name des Unternehmens / Gläubigers:</label>
+      <input type="text" id="empfaengerName" required>
+      <label for="empfaengerAdresse">Anschrift des Empfängers:</label>
+      <textarea id="empfaengerAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Angaben zur Rechnung</legend>
+      <label for="rechnungsnummer">Rechnungsnummer:</label>
+      <input type="text" id="rechnungsnummer" required>
+      <label for="rechnungsdatum">Datum der Rechnung:</label>
+      <input type="date" id="rechnungsdatum" required>
+      <label for="forderungshoehe">Rechnungsbetrag in €:</label>
+      <input type="number" id="forderungshoehe" step="0.01" required>
+      <label for="faelligkeitsdatum">Ursprüngliches Fälligkeitsdatum:</label>
+      <input type="date" id="faelligkeitsdatum" required>
+    </fieldset>
+    
+    <fieldset>
+      <legend>4. Ihre Bitte</legend>
+      <label for="begruendungText">Kurze, ehrliche Begründung (optional):
+        <small>Eine kurze Erklärung wirkt transparent. Halten Sie es einfach. Z.B.: "Aufgrund einer unerwarteten Ausgabe..." oder "Wegen eines verspäteten Gehaltseingangs...".</small>
+      </label>
+      <textarea id="begruendungText" placeholder="z.B. Aufgrund einer unerwarteten, dringenden Ausgabe in diesem Monat..."></textarea>
+      <label for="neuesDatumVorschlag">Ich bitte um Aufschub der Zahlung bis zum:</label>
+      <input type="date" id="neuesDatumVorschlag" required>
+      <small>Schlagen Sie ein realistisches Datum vor, das nicht zu weit in der Zukunft liegt (z.B. 2-4 Wochen).</small>
+    </fieldset>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnAufschub" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnAufschub" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget- & Haushaltsplan erstellen | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie einen detaillierten Haushaltsplan, um Ihre Einnahmen und Ausgaben zu überblicken. Berechnen Sie Ihren frei verfügbaren Betrag und laden Sie den Plan als PDF herunter.">
+  <meta name="keywords" content="Haushaltsplan, Budgetplan, Einnahmen, Ausgaben, Finanzen, Schulden, Übersicht, Generator, PDF, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="haushaltsplan_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1, h2 { color: #2c3e50; text-align: center; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; margin-top: 2rem; padding-bottom: 0.5rem; border-bottom: 2px solid #aed6f1;}
+    fieldset { border: none; padding: 0; margin: 0; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0; color: #1a5276; margin-bottom:1rem; text-align: left; width: 100%;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    .input-group { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; align-items: center; margin-bottom: 0.5rem;}
+    .input-group label { margin: 0; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    .summary-box { background-color: #f4f6f9; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 1.1rem; padding: 0.5rem 0; }
+    .summary-row.total { font-weight: bold; font-size: 1.3rem; border-top: 2px solid #333; margin-top: 0.5rem; padding-top: 0.5rem;}
+    .surplus { color: #27ae60; }
+    .deficit { color: #c0392b; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Ihr persönlicher Budget- & Haushaltsplan</h1>
+  <div class="info-box">
+    <p>Schaffen Sie sich einen klaren Überblick über Ihre Finanzen! Ein Haushaltsplan ist der wichtigste Schritt, um die Kontrolle über Ihr Geld zu gewinnen, Sparpotenziale zu entdecken und eine solide Grundlage für Verhandlungen mit Gläubigern oder Anträge bei Ämtern zu schaffen.</p>
+  </div>
+
+  <form id="haushaltsplanForm">
+    <fieldset>
+      <legend>1. Allgemeine Angaben</legend>
+      <label for="personName">Haushaltsplan für:</label>
+      <input type="text" id="personName" placeholder="Max Mustermann" required>
+      <div class="input-group" style="grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+        <div>
+            <label for="zeitraumMonat">Monat:</label>
+            <select id="zeitraumMonat" required></select> </div>
+        <div>
+            <label for="zeitraumJahr">Jahr:</label>
+            <input type="number" id="zeitraumJahr" placeholder="z.B. 2025" required>
+        </div>
+        <div>
+            <label for="anzahlPersonenHaushalt">Personen im Haushalt:</label>
+            <input type="number" id="anzahlPersonenHaushalt" value="1" required>
+        </div>
+      </div>
+    </fieldset>
+
+    <h2>Einnahmen & Ausgaben</h2>
+
+    <fieldset>
+      <legend>2. Monatliche Einnahmen</legend>
+      <div class="input-group"><label for="einkommenNetto">Lohn/Gehalt (Netto)</label><input type="number" id="einkommenNetto" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenBuergergeld">Bürgergeld / Sozialleistungen</label><input type="number" id="einkommenBuergergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenRente">Rente / Pension</label><input type="number" id="einkommenRente" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenKindergeld">Kindergeld</label><input type="number" id="einkommenKindergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenUnterhalt">Unterhalt (erhalten)</label><input type="number" id="einkommenUnterhalt" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenWohngeld">Wohngeld / Lastenzuschuss</label><input type="number" id="einkommenWohngeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenSonstige">Sonstiges (z.B. Minijob)</label><input type="number" id="einkommenSonstige" class="einnahme" step="0.01" placeholder="0.00"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Monatliche Ausgaben</legend>
+      <h3>Wohnen</h3>
+      <div class="input-group"><label for="ausgabeMiete">Miete (warm, inkl. NK/HK)</label><input type="number" id="ausgabeMiete" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeStrom">Strom</label><input type="number" id="ausgabeStrom" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeRundfunk">Rundfunkbeitrag</label><input type="number" id="ausgabeRundfunk" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <h3>Versicherungen & Finanzen</h3>
+      <div class="input-group"><label for="ausgabeVersicherungen">Versicherungen (Haftpflicht, KFZ etc.)</label><input type="number" id="ausgabeVersicherungen" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeKredite">Bestehende Kreditraten</label><input type="number" id="ausgabeKredite" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeUnterhalt">Unterhaltszahlungen</label><input type="number" id="ausgabeUnterhalt" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <h3>Allgemeine Lebenshaltung</h3>
+      <div class="input-group"><label for="ausgabeLebensmittel">Lebensmittel & Drogerie</label><input type="number" id="ausgabeLebensmittel" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeMobilitaet">Mobilität (Fahrkarten, Tanken)</label><input type="number" id="ausgabeMobilitaet" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeKommunikation">Telefon, Internet, Handy</label><input type="number" id="ausgabeKommunikation" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeFreizeit">Freizeit, Kultur, Hobbies</label><input type="number" id="ausgabeFreizeit" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeSonstige">Sonstige Ausgaben</label><input type="number" id="ausgabeSonstige" class="ausgabe" step="0.01" placeholder="0.00"></div>
+    </fieldset>
+
+    <div class="summary-box">
+        <h2>Zusammenfassung</h2>
+        <div class="summary-row">
+            <span>Gesamteinnahmen:</span>
+            <span id="summeEinnahmen">0,00 €</span>
+        </div>
+        <div class="summary-row">
+            <span>Gesamtausgaben:</span>
+            <span id="summeAusgaben">0,00 €</span>
+        </div>
+        <div class="summary-row total">
+            <span>Überschuss / Defizit:</span>
+            <span id="ergebnis" class="surplus">0,00 €</span>
+        </div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnHaushaltsplan" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnHaushaltsplan" class="button-secondary">Laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
