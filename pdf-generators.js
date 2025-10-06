@@ -3628,3 +3628,785 @@ function generateDeckblattAufenthaltPDF(data) {
 // ===================================================================================
 // ENDE: Deckblatt Aufenthalt
 // ===================================================================================
+
+// ===================================================================================
+// Start: REZEPT FÜR WIDERSPRUCH GEGEN Mahnbescheid
+// ===================================================================================
+
+
+function generateMahnbescheidWiderspruchPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen
+    const margin = 25;
+    const defaultLineHeight = 8;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, currentLineHeight = defaultLineHeight, fontStyle = "normal", fontSize = textFontSize) {
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        doc.text(text, margin, y);
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, paragraphLineHeight = defaultLineHeight, paragraphFontSize = textFontSize, options = {}) {
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > usableHeight) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    // Formulardaten aus dem 'data' Objekt verwenden
+    const {
+        personName, personAdresse, personPlz, personOrt,
+        mahngerichtName, mahngerichtAdresse,
+        bescheidAktenzeichen, bescheidDatum,
+        glaeubigerName
+    } = data;
+
+    const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT"); // Nutzt deine globale Hilfsfunktion
+
+    // Absender (klein oben links)
+    doc.setFontSize(9);
+    doc.setFont("times", "normal");
+    const absenderText = `${personName} · ${personAdresse} · ${personPlz} ${personOrt}`;
+    doc.text(absenderText, margin, margin - 10);
+
+    // Empfänger (Gericht)
+    y += 15;
+    writeLine(mahngerichtName);
+    mahngerichtAdresse.split("\n").forEach(line => writeLine(line.trim()));
+    y += defaultLineHeight * 2;
+
+    // Datum (rechtsbündig)
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    const betreffText = `Widerspruch gegen den Mahnbescheid vom ${bescheidDatumFormatiert}`;
+    writeParagraph(betreffText, defaultLineHeight, betreffFontSize, {fontStyle: "bold", extraSpacingAfter: defaultLineHeight / 2});
+    writeParagraph(`Aktenzeichen: ${bescheidAktenzeichen}`, defaultLineHeight, betreffFontSize, {fontStyle: "bold", extraSpacingAfter: defaultLineHeight});
+    
+    // Nennung der Parteien
+    writeParagraph(`Antragsteller: ${glaeubigerName || '(Name des Gläubigers)'}`, defaultLineHeight, textFontSize, {extraSpacingAfter: 2});
+    writeParagraph(`Antragsgegner: ${personName}`, defaultLineHeight, textFontSize, {extraSpacingAfter: defaultLineHeight});
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,", defaultLineHeight, textFontSize);
+
+    // Haupttext des Widerspruchs
+    writeParagraph("hiermit erhebe ich gegen den oben genannten Mahnbescheid");
+    
+    // Der eigentliche Widerspruch - fett und zentriert
+    doc.setFontSize(textFontSize);
+    doc.setFont("times", "bold");
+    const widerspruchSatz = "W I D E R S P R U C H";
+    const widerspruchSatzBreite = doc.getStringUnitWidth(widerspruchSatz) * textFontSize / doc.internal.scaleFactor;
+    doc.text(widerspruchSatz, (pageWidth - widerspruchSatzBreite) / 2, y + 2);
+    y += defaultLineHeight + spaceAfterParagraph;
+    
+    writeParagraph("ein.");
+    
+    writeParagraph("Der Widerspruch richtet sich gegen den Anspruch insgesamt.", defaultLineHeight, textFontSize, {fontStyle: "bold"});
+
+    y += defaultLineHeight * 2;
+
+    // Grußformel und Unterschrift
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4; // Platz für handschriftliche Unterschrift
+    writeParagraph("_________________________");
+    writeParagraph(`(${personName})`);
+
+    doc.save("Widerspruch_Mahnbescheid.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR WIDERSPRUCH GEGEN MA delusionalESCHEID
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR WIDERSPRUCH GEGEN FORDERUNG (INKASSO/GLÄUBIGER)
+// ===================================================================================
+
+function generateForderungWiderspruchPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeLine(text, currentLineHeight = defaultLineHeight, fontStyle = "normal", fontSize = textFontSize) {
+        if (y + currentLineHeight > usableHeight) { doc.addPage(); y = margin; }
+        doc.setFontSize(fontSize);
+        doc.setFont("times", fontStyle);
+        doc.text(text, margin, y);
+        y += currentLineHeight;
+    }
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > usableHeight) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    // Formulardaten aus dem 'data' Objekt
+    const {
+        personName, personAdresse, personPlz, personOrt,
+        empfaengerName, empfaengerAdresse,
+        schreibenDatum, aktenzeichen, originalglaeubigerName,
+        widerspruchsgruende, textBestehtNicht,
+        zusatzforderungen
+    } = data;
+
+    const schreibenDatumFormatiert = getFormattedDateValue(schreibenDatum, "UNBEKANNT");
+
+    // Absender (klein oben links)
+    doc.setFontSize(9);
+    doc.text(`${personName} · ${personAdresse} · ${personPlz} ${personOrt}`, margin, margin - 10);
+    y += 10;
+
+    // Empfänger
+    writeLine(empfaengerName, defaultLineHeight, "normal", textFontSize);
+    empfaengerAdresse.split("\n").forEach(line => writeLine(line.trim(), defaultLineHeight, "normal", textFontSize));
+    y += defaultLineHeight * 2;
+
+    // Datum (rechtsbündig)
+    const datumHeute = new Date().toLocaleString("de-DE");
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Widerspruch gegen Ihre Forderung vom ${schreibenDatumFormatiert}`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Ihr Zeichen: ${aktenzeichen}`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: defaultLineHeight });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Einleitung
+    writeParagraph(`hiermit widerspreche ich der von Ihnen mit Schreiben vom ${schreibenDatumFormatiert} geltend gemachten Forderung im Namen von "${originalglaeubigerName}" vollumfänglich.`);
+    
+    // Begründung (dynamisch)
+    writeParagraph("Begründung:", { fontStyle: "bold", extraSpacingAfter: 2 });
+
+    if (widerspruchsgruende.includes("unbekannt")) {
+        writeParagraph("- Die von Ihnen genannte Forderung ist mir gänzlich unbekannt.");
+    }
+    if (widerspruchsgruende.includes("bestehtNicht")) {
+        let begruendung = "- Die Forderung besteht nicht bzw. nicht mehr.";
+        if (textBestehtNicht && textBestehtNicht.trim() !== "") {
+            begruendung += ` Zur Erläuterung: ${textBestehtNicht.trim()}`;
+        }
+        writeParagraph(begruendung);
+    }
+    if (widerspruchsgruende.includes("hoeheFalsch")) {
+        writeParagraph("- Die Höhe der Hauptforderung wird bestritten.");
+    }
+    if (widerspruchsgruende.includes("inkassoKosten")) {
+        writeParagraph("- Insbesondere widerspreche ich den von Ihnen angesetzten Inkasso- und Mahngebühren. Diese sind in der vorliegenden Form und Höhe nicht erstattungsfähig.");
+    }
+    if (widerspruchsgruende.includes("verjaehrt")) {
+        writeParagraph("- Rein vorsorglich erhebe ich die Einrede der Verjährung.");
+    }
+    if (widerspruchsgruende.includes("nachweise")) {
+        writeParagraph("- Ich bestreite die Forderung vorsorglich dem Grunde und der Höhe nach. Ein Vertragsschluss wird ausdrücklich bestritten.");
+    }
+    
+    // Zusatzforderungen (dynamisch)
+    y += spaceAfterParagraph;
+    if (widerspruchsgruende.includes("nachweise")) {
+         writeParagraph("Ich fordere Sie auf, mir zur Prüfung des Sachverhalts folgende Unterlagen in Kopie vorzulegen: eine detaillierte Forderungsaufstellung, eine Kopie des ursprünglichen Vertrags sowie eine Kopie der Rechnung.", { fontStyle: "bold" });
+    }
+    if (zusatzforderungen.includes("vollmacht")) {
+        writeParagraph("Zudem fordere ich Sie auf, mir eine Kopie der originalen Vollmachtsurkunde nach § 174 BGB vorzulegen, die Ihre Beauftragung durch den Gläubiger nachweist.", { fontStyle: "bold" });
+    }
+    if (zusatzforderungen.includes("datenschutz")) {
+        writeParagraph("Ich untersage Ihnen die Weitergabe meiner Daten an Dritte, insbesondere an Auskunfteien (z.B. Schufa). Einem entsprechenden Eintrag widerspreche ich bereits jetzt. Gleichzeitig widerspreche ich der Speicherung und Verarbeitung meiner personenbezogenen Daten über das für die Abwicklung notwendige Maß hinaus.", { fontStyle: "bold" });
+    }
+
+    // Schlussteil
+    y += defaultLineHeight;
+    writeParagraph("Bis zur Vorlage der geforderten Nachweise und einer Klärung des Sachverhalts werde ich keine Zahlungen leisten. Ich erwarte, dass Sie von weiteren Mahnungen, Anrufen oder anderweitigen Kontaktversuchen absehen. Einer telefonischen Kontaktaufnahme widerspreche ich ausdrücklich.");
+    writeParagraph("Ich setze Ihnen eine Frist zur schriftlichen Rückmeldung von 14 Tagen ab Erhalt dieses Schreibens.");
+    writeParagraph("Sollten Sie ohne Klärung weitere Schritte einleiten, behalte ich mir vor, rechtliche Hilfe in Anspruch zu nehmen.", { fontStyle: "italic" });
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Widerspruch_Forderung.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR WIDERSPRUCH GEGEN FORDERUNG (INKASSO/GLÄUBIGER)
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR RATENZAHLUNGS- & VERGLEICHSANGEBOT
+// ===================================================================================
+
+function generateRatenzahlungPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 3;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const usableHeight = pageHeight - margin;
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > usableHeight) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    // Formulardaten aus dem 'data' Objekt
+    const {
+        personName, personAdresse, personPlz, personOrt,
+        empfaengerName, empfaengerAdresse, aktenzeichen, forderungshoehe,
+        angebotTyp, wunschrate, vergleichsbetrag
+    } = data;
+    
+    const forderungshoeheFormatted = (parseFloat(forderungshoehe) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+    const wunschrateFormatted = (parseFloat(wunschrate) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+    const vergleichsbetragFormatted = (parseFloat(vergleichsbetrag) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+
+    // Absender (klein oben)
+    doc.setFontSize(9);
+    doc.text(`${personName} · ${personAdresse} · ${personPlz} ${personOrt}`, margin, margin - 10);
+    y += 10;
+
+    // Empfänger
+    empfaengerName.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+    
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Angebot zur außergerichtlichen Einigung Ihrer Forderung, Zeichen: ${aktenzeichen}`, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Einleitung
+    writeParagraph(`ich beziehe mich auf Ihre Forderung in der oben genannten Angelegenheit in Höhe von ${forderungshoeheFormatted}.`);
+    writeParagraph(`Ich möchte betonen, dass ich gewillt bin, die Angelegenheit zu klären. Aufgrund meiner derzeitigen finanziellen Situation ist es mir jedoch nicht möglich, die gesamte Summe auf einmal zu begleichen.`);
+    writeParagraph("Um eine für beide Seiten tragfähige und außergerichtliche Lösung zu finden und weitere Kosten zu vermeiden, unterbreite ich Ihnen daher den folgenden Vorschlag:");
+
+    // Dynamischer Angebotsteil
+    if (angebotTyp === 'ratenzahlung') {
+        writeParagraph("Vorschlag zur Ratenzahlung:", { fontStyle: "bold", extraSpacingAfter: 2 });
+        writeParagraph(`Ich biete Ihnen an, die offene Forderung in monatlichen Raten in Höhe von ${wunschrateFormatted} zu tilgen.`);
+        const naechsterErster = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toLocaleDateString("de-DE");
+        writeParagraph(`Die erste Rate würde ich zum ${naechsterErster} an Sie überweisen. Ich bitte um Ihr Einverständnis und den Verzicht auf weitere Zinsen und Gebühren, solange die Raten pünktlich gezahlt werden.`);
+    } else if (angebotTyp === 'vergleich') {
+        writeParagraph("Vorschlag zur Erledigung durch eine Vergleichszahlung:", { fontStyle: "bold", extraSpacingAfter: 2 });
+        writeParagraph(`Ich biete Ihnen an, zur vollständigen und endgültigen Abgeltung Ihrer Forderung eine Einmalzahlung in Höhe von ${vergleichsbetragFormatted} zu leisten.`);
+        writeParagraph("Die Zahlung würde innerhalb von 14 Tagen nach Erhalt Ihrer schriftlichen Zustimmung zu diesem Vergleich erfolgen. Mit Eingang des Betrags bei Ihnen sind alle gegenseitigen Ansprüche aus dieser Angelegenheit, inklusive aller Kosten und Zinsen, erledigt.");
+    }
+
+    // Schlussteil
+    y += defaultLineHeight;
+    writeParagraph("Ich bitte Sie um eine schriftliche Rückmeldung innerhalb von 14 Tagen, ob Sie meinen Vorschlag annehmen. Einer telefonischen Kontaktaufnahme widerspreche ich.");
+    
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Angebot_Ratenzahlung_Vergleich.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR RATENZAHLUNGS- & VERGLEICHSANGEBOT
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR BUDGET- & HAUSHALTSPLAN
+// ===================================================================================
+
+function generateHaushaltsplanPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // --- Helper zum Formatieren und Zeichnen ---
+    const margin = 20;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    let y = margin;
+    const col1 = margin;
+    const col2 = 150;
+    const lineHeight = 8;
+    const sectionSpacing = 12;
+
+    function checkPageBreak() {
+        if (y > pageHeight - margin) {
+            doc.addPage();
+            y = margin;
+        }
+    }
+
+    // --- KORRIGIERTE addRow Funktion ---
+    function addRow(label, value, isBold = false, isTotal = false) {
+        checkPageBreak();
+        const formattedValue = (parseFloat(value) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+        
+        // Sorgt für sauberen Abstand VOR der Summenzeile
+        if (isTotal) {
+            y += 2; 
+            doc.line(col1, y, col2 + 25, y); // Linie zeichnen
+            y += 5; // Abstand NACH der Linie, bevor der Text kommt
+        }
+
+        doc.setFont("times", isBold ? "bold" : "normal");
+        doc.text(label, col1, y);
+        doc.text(formattedValue, col2, y, { align: 'right' });
+
+        // Normaler Zeilenabstand nach jeder Zeile
+        y += lineHeight;
+    }
+    
+    function addSection(title) {
+        checkPageBreak();
+        y += sectionSpacing;
+        doc.setFontSize(14);
+        doc.setFont("times", "bold");
+        doc.text(title, col1, y);
+        y += lineHeight + 2;
+        doc.setFontSize(11);
+    }
+    
+    // --- PDF-Inhalt (bleibt gleich, nutzt aber die korrigierten Daten) ---
+    doc.setFontSize(18);
+    doc.setFont("times", "bold");
+    doc.text("Haushaltsplan", margin, y);
+    y += lineHeight;
+    
+    doc.setFontSize(12);
+    doc.setFont("times", "normal");
+    doc.text(`für ${data.personName || 'N/A'}, Zeitraum: ${data.zeitraumMonat} ${data.zeitraumJahr}`, margin, y);
+    y += 4;
+    doc.text(`Anzahl Personen im Haushalt: ${data.anzahlPersonenHaushalt || 'N/A'}`, margin, y);
+
+    // Einnahmen
+    addSection("Monatliche Einnahmen");
+    addRow("Lohn/Gehalt (Netto)", data.einkommenNetto);
+    addRow("Bürgergeld / Sozialleistungen", data.einkommenBuergergeld);
+    addRow("Rente / Pension", data.einkommenRente);
+    addRow("Kindergeld", data.einkommenKindergeld);
+    addRow("Unterhalt (erhalten)", data.einkommenUnterhalt);
+    addRow("Wohngeld / Lastenzuschuss", data.einkommenWohngeld);
+    addRow("Sonstiges", data.einkommenSonstige);
+    addRow("Summe Einnahmen", data.summeEinnahmen, true, true); // Nutzt jetzt die korrekte Zahl
+
+    // Ausgaben
+    addSection("Monatliche Ausgaben");
+    doc.setFont("times", "bolditalic");
+    doc.text("Wohnen", col1, y); y += lineHeight;
+    doc.setFont("times", "normal");
+    addRow("Miete (warm, inkl. NK/HK)", data.ausgabeMiete);
+    addRow("Strom", data.ausgabeStrom);
+    addRow("Rundfunkbeitrag", data.ausgabeRundfunk);
+    
+    y += 4;
+    doc.setFont("times", "bolditalic");
+    doc.text("Versicherungen & Finanzen", col1, y); y += lineHeight;
+    doc.setFont("times", "normal");
+    addRow("Versicherungen", data.ausgabeVersicherungen);
+    addRow("Bestehende Kreditraten", data.ausgabeKredite);
+    addRow("Unterhaltszahlungen", data.ausgabeUnterhalt);
+
+    y += 4;
+    doc.setFont("times", "bolditalic");
+    doc.text("Allgemeine Lebenshaltung", col1, y); y += lineHeight;
+    doc.setFont("times", "normal");
+    addRow("Lebensmittel & Drogerie", data.ausgabeLebensmittel);
+    addRow("Mobilität (Fahrkarten, Tanken)", data.ausgabeMobilitaet);
+    addRow("Telefon, Internet, Handy", data.ausgabeKommunikation);
+    addRow("Freizeit, Kultur, Hobbies", data.ausgabeFreizeit);
+    addRow("Sonstige Ausgaben", data.ausgabeSonstige);
+    addRow("Summe Ausgaben", data.summeAusgaben, true, true); // Nutzt jetzt die korrekte Zahl
+
+    // Ergebnis
+    addSection("Ergebnis");
+    addRow("Überschuss / Defizit", data.ergebnis, true, false); // Nutzt jetzt die korrekte Zahl
+
+    // Footer
+    const erstelldatum = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(8);
+    doc.setTextColor(150);
+    doc.text(`Erstellt mit sozial-lotse.de am ${erstelldatum}`, margin, pageHeight - 10);
+
+    doc.save(`Haushaltsplan_${data.personName}_${data.zeitraumMonat}_${data.zeitraumJahr}.pdf`);
+}
+// ===================================================================================
+// ENDE: REZEPT FÜR BUDGET- & HAUSHALTSPLAN
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR ANTRAG AUF STUNDUNG
+// ===================================================================================
+
+function generateStundungPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, steuernummer,
+        empfaengerName, empfaengerAdresse, rechnungsnummer, rechnungsdatum,
+        forderungshoehe, faelligkeitsdatum, begruendungText, stundungBisDatum
+    } = data;
+    
+    // Formatierung der Datums- und Währungsangaben
+    const rechnungsdatumFmt = getFormattedDateValue(rechnungsdatum);
+    const faelligkeitsdatumFmt = getFormattedDateValue(faelligkeitsdatum);
+    const stundungBisDatumFmt = getFormattedDateValue(stundungBisDatum);
+    const forderungshoeheFmt = (parseFloat(forderungshoehe) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+
+    // Absender
+    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+
+    // Empfänger
+    writeParagraph(empfaengerName);
+    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    let betreff = `Antrag auf Stundung der Forderung vom ${rechnungsdatumFmt}`;
+    betreff += `\nRechnungs-Nr. / Aktenzeichen: ${rechnungsnummer}`;
+    if (steuernummer) {
+        betreff += `\nSteuernummer / Kundennummer: ${steuernummer}`;
+    }
+    writeParagraph(betreff, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph(`hiermit beantrage ich die Stundung der oben genannten Forderung in Höhe von ${forderungshoeheFmt}, die ursprünglich am ${faelligkeitsdatumFmt} zur Zahlung fällig war.`);
+    
+    writeParagraph("Begründung:", { fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Aufgrund eines unvorhersehbaren und vorübergehenden finanziellen Engpasses ist es mir bedauerlicherweise nicht möglich, die Forderung fristgerecht zu begleichen. Der Grund hierfür ist folgender:`);
+    writeParagraph(begruendungText, { fontStyle: "italic" });
+    writeParagraph("Ich möchte betonen, dass es sich um eine temporäre Situation handelt und die Begleichung der Forderung zu einem späteren Zeitpunkt vollständig gesichert ist.");
+
+    writeParagraph("Vorschlag:", { fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Ich bitte Sie daher höflich, die Forderung bis zum ${stundungBisDatumFmt} zu stunden. Ich versichere Ihnen, den ausstehenden Gesamtbetrag bis zu diesem Datum vollständig an Sie zu überweisen.`);
+
+    // Schlussteil
+    writeParagraph("Ich bedanke mich im Voraus für Ihr Verständnis und Entgegenkommen und bitte um eine kurze schriftliche Bestätigung meines Antrags.");
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Antrag_auf_Stundung.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR ANTRAG AUF STUNDUNG
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR P-KONTO-SCHREIBEN AN DIE BANK
+// ===================================================================================
+
+function generatePKontoPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, geburtsdatum,
+        bankName, bankAdresse, iban, schreibenTyp, ausstellerBescheinigung
+    } = data;
+    
+    const geburtsdatumFmt = getFormattedDateValue(geburtsdatum);
+
+    // Absender
+    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+
+    // Empfänger (Bank)
+    writeParagraph(bankName);
+    bankAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff (dynamisch)
+    let betreff = "";
+    if (schreibenTyp === 'umwandlung') {
+        betreff = "Antrag auf Umwandlung meines Girokontos in ein Pfändungsschutzkonto (P-Konto)";
+    } else if (schreibenTyp === 'bescheinigung') {
+        betreff = "Einreichung einer P-Konto-Bescheinigung zur Erhöhung der Freibeträge";
+    } else { // 'beides'
+        betreff = "Antrag auf Umwandlung in ein P-Konto und Einreichung einer Bescheinigung";
+    }
+    writeParagraph(betreff, { fontSize: betreffFontSize, fontStyle: "bold" });
+    writeParagraph(`Kontoinhaber: ${personName}, geb. am ${geburtsdatumFmt}`, { extraSpacingAfter: 0 });
+    writeParagraph(`IBAN: ${iban}`);
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext (dynamisch)
+    if (schreibenTyp === 'umwandlung' || schreibenTyp === 'beides') {
+        writeParagraph("hiermit beantrage ich gemäß § 850k Abs. 7 ZPO die sofortige Umwandlung meines oben genannten Girokontos in ein Pfändungsschutzkonto (P-Konto).");
+        writeParagraph("Ich versichere, dass ich kein weiteres Pfändungsschutzkonto bei einem anderen Kreditinstitut führe.");
+    }
+    
+    if (schreibenTyp === 'bescheinigung' || schreibenTyp === 'beides') {
+        if (schreibenTyp === 'bescheinigung') { // Einleitung nur bei alleinigem Bescheinigungs-Schreiben
+             writeParagraph("zu meinem oben genannten Pfändungsschutzkonto (P-Konto) reiche ich Ihnen die beigefügte Bescheinigung nach § 903 ZPO ein.");
+        } else { // Text bei 'beides'
+             writeParagraph("Zusätzlich reiche ich Ihnen die beigefügte Bescheinigung nach § 903 ZPO zur Berücksichtigung erhöhter Freibeträge ein.");
+        }
+        writeParagraph(`Die Bescheinigung wurde ausgestellt von: ${ausstellerBescheinigung}.`);
+        writeParagraph("Ich bitte Sie, die darin genannten Freibeträge schnellstmöglich in meinem P-Konto einzurichten und mir die korrekte Einrichtung kurz schriftlich zu bestätigen.");
+    }
+
+    if (schreibenTyp === 'umwandlung') { // Schlusssatz nur bei reiner Umwandlung
+        writeParagraph("Bitte bestätigen Sie mir die Umwandlung meines Kontos schriftlich.");
+    }
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+    
+    if (schreibenTyp === 'bescheinigung' || schreibenTyp === 'beides') {
+        writeParagraph("Anlage: P-Konto-Bescheinigung im Original", { fontStyle: 'italic', fontSize: 10 });
+    }
+
+    doc.save("Antrag_P-Konto.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR P-KONTO-SCHREIBEN AN DIE BANK
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR BITTE UM ZAHLUNGSAUFSCHUB
+// ===================================================================================
+
+function generateZahlungsaufschubPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, kundennummer,
+        empfaengerName, empfaengerAdresse, rechnungsnummer, rechnungsdatum,
+        forderungshoehe, faelligkeitsdatum, begruendungText, neuesDatumVorschlag
+    } = data;
+    
+    // Formatierung
+    const rechnungsdatumFmt = getFormattedDateValue(rechnungsdatum);
+    const faelligkeitsdatumFmt = getFormattedDateValue(faelligkeitsdatum);
+    const neuesDatumVorschlagFmt = getFormattedDateValue(neuesDatumVorschlag);
+    const forderungshoeheFmt = (parseFloat(forderungshoehe) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+
+    // Absender
+    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+
+    // Empfänger
+    writeParagraph(empfaengerName);
+    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    let betreff = `Bitte um Zahlungsaufschub für Rechnung Nr. ${rechnungsnummer}`;
+    if (kundennummer) {
+        betreff += `\nKundennummer: ${kundennummer}`;
+    }
+    writeParagraph(betreff, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph(`ich beziehe mich auf Ihre oben genannte Rechnung vom ${rechnungsdatumFmt} in Höhe von ${forderungshoeheFmt}.`);
+    
+    let begruendung = `Leider ist es mir aufgrund eines kurzfristigen finanziellen Engpasses nicht möglich, den Betrag bis zur Fälligkeit am ${faelligkeitsdatumFmt} vollständig zu begleichen.`;
+    if (begruendungText && begruendungText.trim() !== "") {
+        begruendung += ` ${begruendungText.trim()}`;
+    }
+    writeParagraph(begruendung);
+    
+    writeParagraph(`Ich möchte Sie daher höflich um einen kurzen Zahlungsaufschub und eine Verlängerung der Zahlungsfrist bitten.`);
+    writeParagraph(`Ich schlage vor, den gesamten ausstehenden Betrag bis spätestens zum ${neuesDatumVorschlagFmt} an Sie zu überweisen und versichere Ihnen die vollständige Begleichung der Rechnung.`);
+
+    // Schlussteil
+    writeParagraph("Ich hoffe sehr auf Ihr Verständnis und bedanke mich im Voraus für Ihr Entgegenkommen. Über eine kurze Bestätigung Ihres Einverständnisses würde ich mich freuen.");
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Bitte_um_Zahlungsaufschub.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR BITTE UM ZAHLUNGSAUFSCHUB
+// ===================================================================================
+
+
