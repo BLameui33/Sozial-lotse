@@ -4409,4 +4409,850 @@ function generateZahlungsaufschubPDF(data) {
 // ENDE: REZEPT FÜR BITTE UM ZAHLUNGSAUFSCHUB
 // ===================================================================================
 
+// ===================================================================================
+// START: REZEPT FÜR LOHNFORDERUNG BEI ZAHLUNGSVERZUG
+// ===================================================================================
+
+function generateLohnforderungPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, personalnummer,
+        arbeitgeberName, arbeitgeberAdresse, zeitraum, offenerBetrag,
+        zahlungsfrist, kontoinhaber, iban, bic
+    } = data;
+    
+    // Formatierung
+    const zahlungsfristFmt = getFormattedDateValue(zahlungsfrist);
+    const offenerBetragFmt = (parseFloat(offenerBetrag) || 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(arbeitgeberName);
+    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    let betreff = `Geltendmachung von Lohn- und Gehaltsansprüchen`;
+    if (personalnummer) {
+        betreff += `\nPersonalnummer: ${personalnummer}`;
+    }
+    writeParagraph(betreff, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph("hiermit mache ich meine nachfolgend aufgeführten Lohn- bzw. Gehaltsansprüche aus unserem bestehenden Arbeitsverhältnis geltend.");
+    writeParagraph("Bislang ist folgende Zahlung nicht auf meinem Konto eingegangen:");
+    y += spaceAfterParagraph;
+    writeParagraph(`• Ausstehender Bruttolohn/Gehalt für: ${zeitraum}\n  in Höhe von: ${offenerBetragFmt} €`, { fontStyle: "bold", extraSpacingAfter: defaultLineHeight });
+    
+    writeParagraph(`Ich fordere Sie hiermit auf, den oben genannten ausstehenden Betrag bis spätestens zum ${zahlungsfristFmt} auf mein unten angegebenes Konto zu überweisen.`);
+    
+    // Bankverbindung
+    y += defaultLineHeight;
+    writeParagraph("Meine Bankverbindung lautet:", { extraSpacingAfter: 2 });
+    writeParagraph(`Kontoinhaber: ${kontoinhaber}\nIBAN: ${iban}` + (bic ? `\nBIC: ${bic}` : ''));
+    
+    // Konsequenzen
+    writeParagraph("Sollte die Zahlung nicht fristgerecht bis zum Ablauf der genannten Frist vollständig auf meinem Konto eingehen, sehe ich mich gezwungen, ohne weitere Ankündigung gerichtliche Schritte (Lohnklage beim Arbeitsgericht) einzuleiten. Die dadurch entstehenden Kosten gehen dann vollständig zu Ihren Lasten.");
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Lohnforderung.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR LOHNFORDERUNG BEI ZAHLUNGSVERZUG
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR ANTRAG AUF ARBEITSZEUGNIS
+// ===================================================================================
+
+function generateArbeitszeugnisPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, arbeitgeberName,
+        arbeitgeberAdresse, position, eintrittsdatum, austrittsdatum, fristsetzung
+    } = data;
+    
+    // Formatierung
+    const eintrittsdatumFmt = getFormattedDateValue(eintrittsdatum);
+    const austrittsdatumFmt = getFormattedDateValue(austrittsdatum);
+    const fristsetzungFmt = getFormattedDateValue(fristsetzung);
+
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(arbeitgeberName);
+    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph("Aufforderung zur Ausstellung eines qualifizierten Arbeitszeugnisses", { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph("hiermit fordere ich Sie gemäß § 109 Gewerbeordnung (GewO) zur Ausstellung eines qualifizierten Arbeitszeugnisses auf.");
+    writeParagraph(`Mein Arbeitsverhältnis in Ihrem Unternehmen als ${position} bestand vom ${eintrittsdatumFmt} bis zum ${austrittsdatumFmt}.`);
+    writeParagraph("Ich bitte um die Ausstellung eines qualifizierten Zeugnisses, das sich sowohl auf meine Leistungen als auch auf mein Verhalten im Arbeitsverhältnis (Führung) erstreckt.");
+    writeParagraph("Bitte senden Sie mir das ordnungsgemäß unterschriebene Arbeitszeugnis im Original an meine oben genannte Adresse.");
+    
+    // Fristsetzung
+    writeParagraph(`Ich setze Ihnen für die Ausstellung und Zusendung des Zeugnisses eine Frist bis zum ${fristsetzungFmt}.`);
+
+    // Konsequenzen
+    writeParagraph("Sollte ich das Zeugnis nicht fristgerecht erhalten, behalte ich mir vor, meinen Anspruch gerichtlich beim Arbeitsgericht durchzusetzen.", { fontStyle: "italic" });
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Antrag_Arbeitszeugnis.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR ANTRAG AUF ARBEITSZEUGNIS
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR WIDERSPRUCH GEGEN ABMAHNUNG
+// ===================================================================================
+
+function generateAbmahnungPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, arbeitgeberName,
+        arbeitgeberAdresse, datumAbmahnung, grundAbmahnung, gegendarstellungText
+    } = data;
+    
+    // Formatierung
+    const datumAbmahnungFmt = getFormattedDateValue(datumAbmahnung);
+
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(arbeitgeberName);
+    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Widerspruch gegen die Abmahnung vom ${datumAbmahnungFmt} / Gegendarstellung`, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph(`hiermit widerspreche ich der von Ihnen am ${datumAbmahnungFmt} ausgesprochenen Abmahnung wegen "${grundAbmahnung}".`);
+    writeParagraph("Die in der Abmahnung erhobenen Vorwürfe sind unzutreffend. Ich stelle den Sachverhalt aus meiner Sicht wie folgt dar:");
+    writeParagraph(gegendarstellungText, { fontStyle: "italic", extraSpacingAfter: defaultLineHeight });
+
+    // Forderung
+    writeParagraph("Da die Abmahnung auf unrichtigen Tatsachenbehauptungen beruht, ist sie unrechtmäßig. Ich fordere Sie hiermit auf, die Abmahnung ersatzlos aus meiner Personalakte zu entfernen.");
+    writeParagraph("Vorsorglich fordere ich Sie auf, dieses Widerspruchsschreiben als Gegendarstellung ebenfalls zu meiner Personalakte zu nehmen.");
+    
+    // Konsequenzen
+    writeParagraph("Ich behalte mir ausdrücklich vor, meinen Anspruch auf Entfernung der Abmahnung gerichtlich beim Arbeitsgericht durchzusetzen.", { fontStyle: "italic" });
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Widerspruch_Abmahnung.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR WIDERSPRUCH GEGEN ABMAHNUNG
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR VERTRAGS-WIDERRUF (FERNABSATZ)
+// ===================================================================================
+
+function generateWiderrufPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, unternehmenName,
+        unternehmenAdresse, vertragsbezeichnung, vertragsnummer, vertragsdatum,
+        widerrufEinzugsermaechtigung
+    } = data;
+    
+    // Formatierung
+    const vertragsdatumFmt = getFormattedDateValue(vertragsdatum);
+
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(unternehmenName);
+    unternehmenAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Widerruf des Vertrages "${vertragsbezeichnung}"`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Vertrags-/Bestellnummer: ${vertragsnummer}`, { extraSpacingAfter: 0 });
+    writeParagraph(`Datum des Vertragsabschlusses: ${vertragsdatumFmt}`);
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph(`hiermit widerrufe ich den von mir am ${vertragsdatumFmt} abgeschlossenen Vertrag über "${vertragsbezeichnung}" (Vertragsnummer: ${vertragsnummer}) fristgerecht innerhalb der gesetzlichen Widerrufsfrist.`);
+    
+    if (widerrufEinzugsermaechtigung) {
+        y += spaceAfterParagraph;
+        writeParagraph("Gleichzeitig widerrufe ich die Ihnen erteilte Einzugsermächtigung (SEPA-Lastschriftmandat) für mein Konto. Ich fordere Sie auf, ab sofort keine Abbuchungen mehr vorzunehmen.", { fontStyle: "bold" });
+    }
+
+    writeParagraph("Ich bitte Sie, mir den Eingang dieses Widerrufs sowie die Vertragsauflösung unverzüglich schriftlich zu bestätigen.");
+    writeParagraph("Bitte veranlassen Sie die Rückabwicklung des Vertrages und erstatten Sie eventuell bereits geleistete Zahlungen innerhalb von 14 Tagen auf das ursprüngliche Zahlungsmittel.");
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Widerruf_Vertrag.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR VERTRAGS-WIDERRUF (FERNABSATZ)
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR REKLAMATION (NACHERFÜLLUNG)
+// ===================================================================================
+
+function generateReklamationPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, verkaeuferName, verkaeuferAdresse,
+        warenbezeichnung, kaufdatum, rechnungsnummer, mangelbeschreibung,
+        nacherfuellungWahl, fristsetzung
+    } = data;
+    
+    // Formatierung
+    const kaufdatumFmt = getFormattedDateValue(kaufdatum);
+    const fristsetzungFmt = getFormattedDateValue(fristsetzung);
+
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(verkaeuferName);
+    verkaeuferAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph("Reklamation und Aufforderung zur Nacherfüllung gemäß § 439 BGB", { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Ware: ${warenbezeichnung}\nKaufdatum: ${kaufdatumFmt}\nRechnungs-Nr.: ${rechnungsnummer}`);
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph(`am ${kaufdatumFmt} habe ich bei Ihnen die oben genannte Ware erworben.`);
+    writeParagraph("Leider musste ich feststellen, dass der Artikel mangelhaft ist. Der Mangel äußert sich wie folgt:");
+    writeParagraph(mangelbeschreibung, { fontStyle: "italic", extraSpacingAfter: defaultLineHeight });
+    
+    writeParagraph("Gemäß § 437 Nr. 1 BGB in Verbindung mit § 439 BGB mache ich hiermit meine gesetzlichen Gewährleistungsrechte geltend und fordere Sie zur Nacherfüllung auf.");
+
+    // Wahl der Nacherfüllung
+    if (nacherfuellungWahl === 'neulieferung') {
+        writeParagraph("Ich habe mich für die Lieferung einer neuen, mangelfreien Ware (Neulieferung) entschieden.", { fontStyle: "bold" });
+    } else { // 'reparatur'
+        writeParagraph("Ich habe mich für die Reparatur der mangelhaften Ware (Nachbesserung) entschieden.", { fontStyle: "bold" });
+    }
+    
+    // Fristsetzung und weitere Hinweise
+    writeParagraph(`Ich setze Ihnen zur Erfüllung meiner Forderung eine Frist bis zum ${fristsetzungFmt}.`);
+    writeParagraph("Ich weise Sie darauf hin, dass Sie gemäß § 439 Abs. 2 BGB alle zum Zwecke der Nacherfüllung erforderlichen Aufwendungen, insbesondere Transport-, Wege-, Arbeits- und Materialkosten, zu tragen haben.", { fontSize: 10, fontStyle: "italic" });
+    writeParagraph("Sollten Sie diese Frist ergebnislos verstreichen lassen, behalte ich mir weitere rechtliche Schritte (z.B. Rücktritt vom Kaufvertrag oder Minderung des Kaufpreises) ausdrücklich vor.");
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Reklamation_Ware.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR REKLAMATION (NACHERFÜLLUNG)
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR VERTRAGSKÜNDIGUNG
+// ===================================================================================
+
+function generateKuendigungPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        // Diese Hilfsfunktion kann aus einem anderen Generator kopiert werden
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+
+    const {
+        personName, personAdresse, personPlzOrt, anbieterName, anbieterAdresse,
+        vertragsbezeichnung, kundennummer, kuendigungArt, kuendigungZumDatum,
+        sonderkuendigungGrund, widerrufEinzugsermaechtigung, keineWerbung
+    } = data;
+    
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(anbieterName);
+    anbieterAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Kündigung des Vertrages "${vertragsbezeichnung}"`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Kunden-/Vertragsnummer: ${kundennummer}`);
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext (dynamisch)
+    if (kuendigungArt === 'naechstmoeglich') {
+        writeParagraph(`hiermit kündige ich den oben genannten Vertrag fristgerecht zum nächstmöglichen Zeitpunkt.`);
+    } else if (kuendigungArt === 'datum') {
+        const kuendigungZumDatumFmt = getFormattedDateValue(kuendigungZumDatum);
+        writeParagraph(`hiermit kündige ich den oben genannten Vertrag fristgerecht zum ${kuendigungZumDatumFmt}.`);
+    } else { // 'sonder'
+        writeParagraph(`hiermit kündige ich den oben genannten Vertrag außerordentlich und fristlos aus wichtigem Grund mit sofortiger Wirkung.`);
+        if (sonderkuendigungGrund && sonderkuendigungGrund.trim() !== "") {
+            writeParagraph("Meine Kündigung begründe ich wie folgt:", { extraSpacingAfter: 2 });
+            writeParagraph(sonderkuendigungGrund, { fontStyle: "italic" });
+        }
+    }
+
+    // Zusätzliche Klauseln
+    writeParagraph("Bitte senden Sie mir eine schriftliche Bestätigung dieser Kündigung unter Angabe des Beendigungsdatums an meine oben genannte Adresse.");
+
+    if (widerrufEinzugsermaechtigung) {
+        writeParagraph("Des Weiteren widerrufe ich die Ihnen erteilte Einzugsermächtigung (SEPA-Lastschriftmandat) zum Datum der Vertragsbeendigung.");
+    }
+    if (keineWerbung) {
+        writeParagraph("Ich widerspreche der Nutzung meiner Kontaktdaten für Werbezwecke über das Vertragsende hinaus.");
+    }
+
+    // Grußformel
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    doc.save("Kuendigung.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR VERTRAGSKÜNDIGUNG
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR ANTRAG AUF UNTERHALTSVORSCHUSS (KORRIGIERTE VERSION)
+// ===================================================================================
+
+function generateUnterhaltsvorschussPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+    const sectionSpacing = 12; // <--- DIESE ZEILE WAR DER FEHLER, JETZT IST SIE DA.
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+    
+    // --- SEITE 1: ANTRAGSSCHREIBEN ---
+    const {
+        personName, personAdresse, personPlzOrt, behoerdeName, behoerdeAdresse,
+        kind1Name, kind1Geburtsdatum, kind2Name, kind2Geburtsdatum,
+        andererElternteilName, adresseBekannt, andererElternteilAdresse
+    } = data;
+    
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(behoerdeName);
+    behoerdeAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    writeParagraph(`Antrag auf Leistungen nach dem Unterhaltsvorschussgesetz (UVG)`, { fontSize: betreffFontSize, fontStyle: "bold" });
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    writeParagraph("hiermit beantrage ich für mein Kind / meine Kinder Leistungen nach dem Unterhaltsvorschussgesetz (UVG).");
+    writeParagraph("Ich lebe von dem anderen Elternteil dauernd getrennt und erziehe mein Kind bzw. meine Kinder allein in meinem Haushalt. Der andere Elternteil kommt seinen Unterhaltsverpflichtungen nicht, nur unregelmäßig oder nicht in voller Höhe nach.");
+    
+    writeParagraph("Der Antrag bezieht sich auf:", { fontStyle: "bold", extraSpacingAfter: 2 });
+    let kinderText = `- ${kind1Name}, geboren am ${getFormattedDateValue(kind1Geburtsdatum)}`;
+    if (kind2Name && kind2Geburtsdatum) {
+        kinderText += `\n- ${kind2Name}, geboren am ${getFormattedDateValue(kind2Geburtsdatum)}`;
+    }
+    writeParagraph(kinderText);
+    
+    writeParagraph("Angaben zum anderen Elternteil:", { fontStyle: "bold", extraSpacingAfter: 2 });
+    writeParagraph(`Name: ${andererElternteilName}`);
+    if (adresseBekannt === 'ja') {
+        writeParagraph(`Letzte bekannte Anschrift:\n${andererElternteilAdresse}`);
+    } else {
+        writeParagraph("Die derzeitige Anschrift ist mir nicht bekannt.");
+    }
+    
+    // Schlussteil
+    writeParagraph("Bitte werten Sie dieses Schreiben als formlosen Erstantrag zur Fristwahrung und senden Sie mir die offiziellen Antragsformulare sowie eine Liste der benötigten Unterlagen zu.");
+    
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+
+    // --- SEITE 2: CHECKLISTE ---
+    doc.addPage();
+    y = margin;
+    
+    doc.setFontSize(16);
+    doc.setFont("times", "bold");
+    doc.text("Checkliste: Benötigte Unterlagen für den Antrag", margin, y);
+    y += sectionSpacing * 1.5;
+
+    doc.setFontSize(textFontSize);
+    doc.setFont("times", "normal");
+    writeParagraph("Reichen Sie dieses Anschreiben zusammen mit den offiziellen Formularen (sobald Sie diese erhalten) und Kopien der folgenden Unterlagen ein. Nehmen Sie die Originale zum Termin im Amt mit.");
+    y += defaultLineHeight;
+
+    const checklistItems = [
+        "Geburtsurkunde des Kindes / der Kinder",
+        "Ihren gültigen Personalausweis oder Reisepass mit Meldebestätigung",
+        "Falls vorhanden: Unterhaltstitel (z.B. Urteil, Jugendamtsurkunde, notarielle Urkunde)",
+        "Falls vorhanden: Nachweise über die bisherigen Unterhaltszahlungen (z.B. Kontoauszüge der letzten 3 Monate)",
+        "Falls vorhanden: Schriftverkehr mit dem anderen Elternteil oder dessen Anwalt bezüglich des Unterhalts",
+        "Bei Geschiedenen: Scheidungsurteil",
+        "Falls zutreffend: Vaterschaftsanerkennung oder -feststellung",
+        "Gegebenenfalls Nachweise über das Einkommen des Kindes (z.B. Ausbildungsvergütung)"
+    ];
+    
+    const checkboxYStart = y;
+    checklistItems.forEach((item, index) => {
+        const currentY = checkboxYStart + (index * (defaultLineHeight + 10)); // Berechne Y-Position für jede Checkbox
+        doc.rect(margin, currentY - 3, 4, 4); // Checkbox-Kästchen
+        doc.text(item, margin + 8, currentY);
+    });
+
+    doc.save("Antrag_Unterhaltsvorschuss.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR ANTRAG AUF UNTERHALTSVORSCHUSS (KORRIGIERTE VERSION)
+// ===================================================================================
+
+// ===================================================================================
+// START: REZEPT FÜR ANTRAG AUF ÜBERNAHME/ERMÄSSIGUNG DER KITA-GEBÜHREN
+// ===================================================================================
+
+function generateKitaGebuehrenPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+    // Layout-Konstanten und PDF-Schreibfunktionen (wiederverwendet)
+    const margin = 25;
+    const defaultLineHeight = 7;
+    const spaceAfterParagraph = 4;
+    const textFontSize = 11;
+    const betreffFontSize = 13;
+    const sectionSpacing = 12;
+
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    function writeParagraph(text, options = {}) {
+        const paragraphLineHeight = options.lineHeight || defaultLineHeight;
+        const paragraphFontSize = options.fontSize || textFontSize;
+        const fontStyle = options.fontStyle || "normal";
+        const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
+        doc.setFontSize(paragraphFontSize);
+        doc.setFont("times", fontStyle);
+        const lines = doc.splitTextToSize(text, pageWidth - (2 * margin));
+        lines.forEach(line => {
+            if (y + paragraphLineHeight > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+            doc.text(line, margin, y);
+            y += paragraphLineHeight;
+        });
+        if (lines.length > 0) y += extraSpacing;
+    }
+    
+    // --- SEITE 1: ANTRAGSSCHREIBEN ---
+    const {
+        personName, personAdresse, personPlzOrt, behoerdeName, behoerdeAdresse,
+        kind1Name, kind1Geburtsdatum, kind2Name, kind2Geburtsdatum,
+        kitaName, kitaAdresse, antragArt
+    } = data;
+    
+    // Absender
+    doc.setFontSize(9);
+    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
+    doc.text(absenderZeile, margin, margin - 10);
+    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
+    y += 15;
+
+    // Empfänger
+    writeParagraph(behoerdeName);
+    behoerdeAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
+    y += defaultLineHeight * 2;
+
+    // Datum
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
+    y += defaultLineHeight * 2;
+
+    // Betreff
+    const antragArtText = antragArt === 'befreiung' ? 'Übernahme' : 'Ermäßigung';
+    writeParagraph(`Antrag auf ${antragArtText} der Elternbeiträge für die Kindertagesbetreuung`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
+    let kinderBetreff = `Kind: ${kind1Name}, geb. am ${getFormattedDateValue(kind1Geburtsdatum)}`;
+    if (kind2Name && kind2Geburtsdatum) {
+        kinderBetreff = `Kinder: ${kind1Name} und ${kind2Name}`;
+    }
+    writeParagraph(kinderBetreff);
+
+    // Anrede
+    writeParagraph("Sehr geehrte Damen und Herren,");
+
+    // Haupttext
+    const antragVerb = antragArt === 'befreiung' ? 'die vollständige Übernahme' : 'eine Ermäßigung';
+    writeParagraph(`hiermit beantragen wir ${antragVerb} der Elternbeiträge (Kostenbeitrag) für die Betreuung unseres Kindes / unserer Kinder.`);
+    
+    writeParagraph("Der Antrag bezieht sich auf:", { fontStyle: "bold", extraSpacingAfter: 2 });
+    let kinderText = `- ${kind1Name}, geboren am ${getFormattedDateValue(kind1Geburtsdatum)}`;
+    if (kind2Name && kind2Geburtsdatum) {
+        kinderText += `\n- ${kind2Name}, geboren am ${getFormattedDateValue(kind2Geburtsdatum)}`;
+    }
+    writeParagraph(kinderText);
+
+    writeParagraph(`Die Betreuung erfolgt in folgender Einrichtung:\n${kitaName}\n${kitaAdresse}`);
+    writeParagraph("Aufgrund unserer derzeitigen Einkommenssituation ist es uns nicht zuzumuten, den Elternbeitrag in voller Höhe zu leisten.");
+    
+    // Schlussteil
+    writeParagraph("Bitte werten Sie dieses Schreiben als formlosen Erstantrag zur Fristwahrung und senden Sie uns die offiziellen Antragsformulare sowie eine Liste der benötigten Nachweise zu.");
+    
+    y += defaultLineHeight;
+    writeParagraph("Mit freundlichen Grüßen");
+    y += defaultLineHeight * 4;
+    writeParagraph(`(${personName})`);
+
+    // --- SEITE 2: CHECKLISTE ---
+    doc.addPage();
+    y = margin;
+    
+    doc.setFontSize(16);
+    doc.setFont("times", "bold");
+    doc.text("Checkliste: Typische Unterlagen für den Antrag", margin, y);
+    y += sectionSpacing;
+
+    doc.setFontSize(textFontSize);
+    doc.setFont("times", "normal");
+    writeParagraph("Die genauen Anforderungen variieren je nach Gemeinde. Reichen Sie dieses Anschreiben zusammen mit den offiziellen Formularen und in der Regel Kopien der folgenden Dokumente ein:");
+    y += defaultLineHeight;
+
+    const checklistItems = [
+        "Einkommensnachweise aller Haushaltsmitglieder (z.B. Lohnabrechnungen der letzten 12 Monate, Bescheide über Bürgergeld, ALG I, Elterngeld, Kinderzuschlag etc.)",
+        "Mietvertrag und Nachweis der aktuellen Miethöhe (z.B. Kontoauszug)",
+        "Betreuungsvertrag mit der Kindertageseinrichtung",
+        "Geburtsurkunde(n) des/der Kind(er)",
+        "Personalausweise der Eltern",
+        "Nachweise über besondere finanzielle Belastungen (z.B. private Versicherungen, Fahrtkosten zur Arbeit, Kreditraten)"
+    ];
+    
+    const checkboxYStart = y;
+    checklistItems.forEach((item, index) => {
+        const textLines = doc.splitTextToSize(item, pageWidth - (2 * margin) - 8);
+        const currentY = y;
+        doc.rect(margin, currentY - 3, 4, 4); // Checkbox-Kästchen
+        doc.text(textLines, margin + 8, currentY);
+        y += textLines.length * defaultLineHeight + 8; // Dynamischer Abstand
+    });
+
+    doc.save("Antrag_Kita-Gebuehren.pdf");
+}
+
+// ===================================================================================
+// ENDE: REZEPT FÜR ANTRAG AUF ÜBERNAHME/ERMÄSSIGUNG DER KITA-GEBÜHREN
+// ===================================================================================
+
+
 
