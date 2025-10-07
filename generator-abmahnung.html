@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerspruch gegen Abmahnung erstellen | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie einen formellen Widerspruch (Gegendarstellung) gegen eine unberechtigte Abmahnung vom Arbeitgeber. Sichern Sie Ihre Rechte für den Fall einer Kündigung.">
+  <meta name="keywords" content="Abmahnung, Widerspruch, Gegendarstellung, Arbeitsrecht, Kündigung, Personalakte, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="abmahnung_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    textarea { min-height: 150px; resize: vertical; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box, .warning-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Widerspruch gegen eine Abmahnung</h1>
+  <div class="info-box">
+    <p>Eine Abmahnung ist ein "Warnschuss" Ihres Arbeitgebers und oft die Voraussetzung für eine spätere verhaltensbedingte Kündigung. Wenn die Vorwürfe in der Abmahnung unberechtigt sind, sollten Sie dem schriftlich widersprechen. Ihr Widerspruch muss dann zu Ihrer Personalakte genommen werden.</p>
+  </div>
+  <div class="warning-box">
+    <p><strong>Beweise sichern!</strong> Reagieren Sie zeitnah und senden Sie Ihren Widerspruch nachweisbar (per Einwurf-Einschreiben) oder übergeben Sie ihn persönlich im Beisein eines Zeugen. Dies ist wichtig, falls es später zu einem Kündigungsschutzprozess kommt.</p>
+  </div>
+
+<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="abmahnungForm">
+    <fieldset>
+      <legend>1. Ihre Angaben (Arbeitnehmer/in)</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Angaben zum Arbeitgeber</legend>
+      <label for="arbeitgeberName">Name des Unternehmens:</label>
+      <input type="text" id="arbeitgeberName" required>
+      <label for="arbeitgeberAdresse">Anschrift des Unternehmens (Personalabteilung):</label>
+      <textarea id="arbeitgeberAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Details zur Abmahnung</legend>
+      <label for="datumAbmahnung">Datum der Abmahnung:</label>
+      <input type="date" id="datumAbmahnung" required>
+      <label for="grundAbmahnung">Kurze Zusammenfassung des Vorwurfs in der Abmahnung:
+        <small>(z.B. "Angebliches Zuspätkommen am TT.MM.JJJJ", "Angebliche Schlechtleistung bei Projekt X")</small>
+      </label>
+      <input type="text" id="grundAbmahnung" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Ihre Gegendarstellung</legend>
+      <label for="gegendarstellungText">Schildern Sie hier sachlich und präzise, warum die Vorwürfe nicht zutreffen:
+        <small>Entkräften Sie die Vorwürfe Punkt für Punkt mit Fakten. Vermeiden Sie Emotionen oder Beleidigungen. Nennen Sie ggf. Zeugen oder andere Beweise.</small>
+      </label>
+      <textarea id="gegendarstellungText" required placeholder="Beispiel: Der Vorwurf, ich sei am TT.MM.JJJJ zu spät zur Arbeit erschienen, ist unzutreffend. Tatsächlich war ich pünktlich um 8:00 Uhr an meinem Arbeitsplatz, was mein Kollege Herr Max Mustermann bezeugen kann. Die elektronische Zeiterfassung war an diesem Morgen gestört, was ich der IT-Abteilung gemeldet habe."></textarea>
+    </fieldset>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnAbmahnung" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnAbmahnung" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

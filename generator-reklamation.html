@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Reklamation (defekte Ware) | Gewährleistung einfordern | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie eine formelle Reklamation bei defekter oder mangelhafter Ware. Fordern Sie Ihr Recht auf Nacherfüllung (Reparatur oder Umtausch) vom Verkäufer ein.">
+  <meta name="keywords" content="Reklamation, Mangel, defekt, Gewährleistung, Nacherfüllung, Umtausch, Reparatur, Verbraucherrecht, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="reklamation_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], input[type="number"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    textarea { min-height: 100px; resize: vertical; }
+    .radio-group label { font-weight: normal; display: block; margin-top: 0.5rem;}
+    .radio-group input[type="radio"] { width: auto; margin-right: 8px; vertical-align: middle;}
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box, .warning-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Reklamation bei mangelhafter Ware</h1>
+  <div class="info-box">
+    <p>Wenn eine gekaufte Ware einen Mangel aufweist, haben Sie gesetzliche Gewährleistungsrechte gegenüber dem <strong>Verkäufer</strong>. Ihr erster und wichtigster Anspruch ist die "Nacherfüllung". Das bedeutet, Sie können vom Verkäufer entweder die Reparatur oder die Lieferung einer neuen, mangelfreien Sache verlangen.</p>
+  </div>
+  <div class="warning-box">
+    <p><strong>Gewährleistung ≠ Garantie!</strong> Die <strong>Gewährleistung</strong> ist Ihr gesetzlicher Anspruch gegenüber dem Verkäufer (2 Jahre bei Neuware). Eine <strong>Garantie</strong> ist eine freiwillige, zusätzliche Zusage, meist vom Hersteller. Berufen Sie sich immer zuerst auf Ihre gesetzlichen Gewährleistungsrechte!</p>
+  </div>
+<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="reklamationForm">
+    <fieldset>
+      <legend>1. Ihre Angaben (Käufer/in)</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Angaben zum Verkäufer</legend>
+      <label for="verkaeuferName">Name des Verkäufers (Unternehmen):</label>
+      <input type="text" id="verkaeuferName" required>
+      <label for="verkaeuferAdresse">Anschrift des Verkäufers:</label>
+      <textarea id="verkaeuferAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Details zum Kauf</legend>
+      <label for="warenbezeichnung">Genaue Bezeichnung der Ware:</label>
+      <input type="text" id="warenbezeichnung" required placeholder="z.B. Smartphone Modell X, 128GB, Schwarz">
+      <label for="kaufdatum">Kaufdatum:</label>
+      <input type="date" id="kaufdatum" required>
+      <label for="rechnungsnummer">Rechnungs- oder Bestellnummer:</label>
+      <input type="text" id="rechnungsnummer" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Beschreibung des Mangels</legend>
+      <label for="mangelbeschreibung">Beschreiben Sie den Mangel so genau wie möglich:
+        <small>Was genau funktioniert nicht? Seit wann tritt der Fehler auf? Unter welchen Umständen?</small>
+      </label>
+      <textarea id="mangelbeschreibung" required placeholder="Beispiel: Das Display des Smartphones flackert seit gestern und zeigt nur noch Streifen an. Ein Neustart hat das Problem nicht behoben. Das Gerät ist unbenutzbar."></textarea>
+    </fieldset>
+    
+    <fieldset>
+      <legend>5. Ihre Forderung (Nacherfüllung)</legend>
+      <p>Sie haben grundsätzlich die Wahl zwischen Reparatur und Umtausch. Der Verkäufer kann Ihre Wahl nur ablehnen, wenn sie für ihn mit unverhältnismäßig hohen Kosten verbunden ist.</p>
+      <div class="radio-group">
+        <label><input type="radio" name="nacherfuellungWahl" value="neulieferung" required> Ich fordere die <strong>Lieferung einer neuen, mangelfreien Ware (Umtausch)</strong>.</label>
+        <label><input type="radio" name="nacherfuellungWahl" value="reparatur" required> Ich fordere die <strong>Reparatur</strong> der mangelhaften Ware.</label>
+      </div>
+      <label for="fristsetzung">Setzen Sie eine Frist zur Nacherfüllung:
+        <small>Eine Frist von 14 Tagen ist in der Regel angemessen.</small>
+      </label>
+      <input type="date" id="fristsetzung" required>
+    </fieldset>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnReklamation" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnReklamation" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

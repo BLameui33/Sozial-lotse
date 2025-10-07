@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Antrag auf Arbeitszeugnis erstellen | Sozial-Lotse</title>
+  <meta name="description" content="Fordern Sie Ihr qualifiziertes Arbeitszeugnis vom ehemaligen Arbeitgeber formell und mit Fristsetzung an. Jeder Arbeitnehmer hat einen gesetzlichen Anspruch darauf.">
+  <meta name="keywords" content="Arbeitszeugnis, qualifiziertes Arbeitszeugnis, Zeugnis anfordern, Arbeitsrecht, Anspruch, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="arbeitszeugnis_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"] { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box, .warning-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Antrag auf Ausstellung eines Arbeitszeugnisses</h1>
+  <div class="info-box">
+    <p>Nach § 109 der Gewerbeordnung (GewO) hat jeder Arbeitnehmer bei Beendigung eines Arbeitsverhältnisses Anspruch auf ein schriftliches Arbeitszeugnis. Sie sollten immer ein <strong>qualifiziertes Arbeitszeugnis</strong> verlangen, da dieses neben den Fakten auch eine Beurteilung Ihrer Leistung und Ihres Verhaltens enthält.</p>
+  </div>
+  <div class="warning-box">
+    <p><strong>Achten Sie auf Fristen!</strong> Prüfen Sie Ihren Arbeitsvertrag auf sogenannte Ausschluss- oder Verfallfristen. Oft müssen Sie das Zeugnis innerhalb von 3 Monaten nach Austritt schriftlich anfordern, sonst kann Ihr Anspruch verfallen.</p>
+  </div>
+
+<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="arbeitszeugnisForm">
+    <fieldset>
+      <legend>1. Ihre Angaben (Arbeitnehmer/in)</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Angaben zum (ehemaligen) Arbeitgeber</legend>
+      <label for="arbeitgeberName">Name des Unternehmens:</label>
+      <input type="text" id="arbeitgeberName" required>
+      <label for="arbeitgeberAdresse">Anschrift des Unternehmens:</label>
+      <textarea id="arbeitgeberAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Details zum Arbeitsverhältnis</legend>
+      <label for="position">Ihre Position / Berufsbezeichnung im Unternehmen:</label>
+      <input type="text" id="position" required placeholder="z.B. Kauffrau für Büromanagement">
+      <label for="eintrittsdatum">Eintrittsdatum:</label>
+      <input type="date" id="eintrittsdatum" required>
+      <label for="austrittsdatum">Austrittsdatum:</label>
+      <input type="date" id="austrittsdatum" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>4. Art des Zeugnisses & Fristsetzung</legend>
+        <label>
+            <input type="checkbox" checked disabled> Ich beantrage die Ausstellung eines <strong>qualifizierten</strong> Arbeitszeugnisses.
+            <small>Dies ist der Standard und umfasst die Beurteilung von Leistung und Sozialverhalten. Ein "einfaches" Zeugnis enthält nur Fakten wie Dauer und Art der Tätigkeit.</small>
+        </label>
+        <label for="fristsetzung">Setzen Sie eine Frist zur Ausstellung:
+            <small>Eine Frist von 2-3 Wochen ist angemessen und üblich.</small>
+        </label>
+        <input type="date" id="fristsetzung" required>
+    </fieldset>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnZeugnis" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnZeugnis" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

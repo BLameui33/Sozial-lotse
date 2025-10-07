@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Vertrag widerrufen (14-Tage-Frist) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie ein rechtssicheres Widerrufsschreiben für Online-, Telefon- oder Haustürverträge. Nutzen Sie Ihr 14-tägiges Widerrufsrecht als Verbraucher.">
+  <meta name="keywords" content="Widerruf, 14 Tage Widerrufsrecht, Fernabsatzvertrag, Vertrag kündigen, widerrufen, Verbraucherrecht, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="widerruf_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
+    .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    .checkbox-group label { font-weight: normal; }
+    .checkbox-group input { width: auto; margin-right: 8px; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box, .warning-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+    footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
+    footer a { color: #555; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+  <h1>Widerruf eines Online- oder Telefonvertrags</h1>
+  <div class="info-box">
+    <p>Bei Verträgen, die Sie im Internet, am Telefon, an der Haustür oder auf der Straße abschließen, haben Sie als Verbraucher ein <strong>gesetzliches Widerrufsrecht von 14 Tagen</strong>. Sie können den Vertrag in dieser Zeit ohne Angabe von Gründen auflösen. Eine Begründung ist nicht notwendig.</p>
+  </div>
+  <div class="warning-box">
+    <p><strong>Frist beachten und Versand nachweisen!</strong> Die 14-Tage-Frist beginnt erst, wenn Sie die Ware erhalten UND korrekt über Ihr Widerrufsrecht informiert wurden. Senden Sie Ihren Widerruf am besten so, dass Sie einen Nachweis haben (z.B. per Einwurf-Einschreiben oder per E-Mail mit Bitte um Eingangsbestätigung).</p>
+  </div>
+<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
+
+  <form id="widerrufForm">
+    <fieldset>
+      <legend>1. Ihre Angaben (Verbraucher/in)</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Angaben zum Unternehmen</legend>
+      <label for="unternehmenName">Name des Unternehmens:</label>
+      <input type="text" id="unternehmenName" required>
+      <label for="unternehmenAdresse">Anschrift des Unternehmens:</label>
+      <textarea id="unternehmenAdresse" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Details zum Vertrag</legend>
+      <label for="vertragsbezeichnung">Was haben Sie bestellt oder beauftragt?
+        <small>(z.B. "Mobilfunkvertrag Super Allnet", "Abonnement der Zeitschrift XY", "Bestellung eines Staubsaugers")</small>
+      </label>
+      <input type="text" id="vertragsbezeichnung" required>
+      <label for="vertragsnummer">Vertrags-, Kunden- oder Bestellnummer:</label>
+      <input type="text" id="vertragsnummer" required>
+      <label for="vertragsdatum">Datum des Vertragsabschlusses / der Bestellung:</label>
+      <input type="date" id="vertragsdatum" required>
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Zusätzliche Erklärungen</legend>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="widerrufEinzugsermaechtigung">
+                Ich widerrufe ebenfalls die erteilte Einzugsermächtigung (SEPA-Lastschriftmandat).
+                <small>Wichtig, damit das Unternehmen kein Geld mehr von Ihrem Konto abbuchen darf.</small>
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="button-group">
+      <button type="button" id="saveBtnWiderruf" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnWiderruf" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
