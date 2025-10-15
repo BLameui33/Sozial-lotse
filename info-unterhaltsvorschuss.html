@@ -1,221 +1,137 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Unterhaltsvorschuss (UVG): Anspruch, Höhe und Antrag (mit Frist-Tipp) | Sozial-Lotse</title>
-  <meta name="description" content="Wenn der Kindesunterhalt ausbleibt: Erfahren Sie alles über den Anspruch auf Unterhaltsvorschuss nach dem UVG, die Höhe der Leistungen, die Voraussetzungen für Kinder über 12 und wie Sie den Antrag richtig stellen.">
-  <meta name="keywords" content="Unterhaltsvorschuss, Unterhalt, alleinerziehend, Jugendamt, UVG, Antrag, Kindesunterhalt, Sozialleistung, Höhe Unterhaltsvorschuss, Sozial-Lotse">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/logo-lotse-fav.png">
-  <style>
-    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+  <meta charset="UTF-8">
+  <title>Unterhaltsvorschuss: Anspruch & Antrag bei fehlendem Unterhalt | Sozial-Lotse</title>
+  <meta name="description" content="Wenn der Kindesunterhalt ausbleibt: Erfahren Sie alles über den Anspruch auf Unterhaltsvorschuss vom Jugendamt, die Voraussetzungen und wie Sie den Antrag richtig stellen.">
+  <meta name="keywords" content="Unterhaltsvorschuss, Unterhalt, alleinerziehend, Jugendamt, UVG, Antrag, Kindesunterhalt, Sozialleistung, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <style>
+    /* Das CSS wird von deinen anderen Lotse-Seiten übernommen für ein einheitliches Design. */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
     .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #16a085; text-align: center; }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #2c3e50; text-align: center; }
     h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
-    h3 { font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.8rem; color: #2980b9; }
     p, ul li { margin-bottom: 1rem; }
     ul { padding-left: 20px; }
     .highlight-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; padding: 15px; margin: 1.5rem 0; border-radius: 5px; }
     .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; padding: 15px; margin: 1.5rem 0; font-size: 0.95em;}
-    strong { color: #1e8449; }
-    .cta-button {
-      display: inline-block; background: #0070f3; color: white !important; padding: 0.8rem 1.5rem;
-      text-decoration: none; border-radius: 6px; margin-top: 0.5rem; font-weight: bold;
-    }
-    .cta-button:hover { background-color: #005bb5; }
+    strong { color: #2980b9; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; transition: color 0.2s; }
+    .site-logo:hover { color: #d35400; }
     footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
     footer a { color: #555; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      h2 { font-size: 1.4rem; }
-      h3 { font-size: 1.2rem; }
-      .page-container { padding: 1rem; margin: 1rem auto; }
-    }
-    .button-container {
-    /* Zentriert den Button innerhalb des Containers */
-    text-align: center;
-    /* Fügt etwas Abstand nach oben und unten hinzu */
-    margin: 2.5rem 0;
-}
-
-.button-primary {
-    /* Farben und Form */
-    display: inline-block;
-    background-color: #d35400; /* Deine Hauptfarbe */
-    color: #ffffff;
-    padding: 14px 28px;
-    border-radius: 8px;
-    
-    /* Schrift und Text */
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none; /* Wichtig, um die Link-Unterstreichung zu entfernen */
-    
-    /* Moderne Effekte */
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease-in-out;
-}
-
-/* Hover-Effekt für Interaktivität */
-.button-primary:hover {
-    background-color: #a94400; /* Dunklere Variante deiner Hauptfarbe */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-    /* Stil für den Header-Container */
-.site-header {
-    background-color: #ffffff; /* Weißer Hintergrund */
-    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
-    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
-    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
-    text-align: center;
-}
-
-/* Stil für das Logo bzw. den Seitennamen */
-.site-logo {
-    color: #1a5276; /* Deine dunkle Akzentfarbe */
-    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Link-Unterstreichung */
-    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
-}
-
-.site-logo:hover {
-    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
-}
   </style>
-  <script type="application/ld+json">
+  <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Wie lange wird Unterhaltsvorschuss gezahlt und was sind die Altersgrenzen?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Unterhaltsvorschuss wird längstens bis zur Vollendung des 18. Lebensjahres des Kindes gezahlt. Für Kinder zwischen 12 und 17 Jahren gelten zusätzliche Voraussetzungen: Entweder darf das Kind selbst keine Bürgergeld-Leistungen beziehen, oder der alleinerziehende Elternteil muss bei Bezug von Bürgergeld ein eigenes Einkommen von mindestens 600 Euro brutto erzielen."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Wie wird die Höhe des Unterhaltsvorschusses berechnet?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Der Unterhaltsvorschuss berechnet sich nach dem jeweiligen Mindestunterhalt der Düsseldorfer Tabelle, abzüglich des vollen Kindergeldes für ein erstes Kind. Einkommen des Kindes (z.B. aus Ausbildungsvergütung) wird ebenfalls angerechnet, nicht aber das Einkommen des alleinerziehenden Elternteils."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Muss der andere Elternteil den Vorschuss zurückzahlen?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ja. Die Unterhaltsvorschusskasse holt sich das Geld vom unterhaltspflichtigen Elternteil zurück, sofern dieser leistungsfähig ist. Der Vorschuss ist eine Ausfallleistung des Staates, der den Unterhaltsanspruch des Kindes übernimmt und diesen gegen den Unterhaltspflichtigen geltend macht (Regress)."
-      }
-    }
-  ]
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie lange wird Unterhaltsvorschuss gezahlt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unterhaltsvorschuss wird längstens bis zur Vollendung des 18. Lebensjahres des Kindes gezahlt. Für Kinder zwischen 12 und 17 Jahren gelten zusätzliche Voraussetzungen: Entweder darf das Kind selbst keine Bürgergeld-Leistungen beziehen oder der alleinerziehende Elternteil muss bei Bezug von Bürgergeld ein eigenes Einkommen von mindestens 600 Euro brutto erzielen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Muss der andere Elternteil den Vorschuss zurückzahlen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die Unterhaltsvorschusskasse holt sich das Geld vom unterhaltspflichtigen Elternteil zurück, sofern dieser leistungsfähig ist. Der Unterhaltsvorschuss ist eine Ausfallleistung des Staates, die den Kindesunterhalt aber nicht ersetzt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was passiert, wenn ich wieder heirate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wenn Sie als alleinerziehender Elternteil erneut heiraten, entfällt der Anspruch auf Unterhaltsvorschuss ab dem Monat der Heirat. Der neue Ehepartner wird dann in die Unterhaltsverpflichtung für die Familie mit einbezogen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wird der Unterhaltsvorschuss auf das Bürgergeld angerechnet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, der Unterhaltsvorschuss gilt als Einkommen des Kindes und wird vollständig auf dessen Bürgergeld-Bedarf angerechnet."
+      }
+    }
+  ]
 }
 </script>
 </head>
 <body>
 
 <header class="site-header">
-    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Unterhaltsvorschuss (UVG): Staatliche Hilfe, wenn der Unterhalt ausbleibt</h1>
+  <h1>Unterhaltsvorschuss: Staatliche Hilfe, wenn der Unterhalt ausbleibt</h1>
 
-  <p class="highlight-box">Der Unterhaltsvorschuss nach dem **Unterhaltsvorschussgesetz (UVG)** ist eine der wichtigsten Leistungen für Alleinerziehende. Er sichert das finanzielle Auskommen des Kindes, wenn der andere Elternteil seiner gesetzlichen Unterhaltspflicht nicht nachkommt oder stirbt.</p>
-  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800;">
-    <strong>Wichtiger Frist-Tipp:</strong> Unterhaltsvorschuss wird **nicht rückwirkend** gezahlt. Stellen Sie deshalb sofort einen **formlosen Antrag** beim Jugendamt, um die Zahlung für den aktuellen Monat zu sichern, auch wenn die offiziellen Formulare noch fehlen!</p>
+  <p class="highlight-box">Für Alleinerziehende ist es oft eine große finanzielle Belastung, wenn der andere Elternteil keinen oder nur unregelmäßig Kindesunterhalt zahlt. Genau für diese Situation gibt es den Unterhaltsvorschuss. Er ist eine wichtige staatliche Leistung, die einspringt, um das finanzielle Auskommen des Kindes zu sichern.</p>
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800;">
+    <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+  </p>
 
-  <h2>Wer hat Anspruch auf Unterhaltsvorschuss?</h2>
-  <p>Die grundlegenden Voraussetzungen für den Anspruch sind klar im UVG geregelt. Ein Kind hat Anspruch, wenn es:</p>
-  <ul>
-      <li>das **18. Lebensjahr noch nicht vollendet** hat.</li>
-      <li>in Deutschland bei einem **alleinerziehenden Elternteil** lebt (ledig, verwitwet, geschieden oder dauernd getrennt lebend).</li>
-      <li>**keinen oder nur unregelmäßig** Unterhalt vom anderen Elternteil erhält.</li>
-  </ul>
-  
-  <h3>Besondere Regeln für Kinder von 12 bis 17 Jahren</h3>
-  <p>Für diese Altersgruppe besteht der Anspruch nur, wenn **zusätzlich** eine der folgenden Bedingungen erfüllt ist:</p>
-  <ol>
-      <li>Das Kind ist nicht auf Bürgergeld angewiesen (oder bezieht nur ergänzende Leistungen).</li>
-      <li>**ODER** der alleinerziehende Elternteil im Bürgergeld-Bezug hat eigene Brutto-Einkünfte von **mindestens 600 Euro** monatlich.</li>
-  </ol>
+  <h2>Was genau ist der Unterhaltsvorschuss?</h2>
+  <p>Der Unterhaltsvorschuss ist eine <strong>staatliche Ausfallleistung</strong>, die vom Jugendamt bzw. der Unterhaltsvorschusskasse gezahlt wird. Sie ist für Kinder bestimmt, die bei einem alleinerziehenden Elternteil leben und keinen oder zu wenig Unterhalt vom anderen Elternteil erhalten.</p>
+  <ul>
+      <li>Die Leistung sichert den Mindestunterhalt des Kindes.</li>
+      <li>Der Staat holt sich das Geld später vom unterhaltspflichtigen Elternteil zurück, sofern dieser zahlungsfähig ist.</li>
+      <li>Der Anspruch des Kindes auf Unterhalt gegen den anderen Elternteil geht in Höhe der Vorschusszahlung auf den Staat über.</li>
+  </ul>
+  
+  <h2>Wer hat Anspruch auf Unterhaltsvorschuss?</h2>
+  <p>Die grundlegenden Voraussetzungen für den Anspruch sind im Unterhaltsvorschussgesetz (UVG) klar geregelt. Ein Kind hat Anspruch, wenn es:</p>
+  <ol>
+      <li>das <strong>18. Lebensjahr noch nicht vollendet</strong> hat.</li>
+      <li>in Deutschland bei einem <strong>alleinerziehenden Elternteil</strong> lebt. Als alleinerziehend gilt, wer ledig, verwitwet, geschieden ist oder vom Ehepartner dauernd getrennt lebt.</li>
+      <li><strong>keinen oder nicht regelmäßig</strong> Unterhalt vom anderen Elternteil erhält.</li>
+  </ol>
+  <p class="warning-box"><strong>Besondere Regeln für Kinder von 12 bis 17 Jahren:</strong> Für diese Altersgruppe besteht der Anspruch nur, wenn zusätzlich eine der beiden folgenden Bedingungen erfüllt ist: Das Kind ist nicht auf Bürgergeld angewiesen ODER der alleinerziehende Elternteil im Bürgergeld-Bezug hat eigene Brutto-Einkünfte von mindestens 600 Euro.</p>
 
-  <h2>Wie hoch ist der Unterhaltsvorschuss?</h2>
-  <p>Die Höhe des Vorschusses richtet sich nach dem gesetzlichen Mindestunterhalt (Düsseldorfer Tabelle), abzüglich des vollen Kindergeldes. Das Einkommen des alleinerziehenden Elternteils spielt bei der Berechnung der Höhe **keine Rolle**.</p>
-  
-  <table>
-    <thead>
-      <tr>
-        <th>Altersgruppe des Kindes</th>
-        <th>Monatlicher Unterhaltsvorschuss (Stand 2024/2025)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>**0 bis 5 Jahre**</td>
-        <td>ca. **230 €**</td>
-      </tr>
-      <tr>
-        <td>**6 bis 11 Jahre**</td>
-        <td>ca. **301 €**</td>
-      </tr>
-      <tr>
-        <td>**12 bis 17 Jahre**</td>
-        <td>ca. **395 €**</td>
-      </tr>
-    </tbody>
-  </table>
-  <p class="warning-box">Die genauen Beträge können sich jährlich ändern und sind abhängig von den aktuellen Werten für Mindestunterhalt und Kindergeld. Abgezogen werden zusätzlich alle Unterhaltszahlungen, die Sie tatsächlich vom anderen Elternteil erhalten.</p>
+  <h2>Die Wichtigkeit des formlosen Erstantrags</h2>
+  <p>Unterhaltsvorschuss wird grundsätzlich erst <strong>ab dem Monat der Antragstellung</strong> gezahlt, nicht rückwirkend für die Vergangenheit. Die Bearbeitung des offiziellen, mehrseitigen Formulars kann jedoch einige Zeit in Anspruch nehmen.</p>
+  <p>Deshalb ist es extrem wichtig, so früh wie möglich einen <strong>formlosen Antrag per Brief</strong> zu stellen. Damit gilt der Antrag als gestellt und Sie sichern sich die Leistungen ab genau diesem Monat, auch wenn Sie die offiziellen Formulare erst Wochen später einreichen.</p>
+  <p>Ein solcher Erstantrag sollte enthalten:</p>
+  <ul>
+      <li>Ihre Daten und die des Kindes / der Kinder.</li>
+      <li>Die klare Aussage, dass Sie Unterhaltsvorschuss beantragen.</li>
+      <li>Die Bitte um Zusendung der offiziellen Antragsformulare.</li>
+  </ul>
 
-  <h2>Der Antrag: Formlos die Frist sichern</h2>
-  <p>Unterhaltsvorschuss wird bei der zuständigen **Unterhaltsvorschusskasse** des Jugendamtes beantragt. Da die Leistung **maximal ab dem Monat der Antragstellung** gezahlt wird, ist schnelles Handeln entscheidend.</p>
-  
-  <h3>Der formlose Erstantrag</h3>
-  <p>Senden Sie sofort einen kurzen Brief an das Jugendamt, in dem Sie:</p>
-  <ul>
-      <li>Ihre Daten und die des Kindes nennen.</li>
-      <li>die klare Absicht erklären, **Unterhaltsvorschuss zu beantragen**.</li>
-      <li>um Zusendung der offiziellen, mehrseitigen Formulare bitten.</li>
-  </ul>
-  <p>Dieser formlose Antrag gilt als offizielle Antragstellung und sichert Ihnen die Zahlung für den laufenden Monat, auch wenn die Bearbeitung des vollständigen Antrags länger dauert.</p>
+  <h2>Einen schnellen und wirksamen Erstantrag stellen</h2>
+  <p>Unser Generator erstellt für Sie ein perfektes Anschreiben, das als formloser Erstantrag dient und alle wichtigen Informationen enthält. Zusätzlich erhalten Sie eine praktische Checkliste mit allen Unterlagen, die Sie für den offiziellen Antrag benötigen werden.</p>
+  <div style="text-align:center; margin: 2rem 0;">
+      <a href="generator-unterhaltsvorschuss.html" style="background-color: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zum Generator: Antrag auf Unterhaltsvorschuss</a>
+  </div>
 
-  <h2>Den schnellen und wirksamen Erstantrag stellen</h2>
-  <p>Unser Generator erstellt für Sie ein formell korrektes Anschreiben, das als sofortiger, fristsichernder Erstantrag dient. Zusätzlich erhalten Sie eine Checkliste mit allen benötigten Unterlagen für den späteren Hauptantrag (z.B. Geburtsurkunde, Scheidungsurteil).</p>
-  <div style="text-align:center; margin: 2rem 0;">
-      <a href="generator-unterhaltsvorschuss.html" style="background-color: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zum Generator: Antrag auf Unterhaltsvorschuss</a>
-  </div>
+  <h2>Häufig gestellte Fragen (FAQ)</h2>
+  <div class="faq-section">
+    <h3>Wie lange wird Unterhaltsvorschuss gezahlt?</h3>
+    <p>Unterhaltsvorschuss wird längstens bis zur Vollendung des 18. Lebensjahres des Kindes gezahlt. Für Kinder zwischen 12 und 17 Jahren gelten zusätzliche Voraussetzungen: Entweder darf das Kind selbst keine Bürgergeld-Leistungen beziehen oder der alleinerziehende Elternteil muss bei Bezug von Bürgergeld ein eigenes Einkommen von mindestens 600 Euro brutto erzielen.</p>
 
-  <h2>Häufig gestellte Fragen (FAQ)</h2>
-  <div class="faq-section">
-    <h3>Wie lange wird Unterhaltsvorschuss gezahlt und was sind die Altersgrenzen?</h3>
-    <p>Unterhaltsvorschuss wird längstens bis zur Vollendung des 18. Lebensjahres des Kindes gezahlt. Für Kinder zwischen 12 und 17 Jahren gelten zusätzliche Voraussetzungen: Entweder darf das Kind selbst keine Bürgergeld-Leistungen beziehen, oder der alleinerziehende Elternteil muss bei Bezug von Bürgergeld ein eigenes Einkommen von mindestens 600 Euro brutto erzielen.</p>
+    <h3>Muss der andere Elternteil den Vorschuss zurückzahlen?</h3>
+    <p>Ja. Die Unterhaltsvorschusskasse holt sich das Geld vom unterhaltspflichtigen Elternteil zurück, sofern dieser leistungsfähig ist. Der Unterhaltsvorschuss ist eine Ausfallleistung des Staates, die den Kindesunterhalt aber nicht ersetzt.</p>
 
-    <h3>Muss der andere Elternteil den Vorschuss zurückzahlen?</h3>
-    <p>Ja. Die Unterhaltsvorschusskasse holt sich das Geld vom unterhaltspflichtigen Elternteil zurück, sofern dieser leistungsfähig ist. Der Vorschuss ist eine Ausfallleistung des Staates, der den Unterhaltsanspruch des Kindes übernimmt und diesen gegen den Unterhaltspflichtigen geltend macht (Regress).</p>
-
-    <h3>Wird der Unterhaltsvorschuss auf das Bürgergeld angerechnet?</h3>
-    <p>Ja, der Unterhaltsvorschuss gilt als Einkommen des Kindes und wird vollständig auf dessen Bürgergeld-Bedarf angerechnet.</p>
-
-    <h3>Was passiert, wenn ich wieder heirate?</h3>
-    <p>Wenn Sie als alleinerziehender Elternteil erneut heiraten, entfällt der Anspruch auf Unterhaltsvorschuss ab dem Monat der Heirat. Der neue Ehepartner wird dann in die Unterhaltsverpflichtung für die Familie mit einbezogen.</p>
-  </div>
+    <h3>Was passiert, wenn ich wieder heirate?</h3>
+    <p>Wenn Sie als alleinerziehender Elternteil erneut heiraten, entfällt der Anspruch auf Unterhaltsvorschuss ab dem Monat der Heirat. Der neue Ehepartner wird dann in die Unterhaltsverpflichtung für die Familie mit einbezogen.</p>
+    
+    <h3>Wird der Unterhaltsvorschuss auf das Bürgergeld angerechnet?</h3>
+    <p>Ja, der Unterhaltsvorschuss gilt als Einkommen des Kindes und wird vollständig auf dessen Bürgergeld-Bedarf angerechnet.</p>
+  </div>
 </div>
 
 <footer>
-  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
 </footer>
 
 </body>
-
 </html>
-
