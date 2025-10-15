@@ -1,216 +1,126 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Vertrag richtig kündigen: Fristen, Form & Sonderkündigungsrecht | Sozial-Lotse</title>
-  <meta name="description" content="Lernen Sie, wie Sie Verträge und Abonnements (z.B. Fitnessstudio, Handyvertrag) rechtssicher kündigen. Alles zu Kündigungsfristen, Sonderkündigungsrecht, der korrekten Form und dem gesetzlichen 'Kündigungs-Button'.">
-  <meta name="keywords" content="Kündigung, Vertrag kündigen, Abo kündigen, Kündigungsfrist, Sonderkündigungsrecht, außerordentliche Kündigung, Textform, Kündigungs-Button, Verbraucherrecht, BGB, Vorlage, Sozial-Lotse">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/logo-lotse-fav.png">
- <style>
-    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+  <meta charset="UTF-8">
+  <title>Vertrag richtig kündigen: Fristen, Form & Vorlagen | Sozial-Lotse</title>
+  <meta name="description" content="Lernen Sie, wie Sie Verträge und Abonnements (z.B. Fitnessstudio, Handyvertrag) rechtssicher kündigen. Alles zu Kündigungsfristen, Sonderkündigungsrecht und der richtigen Form.">
+  <meta name="keywords" content="Kündigung, Vertrag kündigen, Abo kündigen, Kündigungsfrist, Sonderkündigungsrecht, Vorlage, Verbraucherrecht, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <style>
+    /* Das CSS wird von deinen anderen Lotse-Seiten übernommen für ein einheitliches Design. */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
     .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #16a085; text-align: center; }
+    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #2c3e50; text-align: center; }
     h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
-    h3 { font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.8rem; color: #2980b9; }
-    p, ul li { margin-bottom: 1rem; }
-    ul { padding-left: 20px; }
+    p, ul li, ol li { margin-bottom: 1rem; }
+    ul, ol { padding-left: 20px; }
     .highlight-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; padding: 15px; margin: 1.5rem 0; border-radius: 5px; }
     .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; padding: 15px; margin: 1.5rem 0; font-size: 0.95em;}
-    strong { color: #1e8449; }
-    .cta-button {
-      display: inline-block; background: #0070f3; color: white !important; padding: 0.8rem 1.5rem;
-      text-decoration: none; border-radius: 6px; margin-top: 0.5rem; font-weight: bold;
-    }
-    .cta-button:hover { background-color: #005bb5; }
+    strong { color: #2980b9; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; transition: color 0.2s; }
+    .site-logo:hover { color: #d35400; }
     footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
     footer a { color: #555; text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      h2 { font-size: 1.4rem; }
-      h3 { font-size: 1.2rem; }
-      .page-container { padding: 1rem; margin: 1rem auto; }
-    }
-    .button-container {
-    /* Zentriert den Button innerhalb des Containers */
-    text-align: center;
-    /* Fügt etwas Abstand nach oben und unten hinzu */
-    margin: 2.5rem 0;
-}
-
-.button-primary {
-    /* Farben und Form */
-    display: inline-block;
-    background-color: #d35400; /* Deine Hauptfarbe */
-    color: #ffffff;
-    padding: 14px 28px;
-    border-radius: 8px;
-    
-    /* Schrift und Text */
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none; /* Wichtig, um die Link-Unterstreichung zu entfernen */
-    
-    /* Moderne Effekte */
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease-in-out;
-}
-
-/* Hover-Effekt für Interaktivität */
-.button-primary:hover {
-    background-color: #a94400; /* Dunklere Variante deiner Hauptfarbe */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-    /* Stil für den Header-Container */
-.site-header {
-    background-color: #ffffff; /* Weißer Hintergrund */
-    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
-    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
-    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
-    text-align: center;
-}
-
-/* Stil für das Logo bzw. den Seitennamen */
-.site-logo {
-    color: #1a5276; /* Deine dunkle Akzentfarbe */
-    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Link-Unterstreichung */
-    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
-}
-
-.site-logo:hover {
-    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
-}
   </style>
-  <script type="application/ld+json">
+  <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Was bedeutet 'Kündigung zum nächstmöglichen Zeitpunkt'?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Diese Formulierung ist eine sichere Wahl, wenn Sie Ihre genaue Kündigungsfrist nicht kennen. Sie bedeutet, dass Sie den Vertrag zur erstmöglichen Gelegenheit beenden möchten, die sich aus den Vertragsbedingungen ergibt. Der Anbieter ist dann verpflichtet, Ihnen das genaue Beendigungsdatum in der Kündigungsbestätigung mitzuteilen. So vermeiden Sie eine fehlerhafte Datumsangabe, die Ihre Kündigung ungültig machen könnte."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Welche Kündigungsform ist seit 2022 gesetzlich vorgeschrieben?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Für die meisten Verbraucherverträge ist die 'Textform' ausreichend. Das bedeutet, Sie brauchen keine Unterschrift (im Gegensatz zur 'Schriftform'). Seit Juli 2022 müssen Anbieter von Online-Diensten und Abonnements (z.B. Streaming, Online-Zeitung) einen leicht auffindbaren 'Kündigungs-Button' auf ihrer Website bereitstellen, der die Kündigung genauso einfach macht wie der Vertragsabschluss."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Was ist das Sonderkündigungsrecht?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Das Sonderkündigungsrecht (oder außerordentliche Kündigung nach § 314 BGB) erlaubt Ihnen, einen Vertrag fristlos oder mit einer verkürzten Frist zu beenden, wenn ein 'wichtiger Grund' vorliegt, der Ihnen das Festhalten am Vertrag unzumutbar macht. Das ist z.B. der Fall, wenn der Anbieter die Preise erhöht, vertraglich zugesicherte Leistungen dauerhaft nicht erbringt oder Sie unverschuldet umziehen und der Vertrag standortgebunden ist."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Wie lange darf die Kündigungsfrist bei Verträgen maximal sein?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Für die meisten neuen Verbraucherverträge (nach dem 01.03.2022 abgeschlossen) gilt, dass sich der Vertrag nach der Erstlaufzeit nur noch auf unbestimmte Zeit verlängern darf und die Kündigungsfrist in diesem Fall **maximal einen Monat** betragen darf (§ 309 Nr. 9 BGB). Eine Kündigungsfrist von 3 Monaten gilt oft nur für die Kündigung zum Ende der initialen Mindestlaufzeit."
-      }
-    }
-  ]
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was bedeutet 'Kündigung zum nächstmöglichen Zeitpunkt'?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Diese Formulierung ist eine sichere Wahl, wenn Sie Ihre genaue Kündigungsfrist nicht kennen. Sie bedeutet, dass Sie den Vertrag zur erstmöglichen Gelegenheit beenden möchten, die sich aus den Vertragsbedingungen ergibt. Der Anbieter ist dann verpflichtet, Ihnen das genaue Beendigungsdatum in der Kündigungsbestätigung mitzuteilen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Muss ich meine Kündigung per Post schicken?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das hängt vom Vertrag ab. Oft reicht eine Kündigung in 'Textform' (z.B. per E-Mail oder Kontaktformular). Die sicherste Methode ist jedoch immer der Versand per Einwurf-Einschreiben. Damit haben Sie einen rechtssicheren Nachweis, dass Ihre Kündigung fristgerecht angekommen ist. Seit Juli 2022 müssen viele Online-Verträge auch über einen leicht auffindbaren 'Kündigungs-Button' auf der Website gekündigt werden können."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist das Sonderkündigungsrecht?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Sonderkündigungsrecht (oder außerordentliche Kündigung) erlaubt Ihnen, einen Vertrag fristlos oder mit einer verkürzten Frist zu beenden, wenn ein 'wichtiger Grund' vorliegt. Das ist z.B. der Fall, wenn der Anbieter die Preise erhöht oder vertraglich zugesicherte Leistungen nicht mehr erbringt. Auch ein Umzug kann bei standortgebundenen Verträgen (wie Fitnessstudio) ein Sonderkündigungsrecht begründen."
+      }
+    }
+  ]
 }
 </script>
 </head>
 <body>
 
 <header class="site-header">
-    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Verträge und Abos richtig kündigen: Fristen, Form & Nachweis</h1>
+  <h1>Verträge und Abos richtig kündigen: So geht's</h1>
 
-  <p class="highlight-box">Ob Fitnessstudio, Handyvertrag oder Streaming-Dienst – Verträge sind schnell abgeschlossen, aber die Beendigung erfordert oft mehr Aufmerksamkeit. Eine **formell korrekte und nachweisbare Kündigung** ist entscheidend, um ungewollte Vertragsverlängerungen und weitere Kosten zu vermeiden. Wir zeigen Ihnen, worauf Sie achten müssen, um rechtlich auf der sicheren Seite zu sein.</p>
+  <p class="highlight-box">Ob Fitnessstudio, Handyvertrag oder Streaming-Dienst – Verträge sind schnell abgeschlossen, aber die Beendigung erfordert oft mehr Aufmerksamkeit. Eine formell korrekte Kündigung ist entscheidend, um ungewollte Vertragsverlängerungen und weitere Kosten zu vermeiden. Wir zeigen Ihnen, worauf Sie achten müssen.</p>
 
-  <h2>Die 3 Säulen einer rechtssicheren Kündigung</h2>
-  <p>Egal, welchen Vertrag Sie beenden möchten, diese drei Punkte sind immer entscheidend für den Erfolg und müssen beachtet werden:</p>
-  <ol>
-      <li>**Die Frist einhalten (Der Zeitpunkt):** Die Kündigungsfrist ist der wichtigste Faktor. Ihre Kündigung muss **vor Ablauf der Frist beim Anbieter eingehen**. Das Datum des Poststempels ist dabei unerheblich! Planen Sie immer einen Puffer für den Postweg ein. Nach der ersten Mindestlaufzeit gilt oft eine maximale Kündigungsfrist von einem Monat.</li>
-      <li>**Die richtige Form wahren (Die Art):** Prüfen Sie im Vertrag, welche Form vorgeschrieben ist.
-        <ul>
-            <li>**Schriftform:** Erfordert zwingend eine handschriftliche Unterschrift (Brief oder Fax mit Unterschrift).</li>
-            <li>**Textform:** Erfordert keine Unterschrift und kann per E-Mail, Fax oder über das Online-Kontaktformular erfolgen (Standard bei den meisten Verbraucherverträgen).</li>
-            <li>**Kündigungs-Button:** Bei vielen Online-Verträgen gesetzlich vorgeschrieben!</li>
-        </ul>
-      </li>
-      <li>**Den Zugang nachweisen (Die Sicherheit):** Im Streitfall müssen Sie beweisen können, dass der Anbieter Ihre Kündigung rechtzeitig erhalten hat. Der sicherste Weg dafür ist der Versand per **Einwurf-Einschreiben**.</li>
-  </ol>
+  <h2>Die 3 goldenen Regeln für jede Kündigung</h2>
+  <p>Egal, welchen Vertrag Sie beenden möchten, diese drei Punkte sind immer entscheidend für den Erfolg:</p>
+  <ol>
+      <li><strong>Die richtige Form wahren:</strong> Prüfen Sie im Vertrag, ob eine bestimmte Form vorgeschrieben ist (z.B. "Schriftform", was eine Unterschrift erfordert). Auf der sicheren Seite sind Sie immer mit einem unterschriebenen Brief.</li>
+      <li><strong>Die Frist einhalten:</strong> Die Kündigungsfrist ist der wichtigste Faktor. Ihre Kündigung muss **vor Ablauf der Frist beim Anbieter eingehen**. Das Datum des Poststempels ist dabei unerheblich! Planen Sie also immer einen Puffer ein.</li>
+      <li><strong>Den Zugang nachweisen:</strong> Im Streitfall müssen Sie beweisen können, dass der Anbieter Ihre Kündigung rechtzeitig erhalten hat. Der sicherste Weg dafür ist der Versand per <strong>Einwurf-Einschreiben</strong>. Bei einer Kündigung per E-Mail sollten Sie immer um eine schriftliche Eingangsbestätigung bitten.</li>
+  </ol>
 
-  <h2>Wichtige Neuerungen im Verbraucherrecht (seit 2022)</h2>
-  <p>Dank neuer gesetzlicher Regelungen ist die Kündigung von Verbraucherverträgen einfacher und fairer geworden:</p>
-  <ul>
-      <li>**Der Kündigungs-Button (§ 312k BGB):** Anbieter von Verträgen, die online abgeschlossen werden können, müssen eine leicht auffindbare Schaltfläche („Kündigungs-Button“) bereitstellen, über die der Vertrag mit wenigen Klicks beendet werden kann. Fehlt dieser, kann der Vertrag jederzeit fristlos gekündigt werden.</li>
-      <li>**Maximale Verlängerung:** Verträge, die sich nach der Mindestlaufzeit automatisch verlängern, dürfen sich nur noch auf **unbestimmte Zeit** verlängern. Die Kündigungsfrist beträgt in dieser Verlängerungsphase **maximal einen Monat** (§ 309 Nr. 9 BGB).</li>
-  </ul>
+  <h2>Ordentliche vs. Außerordentliche Kündigung</h2>
+  <p>Das Gesetz unterscheidet zwei Hauptarten der Kündigung.</p>
+  
+  <h3>Die ordentliche (fristgerechte) Kündigung</h3>
+  <p>Dies ist der Normalfall. Sie beenden den Vertrag unter Einhaltung der vereinbarten Kündigungsfrist zum Ende der Laufzeit. Eine Begründung ist hierfür <strong>nicht erforderlich</strong>. Sie können entweder "zum nächstmöglichen Zeitpunkt" kündigen (empfohlen, wenn Sie die Frist nicht genau kennen) oder zu einem konkreten Datum, falls dieses bekannt ist.</p>
+  
+  <h3>Die außerordentliche (fristlose) Kündigung</h3>
+  <p>Diese beendet den Vertrag sofort oder mit kurzer Frist. Sie ist nur aus einem <strong>"wichtigen Grund"</strong> möglich, der es Ihnen unzumutbar macht, am Vertrag festzuhalten. Typische Gründe sind:</p>
+  <ul>
+      <li>Einseitige Preiserhöhungen durch den Anbieter (Sonderkündigungsrecht).</li>
+      <li>Nicht-Erbringung der vertraglich zugesicherten Leistung.</li>
+      <li>Ein Umzug, wenn die Leistung an einen Ort gebunden ist (z.B. Fitnessstudio, lokaler Internetanbieter).</li>
+  </ul>
+  <p class="warning-box">Bei einer außerordentlichen Kündigung müssen Sie den wichtigen Grund in Ihrem Schreiben <strong>immer angeben und begründen</strong>.</p>
+  
+  <h2>Wichtige Zusatz-Erklärungen in Ihrer Kündigung</h2>
+  <p>Eine gute Kündigung beendet nicht nur den Vertrag, sondern regelt auch wichtige Nebensachen. Denken Sie an diese beiden Punkte:</p>
+  <ul>
+      <li><strong>Einzugsermächtigung widerrufen:</strong> Widerrufen Sie das erteilte SEPA-Lastschriftmandat zum Vertragsende. Das verhindert, dass der Anbieter versehentlich oder unberechtigt weiter Geld von Ihrem Konto abbucht.</li>
+      <li><strong>Werbung widersprechen:</strong> Untersagen Sie dem Unternehmen die weitere Nutzung Ihrer Daten zu Werbezwecken. So vermeiden Sie unerwünschte Anrufe oder E-Mails nach Vertragsende.</li>
+  </ul>
+  
+  <h2>Eine rechtssichere Kündigung für jeden Vertrag erstellen</h2>
+  <p>Unser universeller Generator fragt alle wichtigen Punkte ab und erstellt ein formell korrektes Kündigungsschreiben, das auf Ihre Situation zugeschnitten ist – egal ob ordentlich, fristlos, mit oder ohne Datum.</p>
+  <div style="text-align:center; margin: 2rem 0;">
+      <a href="generator-kuendigung.html" style="background-color: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zum Kündigungs-Generator</a>
+  </div>
 
-  <h2>Ordentliche vs. Außerordentliche Kündigung</h2>
-  <p>Das Gesetz unterscheidet zwei Hauptarten der Vertragsbeendigung:</p>
-  
-  <h3>1. Die ordentliche (fristgerechte) Kündigung</h3>
-  <p>Dies ist der Normalfall. Sie beenden den Vertrag unter Einhaltung der vereinbarten Kündigungsfrist zum Ende der Laufzeit. Eine Begründung ist hierfür **nicht erforderlich**. Es empfiehlt sich, **"zum nächstmöglichen Zeitpunkt"** zu kündigen, um keine Fehler bei der Datumsangabe zu machen.</p>
-  
-  <h3>2. Die außerordentliche (fristlose) Kündigung / Sonderkündigungsrecht</h3>
-  <p>Diese beendet den Vertrag sofort oder mit sehr kurzer Frist. Sie ist nur aus einem **"wichtigen Grund"** (§ 314 BGB) möglich, der es Ihnen unzumutbar macht, am Vertrag festzuhalten. Typische Gründe sind:</p>
-  <ul>
-      <li>**Preiserhöhung:** Einseitige, nicht gerechtfertigte Preisanpassungen durch den Anbieter.</li>
-      <li>**Leistungsmangel:** Dauerhafte Nicht-Erbringung der vertraglich zugesicherten Leistung (z.B. Internet- oder Telefonanschluss funktioniert über längere Zeit nicht).</li>
-      <li>**Umzug:** Bei standortgebundenen Verträgen (z.B. Fitnessstudio, lokaler Kabelanbieter), wenn die Leistung am neuen Wohnort nicht erbracht werden kann.</li>
-  </ul>
-  <p class="warning-box">Bei einer außerordentlichen Kündigung müssen Sie den wichtigen Grund in Ihrem Schreiben **immer angeben, konkret begründen und dem Anbieter eine Frist zur Nachbesserung gesetzt haben** (falls möglich), bevor Sie die fristlose Kündigung aussprechen.</p>
-  
-  <h2>Wichtige Zusatz-Erklärungen in Ihrer Kündigung</h2>
-  <p>Eine gute Kündigung beendet nicht nur den Vertrag, sondern regelt auch wichtige Nebensachen. Denken Sie an diese beiden Punkte:</p>
-  <ul>
-      <li>**Einzugsermächtigung widerrufen:** Widerrufen Sie vorsorglich das erteilte SEPA-Lastschriftmandat zum Vertragsende. Das verhindert, dass der Anbieter versehentlich oder unberechtigt weiter Geld von Ihrem Konto abbucht.</li>
-      <li>**Kündigungsbestätigung verlangen:** Fordern Sie immer eine schriftliche Bestätigung des Beendigungsdatums.</li>
-  </ul>
-  
-  <h2>Eine rechtssichere Kündigung für jeden Vertrag erstellen</h2>
-  <p>Unser universeller Generator fragt alle wichtigen Punkte ab und erstellt ein formell korrektes Kündigungsschreiben, das auf Ihre Situation zugeschnitten ist – egal ob ordentlich, fristlos, mit oder ohne Datum. Sie erhalten die fertige Vorlage, die Sie nur noch unterschreiben und versenden müssen.</p>
-  <div style="text-align:center; margin: 2rem 0;">
-      <a href="generator-kuendigung.html" style="background-color: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zum Kündigungs-Generator</a>
-  </div>
+  <h2>Häufig gestellte Fragen (FAQ)</h2>
+  <div class="faq-section">
+    <h3>Was bedeutet "Kündigung zum nächstmöglichen Zeitpunkt"?</h3>
+    <p>Diese Formulierung ist eine sichere Wahl, wenn Sie Ihre genaue Kündigungsfrist nicht kennen. Sie bedeutet, dass Sie den Vertrag zur erstmöglichen Gelegenheit beenden möchten, die sich aus den Vertragsbedingungen ergibt. Der Anbieter ist dann verpflichtet, Ihnen das genaue Beendigungsdatum in der Kündigungsbestätigung mitzuteilen.</p>
+    
+    <h3>Muss ich meine Kündigung per Post schicken?</h3>
+    <p>Das hängt vom Vertrag ab. Oft reicht eine Kündigung in "Textform" (z.B. per E-Mail oder Kontaktformular). Die sicherste Methode ist jedoch immer der Versand per Einwurf-Einschreiben. Damit haben Sie einen rechtssicheren Nachweis, dass Ihre Kündigung fristgerecht angekommen ist. Seit Juli 2022 müssen viele Online-Verträge auch über einen leicht auffindbaren "Kündigungs-Button" auf der Website gekündigt werden können.</p>
 
-  <h2>Häufig gestellte Fragen (FAQ)</h2>
-  <div class="faq-section">
-    <h3>Was bedeutet "Kündigung zum nächstmöglichen Zeitpunkt"?</h3>
-    <p>Diese Formulierung ist eine sichere Wahl, wenn Sie Ihre genaue Kündigungsfrist nicht kennen. Sie bedeutet, dass Sie den Vertrag zur erstmöglichen Gelegenheit beenden möchten, die sich aus den Vertragsbedingungen ergibt. Der Anbieter ist dann verpflichtet, Ihnen das genaue Beendigungsdatum in der Kündigungsbestätigung mitzuteilen. So vermeiden Sie eine fehlerhafte Datumsangabe, die Ihre Kündigung ungültig machen könnte.</p>
-    
-    <h3>Welche Kündigungsform ist seit 2022 gesetzlich vorgeschrieben?</h3>
-    <p>Für die meisten Verbraucherverträge ist die **'Textform'** ausreichend. Das bedeutet, Sie brauchen keine Unterschrift (im Gegensatz zur 'Schriftform'). Seit Juli 2022 müssen Anbieter von Online-Diensten und Abonnements (z.B. Streaming, Online-Zeitung) einen leicht auffindbaren **'Kündigungs-Button'** auf ihrer Website bereitstellen, der die Kündigung genauso einfach macht wie der Vertragsabschluss. Fehlt dieser Button, ist eine sofortige Kündigung möglich.</p>
-
-    <h3>Was ist das Sonderkündigungsrecht?</h3>
-    <p>Das Sonderkündigungsrecht (oder außerordentliche Kündigung nach § 314 BGB) erlaubt Ihnen, einen Vertrag fristlos oder mit einer verkürzten Frist zu beenden, wenn ein **'wichtiger Grund'** vorliegt, der Ihnen das Festhalten am Vertrag unzumutbar macht. Das ist z.B. der Fall, wenn der Anbieter die Preise erhöht, vertraglich zugesicherte Leistungen dauerhaft nicht erbringt oder Sie unverschuldet umziehen und der Vertrag standortgebunden ist.</p>
-    
-    <h3>Wie lange darf die Kündigungsfrist bei Verträgen maximal sein?</h3>
-    <p>Für die meisten neuen Verbraucherverträge (nach dem 01.03.2022 abgeschlossen) gilt, dass sich der Vertrag nach der Erstlaufzeit nur noch auf unbestimmte Zeit verlängern darf und die Kündigungsfrist in diesem Fall **maximal einen Monat** betragen darf (§ 309 Nr. 9 BGB). Eine Kündigungsfrist von 3 Monaten gilt oft nur für die Kündigung zum Ende der initialen Mindestlaufzeit.</p>
-  </div>
+    <h3>Was ist das Sonderkündigungsrecht?</h3>
+    <p>Das Sonderkündigungsrecht (oder außerordentliche Kündigung) erlaubt Ihnen, einen Vertrag fristlos oder mit einer verkürzten Frist zu beenden, wenn ein "wichtiger Grund" vorliegt. Das ist z.B. der Fall, wenn der Anbieter die Preise erhöht oder vertraglich zugesicherte Leistungen nicht mehr erbringt. Auch ein Umzug kann bei standortgebundenen Verträgen (wie Fitnessstudio) ein Sonderkündigungsrecht begründen.</p>
+  </div>
 </div>
 
 <footer>
-  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
 </footer>
 
 </body>
-
 </html>
-
