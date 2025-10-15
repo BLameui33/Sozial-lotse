@@ -1,199 +1,114 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Widerrufsrecht (§ 355 BGB): 14 Tage Bedenkzeit bei Online-Verträgen | Sozial-Lotse</title>
-  <meta name="description" content="Informationen zum gesetzlichen 14-tägigen Widerrufsrecht (§ 355 BGB) für Verbraucher bei Online-, Telefon- oder Haustürgeschäften. Erfahren Sie alles über Fristbeginn, Ausnahmen und die Rückabwicklung von Verträgen.">
-  <meta name="keywords" content="Widerrufsrecht, 14 Tage, Widerruf, Fernabsatzvertrag, § 355 BGB, Verbraucherrecht, Vertrag, Rückabwicklung, Online-Shop, Sozial-Lotse">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/logo-lotse-fav.png">
-  <style>
-    /* Das CSS wird ähnlich sein wie bei den anderen Lotse-Seiten. */
+  <meta charset="UTF-8">
+  <title>Vertrag widerrufen (14-Tage-Frist) | Sozial-Lotse</title>
+  <meta name="description" content="Erstellen Sie ein rechtssicheres Widerrufsschreiben für Online-, Telefon- oder Haustürverträge. Nutzen Sie Ihr 14-tägiges Widerrufsrecht als Verbraucher.">
+  <meta name="keywords" content="Widerruf, 14 Tage Widerrufsrecht, Fernabsatzvertrag, Vertrag kündigen, widerrufen, Verbraucherrecht, Generator, Vorlage, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="widerruf_script.js"></script>
+  <style>
+    /* Gleiche Stile wie bei den anderen Seiten */
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; background-color: #f9f9f9; color: #333; margin: 0; padding: 0; }
     .page-container { max-width: 800px; margin: 2rem auto; background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1 { font-size: 2.2rem; margin-bottom: 1.5rem; color: #16a085; text-align: center; }
-    h2 { font-size: 1.6rem; margin-top: 2rem; margin-bottom: 1rem; color: #1a5276; border-bottom: 2px solid #aed6f1; padding-bottom: 0.6rem; }
-    h3 { font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.8rem; color: #2980b9; }
-    p, ul li { margin-bottom: 1rem; }
-    ul { padding-left: 20px; }
-    .highlight-box { background-color: #eafaf1; border-left: 5px solid #2ecc71; padding: 15px; margin: 1.5rem 0; border-radius: 5px; }
-    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; padding: 15px; margin: 1.5rem 0; font-size: 0.95em;}
-    strong { color: #1e8449; }
-    .cta-button {
-      display: inline-block; background: #0070f3; color: white !important; padding: 0.8rem 1.5rem;
-      text-decoration: none; border-radius: 6px; margin-top: 0.5rem; font-weight: bold;
-    }
-    .cta-button:hover { background-color: #005bb5; }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #2c3e50; text-align: center; }
+    fieldset { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2rem; border-radius: 6px; }
+    legend { font-weight: bold; font-size: 1.5em; padding: 0 0.5em; color: #1a5276; margin-bottom:1rem;}
+    label { display: block; margin-top: 1rem; font-weight: 500; }
+    label small { display: block; font-weight: normal; font-size: 0.85em; color: #555; margin-top: 0.2rem; }
+    input[type="text"], input[type="date"], textarea { width: 100%; padding: 10px; margin-top: 0.3rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    .checkbox-group label { font-weight: normal; }
+    .checkbox-group input { width: auto; margin-right: 8px; }
+    .button-group { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; text-align: center; }
+    button { padding: 12px 25px; font-size: 1.1rem; border-radius: 6px; cursor: pointer; border: none; font-weight: bold; margin: 0 0.5rem; }
+    .button-primary { background-color: #d35400; color: white; }
+    .button-secondary { background-color: #7f8c8d; color: white; }
+    .info-box, .warning-box { padding: 1rem 1.5rem; border-radius: 5px; margin: 1.5rem 0; }
+    .info-box { background-color: #eaf2f8; border-left: 5px solid #3498db; }
+    .warning-box { background-color: #fcf8e3; border-left: 5px solid #f0ad4e; }
+    .site-header { background-color: #ffffff; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.07); border-bottom: 1px solid #e9ecef; margin-bottom: 2rem; text-align: center; }
+    .site-logo { color: #1a5276; font-size: 1.5rem; font-weight: bold; text-decoration: none; }
     footer { text-align: center; padding: 2rem 0; margin-top: 2rem; font-size: 0.9em; color: #666; }
     footer a { color: #555; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      h2 { font-size: 1.4rem; }
-      h3 { font-size: 1.2rem; }
-      .page-container { padding: 1rem; margin: 1rem auto; }
-    }
-    .button-container {
-    /* Zentriert den Button innerhalb des Containers */
-    text-align: center;
-    /* Fügt etwas Abstand nach oben und unten hinzu */
-    margin: 2.5rem 0;
-}
-
-.button-primary {
-    /* Farben und Form */
-    display: inline-block;
-    background-color: #d35400; /* Deine Hauptfarbe */
-    color: #ffffff;
-    padding: 14px 28px;
-    border-radius: 8px;
-    
-    /* Schrift und Text */
-    font-weight: bold;
-    font-size: 1.1rem;
-    text-decoration: none; /* Wichtig, um die Link-Unterstreichung zu entfernen */
-    
-    /* Moderne Effekte */
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease-in-out;
-}
-
-/* Hover-Effekt für Interaktivität */
-.button-primary:hover {
-    background-color: #a94400; /* Dunklere Variante deiner Hauptfarbe */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-    /* Stil für den Header-Container */
-.site-header {
-    background-color: #ffffff; /* Weißer Hintergrund */
-    padding: 1rem 2rem;        /* Innenabstand oben/unten und links/rechts */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07); /* Subtiler Schatten nach unten */
-    border-bottom: 1px solid #e9ecef; /* Feine untere Trennlinie */
-    margin-bottom: 2rem;       /* Abstand zum Inhalt darunter */
-    text-align: center;
-}
-
-/* Stil für das Logo bzw. den Seitennamen */
-.site-logo {
-    color: #1a5276; /* Deine dunkle Akzentfarbe */
-    font-size: 1.5rem;   /* Angenehme, gut lesbare Größe */
-    font-weight: bold;
-    text-decoration: none; /* Entfernt die Link-Unterstreichung */
-    transition: color 0.2s; /* Weicher Farbwechsel beim Hovern */
-}
-
-.site-logo:hover {
-    color: #d35400; /* Deine orange Hauptfarbe als Hover-Effekt */
-}
   </style>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Wann beginnt die Widerrufsfrist von 14 Tagen?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Bei Warenlieferungen beginnt die Frist, sobald Sie oder ein von Ihnen benannter Dritter (nicht der Lieferdienst) die Ware erhalten hat. Bei Dienstleistungen beginnt die Frist am Tag des Vertragsschlusses. Die Frist beginnt aber nur, wenn Sie ordnungsgemäß über Ihr Widerrufsrecht belehrt wurden."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Wer trägt die Kosten für die Rücksendung der Ware?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Grundsätzlich tragen Sie als Verbraucher die unmittelbaren Kosten der Rücksendung, WENN der Verkäufer Sie vorab in der Widerrufsbelehrung darüber informiert hat. Viele Online-Händler übernehmen die Kosten aber freiwillig als Service."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Was passiert nach dem Widerruf mit meinem Geld?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Der Verkäufer muss Ihnen alle Zahlungen (einschließlich der Standard-Lieferkosten zum Zeitpunkt des Kaufs) spätestens innerhalb von **14 Tagen** nach Eingang des Widerrufs zurückzahlen. Der Verkäufer darf die Rückzahlung aber solange verweigern, bis er die Ware zurückerhalten oder Sie einen Versandnachweis erbracht haben."
-      }
-    }
-  ]
-}
-</script>
 </head>
 <body>
 
 <header class="site-header">
-    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Das Widerrufsrecht (§ 355 BGB): 14 Tage Bedenkzeit bei Online-Käufen</h1>
+  <h1>Widerruf eines Online- oder Telefonvertrags</h1>
+  <div class="info-box">
+    <p>Bei Verträgen, die Sie im Internet, am Telefon, an der Haustür oder auf der Straße abschließen, haben Sie als Verbraucher ein <strong>gesetzliches Widerrufsrecht von 14 Tagen</strong>. Sie können den Vertrag in dieser Zeit ohne Angabe von Gründen auflösen. Eine Begründung ist nicht notwendig.</p>
+  </div>
+  <div class="warning-box">
+    <p><strong>Frist beachten und Versand nachweisen!</strong> Die 14-Tage-Frist beginnt erst, wenn Sie die Ware erhalten UND korrekt über Ihr Widerrufsrecht informiert wurden. Senden Sie Ihren Widerruf am besten so, dass Sie einen Nachweis haben (z.B. per Einwurf-Einschreiben oder per E-Mail mit Bitte um Eingangsbestätigung).</p>
+  </div>
+<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+</p>
+<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
+</p>
 
-  <p class="highlight-box">Das gesetzliche Widerrufsrecht nach § 355 des Bürgerlichen Gesetzbuches (BGB) ist Ihr wichtigstes Schutzschild als Verbraucher. Es gewährt Ihnen eine **14-tägige Bedenkzeit**, um von Verträgen zurückzutreten, die Sie außerhalb von Geschäftsräumen geschlossen haben – typischerweise online oder am Telefon.</p>
+  <form id="widerrufForm">
+    <fieldset>
+      <legend>1. Ihre Angaben (Verbraucher/in)</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required>
+      <label for="personAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="personAdresse" required>
+      <label for="personPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="personPlzOrt" required>
+    </fieldset>
 
-  <h2>Wann gilt das 14-tägige Widerrufsrecht?</h2>
-  <p>Das Recht zum Widerruf gilt für sogenannte **Fernabsatzverträge** (Online-Shop, E-Mail, Telefon) und **außerhalb von Geschäftsräumen geschlossene Verträge** (Haustür, Straße, Kaffeefahrten). Es dient dem Schutz, da Sie die Ware vor dem Kauf nicht prüfen oder sich in Ruhe beraten lassen konnten.</p>
-  <ul>
-      <li>**Gilt NICHT:** Für Verträge, die Sie in einem stationären Geschäft abschließen. Hier besteht nur ein Umtauschrecht, wenn der Händler dies freiwillig anbietet (Kulanz).</li>
-      <li>**Gilt:** Für fast alle Waren und Dienstleistungen, die Sie **online** oder **am Telefon** bestellt haben.</li>
-  </ul>
+    <fieldset>
+      <legend>2. Angaben zum Unternehmen</legend>
+      <label for="unternehmenName">Name des Unternehmens:</label>
+      <input type="text" id="unternehmenName" required>
+      <label for="unternehmenAdresse">Anschrift des Unternehmens:</label>
+      <textarea id="unternehmenAdresse" rows="3" required></textarea>
+    </fieldset>
 
-  <h2>Der Fristbeginn: So laufen die 14 Tage richtig</h2>
-  <p>Der Startpunkt der Widerrufsfrist ist entscheidend. Die Frist beginnt nur, wenn zwei Bedingungen erfüllt sind:</p>
-  <ol>
-      <li>Sie wurden **ordnungsgemäß** über Ihr Widerrufsrecht belehrt (Widerrufsbelehrung in Textform).</li>
-      <li>Der Fristbeginn ist eingetreten:</li>
-        <ul>
-          <li>**Bei Waren:** Am Tag, an dem Sie oder ein Dritter (nicht der Paketbote) die **letzte Ware** aus einer Bestellung erhalten haben.</li>
-          <li>**Bei Dienstleistungen:** Am Tag des **Vertragsschlusses**.</li>
-        </ul>
-  </ol>
-  <p class="warning-box"><strong>Die Verlängerung:</strong> Hat der Unternehmer Sie **nicht oder fehlerhaft** über Ihr Widerrufsrecht belehrt, beginnt die Frist nicht zu laufen. Ihr Widerrufsrecht verlängert sich in diesem Fall automatisch auf maximal **12 Monate und 14 Tage**.</p>
-  
-  <h2>Wann ist der Widerruf ausgeschlossen? (Wichtige Ausnahmen)</h2>
-  <p>Das Widerrufsrecht gilt nicht uneingeschränkt. Das Gesetz schließt es für folgende Bereiche aus:</p>
-  <ul>
-      <li>Waren, die nach **Kundenspezifikation** angefertigt wurden (z.B. ein graviertes Schmuckstück).</li>
-      <li>Versiegelte Waren, deren Versiegelung nach der Lieferung entfernt wurde und die aus **Gesundheits- oder Hygienegründen** nicht zur Rückgabe geeignet sind (z.B. bestimmte Kosmetika, Ohrringe).</li>
-      <li>**Digitale Inhalte** (Downloads, Streaming), wenn Sie der Ausführung des Vertrags vor Ablauf der Frist zugestimmt und **zugleich** bestätigt haben, dass Sie dadurch Ihr Widerrufsrecht verlieren.</li>
-      <li>Waren, die **schnell verderben** können.</li>
-      <li>Verträge über die Lieferung von **Zeitungen, Zeitschriften oder Illustrierten** (außer Abonnements).</li>
-  </ul>
+    <fieldset>
+      <legend>3. Details zum Vertrag</legend>
+      <label for="vertragsbezeichnung">Was haben Sie bestellt oder beauftragt?
+        <small>(z.B. "Mobilfunkvertrag Super Allnet", "Abonnement der Zeitschrift XY", "Bestellung eines Staubsaugers")</small>
+      </label>
+      <input type="text" id="vertragsbezeichnung" required>
+      <label for="vertragsnummer">Vertrags-, Kunden- oder Bestellnummer:</label>
+      <input type="text" id="vertragsnummer" required>
+      <label for="vertragsdatum">Datum des Vertragsabschlusses / der Bestellung:</label>
+      <input type="date" id="vertragsdatum" required>
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Zusätzliche Erklärungen</legend>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="widerrufEinzugsermaechtigung">
+                Ich widerrufe ebenfalls die erteilte Einzugsermächtigung (SEPA-Lastschriftmandat).
+                <small>Wichtig, damit das Unternehmen kein Geld mehr von Ihrem Konto abbuchen darf.</small>
+            </label>
+        </div>
+    </fieldset>
 
-  <h2>Ablauf nach dem Widerruf: Wer zahlt wann?</h2>
-  <ol>
-      <li>**Ihre Pflicht:** Sie müssen die Ware spätestens **14 Tage** nach Abgabe Ihrer Widerrufserklärung an den Unternehmer zurücksenden. Sie tragen die Kosten der Rücksendung, falls der Verkäufer Sie ordnungsgemäß darüber informiert hat.</li>
-      <li>**Pflicht des Verkäufers:** Der Verkäufer muss Ihnen alle Zahlungen (Warenwert und ursprüngliche Standard-Versandkosten) spätestens **14 Tage** nach Erhalt des Widerrufs zurückzahlen.</li>
-  </ol>
-  <p>Der Verkäufer darf die Rückzahlung solange zurückhalten, bis er die Ware erhalten oder Sie den Nachweis erbracht haben, dass Sie die Ware abgeschickt haben.</p>
-
-  <h2>Einen rechtssicheren Widerruf formulieren</h2>
-  <p>Der Widerruf muss **eindeutig** erklärt werden. Er muss nicht begründet werden, sollte aber die Vertragsdaten enthalten und nachweisbar (E-Mail mit Lesebestätigung, Einschreiben) verschickt werden.</p>
-  <p>Nutzen Sie unseren Generator, um ein unmissverständliches Widerrufsschreiben zu erstellen, das alle notwendigen Paragrafen nennt und den Unternehmer zur Rückabwicklung auffordert.</p>
-  <div style="text-align:center; margin: 2rem 0;">
-      <a href="generator-widerruf.html" style="background-color: #27ae60; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">Zum Generator: Vertrag widerrufen</a>
-  </div>
-
-  <h2>Häufig gestellte Fragen (FAQ)</h2>
-  <div class="faq-section">
-    <h3>Muss ich eine Begründung für meinen Widerruf angeben?</h3>
-    <p>Nein. Das Gesetz erlaubt Ihnen, den Vertrag innerhalb der Frist **ohne Angabe von Gründen** zu widerrufen. Der Händler darf keine Begründung von Ihnen verlangen.</p>
-    
-    <h3>Wer trägt die Kosten für die Rücksendung der Ware?</h3>
-    <p>Grundsätzlich tragen Sie als Verbraucher die unmittelbaren Kosten der Rücksendung, **WENN** der Verkäufer Sie vorab in der Widerrufsbelehrung darüber informiert hat. Viele Online-Händler übernehmen die Kosten aber freiwillig als Service.</p>
-
-    <h3>Was passiert, wenn ich die Widerrufsfrist verpasst habe?</h3>
-    <p>Prüfen Sie, ob Sie ordnungsgemäß belehrt wurden. Wenn nicht, verlängert sich die Frist auf bis zu 12 Monate und 14 Tage. Ist die Frist definitiv abgelaufen, ist der Vertrag bindend und Sie müssen sich an die normalen Kündigungsfristen halten.</p>
-  </div>
+    <div class="button-group">
+      <button type="button" id="saveBtnWiderruf" class="button-secondary">Speichern</button>
+      <button type="button" id="loadBtnWiderruf" class="button-secondary">Laden</button>
+      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+    </div>
+  </form>
 </div>
 
 <footer>
-  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Zurück zur Startseite</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
 </footer>
 
 </body>
-
 </html>
-
