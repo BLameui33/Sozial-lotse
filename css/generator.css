@@ -1,0 +1,293 @@
+/* ==========================================================
+   Mieter-/Sozial-/Kassen-Lotse Generatoren – Premium Design 2025
+   ========================================================== */
+
+:root {
+  --primary: #c0392b; /* Akzentfarbe – individuell je Seite anpassbar */
+  --primary-light: #fdecea;
+  --primary-dark: #992d22;
+  --text: #2f2f2f;
+  --bg: #f8f9fb;
+  --white: #fff;
+  --border: #e0e6ed;
+  --radius: 10px;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --transition: all 0.25s ease;
+}
+
+/* --- Grundlayout --- */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.8;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  font-size: 1.05rem;
+}
+
+/* --- Header --- */
+.site-header {
+  background-color: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-logo {
+  color: var(--primary-dark);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.site-logo:hover {
+  color: var(--primary);
+}
+
+/* --- Container --- */
+.page-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  background: var(--white);
+  padding: 2.8rem 2.4rem;
+  border-radius: var(--radius);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.03),
+    0 10px 30px rgba(0,0,0,0.08);
+}
+
+h1 {
+  font-size: 2.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+  text-align: center;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+/* --- Fieldsets & Labels --- */
+fieldset {
+  border: 1px solid #e5e8eb;
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  margin-top: 2rem;
+  transition: box-shadow 0.25s ease;
+}
+
+fieldset:hover {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+legend {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--primary-dark);
+  padding: 0 0.6em;
+}
+
+label {
+  display: block;
+  margin-top: 1.2rem;
+  font-weight: 500;
+  color: #444;
+}
+
+label small {
+  display: block;
+  font-weight: normal;
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 0.2rem;
+}
+
+/* --- Eingabefelder --- */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  margin-top: 0.4rem;
+  border: 1px solid #ccd3da;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--text);
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* --- Checkboxen --- */
+.checkbox-group {
+  margin-top: 1rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-weight: normal;
+  margin-top: 0.4rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--primary);
+}
+
+/* --- Dynamische Zusatzfelder --- */
+.sub-details {
+  display: none;
+  margin-left: 1.3rem;
+  border-left: 3px solid #eee;
+  padding-left: 1rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Hinweisboxen --- */
+.info-box,
+.warning-box,
+.payment-notice {
+  font-size: 0.95em;
+  padding: 1rem 1.4rem;
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+}
+
+.info-box {
+  background-color: #eafaf1;
+  border-left: 5px solid #2ecc71;
+}
+
+.warning-box {
+  background-color: #fff9e6;
+  border-left: 5px solid #f0ad4e;
+}
+
+.payment-notice {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* --- Buttons --- */
+.button-group {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1.05rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  margin: 0.5rem;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* --- Farbvarianten --- */
+.button-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.button-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.25);
+}
+
+.button-secondary {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+.button-secondary:hover {
+  background-color: #626f70;
+}
+
+.button-danger {
+  background-color: #d9534f;
+  color: white;
+}
+
+.button-danger:hover {
+  background-color: #c9302c;
+}
+
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 2rem;
+  font-size: 0.9em;
+  color: #666;
+  border-top: 1px solid var(--border);
+}
+
+footer a {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* --- Responsiv --- */
+@media (max-width: 600px) {
+  .page-container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  legend {
+    font-size: 1.15rem;
+  }
+
+  button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
