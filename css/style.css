@@ -259,6 +259,40 @@ a:hover {
   text-decoration: underline;
 }
 
+/* --- Responsive Tabellen --- */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* sorgt dafür, dass Spalten lesbar bleiben */
+}
+
+table th, table td {
+  padding: 0.8rem;
+  border: 1px solid #e0e6ed;
+  text-align: left;
+  vertical-align: top;
+}
+
+table th {
+  background-color: #f5f8fb;
+  font-weight: 600;
+  color: #1a5276;
+}
+
+/* --- Textumbruch für lange Wörter auf kleinen Displays --- */
+h1, h2, h3, p, li, td, th {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+
 /* --- Responsive --- */
 @media (max-width: 700px) {
   .page-container {
