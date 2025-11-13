@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mehrbedarfe beim Bürgergeld 2025 berechnen | Alleinerziehend, Schwangerschaft & Pauschalen</title>
+  <meta name="description" content="Schnelle Orientierung zu Mehrbedarfen im Bürgergeld 2025: Alleinerziehenden-Mehrbedarf, Schwangerschaft (ab ca. 13. Woche) und optionale Pauschalen. Mit editierbaren Regelsätzen, Warmmiete (optional) und transparenter Gesamtbedarfs-Schätzung.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://www.deinedomain.tld/mehrbedarfe-orientierung.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mehrbedarfe beim Bürgergeld 2025 – schnell berechnen">
+  <meta property="og:description" content="Alleinerziehend, Schwangerschaft & optionale Pauschalen – mit frei anpassbaren Regelsätzen. Ergebnis: unverbindliche Orientierung.">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Mehrbedarfe beim Bürgergeld – Orientierung 2025</h1>
+
+    <div class="highlight-box" role="region" aria-label="Kurzinfo">
+      <p>
+        Dieser Rechner gibt dir eine <strong>schnelle, unverbindliche Orientierung</strong> zu möglichen
+        <strong>Mehrbedarfen</strong> (z. B. Alleinerziehend, Schwangerschaft). Alle Werte sind <strong>editierbar</strong>,
+        damit du regionale/jahresaktuelle Besonderheiten abbilden kannst.
+      </p>
+      <p>
+        Ergebnis: <em>voraussichtliche Mehrbedarfs-Summe</em> und – falls Warmmiete hinterlegt – eine <em>grobe Gesamtbedarfs-Schätzung</em>.
+      </p>
+    </div>
+
+    <form id="mb-form" class="pflegegrad-form" aria-describedby="mb_ergebnis" novalidate>
+      <!-- 1) Haushalt (Regelsätze / Basis) -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Haushalt &amp; Regelsätze (Basis)</legend>
+
+        <label class="pflegegrad-label" for="mb_haushalt">
+          Haushaltsform
+          <select id="mb_haushalt">
+            <option value="single" selected>Alleinstehend / Alleinerziehend</option>
+            <option value="paar">Partnerhaushalt (zwei Erwachsene)</option>
+          </select>
+        </label>
+
+        <div class="pflegegrad-label">
+          Weitere Erwachsene (18–24, nicht Partner)
+          <input type="number" id="mb_erw_weitere" min="0" max="6" step="1" value="0" />
+        </div>
+
+        <h3>Kinder (Anzahl nach Altersgruppen)</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));">
+          <label class="pflegegrad-label">0–5 Jahre
+            <input type="number" id="mb_k_0_5" min="0" max="10" step="1" value="0" />
+          </label>
+          <label class="pflegegrad-label">6–13 Jahre
+            <input type="number" id="mb_k_6_13" min="0" max="10" step="1" value="0" />
+          </label>
+          <label class="pflegegrad-label">14–17 Jahre
+            <input type="number" id="mb_k_14_17" min="0" max="10" step="1" value="0" />
+          </label>
+        </div>
+
+        <h3>Monatliche Regelsätze (€/Person) – anpassbar</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+          <label class="pflegegrad-label">Erwachsener alleinstehend
+            <input type="number" id="mb_rs_single" min="0" step="1" value="600" />
+          </label>
+          <label class="pflegegrad-label">Erwachsener Partnerhaushalt
+            <input type="number" id="mb_rs_partner" min="0" step="1" value="540" />
+          </label>
+          <label class="pflegegrad-label">Weitere Erwachsene (18–24)
+            <input type="number" id="mb_rs_erw_weitere" min="0" step="1" value="480" />
+          </label>
+          <label class="pflegegrad-label">Kind 0–5
+            <input type="number" id="mb_rs_0_5" min="0" step="1" value="370" />
+          </label>
+          <label class="pflegegrad-label">Kind 6–13
+            <input type="number" id="mb_rs_6_13" min="0" step="1" value="450" />
+          </label>
+          <label class="pflegegrad-label">Kind 14–17
+            <input type="number" id="mb_rs_14_17" min="0" step="1" value="520" />
+          </label>
+        </div>
+
+        <label class="pflegegrad-label" style="margin-top:.6rem;" for="mb_warmmiete">
+          Warmmiete (optional, nur für Gesamtbedarf)
+          <input type="number" id="mb_warmmiete" min="0" step="10" placeholder="z. B. 950" />
+        </label>
+        <p class="hinweis">
+          Hinweis: Für <strong>Mehrbedarfe</strong> wird grundsätzlich vom <em>maßgeblichen Regelsatz</em> ausgegangen. Die Warmmiete fließt hier
+          nur in eine <em>Gesamtbedarfs-Orientierung</em> ein (keine Angemessenheitsprüfung).
+        </p>
+      </fieldset>
+
+      <!-- 2) Mehrbedarfe -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Mehrbedarfe (vereinfacht)</legend>
+
+        <h3>Alleinerziehenden-Mehrbedarf</h3>
+        <div class="hinweis">
+          Du kannst automatisch schätzen lassen (aus Kinderzahl/Alter) oder einen Prozentsatz wählen.
+          In der Praxis gelten <strong>gestaffelte Prozentsätze</strong> nach Umfang der Alleinerziehung.
+        </div>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+          <label class="pflegegrad-label" for="mb_ae_flag">Alleinerziehend?
+            <select id="mb_ae_flag">
+              <option value="nein" selected>Nein</option>
+              <option value="ja">Ja</option>
+            </select>
+          </label>
+          <label class="pflegegrad-label" for="mb_ae_mode">AE-Mehrbedarf (Schätzung/%) 
+            <select id="mb_ae_mode">
+              <option value="auto" selected>Automatisch schätzen</option>
+              <option value="12">12&nbsp;% (klein)</option>
+              <option value="24">24&nbsp;% (mittel)</option>
+              <option value="36">36&nbsp;% (typisch)</option>
+              <option value="48">48&nbsp;% (hoch)</option>
+              <option value="60">60&nbsp;% (sehr hoch)</option>
+            </select>
+          </label>
+          <label class="pflegegrad-label" for="mb_ae_basis">Bemessungsgrundlage (maßgeblicher Regelsatz, €)
+            <input type="number" id="mb_ae_basis" min="0" step="1" value="600" />
+          </label>
+        </div>
+
+        <h3>Schwangerschafts-Mehrbedarf</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+          <label class="pflegegrad-label" for="mb_schw_flag">Schwangerschaft (ab ca. 13. Woche)
+            <select id="mb_schw_flag">
+              <option value="nein" selected>Nein</option>
+              <option value="ja">Ja</option>
+            </select>
+          </label>
+          <label class="pflegegrad-label" for="mb_schw_pct">% vom maßgeblichen Regelsatz
+            <input type="number" id="mb_schw_pct" min="0" max="50" step="1" value="17" />
+          </label>
+          <label class="pflegegrad-label" for="mb_schw_basis">Bemessungsgrundlage (maßgeblicher Regelsatz, €)
+            <input type="number" id="mb_schw_basis" min="0" step="1" value="600" />
+          </label>
+        </div>
+
+        <h3>Optionale Pauschalen (frei)</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+          <label class="pflegegrad-label" for="mb_ernaehrung">Kostenaufwändige Ernährung (€/Monat)
+            <input type="number" id="mb_ernaehrung" min="0" step="5" value="0" />
+          </label>
+          <label class="pflegegrad-label" for="mb_warmwasser">Dezentrale Warmwasserbereitung (gesamt, €/Monat)
+            <input type="number" id="mb_warmwasser" min="0" step="1" value="0" />
+          </label>
+          <label class="pflegegrad-label" for="mb_sonstig">Sonstige Mehrbedarfe (frei, €/Monat)
+            <input type="number" id="mb_sonstig" min="0" step="5" value="0" />
+          </label>
+        </div>
+        <p class="hinweis">
+          Die automatische AE-Schätzung ist bewusst grob. Für konkrete Fälle bitte Bescheid und Gesetzestext prüfen.
+        </p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="mb_berechnen" class="button">Mehrbedarfe berechnen</button>
+        <button type="reset" id="mb_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="mb_ergebnis" aria-live="polite"></section>
+
+    <!-- Erklärteil für Nutzer & SEO -->
+    <section aria-label="Wie wird gerechnet?" style="margin-top:1.25rem">
+      <h2>Wie wird gerechnet? (vereinfacht)</h2>
+      <ul>
+        <li><strong>Alleinerziehend:</strong> Prozentsatz vom <em>maßgeblichen Regelsatz</em> der alleinerziehenden Person. Du kannst einen Richtwert wählen oder automatisch schätzen lassen.</li>
+        <li><strong>Schwangerschaft:</strong> Standardmäßig <em>17 %</em> ab ca. der 13. Woche, bezogen auf den maßgeblichen Regelsatz.</li>
+        <li><strong>Optionale Pauschalen:</strong> Ernährung, dezentrale Warmwasserbereitung, sonstige Mehrbedarfe – frei ergänzbar.</li>
+        <li><strong>Gesamtbedarf (optional):</strong> Summe Regelsätze + Mehrbedarfe + (Warmmiete, wenn eingetragen). Keine Prüfung der Angemessenheit.</li>
+      </ul>
+      <p class="hinweis">
+        Diese Seite ist eine <strong>Orientierung</strong>. Verbindlich sind die gesetzlichen Regelungen und der Bescheid des Jobcenters.
+      </p>
+    </section>
+
+    <section aria-label="FAQ">
+      <h2>FAQ zu Mehrbedarfen im Bürgergeld</h2>
+      <h3>Gilt der Alleinerziehenden-Mehrbedarf für jeden Alleinerziehenden?</h3>
+      <p>In der Praxis wird nach Umfang der Alleinerziehung (Anzahl/Alter der Kinder und Betreuungsanteile) gestaffelt. Nutze hier einen passenden Prozentsatz oder die Autoschätzung.</p>
+
+      <h3>Warum 17 % bei Schwangerschaft?</h3>
+      <p>Als gängiger Orientierungswert wird ein Mehrbedarf von 17 % des maßgeblichen Regelsatzes ab ca. der 13. Woche angenommen. Regional oder rechtlich können Abweichungen bestehen.</p>
+
+      <h3>Werden Warmwasser/Ernährung automatisch berechnet?</h3>
+      <p>Nein. Die Pauschalen sind als <em>freie Eingaben</em> umgesetzt, da es je nach Konstellation Unterschiede gibt. Trage hier deine Werte ein, wenn du sie kennst.</p>
+    </section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Wichtig:</strong> Die Berechnung ist bewusst einfach gehalten.
+        Rechtsgrundlagen, lokale Besonderheiten und individuelle Nachweise können abweichen.
+        Maßgeblich sind die <strong>gesetzlichen Regelungen</strong> und dein <strong>Bescheid</strong>.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <!-- FAQ-Schema für SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie wird der Alleinerziehenden-Mehrbedarf berechnet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vereinfacht als Prozentsatz vom maßgeblichen Regelsatz der alleinerziehenden Person. In der Praxis gibt es gestaffelte Prozentsätze je nach Umfang der Alleinerziehung."
+      }
+    },{
+      "@type": "Question",
+      "name": "Ab wann besteht ein Schwangerschafts-Mehrbedarf?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Orientierend ab ca. der 13. Schwangerschaftswoche. Häufig wird ein Satz von 17 % des maßgeblichen Regelsatzes verwendet."
+      }
+    },{
+      "@type": "Question",
+      "name": "Fließt die Warmmiete in den Mehrbedarf ein?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Die Warmmiete wird hier nur genutzt, um optional einen groben Gesamtbedarf (Regelsätze + Mehrbedarfe + Warmmiete) zu zeigen."
+      }
+    }]
+  }
+  </script>
+
+  <script src="mehrbedarfe-orientierung.js"></script>
+</body>
+</html>

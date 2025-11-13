@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bürgergeld-Freibeträge 2025 berechnen: Erwerbseinkommen & Aufstockung | Sozial-Lotse</title>
+  <meta name="description" content="Rechne deine Freibeträge beim Bürgergeld 2025: 100 € Grundfreibetrag plus 20/30/10 %-Zonen. Sieh sofort, wie viel Einkommen voraussichtlich angerechnet wird – und wie hoch die mögliche Aufstockung ausfallen könnte. Verständlich erklärt.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://www.deinedomain.tld/freibetraege-buergergeld-rechner.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta property="og:title" content="Bürgergeld-Freibeträge 2025 berechnen – in 2 Minuten">
+  <meta property="og:description" content="Trage Netto & Bedarf ein, passe Zonen an – erhalte die Anrechnung und eine grobe Aufstockungs-Schätzung.">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Freibeträge auf Erwerbseinkommen &amp; mögliche Aufstockung (Bürgergeld)</h1>
+
+    <div class="highlight-box" role="region" aria-label="Kurzinfo">
+      <p>
+        Gib dein <strong>monatliches Erwerbs-Netto</strong> und deinen <strong>Gesamtbedarf</strong> an.
+        Wir berechnen die <strong>Erwerbstätigenfreibeträge</strong> (vereinfacht) und zeigen,
+        wie viel Einkommen das Jobcenter <em>voraussichtlich</em> anrechnen könnte – plus eine
+        grobe <strong>Aufstockung</strong> (Bedarf minus anrechenbares Einkommen).
+      </p>
+      <p>
+        Standard-Zonen (anpassbar): <strong>100&nbsp;€</strong> Grundfreibetrag,
+        <strong>20&nbsp;%</strong> auf 100–520&nbsp;€,
+        <strong>30&nbsp;%</strong> auf 520–1.000&nbsp;€,
+        <strong>10&nbsp;%</strong> auf 1.000–1.200&nbsp;€
+        (bzw. bis <strong>1.500&nbsp;€</strong>, wenn ein minderjähriges Kind im Haushalt lebt).
+      </p>
+    </div>
+
+    <form id="fb-form" class="pflegegrad-form" aria-describedby="fb_ergebnis" novalidate>
+      <!-- 1) Einkommen & Bedarf -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Einkommen &amp; Bedarf</legend>
+
+        <label class="pflegegrad-label" for="fb_netto">
+          Erwerbs-Nettoeinkommen pro Monat (alle Erwerbseinkommen zusammen)
+          <input type="number" id="fb_netto" min="0" step="10" placeholder="z. B. 1.250" />
+        </label>
+
+        <label class="pflegegrad-label" for="fb_bedarf">
+          Gesamtbedarf pro Monat (Regelsätze + Unterkunft/Heizung, gedeckelt)
+          <input type="number" id="fb_bedarf" min="0" step="10" placeholder="z. B. 1.850" />
+        </label>
+
+        <label class="pflegegrad-label" for="fb_kind_toggle">
+          Im Haushalt lebt mindestens ein minderjähriges Kind?
+          <select id="fb_kind_toggle">
+            <option value="ja">Ja (Obergrenze 10&nbsp;%-Zone = 1.500&nbsp;€)</option>
+            <option value="nein" selected>Nein (Obergrenze 10&nbsp;%-Zone = 1.200&nbsp;€)</option>
+          </select>
+        </label>
+
+        <p class="hinweis">
+          Deinen <strong>Gesamtbedarf</strong> findest du im Bescheid – oder du schätzt ihn mit unserem Bürgergeld-Vorcheck.
+        </p>
+      </fieldset>
+
+      <!-- 2) Feineinstellungen -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Feineinstellungen (optional)</legend>
+
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label" for="fb_fix">Grundfreibetrag (fix)
+            <input type="number" id="fb_fix" min="0" step="10" value="100" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z1_lo">20&nbsp;%-Zone: Untergrenze
+            <input type="number" id="fb_z1_lo" min="0" step="10" value="100" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z1_hi">20&nbsp;%-Zone: Obergrenze
+            <input type="number" id="fb_z1_hi" min="0" step="10" value="520" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z2_lo">30&nbsp;%-Zone: Untergrenze
+            <input type="number" id="fb_z2_lo" min="0" step="10" value="520" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z2_hi">30&nbsp;%-Zone: Obergrenze
+            <input type="number" id="fb_z2_hi" min="0" step="10" value="1000" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z3_lo">10&nbsp;%-Zone: Untergrenze
+            <input type="number" id="fb_z3_lo" min="0" step="10" value="1000" />
+          </label>
+          <label class="pflegegrad-label" for="fb_z3_hi">10&nbsp;%-Zone: Obergrenze (wird durch Kind-Toggle vorbelegt)
+            <input type="number" id="fb_z3_hi" min="0" step="10" value="1200" />
+          </label>
+        </div>
+
+        <label class="pflegegrad-label" for="fb_sonstig">
+          Weitere Abzüge (optional: Versicherungen, Fahrtkosten, Pauschalen …) – €/Monat
+          <input type="number" id="fb_sonstig" min="0" step="10" value="0" />
+        </label>
+
+        <p class="hinweis">
+          Die Zonen lassen sich anpassen (z.&nbsp;B. bei Regeländerungen). Die <strong>Netto-Betrachtung</strong> hier ist vereinfacht –
+          das Jobcenter rechnet in der Praxis mit <em>zu berücksichtigendem Einkommen</em> und Absetzungen.
+        </p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="fb_berechnen" class="button">Aufstockung berechnen</button>
+        <button type="reset" id="fb_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="fb_ergebnis" aria-live="polite"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte Orientierung</strong> (Netto-Modell).
+        In der Praxis zählen weitere Einkünfte (z.&nbsp;B. Unterhalt, Kindergeld), Absetzbeträge, Vermögen, Bedarf der BG,
+        Brutto/Netto-Besonderheiten u. a. Verbindlich sind Gesetz/Verordnung und dein <strong>Bescheid</strong>.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <!-- FAQ-Schema für SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie werden die Freibeträge beim Bürgergeld berechnet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vereinfacht: 100 € Grundfreibetrag sowie 20 % auf 100–520 €, 30 % auf 520–1.000 € und 10 % auf 1.000–1.200 € (bzw. bis 1.500 €, wenn ein minderjähriges Kind im Haushalt lebt)."
+      }
+    },{
+      "@type": "Question",
+      "name": "Ist das Ergebnis verbindlich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Das Tool nutzt eine vereinfachte Netto-Logik. Verbindlich sind die gesetzlichen Regelungen und dein Bescheid des Jobcenters."
+      }
+    }]
+  }
+  </script>
+
+  <script src="freibetraege-buergergeld-rechner.js"></script>
+</body>
+</html>
