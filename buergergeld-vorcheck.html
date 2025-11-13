@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bürgergeld – Vorcheck 2025 | Sozial-Lotse</title>
+  <meta name="description" content="Vereinfachter Bürgergeld-Vorcheck: Haushalt, Kinder, Warmmiete und Einkommen eingeben – der Rechner schätzt Bedarf, anrechenbares Einkommen und gibt eine grobe Einschätzung (wahrscheinlich / grenzwertig / eher nicht).">
+  <meta name="keywords" content="Bürgergeld Rechner, Vorprüfung, Bedarfsgemeinschaft, Regelsatz, Warmmiete, Freibetrag, Einkommen, Kassen-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Bürgergeld – Vorcheck (vereinfacht)</h1>
+
+    <div class="highlight-box">
+      <p>
+        Dieser Vorcheck ermittelt <strong>grob</strong>, ob Bürgergeld (SGB II) für deinen Haushalt
+        <em>denkbar</em> ist. Wir berechnen einen <strong>vereinfachten Bedarf</strong> (Regelsätze + Warmmiete
+        bis zur Angemessenheitsgrenze) und ziehen ein <strong>vereinfachtes anrechenbares Einkommen</strong> ab.
+      </p>
+      <p>
+        Alle Werte (Regelsätze, Angemessenheitsgrenze, Freibeträge) sind <strong>editierbar</strong>, damit du
+        sie schnell an Jahr/Region anpassen kannst. Ergebnis: <em>wahrscheinlich Anspruch</em> /
+        <em>grenzwertig</em> / <em>eher nicht</em>.
+      </p>
+    </div>
+
+    <form id="bg-form" class="pflegegrad-form">
+      <!-- 1) Haushalt -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Haushalt</legend>
+
+        <label class="pflegegrad-label">
+          Haushaltsform
+          <select id="bg_haushalt">
+            <option value="single">Alleinstehend / Alleinerziehend</option>
+            <option value="paar" selected>Partnerhaushalt (zwei Erwachsene)</option>
+          </select>
+        </label>
+
+        <div class="pflegegrad-label">
+          Anzahl weiterer erwachsener Personen (18–24 im Haushalt, nicht Partner)
+          <input type="number" id="bg_erw_weitere" min="0" max="6" step="1" value="0" />
+        </div>
+
+        <h3>Kinder (nach Altersgruppen, Anzahl je Gruppe)</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+          <label class="pflegegrad-label">0–5 Jahre
+            <input type="number" id="bg_k_0_5" min="0" max="10" step="1" value="0" />
+          </label>
+          <label class="pflegegrad-label">6–13 Jahre
+            <input type="number" id="bg_k_6_13" min="0" max="10" step="1" value="0" />
+          </label>
+          <label class="pflegegrad-label">14–17 Jahre
+            <input type="number" id="bg_k_14_17" min="0" max="10" step="1" value="0" />
+          </label>
+        </div>
+
+        <div class="pflegegrad-label">
+          Alleinerziehenden-Mehrbedarf (% auf Regelsätze der Kinder, grob)
+          <input type="number" id="bg_mehr_ae" min="0" max="60" step="1" value="0" />
+        </div>
+        <p class="hinweis">
+          Nur setzen, wenn <strong>alleinerziehend</strong>. In der Praxis staffelt sich der Mehrbedarf; hier eine simple %-Angabe.
+        </p>
+      </fieldset>
+
+      <!-- 2) Regelsätze & Unterkunft -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Regelsätze &amp; Unterkunft</legend>
+
+        <h3>Monatliche Regelsätze (€/Person) – frei anpassbar</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label">Erwachsener alleinstehend
+            <input type="number" id="bg_rs_single" min="0" step="1" value="600" />
+          </label>
+          <label class="pflegegrad-label">Erwachsener Partnerhaushalt
+            <input type="number" id="bg_rs_partner" min="0" step="1" value="540" />
+          </label>
+          <label class="pflegegrad-label">Weitere Erwachsene (18–24)
+            <input type="number" id="bg_rs_erw_weitere" min="0" step="1" value="480" />
+          </label>
+          <label class="pflegegrad-label">Kind 0–5
+            <input type="number" id="bg_rs_0_5" min="0" step="1" value="370" />
+          </label>
+          <label class="pflegegrad-label">Kind 6–13
+            <input type="number" id="bg_rs_6_13" min="0" step="1" value="450" />
+          </label>
+          <label class="pflegegrad-label">Kind 14–17
+            <input type="number" id="bg_rs_14_17" min="0" step="1" value="520" />
+          </label>
+        </div>
+
+        <h3>Unterkunft &amp; Heizung</h3>
+        <label class="pflegegrad-label">
+          Warmmiete (inkl. Heizung), € / Monat
+          <input type="number" id="bg_warmmiete" min="0" step="10" placeholder="z. B. 950" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Angemessenheitsgrenze Warmmiete (Deckel), € / Monat
+          <input type="number" id="bg_miete_cap" min="0" step="10" value="1000" />
+        </label>
+        <p class="hinweis">
+          Der Bedarf berücksichtigt die Warmmiete nur bis zur <strong>Angemessenheitsgrenze</strong> (hier frei einstellbar).
+        </p>
+      </fieldset>
+
+      <!-- 3) Einkommen & Freibeträge -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3. Einkommen &amp; Freibeträge (vereinfacht)</legend>
+
+        <label class="pflegegrad-label">
+          Haushalts-Nettoeinkommen (alle anrechenbaren Einkünfte zusammen, grob)
+          <input type="number" id="bg_einkommen" min="0" step="50" placeholder="z. B. 1.800" />
+        </label>
+
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label">Pauschaler Erwerbstätigen-Freibetrag (€)
+            <input type="number" id="bg_freibetrag_fix" min="0" step="10" value="100" />
+          </label>
+          <label class="pflegegrad-label">Zusätzlicher prozentualer Freibetrag auf Rest-Einkommen (%)
+            <input type="number" id="bg_freibetrag_pct" min="0" max="50" step="1" value="20" />
+          </label>
+        </div>
+
+        <label class="pflegegrad-label">
+          Weitere Absetzbeträge (Versicherungspauschalen etc.), € / Monat
+          <input type="number" id="bg_abzuege_sonstig" min="0" step="10" value="0" />
+        </label>
+
+        <p class="hinweis">
+          Vereinfachte Anrechnung: <strong>anrechenbares Einkommen</strong> =
+          Einkommen − fixer Freibetrag − (Prozentsatz × (Einkommen − fixer Freibetrag, min 0))
+          − sonstige Abzüge. Negative Werte werden als 0 behandelt.
+        </p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="bg_berechnen" class="button">Vorcheck starten</button>
+        <button type="reset" id="bg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="bg_ergebnis"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte Orientierung</strong>.
+        In der Praxis gelten detaillierte Regeln (Vermögen, genaue Freibeträge, Azubi/Studenten-Regeln,
+        Unterhalt/Kindergeld, Unterkunftsangemessenheit, temporäre Schutzfristen u. v. m.).
+        Verbindlich sind die <strong>gesetzlichen Vorgaben</strong> und Bescheide des Jobcenters.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+  <script src="buergergeld-vorcheck.js"></script>
+</body>
+</html>

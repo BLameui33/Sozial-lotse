@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Unterhaltsvorschuss – Vorprüfung 2025 | Sozial-Lotse</title>
+  <meta name="description" content="Schneller Vorcheck: Besteht voraussichtlich Anspruch auf Unterhaltsvorschuss? Eingaben: Alter des Kindes, Zahlungsverhalten des anderen Elternteils, Höhe der Zahlungen, Einkommen des betreuenden Elternteils. Ergebnis: wahrscheinlich / eher nicht / unklar.">
+  <meta name="keywords" content="Unterhaltsvorschuss, UVG, Jugendamt, Alleinerziehend, Mindestunterhalt, Unterhalt, Vorprüfung, Kassen-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Unterhaltsvorschuss – Vorprüfung</h1>
+
+    <div class="highlight-box">
+      <p>
+        Dieser Vorcheck prüft <strong>grob</strong>, ob ein Anspruch auf <strong>Unterhaltsvorschuss (UVG)</strong>
+        denkbar ist. Ergebnis: <em>wahrscheinlich</em>, <em>eher nicht</em> oder <em>unklar – Beratung empfohlen</em>.
+      </p>
+      <p>
+        Wichtige Vereinfachungen: keine vollständige Mindestunterhaltsprüfung, keine Sonderfälle (z. B. Aufenthaltswechsel, Ausland).
+        Maßgeblich sind stets die <strong>Regelungen nach UVG</strong> und die Entscheidung des <strong>Jugendamts</strong>.
+      </p>
+    </div>
+
+    <form id="uvg-form" class="pflegegrad-form">
+      <!-- 1) Kind & Haushalt -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Kind &amp; Haushalt</legend>
+
+        <label class="pflegegrad-label">
+          Alter des Kindes (Jahre)
+          <input type="number" id="uvg_kind_alter" min="0" max="25" step="1" placeholder="z. B. 7" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Das Kind lebt überwiegend bei <strong>einem</strong> Elternteil (alleinerziehend)
+          <select id="uvg_alleinerziehend">
+            <option value="ja" selected>Ja</option>
+            <option value="nein">Nein / beide Eltern im selben Haushalt</option>
+          </select>
+        </label>
+
+        <p class="hinweis">
+          UVG richtet sich typischerweise an <strong>alleinerziehende</strong> Haushalte. Bei gemeinsamem Haushalt besteht meist kein Anspruch.
+        </p>
+      </fieldset>
+
+      <!-- 2) Unterhalt des anderen Elternteils -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Unterhaltszahlungen des anderen Elternteils</legend>
+
+        <label class="pflegegrad-label">
+          Zahlt der andere Elternteil?
+          <select id="uvg_zahlverhalten">
+            <option value="nein" selected>Nein</option>
+            <option value="unreg">Unregelmäßig / unvollständig</option>
+            <option value="regel">Regelmäßig</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Höhe der Unterhaltszahlungen (durchschnittlich pro Monat, falls vorhanden)
+          <input type="number" id="uvg_betrag" min="0" step="10" placeholder="z. B. 0 oder 120" />
+        </label>
+
+        <p class="hinweis">
+          Für den Vorcheck reicht eine grobe Angabe. Bei <strong>keinen</strong> oder <strong>deutlich zu niedrigen</strong> Zahlungen ist UVG eher denkbar.
+        </p>
+      </fieldset>
+
+      <!-- 3) Einkommen betreuender Elternteil -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3. Einkommen betreuender Elternteil</legend>
+
+        <label class="pflegegrad-label">
+          Monatliches Netto-Einkommen (geschätzt)
+          <input type="number" id="uvg_eltern_netto" min="0" step="50" placeholder="z. B. 1.200" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Bezieht der Haushalt Bürgergeld (SGB II)?
+          <select id="uvg_buergergeld">
+            <option value="nein" selected>Nein</option>
+            <option value="ja">Ja</option>
+          </select>
+        </label>
+
+        <p class="hinweis">
+          Sonderregel (vereinfacht): Für Kinder <strong>12–17 Jahre</strong> gelten zusätzliche Hürden. In der Praxis wird u. a. geschaut,
+          ob <strong>mindestens ca. 600&nbsp;€</strong> eigenes Einkommen vorhanden ist bzw. keine SGB-II-Hilfebedürftigkeit vorliegt.
+        </p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="uvg_check" class="button">Vorprüfung starten</button>
+        <button type="reset" id="uvg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="uvg_ergebnis"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Hinweis:</strong> Diese Vorprüfung ist <strong>unverbindlich</strong> und vereinfacht.
+        Das Jugendamt prüft Details (z. B. Mindestunterhalt, Mitwirkungspflichten, Vaterschaft, Aufenthalt, Anrechnung anderer Leistungen).
+        Bitte lass dich beraten und nutze die offiziellen Informationen deiner Kommune.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+  <script src="unterhaltsvorschuss-vorpruefung.js"></script>
+</body>
+</html>

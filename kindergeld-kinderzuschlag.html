@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kindergeld & Kinderzuschlag – Vorcheck 2025 | Sozial-Lotse</title>
+  <meta name="description" content="Überschlage deine Kindergeld-Summe und prüfe grob, ob Kinderzuschlag denkbar ist. Eingaben: Kinderzahl/Alter, Haushaltsform, Einkommen, Warmmiete. Ergebnis: Kindergeld, KiZ-Vorcheck, Hinweise.">
+  <meta name="keywords" content="Kindergeld Rechner, Kinderzuschlag Vorcheck, KiZ, Warmmiete, Einkommen, Alleinerziehend, Paar, Kassen-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Kindergeld-Übersicht &amp; Kinderzuschlag – Vorcheck</h1>
+
+    <div class="highlight-box">
+      <p>
+        Diese Seite gibt dir eine <strong>Kindergeld-Summe</strong> und eine
+        <strong>grobe Einschätzung</strong>, ob <em>Kinderzuschlag (KiZ)</em> denkbar sein könnte.
+        Der KiZ-Teil ist eine <strong>vereinfachte Orientierung</strong> und ersetzt keinen offiziellen Rechner/Bescheid.
+      </p>
+    </div>
+
+    <form id="kiz-form" class="pflegegrad-form">
+      <!-- 1. Kinder -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Kinder im Haushalt</legend>
+
+        <label class="pflegegrad-label">
+          Anzahl Kinder
+          <input type="number" id="kg_kinder_anzahl" min="0" max="10" step="1" value="2" />
+        </label>
+
+        <div class="hinweis">
+          Trage die <strong>Alter</strong> deiner Kinder ein. Ab <strong>25 Jahren</strong> besteht i. d. R. kein Kindergeldanspruch mehr.
+          Bei <strong>18–24</strong> Jahren hängt der Anspruch u. a. von Ausbildung/Studium/Bewerbungsphase ab (hier vereinfachte Annahme).
+        </div>
+
+        <div id="kg_kinder_liste"></div>
+
+        <label class="pflegegrad-label" style="margin-top:1rem;">
+          Kindergeldsatz pro Kind (€/Monat, anpassbar)
+          <input type="number" id="kg_satz" min="0" step="10" value="250" />
+        </label>
+      </fieldset>
+
+      <!-- 2. Haushalt & Einkommen -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Haushalt &amp; Einkommen</legend>
+
+        <label class="pflegegrad-label">
+          Haushaltsform
+          <select id="kiz_haushalt">
+            <option value="alleinerziehend">Alleinerziehend</option>
+            <option value="paar" selected>Paar</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Netto-Haushaltseinkommen (pro Monat, geschätzt)
+          <input type="number" id="kiz_einkommen" min="0" step="50" placeholder="z. B. 2.600" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Warmmiete (inkl. Heizung, pro Monat)
+          <input type="number" id="kiz_warmmiete" min="0" step="10" placeholder="z. B. 950" />
+        </label>
+
+        <div class="hinweis">
+          Für den <strong>KiZ-Vorcheck</strong> nutzt der Rechner pauschale Bedarfswerte (vereinfachte Annahme),
+          damit du eine grobe Richtung bekommst. Maßgeblich sind immer die <strong>offiziellen KiZ/Wohngeld-Rechner</strong>
+          und Bescheide.
+        </div>
+      </fieldset>
+
+      <!-- 3. Ergebnis -->
+      <div class="button-container">
+        <button type="button" id="kiz_berechnen" class="button">Ergebnis anzeigen</button>
+        <button type="reset" id="kiz_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="kiz_ergebnis"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Wichtig:</strong> Der Kinderzuschlag hängt von vielen Faktoren ab (Einkommensarten,
+        Abzüge, Vermögen, genaue Miet-/Angemessenheitsgrenzen, Kinderstatus 18–24
+        in Ausbildung/Studium u. a.). Dieser Vorcheck nutzt <strong>vereinfachte Pauschalen</strong>
+        und ist <strong>nicht verbindlich</strong>. Nutze zusätzlich den offiziellen KiZ-/Wohngeld-Rechner
+        und/oder lass dich beraten.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+  <script src="kindergeld-kinderzuschlag.js"></script>
+</body>
+</html>

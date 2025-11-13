@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kita-/Betreuungskosten-Check 2025 | Sozial-Lotse</title>
+  <meta name="description" content="Vereinfachter Kita-/Betreuungskosten-Check: Kinder, Alter, Betreuungsstunden, Einkommen und regionale Parameter eingeben – Ergebnis: geschätzter Elternbeitrag pro Monat und Summe mit Ermäßigungen.">
+  <meta name="keywords" content="Kita Gebühren Rechner, Elternbeitrag Kita, Betreuungskosten, Geschwisterrabatt, Einkommensstaffel, beitragsfrei, Hort, U3, Ü3, Kassen-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Kita-/Betreuungskosten-Check</h1>
+
+    <div class="highlight-box">
+      <p>
+        Mit diesem Tool kannst du deine <strong>voraussichtlichen Betreuungskosten</strong> pro Monat überschlagen.
+        Da die Regeln je nach <strong>Stadt/Bundesland</strong> unterschiedlich sind, kannst du die <strong>Parameter</strong>
+        (Gebühr je Stunde, Einkommensstaffel, Geschwisterrabatt, Beitragsfreiheit) flexibel einstellen.
+      </p>
+      <p>
+        Ergebnis ist eine <strong>unverbindliche Orientierung</strong>. Maßgeblich sind immer die Satzung / Bescheide deiner Kommune.
+      </p>
+    </div>
+
+    <form id="kita-form" class="pflegegrad-form">
+      <!-- 1) Haushalt & Region -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Haushalt &amp; Region</legend>
+
+        <label class="pflegegrad-label">
+          Region / Kommune (frei)
+          <input type="text" id="kt_region" placeholder="z. B. Musterstadt / Bundesland" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Haushalts-Nettoeinkommen (Monat, geschätzt)
+          <input type="number" id="kt_netto" min="0" step="50" placeholder="z. B. 3.200" />
+        </label>
+
+        <p class="hinweis">
+          Viele Kommunen staffeln Beiträge nach <strong>Haushaltsnettoeinkommen</strong>.
+          Im nächsten Schritt kannst du die Staffelung als <em>Multiplikator</em> konfigurieren.
+        </p>
+      </fieldset>
+
+      <!-- 2) Kinder & Betreuungsumfang -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Kinder &amp; Betreuungsumfang</legend>
+
+        <label class="pflegegrad-label">
+          Anzahl betreuter Kinder
+          <input type="number" id="kt_kinder_anz" min="0" max="8" step="1" value="2" />
+        </label>
+
+        <div id="kt_kinder_liste" class="hinweis" style="margin-top:.6rem;"></div>
+
+        <p class="hinweis">
+          <strong>Altersgruppe</strong> beeinflusst den Satz: <em>U3</em> (unter 3 J.), <em>Ü3</em> (3–6 J.), <em>Hort</em> (Schulkinder).
+          <strong>Stunden/Woche</strong> werden intern in Monatsstunden (× 4,33) umgerechnet.
+        </p>
+      </fieldset>
+
+      <!-- 3) Parameter / Satzungselemente -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3. Parameter / Satzungselemente (anpassbar)</legend>
+
+        <h3>Gebühr je Betreuungsstunde (€)</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label">U3 €/Std
+            <input type="number" id="kt_rate_u3" min="0" step="0.05" value="2.50" />
+          </label>
+          <label class="pflegegrad-label">Ü3 €/Std
+            <input type="number" id="kt_rate_ue3" min="0" step="0.05" value="1.80" />
+          </label>
+          <label class="pflegegrad-label">Hort €/Std
+            <input type="number" id="kt_rate_hort" min="0" step="0.05" value="1.20" />
+          </label>
+        </div>
+
+        <h3>Einkommensstaffel (Multiplikator auf Stundensätze)</h3>
+        <p class="hinweis">
+          Setze hier den <strong>Multiplikator</strong> abhängig vom Einkommen (z. B. 0,7 bei sehr niedrigem Einkommen,
+          1,0 als Norm, 1,3 bei höheren Einkommen).
+        </p>
+        <div class="pflegegrad-label">
+          Multiplikator (0,3–2,0)
+          <input type="number" id="kt_income_mult" min="0.3" max="2" step="0.05" value="1.00" />
+        </div>
+
+        <h3>Geschwisterermäßigung</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label">Rabatt 2. Kind (%)
+            <input type="number" id="kt_rabatt2" min="0" max="100" step="1" value="30" />
+          </label>
+          <label class="pflegegrad-label">Rabatt ab 3. Kind (%)
+            <input type="number" id="kt_rabatt3" min="0" max="100" step="1" value="100" />
+          </label>
+        </div>
+        <p class="hinweis">
+          Die Rabatte werden auf die <strong>Kita-Gebühr</strong> (nicht auf Essenspauschalen) angewendet, sortiert nach
+          Kostenhöhe je Kind (teuerstes Kind = 0&nbsp;% Rabatt, nächstes = Rabatt 2, weitere = Rabatt 3).
+        </p>
+
+        <h3>Beitragsfreiheit (optional)</h3>
+        <div class="pflegegrad-label">
+          <label><input type="checkbox" id="kt_befrei_ue3" /> Ü3 beitragsfrei (Gebühren = 0 €)</label>
+        </div>
+        <div class="pflegegrad-label">
+          <label><input type="checkbox" id="kt_befrei_u3" /> U3 beitragsfrei (Gebühren = 0 €)</label>
+        </div>
+
+        <h3>Deckel &amp; Pauschalen</h3>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+          <label class="pflegegrad-label">Max. Beitrag pro Kind/Monat (€, 0 = keiner)
+            <input type="number" id="kt_cap_kind" min="0" step="5" value="0" />
+          </label>
+          <label class="pflegegrad-label">Essenspauschale pro Kind/Monat (€, optional)
+            <input type="number" id="kt_essen" min="0" step="1" value="80" />
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="kt_berechnen" class="button">Betreuungskosten berechnen</button>
+        <button type="reset" id="kt_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="kt_ergebnis"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Wichtig:</strong> Die Berechnung ist <strong>vereinfacht</strong>.
+        Kommunale Satzungen unterscheiden z. B. nach Einkommensarten, Zeitkontingenten, Alterswechseln, Schulferien,
+        Befreiungen, Höchstgrenzen und Sonderfällen. Verbindlich sind die <strong>lokalen Regelungen</strong> und Bescheide.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+  <script src="kita-betreuungskosten-check.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Elterngeld-Rechner (vereinfachte Version) 2025 | Sozial-Lotse</title>
+  <meta name="description" content="Vereinfachter Elterngeld-Rechner: Basis oder ElterngeldPlus, Monate pro Elternteil, Teilzeit während des Bezugs und Vergleich 'arbeiten vs. Elterngeld'.">
+  <meta name="keywords" content="Elterngeld Rechner, ElterngeldPlus, Basiselterngeld, Teilzeit, Ersatzrate, Elternzeit, Aufteilung, Kassen-Lotse, Nettolohn, Vergleich arbeiten vs. Elterngeld">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Elterngeld-Rechner (vereinfacht)</h1>
+
+    <div class="highlight-box">
+      <p>
+        Rechne dein voraussichtliches <strong>Elterngeld</strong> (Basis oder ElterngeldPlus) je Elternteil –
+        mit <strong>Monatsanzahl</strong>, optionalem <strong>Teilzeit-Netto</strong> während des Bezugs und einer
+        <strong>Gesamtsumme</strong> für beide. Zusätzlich bekommst du einen groben Vergleich
+        <em>„arbeiten vs. Elterngeld“</em>.
+      </p>
+      <p>
+        Die Rechnung ist eine <strong>vereinfachte Orientierung</strong> und ersetzt keine individuelle Beratung
+        oder einen Behördenbescheid.
+      </p>
+    </div>
+
+    <form id="eg-form" class="pflegegrad-form">
+      <!-- 1. Grundeinstellungen -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Grundeinstellungen</legend>
+
+        <label class="pflegegrad-label">
+          Ersatzrate (vereinfacht, Standard 65&nbsp;%)
+          <input type="number" id="eg_ersatzrate" min="50" max="80" step="0.5" value="65" />
+        </label>
+        <p class="hinweis">
+          Gesetzlich gestaffelt (ca. 65–67&nbsp;%). Wir verwenden hier der Einfachheit halber einen festen Satz.
+        </p>
+      </fieldset>
+
+      <!-- 2. Elternteil A -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Elternteil A</legend>
+
+        <label class="pflegegrad-label">
+          Elterngeld-Variante
+          <select id="a_variante">
+            <option value="basis" selected>Basiselterngeld</option>
+            <option value="plus">ElterngeldPlus</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Durchschnittliches Netto <em>vor Geburt</em> (letzte 12 Monate)
+          <input type="number" id="a_netto_vorher" min="0" step="10" placeholder="z. B. 2.200" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Geplantes Netto während Bezugsmonaten (Teilzeit) – optional
+          <input type="number" id="a_netto_waehrend" min="0" step="10" placeholder="z. B. 900 (oder leer lassen)" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Monate der Inanspruchnahme (0–14 bei Basis, 0–24 bei Plus; keine Prüfung im Tool)
+          <input type="number" id="a_monate" min="0" max="24" step="1" value="12" />
+        </label>
+      </fieldset>
+
+      <!-- 3. Elternteil B -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3. Elternteil B</legend>
+
+        <label class="pflegegrad-label">
+          Elterngeld-Variante
+          <select id="b_variante">
+            <option value="basis">Basiselterngeld</option>
+            <option value="plus" selected>ElterngeldPlus</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Durchschnittliches Netto <em>vor Geburt</em> (letzte 12 Monate)
+          <input type="number" id="b_netto_vorher" min="0" step="10" placeholder="z. B. 2.000" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Geplantes Netto während Bezugsmonaten (Teilzeit) – optional
+          <input type="number" id="b_netto_waehrend" min="0" step="10" placeholder="z. B. 1.200 (oder leer lassen)" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Monate der Inanspruchnahme (0–14 bei Basis, 0–24 bei Plus; keine Prüfung im Tool)
+          <input type="number" id="b_monate" min="0" max="24" step="1" value="12" />
+        </label>
+      </fieldset>
+
+      <!-- 4. Vergleich „arbeiten vs. Elterngeld“ (optional) -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>4. Vergleich „arbeiten vs. Elterngeld“ (optional)</legend>
+
+        <label class="pflegegrad-label">
+          Heutiges Netto (gemeinsam), zum Vergleich pro Monat
+          <input type="number" id="eg_netto_heute" min="0" step="50" placeholder="z. B. 3.800" />
+        </label>
+
+        <p class="hinweis">
+          Wir vergleichen die <strong>Gesamtrente/Monat</strong> aus Elterngeld (A+B, gewählte Varianten)
+          mit deinem heutigen gemeinsamen <strong>Netto</strong>. Das ist nur eine grobe Orientierung
+          (keine Steuern/KV/PV, keine Produkt-/Förderbesonderheiten).
+        </p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="eg_berechnen" class="button">Elterngeld berechnen</button>
+        <button type="reset" id="eg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="eg_ergebnis"></section>
+
+    <div class="warning-box">
+      <p>
+        <strong>Hinweis:</strong> Vereinfachtes Modell (keine Steuer-/SV-Betrachtung, keine Geschwister-/Mehrlingszuschläge,
+        kein Partnerschaftsbonus, keine exakten Anrechnungsregeln bei Einkommen in den Bezugsmonaten). Verbindlich sind
+        die gesetzlichen Vorgaben und Bescheide der zuständigen Stellen.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+</footer>
+
+  <script src="elterngeld-rechner.js"></script>
+</body>
+</html>
