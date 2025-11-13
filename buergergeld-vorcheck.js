@@ -6,20 +6,14 @@ function clamp(v,min,max){ return Math.min(Math.max(v,min),max); }
 
 function berechneBedarf(input){
   const {
-    haushalt,
-    erwWeitere,
-    k05, k613, k1417,
+    haushalt, erwWeitere, k05, k613, k1417,
     rsSingle, rsPartner, rsErwWeitere, rs05, rs613, rs1417,
-    warmmiete, mieteCap,
-    mehrAEpct
+    warmmiete, mieteCap, mehrAEpct
   } = input;
 
   // Regelsätze Erwachsene
-  const erwPartner = haushalt === "paar" ? 2 : 1;
-  const rsErw = (haushalt === "paar"
-    ? rsPartner * 2
-    : rsSingle
-  ) + rsErwWeitere * Math.max(0, erwWeitere);
+  const rsErw = (haushalt === "paar" ? rsPartner * 2 : rsSingle)
+              + rsErwWeitere * Math.max(0, erwWeitere);
 
   // Regelsätze Kinder
   const rsKids = (rs05 * Math.max(0,k05))
@@ -48,10 +42,19 @@ function berechneAnrechenbaresEinkommen(input){
 }
 
 function urteilVorcheck(luecke){
-  // luecke = Bedarf - anrechenbares Einkommen
   if (luecke > 100) return "Wahrscheinlich Anspruch";
   if (luecke >= -100 && luecke <= 100) return "Grenzwertig";
   return "Eher nicht";
+}
+
+function errorBox(msgs){
+  const items = msgs.map(m=>`<li>${m}</li>`).join("");
+  return `
+    <div class="pflegegrad-result-card">
+      <h2>Bitte Eingaben prüfen</h2>
+      <ul>${items}</ul>
+    </div>
+  `;
 }
 
 function baueErgebnisHTML(input, bedarfRes, einkRes){
@@ -98,9 +101,10 @@ function baueErgebnisHTML(input, bedarfRes, einkRes){
       </table>
 
       <p class="hinweis">
-        Diese Einschätzung ist <strong>unverbindlich</strong>. Für eine verbindliche Prüfung (inkl. Vermögen,
-        genaue Freibeträge, Kinder-/Unterhaltsanrechnung, besondere Konstellationen) bitte das <strong>Jobcenter</strong>
-        kontaktieren oder eine unabhängige Beratung nutzen. Passe die Pauschalen oben an deine Region/Jahr an.
+        Unverbindliche Orientierung. Für eine verbindliche Prüfung (inkl. Vermögen,
+        genaue Freibeträge, Kinder-/Unterhaltsanrechnung, besondere Konstellationen)
+        bitte das <strong>Jobcenter</strong> kontaktieren oder unabhängige Beratung nutzen.
+        Passe die Pauschalen oben an deine Region/Jahr an.
       </p>
     </div>
   `;
@@ -140,6 +144,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
   if (!btn || !out) return;
 
   btn.addEventListener("click", ()=>{
+    // sanfte Validierung
+    const errors = [];
+    if (n(rsSingle) <= 0 || n(rsPartner) <= 0) {
+      errors.push("Bitte realistische Regelsätze für Erwachsene eintragen (> 0 €).");
+    }
+    if (n(warmmiete) < 0 || n(mieteCap) < 0) {
+      errors.push("Warmmiete und Angemessenheitsgrenze dürfen nicht negativ sein.");
+    }
+    if (n(eink) < 0) errors.push("Einkommen darf nicht negativ sein.");
+    if (n(freiPct) < 0 || n(freiPct) > 50) {
+      errors.push("Prozentualer Freibetrag muss zwischen 0 % und 50 % liegen.");
+    }
+    if (errors.length) { out.innerHTML = errorBox(errors); out.scrollIntoView({behavior:"smooth"}); return; }
+
     const input = {
       haushalt: (haushaltSel && haushaltSel.value) || "paar",
       erwWeitere: Math.max(0, Math.floor(n(erwWeitInp))),

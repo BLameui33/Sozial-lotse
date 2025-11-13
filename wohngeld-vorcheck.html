@@ -2,96 +2,98 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Wohngeld – Vorcheck (grobe Spanne) 2025 | Sozial-Lotse</title>
-  <meta name="description" content="Grobe Wohngeld-Einschätzung: Personen im Haushalt, Kaltmiete, Einkommen und Mietstufe/Cap eingeben – der Vorcheck ermittelt eine mögliche Spanne und die Einstufung (wahrscheinlich / grenzwertig / eher nicht).">
-  <meta name="keywords" content="Wohngeld Rechner, Wohngeld Vorcheck, Miete, Kaltmiete, Mietstufe, Einkommen, Angemessenheitsgrenze, Kassen-Lotse">
+  <title>Wohngeld-Rechner Vorcheck 2025: Grobe Spanne & schnelle Einschätzung | Sozial-Lotse</title>
+  <meta name="description" content="Schneller Wohngeld-Vorcheck 2025: Personen, Kaltmiete, Einkommen und Mietstufe/Cap eingeben – wir schätzen eine Spanne und ordnen ein: wahrscheinlich, grenzwertig oder eher nicht. Verständlich erklärt, mit anpassbaren Parametern.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://www.sozialrecht-lotse.tld/wohngeld-vorcheck.html">
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="styles.css" />
+  <meta property="og:title" content="Wohngeld-Vorcheck 2025 – Grobe Spanne in 2 Minuten">
+  <meta property="og:description" content="Trag Kaltmiete, Einkommen und Personen ein – erhalte eine verständliche Spannen-Schätzung inkl. Einordnung.">
+  <meta property="og:type" content="website">
 </head>
 <body>
   <header class="site-header">
-    <a href="/" class="site-logo">Sozial-Lotse</a>
+    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
   </header>
 
   <div class="page-container">
-    <h1>Wohngeld – Vorcheck (grobe Spanne)</h1>
+    <h1>Wohngeld-Vorcheck 2025 (grobe Spanne)</h1>
 
-    <div class="highlight-box">
+    <div class="highlight-box" role="region" aria-label="Kurzinfo">
       <p>
-        Dieser Vorcheck gibt dir eine <strong>grobe Spanne</strong>, ob und in welcher Höhe
-        <strong>Wohngeld</strong> möglich sein könnte. Alle Parameter sind <strong>editierbar</strong>,
-        damit du sie an deine Kommune/Jahreswerte anpassen kannst.
+        Dieser Vorcheck zeigt dir eine <strong>grobe Spanne</strong>, ob und in welcher Höhe <strong>Wohngeld</strong>
+        denkbar ist – mit klarer Einordnung: <em>wahrscheinlich</em>, <em>grenzwertig</em> oder <em>eher nicht</em>.
       </p>
       <p>
-        Vereinfachung: Wir nutzen die Faustformel
-        <em>möglicher Zuschuss ≈ gedeckelte Kaltmiete − zumutbare Eigenbelastung</em>,
-        mit Kappung ≥ 0 und einem Toleranzband (±-Prozent) für die Spanne.
+        Basis ist eine einfache Formel: <em>möglicher Zuschuss ≈ gedeckelte Kaltmiete − zumutbare Eigenbelastung</em>.
+        Alle Werte sind <strong>editierbar</strong>, damit du sie an deine Kommune anpassen kannst.
       </p>
     </div>
 
-    <form id="wg-form" class="pflegegrad-form">
+    <form id="wg-form" class="pflegegrad-form" aria-describedby="wg_ergebnis" novalidate>
       <!-- 1) Haushalt -->
       <fieldset class="pflegegrad-fieldset active-step">
         <legend>1. Haushalt</legend>
 
-        <label class="pflegegrad-label">
-          Anzahl Personen im Haushalt (Wohngeld)
+        <label class="pflegegrad-label" for="wg_personen">
+          Personen im Haushalt (wohngeldrechtlich)
           <input type="number" id="wg_personen" min="1" max="8" step="1" value="2" />
         </label>
 
-        <label class="pflegegrad-label">
-          Haushalts-Nettoeinkommen (Monat, grob)
+        <label class="pflegegrad-label" for="wg_netto">
+          Haushalts-Nettoeinkommen pro Monat
           <input type="number" id="wg_netto" min="0" step="50" placeholder="z. B. 2.200" />
         </label>
+        <p class="hinweis">
+          In der Realität zählt das <em>zu berücksichtigende Einkommen</em> (mit Abzügen). Hier nutzen wir dein Netto als Näherung.
+        </p>
       </fieldset>
 
       <!-- 2) Miete -->
       <fieldset class="pflegegrad-fieldset">
         <legend>2. Unterkunftskosten</legend>
 
-        <label class="pflegegrad-label">
-          Kaltmiete (ohne Heizung/WW), € / Monat
+        <label class="pflegegrad-label" for="wg_kaltmiete">
+          Bruttokaltmiete (Miete + kalte Nebenkosten)
           <input type="number" id="wg_kaltmiete" min="0" step="10" placeholder="z. B. 820" />
         </label>
 
-        <label class="pflegegrad-label">
-          Mietstufe / Region (frei) – optional
-          <input type="text" id="wg_mietstufe" placeholder="z. B. Mietstufe D / Musterstadt" />
+        <label class="pflegegrad-label" for="wg_mietstufe">
+          Mietstufe / Ort (optional)
+          <input type="text" id="wg_mietstufe" placeholder="z. B. Mietstufe D – Musterstadt" />
         </label>
 
-        <label class="pflegegrad-label">
-          Angemessene Kaltmieten-Obergrenze (Cap), € / Monat
+        <label class="pflegegrad-label" for="wg_cap">
+          Angemessene Kaltmieten-Obergrenze (Cap)
           <input type="number" id="wg_cap" min="0" step="10" value="900" />
         </label>
         <p class="hinweis">
-          Trage die <strong>lokale Cap</strong> (bruttokalt) für deine Personenanzahl ein (oder nutze einen Schätzwert).
-          Der Rechner deckelt die Miete auf diesen Wert.
+          Nutze die <strong>lokale Höchstgrenze</strong> für deine Personenanzahl. Die Miete wird darauf gedeckelt.
         </p>
       </fieldset>
 
       <!-- 3) Parametrisierung -->
       <fieldset class="pflegegrad-fieldset">
-        <legend>3. Parametrisierung (vereinfacht)</legend>
+        <legend>3. Parametrisierung (einfach)</legend>
 
-        <label class="pflegegrad-label">
-          Zumutbare Eigenbelastung (in % des Haushaltsnettos)
+        <label class="pflegegrad-label" for="wg_zumutbar_pct">
+          Zumutbare Eigenbelastung (in % vom Netto)
           <input type="number" id="wg_zumutbar_pct" min="10" max="40" step="0.5" value="30" />
         </label>
 
         <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">Spannen-Toleranz (− %) 
+          <label class="pflegegrad-label" for="wg_tol_minus">Spannen-Toleranz (− %)
             <input type="number" id="wg_tol_minus" min="0" max="50" step="1" value="10" />
           </label>
-          <label class="pflegegrad-label">Spannen-Toleranz (+ %) 
+          <label class="pflegegrad-label" for="wg_tol_plus">Spannen-Toleranz (+ %)
             <input type="number" id="wg_tol_plus" min="0" max="50" step="1" value="10" />
           </label>
         </div>
 
         <p class="hinweis">
-          Aus der Punkt-Schätzung wird durch ±-Toleranz ein <strong>unterer</strong> und <strong>oberer</strong> Wert.
-          Das ist bewusst grob – die tatsächliche Berechnung ist komplexer.
+          Aus der Punkt-Schätzung wird mit ±-Toleranz eine <strong>Spanne</strong>. Das ist bewusst grob – die echte Berechnung ist komplexer.
         </p>
       </fieldset>
 
@@ -101,21 +103,43 @@
       </div>
     </form>
 
-    <section id="wg_ergebnis"></section>
+    <section id="wg_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
-        <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte</strong> Schätzung.
-        In der Praxis werden u. a. <em>zu berücksichtigendes Einkommen</em> (mit Abzügen),
-        <em>Höchstbeträge</em> nach Personen/Mietstufe, Heizkosten, Besonderheiten etc. berücksichtigt.
-        Maßgeblich sind der <strong>offizielle Wohngeldrechner</strong> und der <strong>Bescheid</strong>.
+        <strong>Hinweis:</strong> Vereinfachte Schätzung. In der Praxis zählen z. B. das <em>zu berücksichtigende Einkommen</em> (mit Abzügen),
+        <em>Höchstbeträge</em> nach Personen/Mietstufe, Heizkosten und Sonderregeln. Verbindlich sind der <strong>amtliche Wohngeldrechner</strong>
+        und der <strong>Bescheid</strong>.
       </p>
     </div>
   </div>
 
   <footer>
     <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
-</footer>
+  </footer>
+
+  <!-- FAQ-Schema für SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Wie funktioniert der Wohngeld-Vorcheck?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wir schätzen den möglichen Zuschuss vereinfacht als gedeckelte Kaltmiete minus zumutbarer Eigenbelastung. Du kannst Cap und Prozentsatz an deine Kommune anpassen."
+      }
+    },{
+      "@type": "Question",
+      "name": "Ist das Ergebnis verbindlich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Nutze zusätzlich den amtlichen Wohngeldrechner und beachte den späteren Bescheid. Der Vorcheck dient nur der Orientierung."
+      }
+    }]
+  }
+  </script>
 
   <script src="wohngeld-vorcheck.js"></script>
 </body>

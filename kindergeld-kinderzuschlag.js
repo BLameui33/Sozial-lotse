@@ -1,4 +1,4 @@
-// kindergeld-kinderzuschlag.js (vereinfachter Vorcheck)
+// kindergeld-kinderzuschlag.js (vereinfachter Vorcheck) – mit sanfter Validierung & smarter Kinderliste
 
 function n(el) {
   if (!el) return 0;
@@ -12,36 +12,67 @@ function euro(v) {
 }
 function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
+function errorBox(msgs){
+  const items = msgs.map(m=>`<li>${m}</li>`).join("");
+  return `
+    <div class="pflegegrad-result-card">
+      <h2>Bitte Eingaben prüfen</h2>
+      <ul>${items}</ul>
+    </div>
+  `;
+}
+
 // UI: dynamische Kinderliste
+function rowForKind(i, defaultAge = 8) {
+  return `
+    <tr>
+      <td>Kind ${i + 1}</td>
+      <td>
+        <input type="number" class="kg_kind_alter" data-index="${i}" min="0" max="30" step="1" value="${defaultAge}" />
+      </td>
+      <td>
+        <label style="display:flex; gap:.4rem; align-items:center;">
+          <input type="checkbox" class="kg_kind_foerder" data-index="${i}" />
+          <span>förderfähig (18–24 in Ausbildung/Studium); unter 18 automatisch</span>
+        </label>
+      </td>
+    </tr>
+  `;
+}
+
 function renderKinderListe(container, anzahl) {
   const k = Math.max(0, Math.floor(anzahl || 0));
-  let html = `
+  if (k === 0) {
+    container.innerHTML = `<p class="hinweis">Keine Kinder eingetragen.</p>`;
+    return;
+  }
+  let rows = "";
+  for (let i = 0; i < k; i++) rows += rowForKind(i);
+  container.innerHTML = `
     <table class="pflegegrad-tabelle" style="margin-top:.6rem;">
       <thead>
         <tr>
           <th>#</th>
           <th>Alter</th>
-          <th>Förderfähig 18–24 (vereinfacht)</th>
+          <th>Förderfähigkeit (18–24)</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody>${rows}</tbody>
+    </table>
   `;
-  for (let i = 0; i < k; i++) {
-    html += `
-      <tr>
-        <td>Kind ${i + 1}</td>
-        <td>
-          <input type="number" class="kg_kind_alter" data-index="${i}" min="0" max="30" step="1" value="8" />
-        </td>
-        <td>
-          <input type="checkbox" class="kg_kind_foerder" data-index="${i}" checked />
-          <small>bei 18–24 Jahren Haken entfernen, falls <em>nicht</em> in Ausbildung/Studium</small>
-        </td>
-      </tr>
-    `;
-  }
-  html += `</tbody></table>`;
-  container.innerHTML = html;
+
+  // Defaults: <18 automatisch förderfähig (Checkbox egal); 18–24 standardmäßig angehakt; >=25 aus
+  Array.from(container.querySelectorAll(".kg_kind_alter")).forEach((inp, idx) => {
+    const chk = container.querySelector(`.kg_kind_foerder[data-index="${idx}"]`);
+    const apply = () => {
+      const age = n(inp);
+      if (age < 18) { chk.checked = true; chk.disabled = true; }
+      else if (age <= 24) { chk.disabled = false; chk.checked = true; }
+      else { chk.disabled = true; chk.checked = false; }
+    };
+    apply();
+    inp.addEventListener("input", apply);
+  });
 }
 
 function leseKinder(container) {
@@ -49,7 +80,8 @@ function leseKinder(container) {
   const foerder = Array.from(container.querySelectorAll(".kg_kind_foerder")).map(inp => !!inp.checked);
 
   let anzahlAnspruch = 0;
-  let hinweise = [];
+  const hinweise = [];
+
   alters.forEach((age, idx) => {
     if (age >= 25) {
       hinweise.push(`Kind ${idx + 1}: ${age} Jahre – i. d. R. kein Kindergeldanspruch.`);
@@ -60,9 +92,10 @@ function leseKinder(container) {
         hinweise.push(`Kind ${idx + 1}: ${age} Jahre – als <em>nicht förderfähig</em> markiert (z. B. keine Ausbildung).`);
         return;
       } else {
-        hinweise.push(`Kind ${idx + 1}: ${age} Jahre – <em>förderfähig angenommen</em> (Ausbildung/Studium; vereinfacht).`);
+        hinweise.push(`Kind ${idx + 1}: ${age} Jahre – <em>förderfähig angenommen</em> (vereinfacht).`);
       }
     }
+    // <18 ist immer förderfähig
     anzahlAnspruch += 1;
   });
 
@@ -70,53 +103,38 @@ function leseKinder(container) {
 }
 
 // KiZ-Vorcheck (stark vereinfacht!)
-// Heuristik mit pauschalen Bedarfen:
-// - Eltern-Basisbedarf (Paar ~1100 €, Alleinerziehend ~700 €)
-// - Kinderbedarf pauschal ~420 €/Kind
-// - + Warmmiete
-// Vergleich Netto vs. Bedarf:
-//   < Mindesteinkommen (Alleinerziehend 600 / Paar 900): "nein (unter Mindestgrenze; ggf. Bürgergeld prüfen)"
-//   >= Mindest und Netto < Bedarf: "denkbar"
-//   zwischen Bedarf und Bedarf*1.15: "grenzwertig"
-//   > Bedarf*1.15: "eher nicht"
 function kizVorcheck({ haushalt, netto, warmmiete, kinderAnz }) {
-  const minIncome = haushalt === "alleinerziehend" ? 600 : 900; // sehr grob
-  const baseParent = haushalt === "alleinerziehend" ? 700 : 1100; // pauschale Orientierung
-  const perChild = 420; // pauschal
+  const minIncome = haushalt === "alleinerziehend" ? 600 : 900; // grobe Mindesteinkommen-Orientierung
+  const baseParent = haushalt === "alleinerziehend" ? 700 : 1100; // pauschaler Elternbedarf
+  const perChild = 420; // pauschaler Kinderbedarf
   const bedarf = baseParent + perChild * Math.max(0, kinderAnz) + Math.max(0, warmmiete);
+  const spannbreiteOben = bedarf * 1.15;
 
   if (netto < minIncome) {
     return {
       urteil: "Eher nein",
-      begruendung: `Nettoeinkommen unter der vereinfachten Mindesteinkommensgrenze (${euro(minIncome)}). Evtl. Anspruch auf Bürgergeld/Wohngeld prüfen.`,
-      bedarf,
-      range: [bedarf, bedarf * 1.15]
+      begruendung: `Nettoeinkommen unter der vereinfachten Mindesteinkommensgrenze (${euro(minIncome)}). Evtl. Bürgergeld/Wohngeld prüfen.`,
+      bedarf, range: [bedarf, spannbreiteOben]
     };
   }
-
   if (netto < bedarf) {
     return {
       urteil: "Denkbar",
-      begruendung: "Nettoeinkommen liegt unter dem pauschal ermittelten Bedarf. Kinderzuschlag/Wohngeld könnten helfen (unverbindlich).",
-      bedarf,
-      range: [bedarf, bedarf * 1.15]
+      begruendung: "Nettoeinkommen liegt unter dem pauschalen Bedarf. Kinderzuschlag/Wohngeld könnten helfen (unverbindlich).",
+      bedarf, range: [bedarf, spannbreiteOben]
     };
   }
-
-  if (netto >= bedarf && netto <= bedarf * 1.15) {
+  if (netto <= spannbreiteOben) {
     return {
       urteil: "Grenzwertig",
-      begruendung: "Netto liegt knapp über dem pauschalen Bedarf. Ergebnis kann je nach Details kippen – offiziellen Rechner nutzen.",
-      bedarf,
-      range: [bedarf, bedarf * 1.15]
+      begruendung: "Netto liegt knapp über dem pauschalen Bedarf. Offizielle Rechner nutzen – Details können das Ergebnis drehen.",
+      bedarf, range: [bedarf, spannbreiteOben]
     };
   }
-
   return {
     urteil: "Eher nein",
     begruendung: "Nettoeinkommen liegt deutlich über dem pauschalen Bedarf (vereinfacht).",
-    bedarf,
-    range: [bedarf, bedarf * 1.15]
+    bedarf, range: [bedarf, spannbreiteOben]
   };
 }
 
@@ -142,7 +160,7 @@ function baueErgebnisHTML(kindergeld, foerderbareKinder, hinweise, kiz, netto, w
       <table class="pflegegrad-tabelle">
         <thead><tr><th>Größe</th><th>Wert</th></tr></thead>
         <tbody>
-          <tr><td>Pauschaler Bedarf (Eltern+Kinder) + Warmmiete</td><td>${euro(kiz.bedarf)}</td></tr>
+          <tr><td>Pauschaler Bedarf (Eltern + Kinder) + Warmmiete</td><td>${euro(kiz.bedarf)}</td></tr>
           <tr><td>Orientierungsbereich „grenzwertig“</td><td>${euro(kiz.range[0])} – ${euro(kiz.range[1])}</td></tr>
           <tr><td>Dein Netto / Warmmiete (Eingabe)</td><td>${euro(netto)} / ${euro(warmmiete)}</td></tr>
         </tbody>
@@ -155,8 +173,8 @@ function baueErgebnisHTML(kindergeld, foerderbareKinder, hinweise, kiz, netto, w
     </div>
 
     <p class="hinweis">
-      Dieser KiZ-Vorcheck ist stark vereinfacht (Pauschalwerte, keine Abzüge/Vermögen/Angemessenheitsgrenzen).
-      Für verbindliche Aussagen nutze bitte den <strong>offiziellen Kinderzuschlag-/Wohngeld-Rechner</strong> und lass dich beraten.
+      Stark vereinfachte Heuristik (Pauschalwerte, keine Vermögensprüfung, keine exakten Abzüge/Angemessenheitsgrenzen).
+      Für verbindliche Aussagen bitte den <strong>offiziellen KiZ-/Wohngeld-Rechner</strong> nutzen und ggf. beraten lassen.
     </p>
   `;
 }
@@ -175,27 +193,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const out = document.getElementById("kiz_ergebnis");
 
   // Initial Kinderliste
-  renderKinderListe(kinderContainer, n(anzahlInput));
+  renderKinderListe(kinderContainer, n(anzahlInput) || 0);
 
   anzahlInput.addEventListener("input", () => {
     renderKinderListe(kinderContainer, n(anzahlInput));
-    out.innerHTML = "";
+    if (out) out.innerHTML = "";
   });
 
   if (btn && out) {
     btn.addEventListener("click", () => {
-      const { anzahlAnspruch, hinweise } = leseKinder(kinderContainer);
-      const kgSatz = n(kgSatzInput);
-      const kindergeld = anzahlAnspruch * kgSatz;
+      const errors = [];
+      const anzahlKinder = Math.max(0, Math.floor(n(anzahlInput)));
+      if (anzahlKinder === 0) {
+        errors.push("Bitte mindestens 1 Kind eintragen, sonst ist Kindergeld = 0.");
+      }
 
-      const haushalt = haushaltSel.value;
+      const kgSatz = n(kgSatzInput);
+      if (kgSatz < 0) errors.push("Kindergeldsatz darf nicht negativ sein.");
+
       const netto = n(einkommenInput);
       const warmmiete = n(warmmieteInput);
+      if (netto < 0) errors.push("Nettoeinkommen darf nicht negativ sein.");
+      if (warmmiete < 0) errors.push("Warmmiete darf nicht negativ sein.");
+
+      if (errors.length) {
+        out.innerHTML = errorBox(errors);
+        out.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      const { anzahlAnspruch, hinweise } = leseKinder(kinderContainer);
+      const kindergeld = Math.max(0, anzahlAnspruch) * Math.max(0, kgSatz);
 
       const kiz = kizVorcheck({
-        haushalt,
-        netto,
-        warmmiete,
+        haushalt: haushaltSel.value,
+        netto: Math.max(0, netto),
+        warmmiete: Math.max(0, warmmiete),
         kinderAnz: anzahlAnspruch
       });
 

@@ -1,75 +1,93 @@
-// wohngeld-vorcheck.js (vereinfachte Spannen-Logik)
+// wohngeld-vorcheck.js – klarer, mit Mini-Validierung & Ergebnis-Ampel
 
 function n(el){ if(!el) return 0; const raw=(el.value||"").toString().replace(",","."); const v=Number(raw); return Number.isFinite(v)?v:0; }
 function euro(v){ const x=Number.isFinite(v)?v:0; return x.toFixed(2).replace(".",",")+" €"; }
 function clamp(v,min,max){ return Math.min(Math.max(v,min),max); }
 
-// Kernformel (vereinfacht):
-// 1) gedeckelte Miete = min(Kaltmiete, Cap)
-// 2) zumutbare Eigenbelastung = Netto * (zumutbar%)
-// 3) Punkt-Schätzung Zuschuss = max(0, gedeckelte Miete - zumutbar)
-// 4) Spanne = Punkt * (1 - tolMinus%) ... Punkt * (1 + tolPlus%)
-function schätzeWohngeld({ kaltmiete, cap, netto, zumutbarPct, tolMinus, tolPlus }) {
-  const gedeckelt = Math.min(Math.max(0,kaltmiete), Math.max(0,cap));
+function errorBox(msgs){
+  if (!msgs.length) return "";
+  return `
+    <div class="pflegegrad-result-card">
+      <h2>Bitte Eingaben prüfen</h2>
+      <ul>${msgs.map(m=>`<li>${m}</li>`).join("")}</ul>
+    </div>
+  `;
+}
+function badge(kind){
+  const map = {
+    pos: {label:"wahrscheinlich", cls:"badge-success"},
+    warn:{label:"grenzwertig", cls:"badge-warning"},
+    neg: {label:"eher nicht", cls:"badge-danger"}
+  };
+  const b = map[kind] || map.warn;
+  return `<span class="${b.cls}" style="padding:.2rem .5rem;border-radius:.5rem;">${b.label}</span>`;
+}
+
+// Kernformel (vereinfacht)
+function schaetzeWohngeld({ kaltmiete, cap, netto, zumutbarPct, tolMinus, tolPlus }) {
+  const gedeckelt = Math.min(Math.max(0, kaltmiete), Math.max(0, cap));
   const zumutbar = Math.max(0, netto) * (clamp(zumutbarPct, 0, 100) / 100);
   const punkt = Math.max(0, gedeckelt - zumutbar);
 
-  const minusF = 1 - clamp(tolMinus, 0, 100) / 100;
-  const plusF  = 1 + clamp(tolPlus,  0, 100) / 100;
-
-  const spanMin = Math.max(0, punkt * minusF);
-  const spanMax = Math.max(0, punkt * plusF);
+  const spanMin = Math.max(0, punkt * (1 - clamp(tolMinus, 0, 100) / 100));
+  const spanMax = Math.max(0, punkt * (1 + clamp(tolPlus, 0, 100) / 100));
 
   return { gedeckelt, zumutbar, punkt, spanMin, spanMax };
 }
 
-// Einordnung (grob)
+// Ampel-Logik
 function einordnung(punkt, spanMin, spanMax) {
-  if (punkt <= 0) return "Eher nicht";
-  // sehr kleiner Betrag -> grenzwertig
-  if (spanMax < 50) return "Grenzwertig";
-  return "Wahrscheinlich";
+  if (punkt <= 0) return {label:"Eher nicht", kind:"neg"};
+  if (spanMax < 50) return {label:"Grenzwertig", kind:"warn"};
+  return {label:"Wahrscheinlich", kind:"pos"};
 }
 
-function baueErgebnisHTML(eingabe, out) {
-  const urteil = einordnung(out.punkt, out.spanMin, out.spanMax);
+function buildResult(e, res){
+  const ord = einordnung(res.punkt, res.spanMin, res.spanMax);
 
   return `
-    <h2>Ergebnis: Wohngeld-Vorcheck (grobe Spanne)</h2>
+    <h2>Ergebnis: Wohngeld-Vorcheck</h2>
 
     <div class="pflegegrad-result-card">
-      <h3>Deine Eingaben (Kurzüberblick)</h3>
+      <p style="font-size:1.05rem;">
+        <strong>Einordnung:</strong> ${badge(ord.kind)} (${ord.label})
+      </p>
+
+      <h3>Deine Eingaben</h3>
       <table class="pflegegrad-tabelle">
         <thead><tr><th>Angabe</th><th>Wert</th></tr></thead>
         <tbody>
-          <tr><td>Personen im Haushalt</td><td>${eingabe.personen}</td></tr>
-          <tr><td>Haushalts-Netto</td><td>${euro(eingabe.netto)}</td></tr>
-          <tr><td>Kaltmiete</td><td>${euro(eingabe.kaltmiete)}</td></tr>
-          <tr><td>Cap (angemessene Kaltmiete)</td><td>${euro(eingabe.cap)}</td></tr>
-          <tr><td>Zumutbare Eigenbelastung</td><td>${eingabe.zumutbarPct.toFixed(1).replace(".",",")} % vom Netto</td></tr>
+          <tr><td>Personen im Haushalt</td><td>${e.personen}</td></tr>
+          <tr><td>Haushalts-Netto pro Monat</td><td>${euro(e.netto)}</td></tr>
+          <tr><td>Bruttokaltmiete</td><td>${euro(e.kaltmiete)}</td></tr>
+          <tr><td>Cap (angemessene Kaltmiete)</td><td>${euro(e.cap)}</td></tr>
+          <tr><td>Zumutbare Eigenbelastung</td><td>${e.zumutbarPct.toFixed(1).replace(".",",")} % vom Netto</td></tr>
+          ${e.mietstufe ? `<tr><td>Mietstufe/Ort</td><td>${e.mietstufe}</td></tr>` : ""}
         </tbody>
       </table>
 
       <h3>Berechnung (vereinfacht)</h3>
       <table class="pflegegrad-tabelle">
-        <thead><tr><th>Größe</th><th>Wert</th></tr></thead>
+        <thead><tr><th>Größe</th><th>Betrag</th></tr></thead>
         <tbody>
-          <tr><td>Gedeckelte Kaltmiete</td><td>${euro(out.gedeckelt)}</td></tr>
-          <tr><td>Zumutbare Eigenbelastung</td><td>${euro(out.zumutbar)}</td></tr>
-          <tr><td><strong>Punkt-Schätzung Zuschuss</strong></td><td><strong>${euro(out.punkt)}</strong></td></tr>
-          <tr><td>Spanne (mit Toleranz)</td><td>${euro(out.spanMin)} – ${euro(out.spanMax)}</td></tr>
+          <tr><td>Gedeckelte Kaltmiete</td><td>${euro(res.gedeckelt)}</td></tr>
+          <tr><td>Zumutbare Eigenbelastung</td><td>${euro(res.zumutbar)}</td></tr>
+          <tr><td><strong>Punkt-Schätzung Zuschuss</strong></td><td><strong>${euro(res.punkt)}</strong></td></tr>
+          <tr><td>Spanne (mit Toleranz)</td><td>${euro(res.spanMin)} – ${euro(res.spanMax)}</td></tr>
         </tbody>
       </table>
 
-      <h3>Einordnung</h3>
-      <p><strong>${urteil}</strong> (auf Basis der vereinfachten Formel und deiner Parameter).</p>
-
-      <p class="hinweis">
-        Für eine verbindliche Einschätzung nutze bitte den <strong>offiziellen Wohngeldrechner</strong>
-        deiner Landes-/Bundesseite und/oder lass dich beraten. Passe Cap und Prozentsatz an deine Kommune an
-        (Personenzahl & Mietstufe).
-      </p>
+      <h3>Nächste Schritte</h3>
+      <ul>
+        <li>Prüfe die <strong>lokale Cap</strong> für deine Personenanzahl und Mietstufe.</li>
+        <li>Nutze den <strong>amtlichen Wohngeldrechner</strong> für eine genaue Berechnung.</li>
+        <li>Bei knapper Spanne (<em>grenzwertig</em>): Unterlagen sammeln und beraten lassen.</li>
+      </ul>
     </div>
+
+    <p class="hinweis">
+      Dieser Vorcheck ersetzt keine Rechtsberatung. Maßgeblich sind der amtliche Wohngeldrechner und der spätere Bescheid.
+    </p>
   `;
 }
 
@@ -81,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const zPct = document.getElementById("wg_zumutbar_pct");
   const tolM = document.getElementById("wg_tol_minus");
   const tolP = document.getElementById("wg_tol_plus");
+  const mietstufe = document.getElementById("wg_mietstufe");
 
   const btn = document.getElementById("wg_berechnen");
   const reset = document.getElementById("wg_reset");
@@ -89,6 +108,18 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!btn || !out) return;
 
   btn.addEventListener("click", () => {
+    const errors = [];
+    if (!pers.value) errors.push("Bitte die Personenanzahl angeben.");
+    if (!kalt.value) errors.push("Bitte die Bruttokaltmiete angeben.");
+    if (!netto.value) errors.push("Bitte das Haushalts-Nettoeinkommen angeben.");
+    if (!cap.value) errors.push("Bitte die Cap-Obergrenze angeben.");
+
+    if (errors.length){
+      out.innerHTML = errorBox(errors);
+      out.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
     const eingabe = {
       personen: Math.max(1, Math.floor(n(pers))),
       netto: n(netto),
@@ -96,10 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
       cap: n(cap),
       zumutbarPct: n(zPct),
       tolMinus: n(tolM),
-      tolPlus: n(tolP)
+      tolPlus: n(tolP),
+      mietstufe: (mietstufe && mietstufe.value || "").trim()
     };
 
-    const res = schätzeWohngeld({
+    const res = schaetzeWohngeld({
       kaltmiete: eingabe.kaltmiete,
       cap: eingabe.cap,
       netto: eingabe.netto,
@@ -108,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tolPlus: eingabe.tolPlus
     });
 
-    out.innerHTML = baueErgebnisHTML(eingabe, res);
+    out.innerHTML = buildResult(eingabe, res);
     out.scrollIntoView({ behavior: "smooth" });
   });
 

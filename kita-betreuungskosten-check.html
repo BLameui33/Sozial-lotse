@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <title>Kita-/Betreuungskosten-Check 2025 | Sozial-Lotse</title>
   <meta name="description" content="Vereinfachter Kita-/Betreuungskosten-Check: Kinder, Alter, Betreuungsstunden, Einkommen und regionale Parameter eingeben – Ergebnis: geschätzter Elternbeitrag pro Monat und Summe mit Ermäßigungen.">
-  <meta name="keywords" content="Kita Gebühren Rechner, Elternbeitrag Kita, Betreuungskosten, Geschwisterrabatt, Einkommensstaffel, beitragsfrei, Hort, U3, Ü3, Kassen-Lotse">
+  <meta name="keywords" content="Kita Gebühren Rechner, Elternbeitrag Kita, Betreuungskosten, Geschwisterrabatt, Einkommensstaffel, beitragsfrei, Hort, U3, Ü3, Kassen-Lotse, Sozial-Lotse">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="site-header">
-    <a href="/" class="site-logo">Sozial-Lotse</a>
+    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
   </header>
 
   <div class="page-container">
     <h1>Kita-/Betreuungskosten-Check</h1>
 
-    <div class="highlight-box">
+    <div class="highlight-box" role="region" aria-label="Einführung">
       <p>
         Mit diesem Tool kannst du deine <strong>voraussichtlichen Betreuungskosten</strong> pro Monat überschlagen.
         Da die Regeln je nach <strong>Stadt/Bundesland</strong> unterschiedlich sind, kannst du die <strong>Parameter</strong>
@@ -28,17 +28,17 @@
       </p>
     </div>
 
-    <form id="kita-form" class="pflegegrad-form">
+    <form id="kita-form" class="pflegegrad-form" aria-describedby="kt_ergebnis" novalidate>
       <!-- 1) Haushalt & Region -->
       <fieldset class="pflegegrad-fieldset active-step">
         <legend>1. Haushalt &amp; Region</legend>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="kt_region">
           Region / Kommune (frei)
           <input type="text" id="kt_region" placeholder="z. B. Musterstadt / Bundesland" />
         </label>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="kt_netto">
           Haushalts-Nettoeinkommen (Monat, geschätzt)
           <input type="number" id="kt_netto" min="0" step="50" placeholder="z. B. 3.200" />
         </label>
@@ -53,7 +53,7 @@
       <fieldset class="pflegegrad-fieldset">
         <legend>2. Kinder &amp; Betreuungsumfang</legend>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="kt_kinder_anz">
           Anzahl betreuter Kinder
           <input type="number" id="kt_kinder_anz" min="0" max="8" step="1" value="2" />
         </label>
@@ -72,13 +72,13 @@
 
         <h3>Gebühr je Betreuungsstunde (€)</h3>
         <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">U3 €/Std
+          <label class="pflegegrad-label" for="kt_rate_u3">U3 €/Std
             <input type="number" id="kt_rate_u3" min="0" step="0.05" value="2.50" />
           </label>
-          <label class="pflegegrad-label">Ü3 €/Std
+          <label class="pflegegrad-label" for="kt_rate_ue3">Ü3 €/Std
             <input type="number" id="kt_rate_ue3" min="0" step="0.05" value="1.80" />
           </label>
-          <label class="pflegegrad-label">Hort €/Std
+          <label class="pflegegrad-label" for="kt_rate_hort">Hort €/Std
             <input type="number" id="kt_rate_hort" min="0" step="0.05" value="1.20" />
           </label>
         </div>
@@ -89,16 +89,16 @@
           1,0 als Norm, 1,3 bei höheren Einkommen).
         </p>
         <div class="pflegegrad-label">
-          Multiplikator (0,3–2,0)
+          <label for="kt_income_mult">Multiplikator (0,3–2,0)</label>
           <input type="number" id="kt_income_mult" min="0.3" max="2" step="0.05" value="1.00" />
         </div>
 
         <h3>Geschwisterermäßigung</h3>
         <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">Rabatt 2. Kind (%)
+          <label class="pflegegrad-label" for="kt_rabatt2">Rabatt 2. Kind (%)
             <input type="number" id="kt_rabatt2" min="0" max="100" step="1" value="30" />
           </label>
-          <label class="pflegegrad-label">Rabatt ab 3. Kind (%)
+          <label class="pflegegrad-label" for="kt_rabatt3">Rabatt ab 3. Kind (%)
             <input type="number" id="kt_rabatt3" min="0" max="100" step="1" value="100" />
           </label>
         </div>
@@ -117,10 +117,10 @@
 
         <h3>Deckel &amp; Pauschalen</h3>
         <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">Max. Beitrag pro Kind/Monat (€, 0 = keiner)
+          <label class="pflegegrad-label" for="kt_cap_kind">Max. Beitrag pro Kind/Monat (€, 0 = keiner)
             <input type="number" id="kt_cap_kind" min="0" step="5" value="0" />
           </label>
-          <label class="pflegegrad-label">Essenspauschale pro Kind/Monat (€, optional)
+          <label class="pflegegrad-label" for="kt_essen">Essenspauschale pro Kind/Monat (€, optional)
             <input type="number" id="kt_essen" min="0" step="1" value="80" />
           </label>
         </div>
@@ -132,7 +132,7 @@
       </div>
     </form>
 
-    <section id="kt_ergebnis"></section>
+    <section id="kt_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
@@ -145,7 +145,7 @@
 
   <footer>
     <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
-</footer>
+  </footer>
 
   <script src="kita-betreuungskosten-check.js"></script>
 </body>

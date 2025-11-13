@@ -1,4 +1,4 @@
-// kita-betreuungskosten-check.js
+// kita-betreuungskosten-check.js – verbessert mit Validierung & Jahresdurchschnitt
 
 function n(el) {
   if (!el) return 0;
@@ -12,9 +12,23 @@ function euro(v) {
 }
 function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
+function errorBox(msgs){
+  const items = msgs.map(m=>`<li>${m}</li>`).join("");
+  return `
+    <div class="pflegegrad-result-card">
+      <h2>Bitte Eingaben prüfen</h2>
+      <ul>${items}</ul>
+    </div>
+  `;
+}
+
 // --- UI: Kinderliste dynamisch rendern ---
 function renderKinderListe(container, anzahl) {
   const k = Math.max(0, Math.floor(anzahl || 0));
+  if (k === 0) {
+    container.innerHTML = `<p class="hinweis">Keine Kinder eingetragen.</p>`;
+    return;
+  }
   let html = `
     <table class="pflegegrad-tabelle">
       <thead>
@@ -22,7 +36,7 @@ function renderKinderListe(container, anzahl) {
           <th>#</th>
           <th>Altersgruppe</th>
           <th>Stunden/Woche</th>
-          <th>Monate/Jahr (Beitrag)</th>
+          <th>Monate/Jahr (beitragspflichtig)</th>
           <th>Essenspauschale aktiv?</th>
         </tr>
       </thead>
@@ -67,38 +81,33 @@ function leseKinder(container) {
 }
 
 // --- Kernlogik ---
-function monatlicheGebuehrKind(kind, rates, incomeMult, caps, befreit) {
+function monatlicheGebuehrKind(kind, rates, incomeMult, capPerKind, free) {
   const stdMonat = Math.max(0, kind.stdWoche) * 4.33;
 
-  // Grundsatz: Satz je Stunde * Monatsstunden * Einkommensmultiplikator
+  // Satz je Stunde
   let satz = 0;
   if (kind.alter === "u3") satz = rates.u3;
   else if (kind.alter === "ue3") satz = rates.ue3;
   else satz = rates.hort;
 
-  // Beitragsfreiheit toggles
-  if ((kind.alter === "u3" && befreit.u3) || (kind.alter === "ue3" && befreit.ue3)) {
+  // Beitragsfreiheit
+  if ((kind.alter === "u3" && free.u3) || (kind.alter === "ue3" && free.ue3)) {
     satz = 0;
   }
 
   let betrag = satz * stdMonat * incomeMult;
 
   // Deckel pro Kind
-  if (caps.capPerKind > 0) {
-    betrag = Math.min(betrag, caps.capPerKind);
-  }
+  if (capPerKind > 0) betrag = Math.min(betrag, capPerKind);
 
-  // Pro "Monat" wird später evtl. mit Anzahl beitragspflichtiger Monate multipliziert.
-  return betrag;
+  return betrag; // pro Monat im beitragspflichtigen Zeitraum (ohne Essen)
 }
 
 function anwendeGeschwisterrabatt(monatsBetraege, rabatt2, rabatt3plus) {
   if (monatsBetraege.length === 0) return { netto: [], rabattSum: 0 };
 
-  // Teuerstes Kind ohne Rabatt; nächstes mit Rabatt2; Rest mit Rabatt3+
-  const sorted = monatsBetraege
-    .map((v, i) => ({ i, v }))
-    .sort((a, b) => b.v - a.v);
+  // Teuerstes Kind ohne Rabatt; nächstes mit Rabatt2; weitere mit Rabatt3+
+  const sorted = monatsBetraege.map((v, i) => ({ i, v })).sort((a, b) => b.v - a.v);
 
   let rabattSum = 0;
   const netto = Array(monatsBetraege.length).fill(0);
@@ -130,11 +139,13 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
         <td>${euro(result.nettoProKind[idx])}</td>
         <td>${k.essen ? euro(params.essen) : "—"}</td>
         <td><strong>${euro(result.gesamtProKind[idx])}</strong></td>
+        <td>${euro(result.jahresDurchschnittProKind[idx])}</td>
       </tr>
     `;
   }).join("");
 
-  const diffPct = einkommen > 0 ? (result.summeGesamt / einkommen) * 100 : null;
+  const anteil = einkommen > 0 ? (result.summeGesamt / einkommen) * 100 : null;
+  const anteilAvg = einkommen > 0 ? (result.jahresDurchschnittGesamt / einkommen) * 100 : null;
 
   return `
     <h2>Ergebnis: geschätzte Betreuungskosten</h2>
@@ -157,7 +168,8 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
             <th>Gebühr/Monat (brutto)</th>
             <th>nach Geschwisterrabatt</th>
             <th>Essenspauschale</th>
-            <th><strong>Summe/Monat</strong></th>
+            <th><strong>Summe/Monat (wenn Beitrag fällig)</strong></th>
+            <th>Jahresdurchschnitt / Monat (auf 12 Mon.)</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
@@ -170,9 +182,11 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
         </thead>
         <tbody>
           <tr><td>Geschwisterrabatt gesamt</td><td>− ${euro(result.rabattSum)}</td></tr>
-          <tr><td>Essenspauschalen gesamt</td><td>${euro(result.essenSum)}</td></tr>
-          <tr><td><strong>Monatliche Gesamtkosten</strong></td><td><strong>${euro(result.summeGesamt)}</strong></td></tr>
-          <tr><td>Anteil am Haushaltsnetto</td><td>${diffPct !== null ? diffPct.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
+          <tr><td>Essenspauschalen gesamt (monatlich, wenn aktiv)</td><td>${euro(result.essenSum)}</td></tr>
+          <tr><td><strong>Monatliche Gesamtkosten (wenn Beitrag fällig)</strong></td><td><strong>${euro(result.summeGesamt)}</strong></td></tr>
+          <tr><td>Anteil am Haushaltsnetto</td><td>${anteil !== null ? anteil.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
+          <tr><td><strong>Jahresdurchschnitt / Monat (auf 12 Mon.)</strong></td><td><strong>${euro(result.jahresDurchschnittGesamt)}</strong></td></tr>
+          <tr><td>Anteil am Haushaltsnetto (Durchschnitt)</td><td>${anteilAvg !== null ? anteilAvg.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
         </tbody>
       </table>
 
@@ -223,21 +237,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   anzInput.addEventListener("input", () => {
     renderKinderListe(kinderWrap, n(anzInput));
-    out.innerHTML = "";
+    if (out) out.innerHTML = "";
   });
 
   if (btn && out) {
     btn.addEventListener("click", () => {
+      const errors = [];
       const region = (regionInput && regionInput.value) || "";
       const einkommen = n(nettoInput);
+      if (einkommen < 0) errors.push("Haushaltsnettoeinkommen darf nicht negativ sein.");
 
       const kinder = leseKinder(kinderWrap);
+      if ((n(anzInput) || 0) !== kinder.length) {
+        errors.push("Bitte Anzahl und Liste der Kinder synchronisieren.");
+      }
 
       const params = {
         rates: {
-          u3: n(rateU3),
-          ue3: n(rateUE3),
-          hort: n(rateHort)
+          u3: Math.max(0, n(rateU3)),
+          ue3: Math.max(0, n(rateUE3)),
+          hort: Math.max(0, n(rateHort))
         },
         incomeMult: clamp(n(incomeMultInput), 0.3, 2),
         rabatt2: clamp(n(rabatt2Input), 0, 100),
@@ -250,18 +269,33 @@ document.addEventListener("DOMContentLoaded", () => {
         essen: Math.max(0, n(essenInput))
       };
 
-      // 1) Brutto-Gebühren pro Kind (Monatsbasis)
+      // Plausis
+      if (params.rates.u3 === 0 && !params.free.u3) errors.push("U3-Satz ist 0 und keine Beitragsfreiheit gesetzt – ist das beabsichtigt?");
+      if (params.rates.ue3 === 0 && !params.free.ue3) errors.push("Ü3-Satz ist 0 und keine Beitragsfreiheit gesetzt – ist das beabsichtigt?");
+      if (params.incomeMult <= 0) errors.push("Einkommensmultiplikator muss > 0 sein.");
+      kinder.forEach((k, i) => {
+        if (k.stdWoche < 0) errors.push(`Kind ${i+1}: Stunden/Woche darf nicht negativ sein.`);
+        if (k.monate < 1 || k.monate > 12) errors.push(`Kind ${i+1}: Monate/Jahr bitte zwischen 1 und 12.`);
+      });
+
+      if (errors.length) {
+        out.innerHTML = errorBox(errors);
+        out.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      // 1) Brutto-Gebühren pro Kind (Monatsbasis – wenn Beitrag fällig)
       const bruttoProKind = kinder.map(k =>
         monatlicheGebuehrKind(
           k,
           params.rates,
           params.incomeMult,
-          { capPerKind: params.capPerKind },
+          params.capPerKind,
           params.free
         )
       );
 
-      // 2) Geschwisterrabatt auf Gebühren anwenden (Sortierung nach Höhe enthalten)
+      // 2) Geschwisterrabatt
       const { netto: nettoProKind, rabattSum } = anwendeGeschwisterrabatt(
         bruttoProKind,
         params.rabatt2,
@@ -271,14 +305,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // 3) Essenspauschale addieren (optional pro Kind)
       const essenProKind = kinder.map(k => (k.essen ? params.essen : 0));
 
-      // 4) Monatskosten je Kind
+      // 4) Monatskosten je Kind (wenn Beitrag fällig)
       const gesamtProKind = kinder.map((_, i) => nettoProKind[i] + essenProKind[i]);
 
-      // 5) Jahresmonate berücksichtigen -> wir geben weiter "pro Monat im Beitragszeitraum" aus,
-      //    die Eingabe "Monate/Jahr" dient eher der Info; optional könnte man daraus einen Jahresdurchschnitt bilden.
-      //    Für Anwender*innen ist meist "pro Monat, wenn Beitrag fällig" interessanter.
+      // 5) Jahresdurchschnitt bilden (auf 12 Monate): (Monatskosten * beitrags-Monate)/12
+      const jahresDurchschnittProKind = kinder.map((k, i) => (gesamtProKind[i] * k.monate) / 12);
+
+      // Summen
       const essenSum = essenProKind.reduce((a, b) => a + b, 0);
       const summeGesamt = gesamtProKind.reduce((a, b) => a + b, 0);
+      const jahresDurchschnittGesamt = jahresDurchschnittProKind.reduce((a, b) => a + b, 0);
 
       const result = {
         bruttoProKind,
@@ -286,10 +322,20 @@ document.addEventListener("DOMContentLoaded", () => {
         gesamtProKind,
         rabattSum,
         essenSum,
-        summeGesamt
+        summeGesamt,
+        jahresDurchschnittProKind,
+        jahresDurchschnittGesamt
       };
 
-      out.innerHTML = baueErgebnis(region, einkommen, kinder, params, result);
+      out.innerHTML = baueErgebnis(region, einkommen, kinder, {
+        rates: params.rates,
+        incomeMult: params.incomeMult,
+        rabatt2: params.rabatt2,
+        rabatt3: params.rabatt3,
+        free: params.free,
+        capPerKind: params.capPerKind,
+        essen: params.essen
+      }, result);
       out.scrollIntoView({ behavior: "smooth" });
     });
   }

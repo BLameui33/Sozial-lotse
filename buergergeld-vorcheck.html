@@ -2,41 +2,39 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Bürgergeld – Vorcheck 2025 | Sozial-Lotse</title>
-  <meta name="description" content="Vereinfachter Bürgergeld-Vorcheck: Haushalt, Kinder, Warmmiete und Einkommen eingeben – der Rechner schätzt Bedarf, anrechenbares Einkommen und gibt eine grobe Einschätzung (wahrscheinlich / grenzwertig / eher nicht).">
-  <meta name="keywords" content="Bürgergeld Rechner, Vorprüfung, Bedarfsgemeinschaft, Regelsatz, Warmmiete, Freibetrag, Einkommen, Kassen-Lotse">
+  <title>Bürgergeld Vorcheck 2025 – Bedarf, Einkommen, grobe Einschätzung | Sozial-Lotse</title>
+  <meta name="description" content="Schneller Bürgergeld-Vorcheck: Haushalt, Kinder, Warmmiete und Einkommen eingeben – der Rechner schätzt Bedarf, anrechenbares Einkommen und gibt eine grobe Einschätzung (wahrscheinlich / grenzwertig / eher nicht). Alle Werte editierbar.">
+  <meta name="keywords" content="Bürgergeld Rechner, Vorcheck Bürgergeld, Bedarfsgemeinschaft, Regelsatz, Warmmiete Angemessenheit, Freibetrag Einkommen, Jobcenter, SGB II, Sozial-Lotse, Kassen-Lotse">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
-  
 </head>
 <body>
   <header class="site-header">
-    <a href="/" class="site-logo">Sozial-Lotse</a>
+    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
   </header>
 
   <div class="page-container">
     <h1>Bürgergeld – Vorcheck (vereinfacht)</h1>
 
-    <div class="highlight-box">
+    <div class="highlight-box" role="region" aria-label="Einführung">
       <p>
-        Dieser Vorcheck ermittelt <strong>grob</strong>, ob Bürgergeld (SGB II) für deinen Haushalt
+        Dieser Vorcheck ermittelt <strong>grob</strong>, ob Bürgergeld (SGB&nbsp;II) für deinen Haushalt
         <em>denkbar</em> ist. Wir berechnen einen <strong>vereinfachten Bedarf</strong> (Regelsätze + Warmmiete
         bis zur Angemessenheitsgrenze) und ziehen ein <strong>vereinfachtes anrechenbares Einkommen</strong> ab.
       </p>
       <p>
-        Alle Werte (Regelsätze, Angemessenheitsgrenze, Freibeträge) sind <strong>editierbar</strong>, damit du
-        sie schnell an Jahr/Region anpassen kannst. Ergebnis: <em>wahrscheinlich Anspruch</em> /
-        <em>grenzwertig</em> / <em>eher nicht</em>.
+        Alle Werte sind <strong>editierbar</strong> (Jahr/Region). Ergebnis als Ampel:
+        <em>wahrscheinlich Anspruch</em> / <em>grenzwertig</em> / <em>eher nicht</em>.
       </p>
     </div>
 
-    <form id="bg-form" class="pflegegrad-form">
+    <form id="bg-form" class="pflegegrad-form" aria-describedby="bg_ergebnis" novalidate>
       <!-- 1) Haushalt -->
       <fieldset class="pflegegrad-fieldset active-step">
         <legend>1. Haushalt</legend>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="bg_haushalt">
           Haushaltsform
           <select id="bg_haushalt">
             <option value="single">Alleinstehend / Alleinerziehend</option>
@@ -98,17 +96,17 @@
         </div>
 
         <h3>Unterkunft &amp; Heizung</h3>
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="bg_warmmiete">
           Warmmiete (inkl. Heizung), € / Monat
           <input type="number" id="bg_warmmiete" min="0" step="10" placeholder="z. B. 950" />
         </label>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="bg_miete_cap">
           Angemessenheitsgrenze Warmmiete (Deckel), € / Monat
           <input type="number" id="bg_miete_cap" min="0" step="10" value="1000" />
         </label>
         <p class="hinweis">
-          Der Bedarf berücksichtigt die Warmmiete nur bis zur <strong>Angemessenheitsgrenze</strong> (hier frei einstellbar).
+          Der Bedarf berücksichtigt die Warmmiete nur bis zur <strong>Angemessenheitsgrenze</strong> (regional unterschiedlich).
         </p>
       </fieldset>
 
@@ -116,8 +114,8 @@
       <fieldset class="pflegegrad-fieldset">
         <legend>3. Einkommen &amp; Freibeträge (vereinfacht)</legend>
 
-        <label class="pflegegrad-label">
-          Haushalts-Nettoeinkommen (alle anrechenbaren Einkünfte zusammen, grob)
+        <label class="pflegegrad-label" for="bg_einkommen">
+          Haushalts-Nettoeinkommen (anrechenbare Einkünfte zusammen, grob)
           <input type="number" id="bg_einkommen" min="0" step="50" placeholder="z. B. 1.800" />
         </label>
 
@@ -130,7 +128,7 @@
           </label>
         </div>
 
-        <label class="pflegegrad-label">
+        <label class="pflegegrad-label" for="bg_abzuege_sonstig">
           Weitere Absetzbeträge (Versicherungspauschalen etc.), € / Monat
           <input type="number" id="bg_abzuege_sonstig" min="0" step="10" value="0" />
         </label>
@@ -148,22 +146,35 @@
       </div>
     </form>
 
-    <section id="bg_ergebnis"></section>
+    <section id="bg_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
-        <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte Orientierung</strong>.
-        In der Praxis gelten detaillierte Regeln (Vermögen, genaue Freibeträge, Azubi/Studenten-Regeln,
-        Unterhalt/Kindergeld, Unterkunftsangemessenheit, temporäre Schutzfristen u. v. m.).
-        Verbindlich sind die <strong>gesetzlichen Vorgaben</strong> und Bescheide des Jobcenters.
+        <strong>Wichtig:</strong> Vereinfachte Orientierung. In der Praxis gelten detaillierte Regeln
+        (Vermögen, exakte Freibeträge, Unterhalt/Kindergeld, Ausbildung/Studium, Unterkunftsangemessenheit,
+        Übergangs-/Schutzfristen u. v. m.). Verbindlich sind die <strong>Gesetze</strong> und Bescheide des
+        <strong>Jobcenters</strong>. Stand: 13.11.2025.
       </p>
     </div>
   </div>
 
   <footer>
     <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
-</footer>
+  </footer>
 
   <script src="buergergeld-vorcheck.js"></script>
+
+  <!-- FAQ-Snippets für SEO (strukturierte Daten) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Wie ermittelt der Vorcheck den Bedarf?","acceptedAnswer":{"@type":"Answer","text":"Vereinfacht: Regelsätze für alle Haushaltsmitglieder plus Warmmiete, jedoch nur bis zur Angemessenheitsgrenze (regional)."}},
+      {"@type":"Question","name":"Wie wird Einkommen angerechnet?","acceptedAnswer":{"@type":"Answer","text":"Vereinfacht: Einkommen abzüglich fixer und prozentualer Freibeträge sowie weiterer Pauschalen. Negative Ergebnisse werden als 0 behandelt."}},
+      {"@type":"Question","name":"Ist das Ergebnis verbindlich?","acceptedAnswer":{"@type":"Answer","text":"Nein. Es ist eine Orientierung. Verbindlich entscheiden die Jobcenter auf Basis der gesetzlichen Regeln und individueller Nachweise."}}
+    ]
+  }
+  </script>
 </body>
 </html>
