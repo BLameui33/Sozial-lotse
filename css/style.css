@@ -591,3 +591,39 @@ h1, h2, h3, p, li, td, th {
       .promo-teaser h2 { font-size: 1.4rem; }
       .promo-teaser p { font-size: 0.95rem; }
     }
+
+
+     .kl-highlight {
+  background:#fff9e6;
+  border-left:4px solid #ffffff;
+  padding:12px 14px;
+  margin:14px 0;
+  border-radius:4px;
+  color:#222;
+}
+
+.kl-sources-box h3 { margin:0 0 6px; font-size:1rem; }
+.kl-sources-box ul { margin:6px 0 0 18px; padding:0; }
+.kl-sources-box li { margin:6px 0; }
+
+.kl-checklist { background:#fbfbfb; border:1px solid #eee; padding:12px; border-radius:8px; }
+.kl-checklist ul { list-style:none; padding:0; margin:0; }
+.kl-checklist li { margin:8px 0; font-size:0.97rem; }
+.kl-checklist input[type="checkbox"]{ transform:scale(1.05); margin-right:8px; }
+
+.kl-checklist-actions { margin-top:10px; display:flex; gap:8px; align-items:center; }
+.kl-btn{ border:1px solid #ccc; background:#fff; color:#222; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.95rem; }
+.kl-btn:active{ transform:translateY(1px); }
+
+@media print {
+  .kl-checklist-actions, .kl-checklist input[type="checkbox"] { display:none; }
+  .kl-highlight { page-break-inside: avoid; }
+}
+
+.kl-fallbeispiele { margin:20px 0; padding:12px; border-radius:6px; background:#f6fbff; border:1px solid #e0eefb; }
+.kl-fallbeispiele h2 { margin-top:0; }
+.kl-fall-intro { color:#334; margin-bottom:10px; }
+.kl-fall { background:#fff; border:1px solid #e9f2fb; padding:12px; border-radius:6px; margin-bottom:12px; }
+.kl-fall h3 { margin:0 0 6px 0; font-size:1rem; }
+.kl-fall p { margin:6px 0; color:#222; font-size:0.95rem; }
+.kl-fall-note { font-size:0.9rem; color:#555; margin-top:8px; }
