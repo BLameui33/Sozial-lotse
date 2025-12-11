@@ -593,6 +593,20 @@ h1, h2, h3, p, li, td, th {
     }
 
 
+    .kl-sources-box {
+  background-color: var(--primary-light);
+  border-left: 6px solid var(--primary);
+  padding: 1.3rem 1.6rem;
+  margin: 2rem 0;
+  border-radius: var(--radius);
+  font-size: 1.05rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.kl-sources-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+}
 
 .kl-sources-box h3 { margin:0 0 6px; font-size:1rem; }
 .kl-sources-box ul { margin:6px 0 0 18px; padding:0; }
