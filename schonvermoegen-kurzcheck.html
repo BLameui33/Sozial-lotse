@@ -1,195 +1,193 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Schonvermögen beim Bürgergeld 2025 prüfen | Kurzcheck für Ersparnisse & Auto</title>
-  <meta name="description" content="Schneller Kurzcheck zum Schonvermögen 2025: Ersparnisse, Kfz-Wert und Haushaltsgröße eingeben – Ergebnis: im Rahmen, knapp oder darüber. Grenzen editierbar (Grundfreibetrag je Person, Auto-Cap, Knapp-Zone).">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://www.deinedomain.tld/schonvermoegen-kurzcheck.html">
-  <link rel="icon" href="/logo-lotse-fav.png">
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8" />
+    <title>Schonvermögen beim Bürgergeld 2025 prüfen | Kurzcheck für Ersparnisse & Auto</title>
+    <meta name="description" content="Schneller Kurzcheck zum Schonvermögen 2025: Ersparnisse, Kfz-Wert und Haushaltsgröße eingeben – Ergebnis: im Rahmen, knapp oder darüber. Grenzen editierbar (Grundfreibetrag je Person, Auto-Cap, Knapp-Zone).">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://www.deinedomain.tld/schonvermoegen-kurzcheck.html">
+    <link rel="icon" href="/logo-lotse-fav.png">
+    <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Schonvermögen 2025 – Kurzcheck für Ersparnisse & Kfz">
-  <meta property="og:description" content="Prüfe schnell, ob dein Vermögen im Schonvermögen liegt. Grenzen frei anpassbar. Ergebnis mit hilfreichen Hinweisen.">
-  <meta property="og:type" content="website">
+    <meta property="og:title" content="Schonvermögen 2025 – Kurzcheck für Ersparnisse & Kfz">
+    <meta property="og:description" content="Prüfe schnell, ob dein Vermögen im Schonvermögen liegt. Grenzen frei anpassbar. Ergebnis mit hilfreichen Hinweisen.">
+    <meta property="og:type" content="website">
 </head>
 <body>
-  <header class="site-header">
-    <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
-  </header>
+    <header class="site-header">
+        <a href="/" class="site-logo" aria-label="Zur Startseite">Sozial-Lotse</a>
+    </header>
 
-  <div class="page-container">
-    <h1>Schonvermögen – Kurzcheck 2025</h1>
+    <div class="page-container">
+        <h1>Schonvermögen – Kurzcheck 2025</h1>
 
-    <div class="highlight-box" role="region" aria-label="Kurzinfo">
-      <p>
-        Mit diesem Tool prüfst du in <strong>wenigen Schritten</strong>, ob dein Vermögen voraussichtlich
-        innerhalb des <strong>Schonvermögens</strong> liegt. Gib deine <strong>Ersparnisse</strong>,
-        einen <strong>groben Kfz-Zeitwert</strong> (falls vorhanden) und die <strong>Haushaltsgröße</strong> an.
-      </p>
-      <p>
-        Alle Grenzwerte sind <strong>editierbar</strong> (siehe „Feineinstellungen“), damit du regionale oder
-        jahresaktuelle Besonderheiten abbilden kannst. Ergebnis: <em>im Rahmen</em>, <em>knapp</em> oder <em>darüber</em> – jeweils mit Hinweistext.
-      </p>
-    </div>
-
-    <form id="sv-form" class="pflegegrad-form" aria-describedby="sv_ergebnis" novalidate>
-      <!-- 1) Schnelle Eingaben -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Deine Angaben</legend>
-
-        <label class="pflegegrad-label" for="sv_ersparnisse">
-          Ersparnisse (Summe, €)
-          <input type="number" id="sv_ersparnisse" min="0" step="50" placeholder="z. B. 8.500" />
-        </label>
-
-        <label class="pflegegrad-label" for="sv_kfz_wert">
-          Kfz vorhanden? Grober Zeitwert (€, 0 wenn keines)
-          <input type="number" id="sv_kfz_wert" min="0" step="100" placeholder="z. B. 6.000" />
-        </label>
-
-        <label class="pflegegrad-label" for="sv_haushalt">
-          Haushaltsgröße (Personen)
-          <input type="number" id="sv_haushalt" min="1" max="10" step="1" value="1" />
-        </label>
-
-        <p class="hinweis">
-          Tipp: Haushaltsgröße = Personen der Bedarfsgemeinschaft. Der Kfz-Wert kann geschätzt werden (z. B. Schwacke, Online-Bewertungen).
-        </p>
-      </fieldset>
-
-      <!-- 2) Feineinstellungen -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Feineinstellungen (optional)</legend>
-
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-          <label class="pflegegrad-label" for="sv_freibetrag_pro_person">
-            Grundfreibetrag pro Person (€, pauschal)
-            <input type="number" id="sv_freibetrag_pro_person" min="0" step="100" value="15000" />
-          </label>
-          <label class="pflegegrad-label" for="sv_kfz_cap">
-            Kfz-Schutz bis (Cap, €)
-            <input type="number" id="sv_kfz_cap" min="0" step="100" value="15000" />
-          </label>
-          <label class="pflegegrad-label" for="sv_knapp_band">
-            „Knapp“-Zone (± %, um die Grenze)
-            <input type="number" id="sv_knapp_band" min="0" max="20" step="1" value="5" />
-          </label>
+        <div class="highlight-box" role="region" aria-label="Kurzinfo">
+            <p>
+                Mit diesem Tool prüfst du in <strong>wenigen Schritten</strong>, ob dein Vermögen voraussichtlich
+                innerhalb des <strong>Schonvermögens</strong> liegt. Gib deine <strong>Ersparnisse</strong>,
+                einen <strong>groben Kfz-Zeitwert</strong> (falls vorhanden) und die <strong>Haushaltsgröße</strong> an.
+            </p>
+            <p>
+                Alle Grenzwerte sind <strong>editierbar</strong> (siehe „Feineinstellungen“), damit du regionale oder
+                jahresaktuelle Besonderheiten abbilden kannst. Ergebnis: <em>im Rahmen</em>, <em>knapp</em> oder <em>darüber</em> – jeweils mit Hinweistext.
+            </p>
         </div>
 
-        <p class="hinweis">
-          Vereinfachung: Das Kfz ist bis zum <strong>Cap</strong> geschützt. Nur der <em>Überhang</em> wird als Vermögen gezählt.
-          In echten Fällen gelten weitere Regeln (z. B. Altersvorsorge, selbstgenutztes Wohneigentum, Zweckbindungen).
-        </p>
-      </fieldset>
+        <form id="sv-form" class="pflegegrad-form" aria-describedby="sv_ergebnis" novalidate>
+            <fieldset class="pflegegrad-fieldset active-step">
+                <legend>1. Deine Angaben</legend>
 
-      <div class="button-container">
-        <button type="button" id="sv_berechnen" class="button">Kurzcheck starten</button>
-        <button type="reset" id="sv_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
+                <label class="pflegegrad-label" for="sv_ersparnisse">
+                    Ersparnisse (Summe, €)
+                    <input type="number" id="sv_ersparnisse" min="0" step="50" placeholder="z. B. 8.500" />
+                </label>
 
-    <section id="sv_ergebnis" aria-live="polite"></section>
+                <label class="pflegegrad-label" for="sv_kfz_wert">
+                    Kfz vorhanden? Grober Zeitwert (€, 0 wenn keines)
+                    <input type="number" id="sv_kfz_wert" min="0" step="100" placeholder="z. B. 6.000" />
+                </label>
 
-    <!-- Erklärteil & SEO -->
-    <section style="margin-top:1.25rem" aria-label="Wie wird geprüft?">
-      <h2>So prüft der Kurzcheck (vereinfacht)</h2>
-      <ol>
-        <li><strong>Freibetrag je Person:</strong> Haushaltsgröße × Grundfreibetrag.</li>
-        <li><strong>Kfz-Bewertung:</strong> Kfz-Wert bis zum Cap bleibt unberücksichtigt, nur der Überhang zählt.</li>
-        <li><strong>Vergleich:</strong> Ersparnisse + Kfz-Überhang vs. gesamter Freibetrag ⇒ Ergebnis <em>im Rahmen / knapp / darüber</em>.</li>
-      </ol>
-      <p class="hinweis">
-        Dieser Kurzcheck ist eine <strong>Orientierung</strong>. Verbindlich sind die gesetzlichen Regelungen und dein <strong>Bescheid</strong>.
-      </p>
-    </section>
+                <label class="pflegegrad-label" for="sv_haushalt">
+                    Haushaltsgröße (Personen)
+                    <input type="number" id="sv_haushalt" min="1" max="10" step="1" value="1" />
+                </label>
 
-    <section aria-label="FAQ Schonvermögen">
-      <h2>FAQ: Schonvermögen beim Bürgergeld</h2>
+                <p class="hinweis">
+                    Tipp: Haushaltsgröße = Personen der Bedarfsgemeinschaft. Der Kfz-Wert kann geschätzt werden (z. B. Schwacke, Online-Bewertungen).
+                </p>
+            </fieldset>
 
-      <h3>Gilt das Auto immer als geschütztes Vermögen?</h3>
-      <p>Vereinfacht ja – bis zu einem <em>angemessenen</em> Wert (hier per Cap einstellbar). Ein darüber liegender Anteil kann als Vermögen zählen.</p>
+            <fieldset class="pflegegrad-fieldset">
+                <legend>2. Feineinstellungen (optional)</legend>
 
-      <h3>Welche Vermögensarten sind außerdem geschützt?</h3>
-      <p>Unter anderem bestimmte Altersvorsorgeformen, notwendiger Hausrat und oft selbstgenutztes Wohneigentum (unter Bedingungen). Diese Details bildet der Kurzcheck nicht vollständig ab.</p>
+                <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+                    <label class="pflegegrad-label" for="sv_freibetrag_pro_person">
+                        Grundfreibetrag pro Person (€)
+                        <span class="muted-label">Hier tragen Sie den geschützten Sparbetrag je Person ein.</span>
+                        <input type="number" id="sv_freibetrag_pro_person" min="0" step="100" value="15000" />
+                    </label>
+                    <label class="pflegegrad-label" for="sv_kfz_cap">
+                        Kfz-Schutzgrenze (€)
+                        <span class="muted-label">Wert, bis zu dem das Auto geschützt ist (z. B. 15.000 €).</span>
+                        <input type="number" id="sv_kfz_cap" min="0" step="100" value="15000" />
+                    </label>
+                    <label class="pflegegrad-label" for="sv_knapp_band">
+                        "Knapp"-Warnzone (± %)
+                        <span class="muted-label">Prozentband, das als "knapp" (z. B. 5%) gewertet wird.</span>
+                        <input type="number" id="sv_knapp_band" min="0" max="20" step="1" value="5" />
+                    </label>
+                </div>
 
-      <h3>Wie genau ist das Ergebnis „knapp“?</h3>
-      <p>„Knapp“ bedeutet, dass dein Vermögen innerhalb der gewählten ±-Prozent-Zone um den Freibetrag liegt. In solchen Fällen empfiehlt sich eine Beratung/Nachweissichtung.</p>
-    </section>
+                <p class="hinweis">
+                    Vereinfachung: Das Kfz ist bis zur **Schutzgrenze** unberücksichtigt. Nur der <em>darüber liegende Wert</em> wird als Vermögen gezählt.
+                    In echten Fällen gelten weitere Regeln (z. B. Altersvorsorge, selbstgenutztes Wohneigentum, Zweckbindungen).
+                </p>
+            </fieldset>
 
-    <div class="warning-box">
-      <p>
-        <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte</strong> Einschätzung. In der Praxis gibt es weitere
-        Regeln, z. B. zu Altersvorsorge, selbstgenutztem Wohneigentum, zweckgebundenen Leistungen, Bausparverträgen,
-        Vermögensübertragungen, Karenzzeiten u. v. m. Maßgeblich ist der <strong>Bescheid</strong>.
-      </p>
+            <div class="button-container">
+                <button type="button" id="sv_berechnen" class="button">Kurzcheck starten</button>
+                <button type="reset" id="sv_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+            </div>
+        </form>
+
+        <section id="sv_ergebnis" aria-live="polite"></section>
+
+        <section style="margin-top:1.25rem" aria-label="Wie wird geprüft?">
+            <h2>So prüft der Kurzcheck (vereinfacht)</h2>
+            <ol>
+                <li><strong>Freibetrag gesamt:</strong> Haushaltsgröße multipliziert mit dem Grundfreibetrag pro Person.</li>
+                <li><strong>Kfz-Bewertung:</strong> Kfz-Wert bis zur Schutzgrenze wird ignoriert, nur der Überschuss zählt.</li>
+                <li><strong>Vergleich:</strong> Ersparnisse + Kfz-Überschuss wird mit dem gesamten Freibetrag verglichen. ⇒ Ergebnis <em>im Rahmen / knapp / darüber</em>.</li>
+            </ol>
+            <p class="hinweis">
+                Dieser Kurzcheck ist eine <strong>Orientierung</strong>. Verbindlich sind die gesetzlichen Regelungen und dein <strong>Bescheid</strong>.
+            </p>
+        </section>
+
+        <section aria-label="FAQ Schonvermögen">
+            <h2>FAQ: Schonvermögen beim Bürgergeld</h2>
+
+            <h3>Gilt das Auto immer als geschütztes Vermögen?</h3>
+            <p>Vereinfacht ja – bis zu einem <em>angemessenen</em> Wert (hier per Schutzgrenze einstellbar). Ein darüber liegender Anteil kann als Vermögen zählen.</p>
+
+            <h3>Welche Vermögensarten sind außerdem geschützt?</h3>
+            <p>Unter anderem bestimmte Altersvorsorgeformen, notwendiger Hausrat und oft selbstgenutztes Wohneigentum (unter Bedingungen). Diese Details bildet der Kurzcheck nicht vollständig ab.</p>
+
+            <h3>Wie genau ist das Ergebnis „knapp“?</h3>
+            <p>„Knapp“ bedeutet, dass dein Vermögen innerhalb der gewählten ±-Prozent-Zone um den Freibetrag liegt. In solchen Fällen empfiehlt sich eine Beratung/Nachweissichtung.</p>
+        </section>
+
+        <div class="warning-box">
+            <p>
+                <strong>Wichtig:</strong> Das ist eine <strong>vereinfachte</strong> Einschätzung. In der Praxis gibt es weitere
+                Regeln, z. B. zu Altersvorsorge, selbstgenutztem Wohneigentum, zweckgebundenen Leistungen, Bausparverträgen,
+                Vermögensübertragungen, Karenzzeiten u. v. m. Maßgeblich ist der <strong>Bescheid</strong>.
+            </p>
+        </div>
+        <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+            <h2 id="promo-headline">
+                <span class="icon" aria-hidden="true">🤖</span>
+                Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+            </h2>
+
+            <p class="lead">
+                Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+                Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+                prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+                Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+            </p>
+
+            <div class="promo-ctas">
+                <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+                    Jetzt kostenlos testen
+                </a>
+                <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+                    Funktionen & Preise
+                </a>
+            </div>
+
+            <div class="free-help">
+                <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+                <nav aria-label="Kostenlose Hilfsseiten">
+                    <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+                    <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+                </nav>
+            </div>
+
+        </section>
     </div>
-     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
 
-  <h2 id="promo-headline">
-    <span class="icon" aria-hidden="true">🤖</span>
-    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
-  </h2>
+    <footer>
+        <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+    </footer>
 
-  <p class="lead">
-    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
-    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
-    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
-    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
-  </p>
+    <script type="application/ld+json">
+    {
+        "@context":"https://schema.org",
+        "@type":"FAQPage",
+        "mainEntity":[
+            {
+                "@type":"Question",
+                "name":"Gilt das Auto immer als geschütztes Vermögen?",
+                "acceptedAnswer":{"@type":"Answer","text":"Vereinfacht bis zu einem einstellbaren Cap/Angemessenheitswert. Der darüber liegende Anteil kann als Vermögen zählen."}
+            },
+            {
+                "@type":"Question",
+                "name":"Welche Vermögensarten können zusätzlich geschützt sein?",
+                "acceptedAnswer":{"@type":"Answer","text":"Je nach Rechtslage z. B. bestimmte Altersvorsorge, notwendiger Hausrat und selbstgenutztes Wohneigentum (unter Bedingungen). Der Kurzcheck bildet diese Details nicht vollständig ab."}
+            },
+            {
+                "@type":"Question",
+                "name":"Was bedeutet das Ergebnis „knapp“?",
+                "acceptedAnswer":{"@type":"Answer","text":"Dein Vermögen liegt innerhalb der eingestellten ±-Prozent-Zone um den Freibetrag. Hier ist eine individuelle Prüfung sinnvoll."}
+            }
+        ]
+    }
+    </script>
 
-  <div class="promo-ctas">
-    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
-      Jetzt kostenlos testen
-    </a>
-    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
-      Funktionen & Preise
-    </a>
-  </div>
-
-  <div class="free-help">
-    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
-
-    <nav aria-label="Kostenlose Hilfsseiten">
-      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
-      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
-    </nav>
-  </div>
-
-</section>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
-  </footer>
-
-  <!-- FAQ-Schema für SEO Rich Results -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Gilt das Auto immer als geschütztes Vermögen?",
-        "acceptedAnswer":{"@type":"Answer","text":"Vereinfacht bis zu einem einstellbaren Cap/Angemessenheitswert. Der darüber liegende Anteil kann als Vermögen zählen."}
-      },
-      {
-        "@type":"Question",
-        "name":"Welche Vermögensarten können zusätzlich geschützt sein?",
-        "acceptedAnswer":{"@type":"Answer","text":"Je nach Rechtslage z. B. bestimmte Altersvorsorge, notwendiger Hausrat und selbstgenutztes Wohneigentum (unter Bedingungen). Der Kurzcheck bildet diese Details nicht vollständig ab."}
-      },
-      {
-        "@type":"Question",
-        "name":"Was bedeutet das Ergebnis „knapp“?",
-        "acceptedAnswer":{"@type":"Answer","text":"Dein Vermögen liegt innerhalb der eingestellten ±-Prozent-Zone um den Freibetrag. Hier ist eine individuelle Prüfung sinnvoll."}
-      }
-    ]
-  }
-  </script>
-
-  <script src="schonvermoegen-kurzcheck.js"></script>
+    <script src="schonvermoegen-kurzcheck.js"></script>
 </body>
 </html>
