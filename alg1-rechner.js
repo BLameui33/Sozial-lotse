@@ -178,12 +178,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.body.appendChild(clonedElement);
 
                     const opt = {
-                        margin:       [0.5, 0.5],
-                        filename:     'alg1-anspruch-check.pdf',
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false },
-                        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-                    };
+                margin:       [10, 10, 10, 10], // Ränder: Oben, Rechts, Unten, Links
+                filename:     "kinderkrankengeld-berechnung.pdf",
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,           // Bessere Qualität
+                    useCORS: true,      // Erlaubt externe Bilder/Fonts
+                    logging: true,      // Zeigt Rendering-Prozess in Konsole
+                    scrollY: 0,         // WICHTIG: Ignoriert Scroll-Position
+                    windowWidth: document.documentElement.offsetWidth // Stellt sicher, dass Layout passt
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
 
                     html2pdf().from(clonedElement).set(opt).save().then(() => {
                         document.body.removeChild(clonedElement);
