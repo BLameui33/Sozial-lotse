@@ -593,14 +593,6 @@ h1, h2, h3, p, li, td, th {
     }
 
 
-     .kl-highlight {
-  background:#fff9e6;
-  border-left:4px solid #ffffff;
-  padding:12px 14px;
-  margin:14px 0;
-  border-radius:4px;
-  color:#222;
-}
 
 .kl-sources-box h3 { margin:0 0 6px; font-size:1rem; }
 .kl-sources-box ul { margin:6px 0 0 18px; padding:0; }

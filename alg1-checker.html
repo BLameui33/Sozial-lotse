@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>ALG-I-Rechner & Anspruchs-Check 2025 | Kassen-Lotse</title>
+  <meta name="description" content="Habe ich Anspruch auf Arbeitslosengeld 1? Rechner für Bezugsdauer, Höhe und Voraussetzungen (Anwartschaftszeit & Alter).">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Kassen-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>ALG-I-Anspruchs-Checker</h1>
+
+    <div class="highlight-box">
+      <p>
+        Prüfe schnell, ob du Anspruch auf <strong>Arbeitslosengeld I</strong> hast, wie lange du es voraussichtlich bekommst und wie hoch die Zahlung etwa ausfällt.
+      </p>
+      <p class="hinweis">
+        <strong>Voraussetzung:</strong> Du musst dich arbeitslos gemeldet haben und in den letzten 30 Monaten mindestens 12 Monate versicherungspflichtig beschäftigt gewesen sein.
+      </p>
+    </div>
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+    <strong>Hinweis:</strong> Diese Informationen ersetzen keine Rechtsberatung. Wenden Sie sich bei Unsicherheiten an eine Verbraucherzentrale oder einen Fachanwalt.
+  </p>
+
+    <form id="alg-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Deine Daten</legend>
+
+        <label class="pflegegrad-label">
+          Dein Alter
+          <input type="number" id="alg_alter" min="15" max="67" placeholder="z. B. 45" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Wichtig für die maximale Bezugsdauer (ab 50/55/58 Jahren gibt es länger Geld).</p>
+
+        <label class="pflegegrad-label">
+          Hast du Kinder? (Kindergeldanspruch)
+          <select id="alg_kinder">
+            <option value="nein" selected>Nein (Leistungssatz 60%)</option>
+            <option value="ja">Ja (Leistungssatz 67%)</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Beschäftigung & Gehalt</legend>
+        
+        <label class="pflegegrad-label">
+          Versicherungspflichtige Monate (letzte 30 Monate)
+          <input type="number" id="alg_monate" min="0" max="30" placeholder="z. B. 24" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Mindestens 12 Monate sind nötig für den Anspruch.</p>
+
+        <label class="pflegegrad-label">
+          Brutto-Monatsgehalt (Durchschnitt letzte 12 Mon.)
+          <input type="number" id="alg_brutto" min="0" step="10" placeholder="z. B. 3500" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Steuerklasse (grobe Einordnung)
+          <select id="alg_steuerklasse">
+            <option value="standard" selected>Klasse 1 / 4 (Standard)</option>
+            <option value="guenstig">Klasse 3 (Verheiratet/Besserverdiener)</option>
+            <option value="teuer">Klasse 5 / 6</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="alg_berechnen" class="button">Anspruch prüfen</button>
+        <button type="reset" id="alg_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="alg_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+ <!-- Highlight-Box: Link auf Info-Seite -->
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema ALG-I:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-alg1-anspruch.html" class="button button-secondary" title="Zur Info-Seite ALG-I">Zur Info-Seite: ALG-I (Details & Checkliste)</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Kassen-Lotse | <a href="index.html">Startseite</a></p>
+  </footer>
+
+  <script src="alg1-rechner.js"></script>
+</body>
+</html>
