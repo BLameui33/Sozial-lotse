@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>ALG 1 Rechner 2025 (Netto) | Sozial-Lotse</title>
+  <meta name="description" content="Wie viel Arbeitslosengeld bekomme ich? Einfacher ALG 1 Rechner für 2025 basierend auf Brutto-Lohn, Steuerklasse und Kinderfreibetrag.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>ALG-I-Netto-Rechner</h1>
+
+    <div class="highlight-box">
+      <p>
+        Ermittle schnell deine voraussichtliche finanzielle Situation bei Arbeitslosigkeit.
+        Dieser Rechner schätzt dein <strong>monatliches Arbeitslosengeld (Netto-Auszahlung)</strong> basierend auf deinem letzten Brutto-Einkommen.
+      </p>
+    </div>
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+    <strong>Hinweis:</strong> Diese Informationen ersetzen keine Rechtsberatung. Wenden Sie sich bei Unsicherheiten an eine Verbraucherzentrale oder einen Fachanwalt.
+  </p>
+
+    <form id="alg-netto-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>Berechnungsgrundlagen</legend>
+
+        <label class="pflegegrad-label">
+          Dein monatliches Brutto-Arbeitsentgelt (€)
+          <input type="number" id="an_brutto" min="0" step="10" placeholder="z. B. 3500.00" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px; margin-bottom:15px;">
+          Durchschnitt der letzten 12 Monate vor der Arbeitslosigkeit.
+        </p>
+
+        <label class="pflegegrad-label">
+          Deine Lohnsteuerklasse
+          <select id="an_stk">
+            <option value="sk1">Klasse 1 (Ledig / Getrennt)</option>
+            <option value="sk4" selected>Klasse 4 (Verheiratet, beide verdienen ähnlich)</option>
+            <option value="sk3">Klasse 3 (Verheiratet, Besserverdiener)</option>
+            <option value="sk5">Klasse 5 (Verheiratet, Geringverdiener)</option>
+            <option value="sk6">Klasse 6 (Nebenjob / Zweitkarte)</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Hast du Kinder? (Kindergeldanspruch)
+          <select id="an_kinder">
+            <option value="nein" selected>Nein (Auszahlung: 60% vom Leistungsentgelt)</option>
+            <option value="ja">Ja (Auszahlung: 67% vom Leistungsentgelt)</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="an_berechnen" class="button">ALG I berechnen</button>
+        <button type="reset" id="an_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="an_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Dein Assistent für Ämter</h2>
+      <p class="lead">
+        Die Agentur für Arbeit fordert Unterlagen an oder schickt einen komplizierten Bescheid? 
+        Clerion hilft dir, die Post zu verstehen und fristgerecht zu antworten.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Jetzt testen</a>
+      </div>
+    </section>
+
+     <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema ALG-I:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-alg1-anspruch.html" class="button button-secondary" title="Zur Info-Seite ALG-I">Zur Info-Seite: ALG-I (Details & Checkliste)</a>
+        <a href="alg1-checker.html" class="button button-secondary" title="Zum Anspruchs-Check ALG-I">Zum ALG1 Checker: ALG-I Anspruchs-Check</a>
+      </p>
+    </aside>
+  </div>
+
+ <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="alg1-netto-rechner.js"></script>
+</body>
+</html>
