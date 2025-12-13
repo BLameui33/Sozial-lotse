@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>ALG I Sperrzeit Rechner 2025 – Risiko jetzt prüfen | Sozial-Lotse</title>
+
+  <meta name="description" content="ALG I Sperrzeit Rechner 2025: Prüfen Sie Ihr Risiko auf eine Sperrzeit bei Eigenkündigung, Aufhebungsvertrag oder verspäteter Arbeitslosmeldung. Kostenlos & anonym.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>ALG I Sperrzeit Checker – Prüfen Sie Ihr Risiko</h1>
+
+
+    <div class="highlight-box">
+      <p>
+        Eine <strong>Sperrzeit beim Arbeitslosengeld I</strong> bedeutet, dass du bis zu 12 Wochen kein Arbeitslosengeld bekommst.
+Prüfe hier dein Risiko basierend auf der Art deiner Kündigung und deiner Fristeinhaltung.
+
+      </p>
+    </div>
+    <p class="hinweis">
+  Der Rechner liefert eine unverbindliche Einschätzung und ersetzt keinen Bescheid der Agentur für Arbeit.
+</p>
+<p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+    <strong>Hinweis:</strong> Diese Informationen ersetzen keine Rechtsberatung. Wenden Sie sich bei Unsicherheiten an eine Verbraucherzentrale oder einen Fachanwalt.
+  </p>
+  <p class="hinweis">
+  Stand der Informationen: 2025. Änderungen der Gesetzeslage werden laufend berücksichtigt.
+</p>
+
+
+    <form id="ks-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Wie endet das Arbeitsverhältnis?</legend>
+
+        <label class="pflegegrad-label">
+          Art der Beendigung
+          <select id="ks_art">
+            <option value="ag_betrieb" selected>Kündigung durch Arbeitgeber (Betriebsbedingt/Personenbedingt)</option>
+            <option value="ag_verhalten">Kündigung durch Arbeitgeber (Verhaltensbedingt/Fristlos)</option>
+            <option value="eigen">Eigenkündigung durch dich</option>
+            <option value="aufhebung">Aufhebungsvertrag unterschrieben</option>
+          </select>
+        </label>
+
+        <div id="div_wichtiger_grund" style="display:none;">
+          <label class="pflegegrad-label">
+            Hast du einen "wichtigen Grund"?
+            <select id="ks_grund">
+              <option value="nein">Nein / Unsicher</option>
+              <option value="ja">Ja (z.B. ärztlicher Rat, Umzug zu Ehepartner, Mobbing belegbar)</option>
+            </select>
+          </label>
+          <p class="hinweis">Ein wichtiger Grund kann eine Sperrzeit verhindern, muss aber nachgewiesen werden.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Fristen & Meldung</legend>
+        
+        <label class="pflegegrad-label">
+          Hast du dich rechtzeitig "arbeitsuchend" gemeldet?
+          <select id="ks_meldung">
+            <option value="ja" selected>Ja (3 Monate vor Ende oder binnen 3 Tagen bei kurzfristiger Kündigung)</option>
+            <option value="nein">Nein, ich war zu spät</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Wurde die ordentliche Kündigungsfrist eingehalten?
+          <select id="ks_frist">
+            <option value="ja" selected>Ja, das Arbeitsverhältnis endet regulär</option>
+            <option value="nein">Nein, es endet früher (z.B. durch Aufhebungsvertrag/Abfindung)</option>
+          </select>
+        </label>
+         <p class="hinweis">Wenn das Arbeitsverhältnis früher endet als die Frist erlaubt und eine Abfindung fließt, ruht der Anspruch oft.</p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="ks_berechnen" class="button">Risiko prüfen</button>
+        <button type="reset" id="ks_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="ks_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Widerspruchs-Generator</h2>
+      <p class="lead">
+        Die Arbeitsagentur hat eine Sperrzeit verhängt? Clerion hilft dir, die Begründung zu prüfen und einen professionellen Widerspruch zu formulieren.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Jetzt Hilfe holen</a>
+      </div>
+    </section>
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema ALG-I:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+       <a href="alg1-netto-rechner.html" class="button button-secondary" title="Zum Netto-Rechner ALG-I">Zum Netto-Rechner: ALG-I</a>
+        <a href="info-alg1-anspruch.html" class="button button-secondary" title="Zur Info-Seite ALG-I">Zur Info-Seite: ALG-I (Details & Checkliste)</a>
+        <a href="info-alg1-sperrzeit.html" class="button button-secondary" title="Zur Info-Seite ALG-I Sperrzeit">Zur Info-Seite: ALG-I Sperrzeit</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="sperrzeit-checker.js"></script>
+</body>
+</html>
