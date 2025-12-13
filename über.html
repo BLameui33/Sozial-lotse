@@ -1,103 +1,330 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Über uns | Lotse-Portale für Sozialrecht, Miete & Krankenkasse</title>
-  <meta name="description" content="Erfahren Sie mehr über die Lotse-Portale: unabhängige Informationsangebote rund um Sozialrecht, Miete und Krankenkasse. Transparent, verständlich und kostenlos.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8" />
+    <title>Über uns | Die Lotse-Portale für Ihre Rechte in Sozialrecht, Miete & Krankenkasse</title>
+    <meta name="description" content="Erfahren Sie mehr über die Lotse-Portale: Ihre unabhängige, verständliche und kostenlose Quelle für Informationen rund um Sozialrecht, Miete und Krankenkasse. Unsere Mission, Arbeitsweise und Prinzipien." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+    /* --- GRUNDEINSTELLUNGEN & TYPOGRAFIE --- */
+    :root {
+      --primary-color: #0056b3;       /* Seriöses Dunkelblau */
+      --secondary-color: #004494;     /* Etwas dunkler für Hover-Effekte */
+      --accent-color: #eef7ff;        /* Sehr helles Blau für Hintergründe */
+      --text-color: #333333;          /* Dunkelgrau für gute Lesbarkeit */
+      --light-text: #666666;          /* Mittelgrau für Nebentexte */
+      --white: #ffffff;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9; /* Leichtes Grau für den Seitenhintergrund */
+    }
+
+    h1, h2, h3 {
+      color: #111;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2.section-title {
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- LAYOUT CONTAINER --- */
+    .page-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: var(--white);
+      box-shadow: 0 0 20px rgba(0,0,0,0.05); /* Leichter Schatten um den Hauptinhalt */
+      margin-top: 20px;
+      margin-bottom: 40px;
+      border-radius: var(--border-radius);
+    }
+
+    /* --- HEADER --- */
+    .site-header {
+      background-color: var(--primary-color);
+      padding: 15px 20px;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .site-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* --- HERO SECTION --- */
+    .mission-hero {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: var(--accent-color);
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+    }
+
+    .lead-text {
+      font-size: 1.2rem;
+      color: #444;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* --- GRID SYSTEM (Responsive) --- */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    /* --- CARDS (Portale & Prinzipien) --- */
+    .portal-card, .principle-card {
+      background: var(--white);
+      border: 1px solid #eee;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-5px); /* Leichter Schwebe-Effekt beim Drüberfahren */
+      border-color: var(--primary-color);
+    }
+
+    .portal-card h3, .principle-card h3 {
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    .portal-card p, .principle-card p {
+      flex-grow: 1; /* Drückt den Button nach unten */
+      font-size: 0.95rem;
+      color: var(--light-text);
+    }
+
+    /* --- BUTTONS --- */
+    .btn-portal, .btn-primary {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-portal:hover, .btn-primary:hover {
+      background-color: var(--secondary-color);
+      text-decoration: none;
+    }
+
+    .cta-support {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* --- HIGHLIGHT BOX --- */
+    .highlight-box {
+      background-color: #fff8e1; /* Ein sanftes Gelb für Hinweise */
+      border-left: 5px solid #ffc107;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+
+    .hinweis {
+      font-size: 0.9rem;
+      color: #888;
+      font-style: italic;
+      margin-top: 10px;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: #222;
+      color: #ccc;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .footer-content a {
+      color: #fff;
+      margin: 0 10px;
+    }
+  </style>
 </head>
 <body>
 
 <header class="site-header">
-  <a href="/" class="site-logo">Lotse-Portale</a>
+    <a href="/" class="site-logo">Lotse-Portale</a>
 </header>
 
 <div class="page-container">
 
-  <h1>Über uns</h1>
+    <section class="mission-hero">
+        <h1>Über uns: Ihr Wegweiser im Behörden- und Rechtsdschungel</h1>
+        <p class="lead-text">
+            Die Lotse-Portale sind Ihr unabhängiges und kostenloses Informationsangebot in Deutschland. Wir helfen Ihnen,
+            Ihre Rechte und Möglichkeiten in komplexen Situationen wie Sozialrecht, Mietfragen und Krankenkassenangelegenheiten
+            **klar, verständlich und ohne Fachjargon** zu verstehen.
+        </p>
+    </section>
 
-  <div class="highlight-box">
-    <p>
-      Die <strong>Lotse-Portale</strong> sind unabhängige Informationsangebote, die Menschen in Deutschland dabei unterstützen,
-      ihre Rechte und Möglichkeiten in komplexen Alltags- und Behördensituationen besser zu verstehen.
-    </p>
-  </div>
+    <section class="section-motivation">
+        <h2 class="section-title">Die Idee hinter den Lotse-Portalen</h2>
+        <div class="content-block">
+            <p>
+                Oft sind behördliche Schreiben kompliziert, Gesetze schwer zugänglich und die Fristen eng.
+                Aus der Frustration über diese unnötigen Hürden heraus entstand die Idee der Lotse-Portale:
+                eine zentrale Anlaufstelle, die komplexe Sachverhalte *übersetzt*.
+            </p>
+            <p>
+                Unser Ziel ist es nicht, Anwälte oder Berater zu ersetzen. Wir möchten jedem Bürger die
+                Möglichkeit geben, sich **fundiert und schnell** eine erste Orientierung zu verschaffen,
+                um dann gut informiert die nächsten Schritte, Anträge oder Widersprüche einzuleiten.
+            </p>
+        </div>
+    </section>
 
-  <h2>Unsere Portale</h2>
-  <p>
-    Zu den Lotse-Portalen gehören:
-  </p>
-  <ul>
-    <li><strong>Sozialrecht-Lotse</strong> – Informationen, Rechner und Hilfen rund um Arbeitslosengeld, Arbeitsrecht, Sozialleistungen, Verbraucherrecht</li>
-    <li><strong>Mieter-Lotse</strong> – Orientierung bei Mietrecht, Nebenkosten, Kündigung und Wohnungsfragen</li>
-    <li><strong>Kassen-Lotse</strong> – Unterstützung bei Krankenkassen & Pflegekassen, Beiträgen, Anträgen und Leistungsfragen</li>
-  </ul>
+    <section class="section-portals">
+        <h2 class="section-title">Unsere Thematischen Lotsen</h2>
+        <p>Wir bündeln unser Wissen in drei spezialisierten Fachportalen, um Ihnen eine gezielte Hilfestellung zu bieten:</p>
 
-  <h2>Unser Ziel</h2>
-  <p>
-    Viele rechtliche und behördliche Themen sind für Betroffene schwer verständlich. Unser Ziel ist es,
-    komplexe Sachverhalte klar, strukturiert und verständlich aufzubereiten – ohne Fachjargon und ohne unnötige Hürden.
-  </p>
+        <div class="portal-grid grid-3">
+            <div class="portal-card">
+                <h3>Sozialrecht-Lotse</h3>
+                <p>Der Kompass durch Arbeitslosengeld, Grundsicherung, Arbeitsrecht, Sozialleistungen (wie Bürgergeld) und Verbraucherrecht. Finden Sie schnell heraus, worauf Sie Anspruch haben.</p>
+                <a href="https://sozialrecht-lotse.de/" class="btn-portal">Zum Portal</a>
+            </div>
+            <div class="portal-card">
+                <h3>Mieter-Lotse</h3>
+                <p>Ihre Orientierungshilfe in allen Fragen rund um das Mietverhältnis: von Nebenkostenabrechnungen über rechtssichere Kündigungen bis hin zu Mängeln und Mieterhöhungen.</p>
+                <a href="https://mieter-lotse.de/" class="btn-portal">Zum Portal</a>
+            </div>
+            <div class="portal-card">
+                <h3>Kassen-Lotse</h3>
+                <p>Unabhängige Informationen zu Krankenkassen & Pflegekassen, Beiträgen, Leistungsfragen und den komplizierten Antragsverfahren. Wir helfen Ihnen, Ihre Rechte im Gesundheitswesen zu nutzen.</p>
+                <a href="https://kassen-lotse.de/" class="btn-portal">Zum Portal</a>
+            </div>
+        </div>
+    </section>
 
-  <p>
-    Die Inhalte richten sich an Menschen, die sich eine erste Orientierung verschaffen möchten,
-    bevor sie offizielle Anträge stellen oder weitere Schritte einleiten.
-  </p>
+    <section class="section-principles">
+        <h2 class="section-title">Unsere Arbeitsweise: Qualität, Transparenz & Unabhängigkeit</h2>
 
-  <h2>Wie wir arbeiten</h2>
-  <p>
-    Die Inhalte der Lotse-Portale werden sorgfältig recherchiert und regelmäßig aktualisiert.
-    Grundlage sind unter anderem öffentlich zugängliche Informationen von Behörden,
-    gesetzliche Regelungen (z. B. Sozialgesetzbuch, Mietrecht, Krankenkassenrecht)
-    sowie allgemein anerkannte Verwaltungspraxis.
-  </p>
+        <div class="principle-grid grid-3">
+            <div class="principle-card">
+                <h3>100% Unabhängig</h3>
+                <p>Wir arbeiten im Interesse der Bürger. Unsere Inhalte und Empfehlungen entstehen **nicht** im Auftrag von Behörden, Krankenkassen oder Wirtschaftsunternehmen. Eine eventuelle Zusammenarbeit mit externen Diensten wird transparent offengelegt.</p>
+            </div>
+            <div class="principle-card">
+                <h3>Sorgfältige Recherche</h3>
+                <p>Unsere Inhalte werden von einem Redaktionsteam sorgfältig recherchiert und basieren auf aktuellen Gesetzen (SGB, BGB etc.), offiziellen Verlautbarungen und anerkannter Verwaltungspraxis. Jede Information durchläuft einen mehrstufigen Prüfprozess.</p>
+            </div>
+            <div class="principle-card">
+                <h3>Stetige Aktualität</h3>
+                <p>Rechtsrahmen ändern sich laufend (z.B. durch Gesetzesreformen oder Gerichtsurteile). Wir bemühen uns um eine zeitnahe Anpassung unserer Inhalte, weisen jedoch darauf hin: Maßgeblich sind stets die offiziellen Bescheide der zuständigen Stellen.</p>
+            </div>
+        </div>
+    </section>
 
-  <p>
-    Unsere Rechner, Generatoren und Checklisten dienen der unverbindlichen Einschätzung
-    und ersetzen keine individuelle Rechts- oder Sozialberatung.
-  </p>
+    <section class="section-tools">
+        <h2 class="section-title">Rechner, Generatoren & Hilfreiche Tools</h2>
+        <div class="highlight-box">
+            <p>
+                Unsere praktischen Tools (z. B. Anspruchs-Checks, Sperrzeit-Prüfungen oder Widerspruchs-Generatoren)
+                helfen Ihnen, **typische Fragestellungen strukturiert zu prüfen und verständlich aufzubereiten.**
+            </p>
+        </div>
+        <p>
+            **Wichtiger Hinweis:** Die Ergebnisse unserer Rechner und Generatoren dienen der **unverbindlichen Ersteinschätzung**. Sie ersetzen keine individuelle Rechts- oder Sozialberatung durch zugelassene Stellen und haben keinen Einfluss auf die verbindlichen Entscheidungen von Behörden oder Kassen.
+        </p>
+    </section>
 
-  <h2>Rechner, Generatoren & Tools</h2>
-  <p>
-    Die auf unseren Seiten angebotenen Rechner und Generatoren (z. B. Anspruchs-Checks,
-    Sperrzeit-Prüfungen oder Widerspruchs-Generatoren) helfen dabei,
-    typische Fragestellungen strukturiert zu prüfen und verständlich aufzubereiten.
-  </p>
+    <section class="section-team">
+        <h2 class="section-title">Das Team hinter den Lotse-Portalen</h2>
+        <p>
+            Die Lotse-Portale werden von einem kleinen, engagierten Team aus Fachredakteuren und Webentwicklern betreut.
+            Unsere gemeinsame Motivation ist es, Wissen barrierefrei zugänglich zu machen und so zur **digitalen Aufklärung** beizutragen.
+            Wir arbeiten täglich daran, die bestehenden Portale zu pflegen, die Inhalte aktuell zu halten und neue, hilfreiche Tools zu entwickeln.
+        </p>
+    </section>
 
-  <p>
-    Die Ergebnisse stellen keine verbindliche Entscheidung dar und haben keinen Einfluss
-    auf Bescheide von Behörden, Krankenkassen oder anderen Stellen.
-  </p>
+    <section class="section-support">
+        <h2 class="section-title">Nachhaltigkeit und Unterstützung</h2>
+        <p>
+            Als unabhängiges Informationsangebot sind wir auf verschiedene Einnahmequellen angewiesen, um unsere Arbeit zu finanzieren
+            und die Portale dauerhaft kostenlos zu halten. Dies geschieht entweder durch **kleine, unaufdringliche Werbung** (die strikt von den redaktionellen Inhalten getrennt ist)
+            oder durch die **freiwillige Unterstützung unserer Nutzer**.
+        </p>
+        <p>
+            Ihre Unterstützung hilft uns, die notwendigen Recherchen und die technische Entwicklung der Tools fortzusetzen.
+            Wenn Sie unsere Mission wertschätzen, finden Sie Informationen zu Spenden und anderen Unterstützungsformen hier:
+        </p>
+        <p class="cta-support">
+            <a href="spenden.html" class="btn-primary">Jetzt die Lotse-Portale unterstützen</a>
+        </p>
+    </section>
 
-  <h2>Unabhängigkeit & Transparenz</h2>
-  <p>
-    Die Lotse-Portale sind unabhängige Informationsangebote.
-    Eine eventuelle Zusammenarbeit mit externen Diensten oder Tools wird transparent dargestellt.
-    Inhalte und Empfehlungen erfolgen nicht im Auftrag von Behörden oder Unternehmen.
-  </p>
+    <section class="section-contact">
+        <h2 class="section-title">Kontakt & Impressum</h2>
+        <p>
+            Haben Sie Fragen, Verbesserungsvorschläge oder möchten Sie uns auf einen Fehler hinweisen?
+            Wir freuen uns über Ihr Feedback. Bitte nutzen Sie die offiziellen Kontaktdaten, die Sie in unserem Impressum finden.
+        </p>
 
-  <h2>Aktualität & Verantwortung</h2>
-  <p>
-    Rechtliche Rahmenbedingungen können sich ändern. Wir bemühen uns,
-    unsere Inhalte laufend an die aktuelle Gesetzeslage anzupassen.
-    Maßgeblich sind jedoch stets die offiziellen Regelungen und Bescheide der zuständigen Stellen.
-  </p>
-
-  <p class="hinweis">
-    Stand der Informationen: 2025
-  </p>
-
-  <h2>Kontakt</h2>
-  <p>
-    Bei Fragen, Hinweisen oder Anmerkungen können Sie uns über die im Impressum
-    angegebenen Kontaktdaten erreichen.
-  </p>
+        <p class="hinweis">
+            Stand der Informationen: 2025
+        </p>
+    </section>
 
 </div>
 
 <footer>
-    <p>&copy; 2025 Sozial-Lotse | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
   </footer>
 
 </body>
