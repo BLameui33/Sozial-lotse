@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kündigungsfrist-Rechner 2025 – Gesetzliche Fristen nach § 622 BGB | Sozial-Lotse</title>
+
+<meta name="description" content="Kündigungsfrist berechnen: Kostenloser Rechner nach § 622 BGB für Arbeitnehmer und Arbeitgeber. Ermittelt die gesetzliche Kündigungsfrist anhand der Betriebszugehörigkeit.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+   <h1>Kündigungsfrist-Rechner – Gesetzliche Fristen nach § 622 BGB</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Wann endet dein Arbeitsverhältnis frühestens?
+    Die <strong>gesetzliche Kündigungsfrist nach § 622 BGB</strong> hängt von der Dauer deiner Betriebszugehörigkeit ab
+    und unterscheidet sich je nach Kündigung durch Arbeitnehmer oder Arbeitgeber.
+  </p>
+</div>
+
+     <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>14.12.2025</strong>.
+</p>
+
+    <form id="kf-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>Vertragsdaten</legend>
+
+        <label class="pflegegrad-label">
+          Dauer der Beschäftigung (in Jahren)
+          <input type="number" id="kf_jahre" min="0" max="60" step="0.5" placeholder="z. B. 5.5" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Bitte gib die vollen Jahre an (z.B. 0 für unter 1 Jahr).</p>
+
+        <label class="pflegegrad-label" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+          <input type="checkbox" id="kf_probezeit" style="width:auto; transform:scale(1.2);">
+          <span>Ich befinde mich noch in der Probezeit (max. 6 Monate)</span>
+        </label>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <label class="pflegegrad-label">
+          Steht im Arbeitsvertrag eine <strong>feste</strong> Frist? (Optional)
+          <select id="kf_vertrag">
+            <option value="gesetzlich" selected>Keine Angabe / Es gelten die gesetzlichen Fristen</option>
+            <option value="verweis">Vertrag verweist auf gesetzliche Fristen</option>
+            <option value="custom">Vertrag nennt explizit eine feste Dauer (z.B. "3 Monate")</option>
+          </select>
+        </label>
+
+        <div id="div_custom_input" style="display:none; margin-top:10px;">
+             <label class="pflegegrad-label">
+                Manuelle Eingabe (Text)
+                <input type="text" id="kf_custom_text" placeholder="z. B. 3 Monate zum Quartalsende" />
+             </label>
+        </div>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="kf_berechnen" class="button">Frist berechnen</button>
+        <button type="reset" id="kf_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="kf_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Arbeitsrecht verstehen</h2>
+      <p class="lead">
+        Kündigung erhalten? Clerion prüft das Schreiben auf Formfehler, berechnet Fristen und hilft dir bei der Formulierung von Antworten oder Klagen.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Kündigung prüfen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zur Kündigungsfrist</h2>
+
+  <div class="faq-item">
+    <h3>Welche Kündigungsfrist gilt für Arbeitnehmer?</h3>
+    <p>
+      Für Arbeitnehmer gilt grundsätzlich eine Kündigungsfrist von vier Wochen
+      zum 15. oder zum Ende eines Kalendermonats, sofern im Arbeitsvertrag nichts anderes geregelt ist.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Welche Kündigungsfrist gilt für Arbeitgeber?</h3>
+    <p>
+      Die Kündigungsfrist für Arbeitgeber verlängert sich mit zunehmender Dauer der Betriebszugehörigkeit
+      und kann bis zu sieben Monate zum Monatsende betragen.
+      Grundlage ist § 622 BGB.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Gilt in der Probezeit eine besondere Kündigungsfrist?</h3>
+    <p>
+      Ja. Während der Probezeit, die maximal sechs Monate dauern darf,
+      kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Können Arbeitsverträge von den gesetzlichen Kündigungsfristen abweichen?</h3>
+    <p>
+      Arbeitsverträge können abweichende Kündigungsfristen enthalten.
+      Diese dürfen Arbeitnehmer jedoch nicht unangemessen benachteiligen
+      und müssen gesetzlichen Vorgaben entsprechen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Kündigungsfrist-Rechner eine Rechtsberatung?</h3>
+    <p>
+      Nein. Der Rechner dient der Orientierung und allgemeinen Information.
+      Er ersetzt keine individuelle rechtliche Beratung durch einen Anwalt oder eine Fachstelle.
+    </p>
+  </div>
+</section>
+
+
+     <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Inkasso und Schulden:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-arbeitszeugnis.html" class="button button-secondary" title="Zur Info Arbeitszeugnis">Zur Info-Seite: Arbeitszeugnis (Details & Checkliste)</a>
+        <a href="info-lohnforderung.html" class="button button-secondary" title="Zur Info Lohn einfordern">Zur Info-Seite: Gehalt einfordern</a>
+        <a href="info-abmahnung.html" class="button button-secondary" title="Zur Info Abmahnung">Zur Info-Seite: Abmahnung</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="kuendigungsfrist-rechner.js"></script>
+</body>
+</html>
