@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Arbeitszeit & Ruhezeit prüfen – ArbZG-Check (8-Stunden-Regel) | Sozial-Lotse</title>
+
+<meta name="description" content="Arbeitszeit- & Ruhezeiten-Checker: Prüfen Sie Ihre tägliche Arbeitszeit, Pausen und Ruhezeiten nach dem Arbeitszeitgesetz (ArbZG). Schnell-Check zur 8- und 11-Stunden-Regel.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Arbeitszeit- & Ruhezeiten-Checker nach dem Arbeitszeitgesetz</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Das Arbeitszeitgesetz (ArbZG) schützt deine Gesundheit und begrenzt
+    tägliche Arbeitszeiten sowie Mindestpausen und Ruhezeiten.
+    Mit diesem Checker prüfst du, ob deine <strong>Arbeitszeit, Pausen und Ruhezeiten</strong>
+    den gesetzlichen Vorgaben entsprechen.
+  </p>
+</div>
+
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>14.12.2025</strong>.
+</p>
+
+    <form id="az-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Tägliche Arbeitszeit (ohne Pausen)</legend>
+
+        <label class="pflegegrad-label">
+          Deine tatsächliche tägliche Arbeitszeit (in Stunden)
+          <input type="number" id="az_stunden" min="1" max="14" step="0.5" placeholder="z. B. 9.5" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Gib die reine Arbeitszeit ohne bezahlte/unbezahlte Pausen an.</p>
+        
+        <label class="pflegegrad-label">
+          Ist deine Arbeitszeit auf 6 Monate/24 Wochen ausgeglichen?
+          <select id="az_ausgleich">
+            <option value="ja" selected>Ja (Über 8h wird ausgeglichen)</option>
+            <option value="nein">Nein (Arbeite oft länger als 8h ohne Ausgleich)</option>
+          </select>
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Länger als 10 Stunden täglich ist nie erlaubt.</p>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Ruhezeit & Schicht</legend>
+        
+        <label class="pflegegrad-label">
+          Pause innerhalb der Arbeitszeit (Gesamtdauer in Minuten)
+          <input type="number" id="az_pause" min="0" max="180" step="5" value="30" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Gesetzliches Minimum: 30 min bei > 6h Arbeit, 45 min bei > 9h Arbeit.</p>
+
+        <label class="pflegegrad-label">
+          Ruhezeit zwischen Ende & Beginn der nächsten Schicht (in Stunden)
+          <input type="number" id="az_ruhezeit" min="0" max="24" step="0.5" value="11" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Gesetzliches Minimum: 11 Stunden ununterbrochene Ruhezeit.</p>
+        
+        <label class="pflegegrad-label">
+          Arbeitest du in einer der folgenden Branchen (Sonderregelung)?
+          <select id="az_sonder">
+            <option value="nein" selected>Nein (Reguläre Branche)</option>
+            <option value="krankenhaus">Krankenhaus/Pflege (Verkürzung auf 10h möglich)</option>
+            <option value="gastgewerbe">Gastgewerbe (Verkürzung auf 10h möglich)</option>
+            <option value="schicht">Regelmäßige Schicht-/Nachtarbeit</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="az_berechnen" class="button">Konformität prüfen</button>
+        <button type="reset" id="az_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="az_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">⚖️</span> Clerion – Arbeitsrechts-Analyse</h2>
+      <p class="lead">
+        Hat der Arbeitgeber systematisch gegen das ArbZG verstoßen? Clerion hilft dir bei der Dokumentation für eine Meldung beim Gewerbeaufsichtsamt.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Rechte prüfen lassen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zum Arbeitszeitgesetz (ArbZG)</h2>
+
+  <div class="faq-item">
+    <h3>Wie viele Stunden darf man laut Arbeitszeitgesetz täglich arbeiten?</h3>
+    <p>
+      Grundsätzlich sind maximal 8 Stunden pro Werktag erlaubt.
+      Eine Verlängerung auf bis zu 10 Stunden ist nur zulässig,
+      wenn innerhalb von 6 Monaten oder 24 Wochen ein Ausgleich erfolgt.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was passiert, wenn regelmäßig mehr als 10 Stunden gearbeitet wird?</h3>
+    <p>
+      Arbeitszeiten von über 10 Stunden pro Tag sind grundsätzlich unzulässig.
+      Dauerhafte Verstöße können Ordnungswidrigkeiten darstellen
+      und vom Gewerbeaufsichtsamt geahndet werden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wie lang muss die Ruhezeit zwischen zwei Arbeitstagen sein?</h3>
+    <p>
+      Nach dem Arbeitszeitgesetz müssen Arbeitnehmer grundsätzlich
+      eine ununterbrochene Ruhezeit von mindestens 11 Stunden einhalten.
+      In bestimmten Branchen sind begrenzte Ausnahmen möglich.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Gibt es Ausnahmen für Pflege, Krankenhaus oder Gastronomie?</h3>
+    <p>
+      Ja. In einzelnen Branchen wie Pflege, Krankenhaus oder Gastgewerbe
+      darf die Ruhezeit auf bis zu 10 Stunden verkürzt werden,
+      wenn ein entsprechender Ausgleich erfolgt.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Zählen Pausen zur Arbeitszeit?</h3>
+    <p>
+      Gesetzliche Ruhepausen zählen grundsätzlich nicht zur Arbeitszeit.
+      Ab mehr als 6 Stunden Arbeit sind mindestens 30 Minuten Pause vorgeschrieben,
+      ab mehr als 9 Stunden mindestens 45 Minuten.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Arbeitszeit-Check eine Rechtsberatung?</h3>
+    <p>
+      Nein. Der Checker dient ausschließlich der allgemeinen Orientierung
+      und ersetzt keine individuelle arbeitsrechtliche Beratung.
+    </p>
+  </div>
+</section>
+
+  <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Arbeitsrecht:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-arbeitszeugnis.html" class="button button-secondary" title="Zur Info Arbeitszeugnis">Zur Info-Seite: Arbeitszeugnis (Details & Checkliste)</a>
+        <a href="info-lohnforderung.html" class="button button-secondary" title="Zur Info Lohn einfordern">Zur Info-Seite: Gehalt einfordern</a>
+        <a href="info-abmahnung.html" class="button button-secondary" title="Zur Info Abmahnung">Zur Info-Seite: Abmahnung</a>
+        <a href="kuendigungsfrist-rechner.html" class="button button-secondary" title="Zum Rechner Kündigungsfrist">Zum Rechner: Kündigungsfrist</a>
+        <a href="urlaubsanspruch.html" class="button button-secondary" title="Zum Rechner Urlaubsanspruch">Zum Rechner: Urlaubsanspruch</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="arbeitszeit-check.js"></script>
+</body>
+</html>

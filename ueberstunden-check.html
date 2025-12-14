@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Überstunden-Vergütung berechnen – Anspruch auf Auszahlung & Zuschläge | Sozial-Lotse</title>
+
+<meta name="description" content="Überstunden-Vergütungscheck: Prüfen Sie, ob Überstunden bezahlt oder durch Freizeit ausgeglichen werden müssen. Rechner zu Auszahlung, Zuschlägen und Nachweis der Mehrarbeit.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Überstunden-Vergütungscheck – Auszahlung oder Freizeitausgleich?</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Wann müssen Überstunden vergütet werden und wann besteht nur Anspruch auf Freizeitausgleich?
+    Mit diesem Überstunden-Vergütungscheck prüfst du, ob dir eine <strong>Auszahlung von Überstunden</strong>
+    zusteht und wie du deine Mehrarbeit korrekt nachweisen kannst.
+  </p>
+</div>
+
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>14.12.2025</strong>.
+</p>
+
+    <form id="ue-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Grundlage der Überstunden</legend>
+
+        <label class="pflegegrad-label">
+          Wurden die Überstunden angeordnet oder gebilligt?
+          <select id="ue_anordnung">
+            <option value="ja" selected>Ja, der Chef wusste Bescheid / hat sie verlangt.</option>
+            <option value="nein">Nein, ich habe sie eigenmächtig geleistet.</option>
+          </select>
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Voraussetzung: Ohne Anordnung/Billigung besteht meist kein Anspruch auf Vergütung.</p>
+
+        <label class="pflegegrad-label">
+          Anzahl der geleisteten Überstunden
+          <input type="number" id="ue_stunden" min="1" step="0.5" placeholder="z. B. 45.5" />
+        </label>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Vertrag & Zuschläge</legend>
+        
+        <label class="pflegegrad-label">
+          Ist ein Überstundenzuschlag vertraglich/tariflich geregelt?
+          <select id="ue_zuschlag_regelung">
+            <option value="nein" selected>Nein / Unsicher (Standard: 0%)</option>
+            <option value="ja_tarif">Ja, durch Tarifvertrag (z.B. 25%)</option>
+            <option value="ja_vertrag">Ja, durch Arbeitsvertrag</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Höhe des Zuschlags (in %)
+          <input type="number" id="ue_zuschlag_prozent" min="0" max="100" step="1" value="0" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Wenn vertraglich geregelt: Gib hier den Prozentsatz ein (z.B. 25). Wenn nicht: 0 belassen.</p>
+
+        <label class="pflegegrad-label">
+          Wie regelt der Vertrag die Abgeltung?
+          <select id="ue_abgeltung">
+            <option value="freizeit" selected>Vorrangig Freizeitausgleich</option>
+            <option value="auszahlung">Vorrangig Auszahlung</option>
+            <option value="nicht_geregelt">Nicht geregelt (oder Vertrag enthält Klausel zur Abgeltung mit Grundgehalt)</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="ue_berechnen" class="button">Anspruch prüfen</button>
+        <button type="reset" id="ue_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="ue_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Dokumentation leicht gemacht</h2>
+      <p class="lead">
+        Mangelnde Dokumentation ist der häufigste Grund für Streitigkeiten. Clerion hilft dir, deine Stunden exakt zu belegen und die Auszahlung einzufordern.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Jetzt Stunden prüfen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zur Überstundenvergütung</h2>
+
+  <div class="faq-item">
+    <h3>Müssen Überstunden immer bezahlt werden?</h3>
+    <p>
+      Nein. Ein Anspruch auf Bezahlung besteht in der Regel nur,
+      wenn Überstunden vom Arbeitgeber angeordnet, gebilligt oder zumindest geduldet wurden.
+      Andernfalls kann der Anspruch entfallen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was gilt bei Freizeitausgleich statt Auszahlung?</h3>
+    <p>
+      Häufig sieht der Arbeitsvertrag oder Tarifvertrag vor,
+      dass Überstunden vorrangig durch Freizeitausgleich abgegolten werden.
+      Eine Auszahlung erfolgt meist nur, wenn Freizeitausgleich nicht möglich ist.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Gibt es einen gesetzlichen Anspruch auf Überstundenzuschläge?</h3>
+    <p>
+      Gesetzlich vorgeschrieben sind Überstundenzuschläge grundsätzlich nicht.
+      Sie ergeben sich meist aus Tarifverträgen oder individuellen Arbeitsverträgen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wie kann ich meine Überstunden nachweisen?</h3>
+    <p>
+      Wichtig ist eine möglichst genaue Dokumentation der Arbeitszeiten,
+      zum Beispiel durch Stundenzettel, Zeiterfassungssysteme oder E-Mails.
+      Der Nachweis ist entscheidend für die Durchsetzung von Ansprüchen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Überstunden-Check eine Rechtsberatung?</h3>
+    <p>
+      Nein. Der Rechner dient der allgemeinen Orientierung und Ersteinschätzung
+      und ersetzt keine individuelle rechtliche Beratung.
+    </p>
+  </div>
+</section>
+
+  <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Arbeitsrecht:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-arbeitszeugnis.html" class="button button-secondary" title="Zur Info Arbeitszeugnis">Zur Info-Seite: Arbeitszeugnis (Details & Checkliste)</a>
+        <a href="info-lohnforderung.html" class="button button-secondary" title="Zur Info Lohn einfordern">Zur Info-Seite: Gehalt einfordern</a>
+        <a href="info-abmahnung.html" class="button button-secondary" title="Zur Info Abmahnung">Zur Info-Seite: Abmahnung</a>
+        <a href="kuendigungsfrist-rechner.html" class="button button-secondary" title="Zum Rechner Kündigungsfrist">Zum Rechner: Kündigungsfrist</a>
+        <a href="urlaubsanspruch.html" class="button button-secondary" title="Zum Rechner Urlaubsanspruch">Zum Rechner: Urlaubsanspruch</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="ueberstunden-check.js"></script>
+</body>
+</html>
