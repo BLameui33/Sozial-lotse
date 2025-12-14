@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Urlaubsrechner 2026 – Urlaubsanspruch bei Kündigung & Eintritt berechnen | Sozial-Lotse</title>
+
+<meta name="description" content="Urlaubsanspruch berechnen: Kostenloser Urlaubsrechner 2026 für anteiligen Urlaub bei Kündigung, Eintritt oder Jobwechsel. Gesetzlicher Mindesturlaub verständlich erklärt.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Urlaubsrechner – Urlaubsanspruch bei Kündigung & Eintritt</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Bei Jobwechsel oder Kündigung im laufenden Jahr wird der <strong>Urlaubsanspruch anteilig</strong> berechnet (Zwölftelung).
+    Mit diesem Urlaubsrechner ermittelst du, wie viele Urlaubstage dir noch zustehen
+    oder ob eine <strong>Urlaubsabgeltung</strong> erfolgen muss.
+  </p>
+</div>
+
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>14.12.2025</strong>.
+</p>
+
+    <form id="urlaub-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Vertragliche Urlaubsdaten</legend>
+
+        <label class="pflegegrad-label">
+          Jahresurlaub laut Arbeitsvertrag (Tage)
+          <input type="number" id="ur_jahresurlaub" min="20" max="40" step="1" value="30" placeholder="z. B. 30" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Arbeitstage pro Woche
+          <select id="ur_wochentage">
+            <option value="5" selected>5 Tage (Mo-Fr) - Gesetzl. Mindesturlaub: 20</option>
+            <option value="6">6 Tage (Mo-Sa) - Gesetzl. Mindesturlaub: 24</option>
+            <option value="4">4 Tage</option>
+            <option value="3">3 Tage</option>
+          </select>
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Wichtig zur Berechnung des gesetzlichen Mindestanspruchs.</p>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Ein- oder Austritt im laufenden Jahr</legend>
+        
+        <p class="hinweis">Bitte gib den Zeitraum des Arbeitsverhältnisses <strong>in diesem Kalenderjahr</strong> an.</p>
+
+        <label class="pflegegrad-label">
+          Beginn (z.B. 01.01. wenn schon da)
+          <input type="date" id="ur_eintritt" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Ende (z.B. 31.12. oder Austrittsdatum)
+          <input type="date" id="ur_austritt" />
+        </label>
+
+        <div class="highlight-box" style="background:#fff3cd; font-size:0.9em; margin-top:10px;">
+            <p><strong>Hinweis:</strong> Anspruch auf 1/12 des Jahresurlaubs besteht für jeden <strong>vollen</strong> Monat des Bestehens des Arbeitsverhältnisses.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3) Bereits verplant</legend>
+        
+        <label class="pflegegrad-label">
+          In diesem Jahr bereits genommene (oder verplante) Tage
+          <input type="number" id="ur_genommen" min="0" step="0.5" value="0" />
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="ur_berechnen" class="button">Resturlaub berechnen</button>
+        <button type="reset" id="ur_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="ur_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Urlaubsabgeltung prüfen</h2>
+      <p class="lead">
+        Der Arbeitgeber will den Resturlaub nicht auszahlen? Clerion prüft deine letzte Abrechnung und hilft dir, die Urlaubsabgeltung einzufordern.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Jetzt Anspruch prüfen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zum Urlaubsanspruch</h2>
+
+  <div class="faq-item">
+    <h3>Wie wird der Urlaubsanspruch bei Kündigung berechnet?</h3>
+    <p>
+      Bei einer Kündigung im laufenden Jahr besteht in der Regel Anspruch auf
+      ein Zwölftel des Jahresurlaubs für jeden vollen Monat des Arbeitsverhältnisses.
+      Ab dem zweiten Halbjahr kann unter bestimmten Voraussetzungen der volle Jahresurlaub entstehen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was ist Urlaubsabgeltung?</h3>
+    <p>
+      Kann Urlaub wegen der Beendigung des Arbeitsverhältnisses nicht mehr genommen werden,
+      muss er finanziell ausgezahlt werden. Dies nennt man Urlaubsabgeltung.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Gilt der gesetzliche Mindesturlaub immer?</h3>
+    <p>
+      Ja. Der gesetzliche Mindesturlaub beträgt bei einer Fünf-Tage-Woche
+      mindestens 20 Arbeitstage pro Jahr. Vertragliche Regelungen dürfen diesen Anspruch nicht unterschreiten.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was gilt bei Eintritt im laufenden Jahr?</h3>
+    <p>
+      Trittst du im laufenden Jahr in ein Unternehmen ein, entsteht der Urlaubsanspruch
+      ebenfalls anteilig. Für jeden vollen Monat entsteht ein Anspruch auf ein Zwölftel des Jahresurlaubs.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Urlaubsrechner eine Rechtsberatung?</h3>
+    <p>
+      Nein. Der Rechner dient der allgemeinen Orientierung und ersetzt keine individuelle
+      Rechtsberatung durch einen Anwalt oder eine Fachstelle.
+    </p>
+  </div>
+</section>
+
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Inkasso und Schulden:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-arbeitszeugnis.html" class="button button-secondary" title="Zur Info Arbeitszeugnis">Zur Info-Seite: Arbeitszeugnis (Details & Checkliste)</a>
+        <a href="info-lohnforderung.html" class="button button-secondary" title="Zur Info Lohn einfordern">Zur Info-Seite: Gehalt einfordern</a>
+        <a href="info-abmahnung.html" class="button button-secondary" title="Zur Info Abmahnung">Zur Info-Seite: Abmahnung</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="urlaubsrechner.js"></script>
+</body>
+</html>
