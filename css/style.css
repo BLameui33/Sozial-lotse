@@ -633,3 +633,15 @@ h1, h2, h3, p, li, td, th {
 .kl-fall h3 { margin:0 0 6px 0; font-size:1rem; }
 .kl-fall p { margin:6px 0; color:#222; font-size:0.95rem; }
 .kl-fall-note { font-size:0.9rem; color:#555; margin-top:8px; }
+
+.highlight-box.pruefdatum-box {
+  font-size: 0.75rem;        /* deutlich kleinerer Text */
+  padding: 0.4rem 0.6rem;    /* schmalere Box */
+  margin: 0.5rem 0;          /* weniger Außenabstand */
+  max-width: fit-content;   /* Box nur so breit wie der Inhalt */
+}
+
+.highlight-box.pruefdatum-box p {
+  margin: 0;
+  line-height: 1.3;
+}

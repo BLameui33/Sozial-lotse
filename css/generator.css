@@ -425,4 +425,17 @@ h1, h2, h3, p, li, td, th {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
 }
 
+.highlight-box.pruefdatum-box {
+  font-size: 0.75rem;        /* deutlich kleinerer Text */
+  padding: 0.4rem 0.6rem;    /* schmalere Box */
+  margin: 0.5rem 0;          /* weniger Außenabstand */
+  max-width: fit-content;   /* Box nur so breit wie der Inhalt */
+}
+
+.highlight-box.pruefdatum-box p {
+  margin: 0;
+  line-height: 1.3;
+}
+
+
 
