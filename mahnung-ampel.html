@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mahnung-Risiko-Ampel – Inkasso & Mahnbescheid richtig einschätzen | Sozial-Lotse</title>
+
+  <meta name="description" content="Mahnung erhalten? Prüfen Sie Ihr Risiko von Zahlungserinnerung bis Inkasso oder gerichtlichem Mahnbescheid. Kostenlose Mahnung-Risiko-Ampel mit Handlungsempfehlungen.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Mahnung-Risiko-Ampel – Wie ernst ist deine Mahnung?</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Du hast eine <strong>Mahnung, Inkasso-Post oder einen Mahnbescheid</strong> erhalten und bist unsicher, wie ernst die Lage ist?
+    Diese Mahnung-Risiko-Ampel hilft dir einzuschätzen, ob Handlungsbedarf besteht – von Zahlungserinnerung bis Gericht.
+  </p>
+</div>
+
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>14.12.2025</strong>.
+</p>
+
+
+    <form id="mahnung-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>Deine Situation</legend>
+
+        <label class="pflegegrad-label">
+          Wie hoch ist der geforderte Betrag (ca.)?
+          <input type="number" id="mr_betrag" min="0" step="10" placeholder="z. B. 450" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Was für ein Schreiben liegt vor?
+          <select id="mr_stufe">
+            <option value="1" selected>1. Mahnung / Zahlungserinnerung</option>
+            <option value="2">2. Mahnung / Eindringliche Mahnung</option>
+            <option value="3">Letzte Mahnung / Androhung Inkasso oder Kündigung</option>
+            <option value="inkasso">Schreiben vom Inkasso-Büro / Anwalt</option>
+            <option value="mb">Gerichtlicher Mahnbescheid (Gelber Brief vom Amtsgericht)</option>
+          </select>
+        </label>
+        
+        <label class="pflegegrad-label">
+          Gibt es bereits eine Zahlungsvereinbarung (Ratenzahlung)?
+          <select id="mr_vereinbarung">
+            <option value="nein" selected>Nein</option>
+            <option value="ja">Ja, wurde vereinbart und eingehalten</option>
+            <option value="gebrochen">Ja, aber ich konnte die Rate nicht zahlen</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="mr_berechnen" class="button">Risiko prüfen</button>
+        <button type="reset" id="mr_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="mr_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Dein Schulden-Lotse</h2>
+      <p class="lead">
+        Inkasso-Post ist einschüchternd. Clerion prüft die Forderung auf unzulässige Gebühren, hilft bei Ratenzahlungsbitten und erkennt Fake-Inkasso.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Post prüfen lassen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zur Mahnung & Inkasso</h2>
+
+  <div class="faq-item">
+    <h3>Was passiert, wenn ich auf eine Mahnung nicht reagiere?</h3>
+    <p>
+      Reagierst du auf eine Mahnung nicht, kann der Gläubiger weitere Mahnungen versenden,
+      ein Inkassounternehmen beauftragen oder ein gerichtliches Mahnverfahren einleiten.
+      Spätestens bei einem Mahnbescheid solltest du unbedingt reagieren.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ist ein Inkasso-Schreiben sofort rechtlich gefährlich?</h3>
+    <p>
+      Ein Inkasso-Schreiben bedeutet noch keine gerichtliche Maßnahme.
+      Allerdings können zusätzliche Gebühren entstehen.
+      Wichtig ist zu prüfen, ob die Forderung berechtigt ist und ob alle Kosten zulässig sind.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was ist ein gerichtlicher Mahnbescheid?</h3>
+    <p>
+      Ein gerichtlicher Mahnbescheid ist ein offizielles Schreiben vom Amtsgericht.
+      Ab Zustellung hast du 14 Tage Zeit, um Widerspruch einzulegen.
+      Ohne Reaktion kann ein Vollstreckungsbescheid folgen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Kann ich bei finanziellen Problemen eine Ratenzahlung vereinbaren?</h3>
+    <p>
+      In vielen Fällen ist eine Ratenzahlung oder Stundung möglich.
+      Wichtig ist, frühzeitig Kontakt aufzunehmen und Vereinbarungen einzuhalten,
+      um weitere Kosten oder rechtliche Schritte zu vermeiden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Rechner eine Rechtsberatung?</h3>
+    <p>
+      Nein. Die Mahnung-Risiko-Ampel dient der Orientierung und Ersteinschätzung.
+      Sie ersetzt keine individuelle Rechtsberatung durch einen Anwalt oder eine Fachstelle.
+    </p>
+  </div>
+</section>
+
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Inkasso und Schulden:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-p-konto.html" class="button button-secondary" title="Zur Info P-Konto">Zur Info-Seite: P-Konto (Details & Checkliste)</a>
+        <a href="info-zahlungsaufschub.html" class="button button-secondary" title="Zur Info Zahlungsaufschub">Zur Info-Seite: Zahlungsaufschub</a>
+        <a href="info-stundung.html" class="button button-secondary" title="Zur Info Stundung">Zur Info-Seite: Stundung</a>
+        <a href="info-inkasso-forderung.html" class="button button-secondary" title="Zur Info Inkasso-Forderung">Zur Info-Seite: Inkasso-Forderung</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="mahnung-ampel.js"></script>
+</body>
+</html>
