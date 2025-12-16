@@ -613,56 +613,87 @@ footer a:hover {
       .promo-teaser p { font-size: 0.95rem; }
     }
     
-    /* Container für die Navigation */
+  /* Container für die Navigation */
 .topic-navigator {
-  background-color: #f8f9fa; /* Heller Hintergrund */
-  padding: 15px;
-  border-bottom: 2px solid #e9ecef;
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #f3f4f6);
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  
-  /* Sticky Effekt: Menü bleibt oben kleben */
+  gap: 12px;
+
   position: sticky;
   top: 0;
-  z-index: 1000; /* Damit es über dem Inhalt schwebt */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .topic-navigator label {
-  font-weight: bold;
-  color: #333;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 15px;
 }
 
-/* Styling für das Dropdown selbst */
+/* Wrapper für Custom Arrow */
 .topic-navigator select {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding: 10px 44px 10px 14px;
+  font-size: 15px;
+  font-weight: 500;
+
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+
   cursor: pointer;
-  max-width: 100%;
+  transition: all 0.25s ease;
+  min-width: 220px;
 }
 
+/* Hover Effekt */
+.topic-navigator select:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Fokus Effekt */
 .topic-navigator select:focus {
   outline: none;
-  border-color: #007bff; /* Farbe beim Anklicken (Blau) */
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Option Styling (limitiert durch Browser) */
+.topic-navigator option {
+  font-size: 15px;
+  padding: 8px;
 }
 
 /* Mobile Optimierung */
 @media (max-width: 600px) {
   .topic-navigator {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
-  
+
   .topic-navigator select {
     width: 100%;
   }
 }
+
     </style>
   
   <!-- Hauptangebot: Clerion -->

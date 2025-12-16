@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         out.innerHTML = resultHtml;
         out.scrollIntoView({ behavior: "smooth" });
 
-        // --- PDF EXPORT (STABILE KLON-METHODE) ---
+        // --- PDF EXPORT (KORRIGIERTE VERSION) ---
         setTimeout(() => {
             const pdfBtn = document.getElementById("rp_pdf_btn");
             const elementToPrint = document.getElementById("rp_result_card");
@@ -219,32 +219,39 @@ document.addEventListener("DOMContentLoaded", () => {
                     const originalText = pdfBtn.innerText;
                     pdfBtn.innerText = "⏳ Wird erstellt...";
                     
-                    // Klonen & Isolieren
-                    const clonedElement = elementToPrint.cloneNode(true);
-                    const btnContainer = clonedElement.querySelector('.button-container');
-                    if(btnContainer) btnContainer.style.display = 'none';
+                    // 1. Buttons im Original-Element kurz ausblenden
+                    const btnContainer = elementToPrint.querySelector('.button-container');
+                    let originalDisplay = '';
+                    if(btnContainer) {
+                        originalDisplay = btnContainer.style.display; // Alten Zustand merken
+                        btnContainer.style.display = 'none'; // Ausblenden
+                    }
 
-                    clonedElement.style.position = 'fixed';
-                    clonedElement.style.top = '0';
-                    clonedElement.style.left = '-9999px';
-                    clonedElement.style.width = '800px'; 
-                    clonedElement.style.backgroundColor = '#ffffff';
-                    document.body.appendChild(clonedElement);
+                    // Sicherstellen, dass der Hintergrund weiß ist (wichtig für JPEGs)
+                    const originalBg = elementToPrint.style.backgroundColor;
+                    elementToPrint.style.backgroundColor = "#ffffff";
 
                     const opt = {
-                        margin:       [0.5, 0.5],
+                        margin:       [10, 10], // Ränder in mm (besser als Inch)
                         filename:     'ratenplan-uebersicht.pdf',
                         image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false },
-                        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                        html2canvas:  { scale: 2, useCORS: true, logging: false }, // Scale 2 sorgt für scharfe Schrift
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
 
-                    html2pdf().from(clonedElement).set(opt).save().then(() => {
-                        document.body.removeChild(clonedElement);
+                    // PDF vom ORIGINAL Element erstellen
+                    html2pdf().from(elementToPrint).set(opt).save()
+                    .then(() => {
+                        // 2. Alles wieder zurücksetzen (Buttons einblenden)
+                        if(btnContainer) btnContainer.style.display = originalDisplay;
+                        elementToPrint.style.backgroundColor = originalBg;
                         pdfBtn.innerText = originalText;
-                    }).catch(err => {
+                    })
+                    .catch(err => {
                         console.error(err);
-                        document.body.removeChild(clonedElement);
+                        // Auch im Fehlerfall zurücksetzen
+                        if(btnContainer) btnContainer.style.display = originalDisplay;
+                        elementToPrint.style.backgroundColor = originalBg;
                         pdfBtn.innerText = "Fehler!";
                     });
                 });
