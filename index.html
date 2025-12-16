@@ -611,7 +611,59 @@ footer a:hover {
     @media (max-width:600px){
       .promo-teaser h2 { font-size: 1.4rem; }
       .promo-teaser p { font-size: 0.95rem; }
-    }</style>
+    }
+    
+    /* Container für die Navigation */
+.topic-navigator {
+  background-color: #f8f9fa; /* Heller Hintergrund */
+  padding: 15px;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  /* Sticky Effekt: Menü bleibt oben kleben */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Damit es über dem Inhalt schwebt */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.topic-navigator label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Styling für das Dropdown selbst */
+.topic-navigator select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.topic-navigator select:focus {
+  outline: none;
+  border-color: #007bff; /* Farbe beim Anklicken (Blau) */
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+  .topic-navigator {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .topic-navigator select {
+    width: 100%;
+  }
+}
+    </style>
   
   <!-- Hauptangebot: Clerion -->
   <h2 id="promo-headline">
@@ -645,6 +697,25 @@ footer a:hover {
     </nav>
   </div>
 </section>
+
+<div class="topic-navigator">
+  <label for="topic-select">Schnellauswahl:</label>
+  <div class="select-wrapper">
+    <select id="topic-select" onchange="location.href=this.value">
+      <option value="" selected disabled>Bitte Thema wählen...</option>
+      <option value="#buergergeld">📄 Bürgergeld (SGB II)</option>
+      <option value="#alg1">🏃‍♂️ Arbeitslosengeld I</option>
+      <option value="#sozialhilfe">🤝 Sozialhilfe & Grundsicherung</option>
+      <option value="#wohngeld-kiz">🏠 Wohngeld & Kinderzuschlag</option>
+      <option value="#but">📚 Bildung & Teilhabe</option>
+      <option value="#bafoeg">🧑‍🎓 Bafög</option> <option value="#asyl">🌍 Asyl & Aufenthalt</option>
+      <option value="#schulden-finanzen">💰 Schulden & Finanzen</option>
+      <option value="#arbeitsrecht">💼 Arbeitsrecht</option>
+      <option value="#verbraucherrecht">✍️ Verbraucherrecht</option>
+      <option value="#familie-kind">👨‍👩‍👧‍👦 Familie & Kind</option>
+    </select>
+  </div>
+</div>
 
     <section id="buergergeld" class="category-section">
       <h2><span aria-hidden="true">📄</span> Bürgergeld (SGB II)</h2>
@@ -824,7 +895,7 @@ footer a:hover {
       </ul>
     </section>
 
-<section id="but" class="category-section">
+<section id="bafoeg" class="category-section">
       <h2><span aria-hidden="true">🧑‍🎓</span> Bafög</h2>
       <ul class="tool-list">
         <li>
