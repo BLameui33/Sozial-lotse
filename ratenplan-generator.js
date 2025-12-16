@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         out.innerHTML = resultHtml;
         out.scrollIntoView({ behavior: "smooth" });
 
-        // --- PDF EXPORT (KORRIGIERTE VERSION) ---
+       // --- PDF EXPORT (ROBUSTE OVERLAY-METHODE) ---
         setTimeout(() => {
             const pdfBtn = document.getElementById("rp_pdf_btn");
             const elementToPrint = document.getElementById("rp_result_card");
@@ -219,39 +219,59 @@ document.addEventListener("DOMContentLoaded", () => {
                     const originalText = pdfBtn.innerText;
                     pdfBtn.innerText = "⏳ Wird erstellt...";
                     
-                    // 1. Buttons im Original-Element kurz ausblenden
-                    const btnContainer = elementToPrint.querySelector('.button-container');
-                    let originalDisplay = '';
-                    if(btnContainer) {
-                        originalDisplay = btnContainer.style.display; // Alten Zustand merken
-                        btnContainer.style.display = 'none'; // Ausblenden
-                    }
+                    // 1. Klon erstellen
+                    const clone = elementToPrint.cloneNode(true);
+                    
+                    // 2. Klon bearbeiten (Buttons entfernen)
+                    const btnContainer = clone.querySelector('.button-container');
+                    if(btnContainer) btnContainer.remove();
 
-                    // Sicherstellen, dass der Hintergrund weiß ist (wichtig für JPEGs)
-                    const originalBg = elementToPrint.style.backgroundColor;
-                    elementToPrint.style.backgroundColor = "#ffffff";
+                    // 3. Klon STYLING erzwingen (WICHTIG für Sichtbarkeit)
+                    // Wir legen den Klon absolut über die gesamte Seite ganz oben links an.
+                    Object.assign(clone.style, {
+                        position: 'absolute',
+                        top: '0px',
+                        left: '0px',
+                        width: '100%',     // Oder '800px' für feste A4 Breite
+                        maxWidth: '800px', // Begrenzen damit es auf A4 passt
+                        zIndex: '99999',   // Ganz oben drauf
+                        background: '#ffffff', // Weißer Hintergrund ist Pflicht
+                        margin: '0',
+                        padding: '20px',
+                        height: 'auto'
+                    });
+
+                    // 4. Klon dem Body hinzufügen (damit er gerendert werden kann)
+                    document.body.appendChild(clone);
+
+                    // Optional: Kurz nach oben scrollen, hilft manchmal bei Rendering-Bugs
+                    // window.scrollTo(0,0); 
 
                     const opt = {
-                        margin:       [10, 10], // Ränder in mm (besser als Inch)
+                        margin:       [10, 10, 10, 10],
                         filename:     'ratenplan-uebersicht.pdf',
                         image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false }, // Scale 2 sorgt für scharfe Schrift
+                        html2canvas:  { 
+                            scale: 2, 
+                            useCORS: true, 
+                            logging: true,
+                            scrollY: 0, // WICHTIG: Sagt dem Canvas, dass wir oben sind
+                            windowHeight: document.body.scrollHeight // Gesamte Höhe erfassen
+                        },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
 
-                    // PDF vom ORIGINAL Element erstellen
-                    html2pdf().from(elementToPrint).set(opt).save()
+                    // 5. PDF generieren und aufräumen
+                    html2pdf().from(clone).set(opt).save()
                     .then(() => {
-                        // 2. Alles wieder zurücksetzen (Buttons einblenden)
-                        if(btnContainer) btnContainer.style.display = originalDisplay;
-                        elementToPrint.style.backgroundColor = originalBg;
+                        document.body.removeChild(clone); // Klon löschen
                         pdfBtn.innerText = originalText;
                     })
                     .catch(err => {
-                        console.error(err);
-                        // Auch im Fehlerfall zurücksetzen
-                        if(btnContainer) btnContainer.style.display = originalDisplay;
-                        elementToPrint.style.backgroundColor = originalBg;
+                        console.error("PDF Fehler:", err);
+                        if(document.body.contains(clone)) {
+                             document.body.removeChild(clone);
+                        }
                         pdfBtn.innerText = "Fehler!";
                     });
                 });
