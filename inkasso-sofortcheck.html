@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inkasso prüfen & widersprechen – Inkasso-Sofortcheck | Sozial-Lotse</title>
+
+<meta name="description" content="Inkassoschreiben erhalten? Prüfe Seriosität, Forderung und Vollmacht. Inkasso-Sofortcheck mit klaren Handlungsempfehlungen & Widerspruch-Tipps.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Inkasso-Sofortcheck: Forderung prüfen & richtig reagieren</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Inkassoschreiben führen häufig zu unnötigem Druck und vorschnellen Zahlungen.
+    <strong>Bleib ruhig.</strong>  
+    Dieser Sofortcheck hilft dir, die <strong>Seriosität der Inkassoforderung</strong> zu prüfen
+    und die richtigen ersten Schritte einzuleiten.
+  </p>
+</div>
+
+
+     <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>16.12.2025</strong>.
+</p>
+
+    <form id="ik-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Prüfung des Schreibens</legend>
+
+        <label class="pflegegrad-label">
+          Ist die Inkasso-Firma im **Rechtsdienstleistungsregister** registriert?
+          <select id="ik_register">
+            <option value="unsicher" selected>Unsicher / Nicht geprüft</option>
+            <option value="ja">Ja, ich habe es geprüft (Seriöses Merkmal)</option>
+            <option value="nein">Nein (Vorsicht, könnte Fake sein!)</option>
+          </select>
+        </label>
+        <p class="hinweis">Prüfe die Firma auf <a href="https://rechtsdienstleistungsregister.de" target="_blank" style="color:#2980b9;">rechtsdienstleistungsregister.de</a>.</p>
+
+        <label class="pflegegrad-label">
+          Liegt eine **Original-Vollmacht** des Gläubigers bei?
+          <select id="ik_vollmacht">
+            <option value="nein" selected>Nein (Sehr häufiger Fehler)</option>
+            <option value="ja">Ja, die Vollmacht liegt bei</option>
+            <option value="kopie">Nur eine Kopie (Rechtlich oft nicht ausreichend)</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Wie hoch ist die Inkassoforderung (Gesamtbetrag)?
+          <input type="number" id="ik_betrag" min="0" step="10" placeholder="z. B. 450" />
+        </label>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Das zugrundeliegende Geschäft</legend>
+        
+        <label class="pflegegrad-label">
+          Ist die ursprüngliche Hauptforderung (z.B. der Kaufpreis) **berechtigt**?
+          <select id="ik_schuld">
+            <option value="ja" selected>Ja, ich habe die Ware/Leistung erhalten.</option>
+            <option value="nein">Nein, ich habe die Leistung nie erhalten/vertraglich widerrufen.</option>
+            <option value="verjaehrt">Ist verjährt (älter als 3 Jahre, Ende Kalenderjahr)</option>
+          </select>
+        </label>
+        
+        <label class="pflegegrad-label">
+          Ist die Forderung jemals **schriftlich bestritten** worden?
+          <select id="ik_bestritten">
+            <option value="nein" selected>Nein, ich habe nur die Rechnungen ignoriert.</option>
+            <option value="ja">Ja, die ursprüngliche Forderung wurde bereits bestritten.</option>
+          </select>
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Wenn die Schuld (Hauptforderung) bereits bestritten wurde, darf der Gläubiger kein Inkassobüro einschalten.</p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="ik_berechnen" class="button">Maßnahmen prüfen</button>
+        <button type="reset" id="ik_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="ik_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zu Inkasso & Forderungen</h2>
+
+  <div class="faq-item">
+    <h3>Muss ich ein Inkassoschreiben sofort bezahlen?</h3>
+    <p>
+      Nein. Ein Inkassoschreiben ist kein gerichtlicher Titel.
+      Du solltest zuerst prüfen, ob die Forderung berechtigt ist
+      und ob das Inkassounternehmen ordnungsgemäß beauftragt wurde.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wie erkenne ich ein unseriöses Inkassobüro?</h3>
+    <p>
+      Ein wichtiges Merkmal ist die Eintragung im Rechtsdienstleistungsregister.
+      Fehlt diese oder werden unzulässige Gebühren verlangt,
+      ist besondere Vorsicht geboten.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Muss eine Vollmacht des Gläubigers vorliegen?</h3>
+    <p>
+      Ja. Inkassounternehmen müssen auf Verlangen eine Originalvollmacht
+      des Gläubigers vorlegen. Ohne Vollmacht besteht häufig keine Zahlungspflicht.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Darf Inkasso eingeschaltet werden, wenn die Forderung bestritten wurde?</h3>
+    <p>
+      Wurde die Hauptforderung bereits sachlich bestritten,
+      dürfen in der Regel keine Inkassokosten geltend gemacht werden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was bedeutet Verjährung bei Inkassoforderungen?</h3>
+    <p>
+      Geldforderungen verjähren meist nach drei Jahren
+      zum Ende des jeweiligen Kalenderjahres.
+      Verjährte Forderungen müssen nicht mehr bezahlt werden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ist ein Inkassoschreiben ein gerichtlicher Mahnbescheid?</h3>
+    <p>
+      Nein. Ein gerichtlicher Mahnbescheid kommt ausschließlich vom Amtsgericht
+      und wird in der Regel als gelber Brief zugestellt.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Inkasso-Sofortcheck eine Rechtsberatung?</h3>
+    <p>
+      Nein. Der Check dient der ersten Orientierung
+      und ersetzt keine individuelle rechtliche Beratung.
+    </p>
+  </div>
+</section>
+
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Inkasso und Schulden:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-p-konto.html" class="button button-secondary" title="Zur Info P-Konto">Zur Info-Seite: P-Konto (Details & Checkliste)</a>
+        <a href="info-zahlungsaufschub.html" class="button button-secondary" title="Zur Info Zahlungsaufschub">Zur Info-Seite: Zahlungsaufschub</a>
+        <a href="info-stundung.html" class="button button-secondary" title="Zur Info Stundung">Zur Info-Seite: Stundung</a>
+        <a href="info-inkasso-forderung.html" class="button button-secondary" title="Zur Info Inkasso-Forderung">Zur Info-Seite: Inkasso-Forderung</a>
+      </p>
+    </aside>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="inkasso-sofortcheck.js"></script>
+</body>
+</html>

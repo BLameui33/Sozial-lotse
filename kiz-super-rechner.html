@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kinderzuschlag Rechner 2026 – KiZ, Wohngeld & Einkommensprüfung | Sozial-Lotse</title>
+
+<meta name="description" content="Großer Kinderzuschlag-Rechner 2026: Prüfe KiZ-Anspruch, berechne Höhe, kombiniere mit Wohngeld oder teste, ob sich mehr Gehalt lohnt.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Kinderzuschlag-Rechner 2026 – Der große KiZ-Checker</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Der <strong>Kinderzuschlag (KiZ)</strong> beträgt bis zu <strong>297 € pro Kind</strong> und Monat
+    und kann den Anspruch auf <strong>Wohngeld, Bildung & Teilhabe</strong> und kostenfreie Kita öffnen.
+    Mit diesem <strong>KiZ-Rechner</strong> prüfst du Anspruch, Höhe und Einkommensgrenzen in verschiedenen Szenarien.
+  </p>
+</div>
+
+
+<section class="content-intro">
+  <h2>Was prüft dieser Kinderzuschlag-Rechner?</h2>
+  <ul>
+    <li><strong>1-Minuten-Check:</strong> Schnelle Einschätzung, ob ein KiZ-Anspruch besteht</li>
+    <li><strong>Gehaltserhöhung:</strong> Prüfe, ob mehr Einkommen den KiZ reduziert oder beendet</li>
+    <li><strong>KiZ + Wohngeld:</strong> Simulation kombinierter Leistungen</li>
+  </ul>
+</section>
+
+<p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>16.12.2025</strong>.
+</p>
+
+    <form id="kiz-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <div class="tabs-container">
+          <label class="tab-label">
+              <input type="radio" name="kiz_modus" value="check" checked>
+              <span class="tab-button">⚡ 1-Minuten-Check</span>
+          </label>
+          <label class="tab-label">
+              <input type="radio" name="kiz_modus" value="warning">
+              <span class="tab-button">⚠️ Gehaltserhöhung</span>
+          </label>
+          <label class="tab-label">
+              <input type="radio" name="kiz_modus" value="combo">
+              <span class="tab-button">🏠 KiZ + Wohngeld</span>
+          </label>
+      </div>
+
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend id="kiz_legend">Basisdaten eingeben</legend>
+
+        <div id="group_basic">
+            <label class="pflegegrad-label">
+              Elternstatus
+              <select id="kiz_eltern">
+                <option value="paare" selected>Paar (zusammenlebend)</option>
+                <option value="alleinerziehend">Alleinerziehend</option>
+              </select>
+            </label>
+
+            <label class="pflegegrad-label">
+              Anzahl Kinder (im Haushalt, kindergeldberechtigt)
+              <input type="number" id="kiz_kinder" min="1" max="10" step="1" value="1" />
+            </label>
+
+            <label class="pflegegrad-label">
+              Brutto-Einkommen der Eltern (Monat)
+              <input type="number" id="kiz_brutto" placeholder="z. B. 2400" />
+            </label>
+            <p class="hinweis" style="margin-top:-10px;">Mindesteinkommen: 900€ (Paare) / 600€ (Alleinerz.). Darunter gibt es Bürgergeld.</p>
+
+            <label class="pflegegrad-label">
+              Netto-Einkommen der Eltern (Auszahlung)
+              <input type="number" id="kiz_netto" placeholder="z. B. 1800" />
+            </label>
+
+            <label class="pflegegrad-label">
+              Warmmiete (inkl. Nebenkosten & Heizung)
+              <input type="number" id="kiz_miete" placeholder="z. B. 850" />
+            </label>
+        </div>
+
+        <div id="group_warning" style="display:none;">
+             <div class="highlight-box" style="background:#eaf2f8; border-left: 4px solid #2980b9;">
+                <p>Prüfe hier, ob sich Mehrarbeit lohnt oder ob der KiZ wegfällt.</p>
+             </div>
+
+             <label class="pflegegrad-label">
+               Beziehst du aktuell bereits KiZ?
+               <select id="kiz_current_status">
+                   <option value="ja">Ja</option>
+                   <option value="nein">Nein (Testen, ob ich reinkomme)</option>
+               </select>
+             </label>
+
+             <label class="pflegegrad-label">
+               Aktuelles Netto-Einkommen
+               <input type="number" id="kiz_warn_netto_old" placeholder="z. B. 1800" />
+             </label>
+
+             <label class="pflegegrad-label">
+               Neues Netto-Einkommen (nach Erhöhung/Minijob)
+               <input type="number" id="kiz_warn_netto_new" placeholder="z. B. 2050" />
+             </label>
+
+             <label class="pflegegrad-label">
+                Anzahl Kinder
+                <input type="number" id="kiz_warn_kinder" min="1" value="1" />
+             </label>
+             
+             <label class="pflegegrad-label">
+                Warmmiete
+                <input type="number" id="kiz_warn_miete" placeholder="z. B. 850" />
+             </label>
+        </div>
+
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="kiz_berechnen" class="button">Analyse starten</button>
+        <button type="reset" id="kiz_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="kiz_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">📝</span> Clerion – Antragshilfe</h2>
+      <p class="lead">
+        KiZ und Wohngeld beantragen ist Papierkrieg. Clerion hilft dir beim Ausfüllen der Formulare und prüft die Bescheide auf Berechnungsfehler.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Jetzt Hilfe holen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zum Kinderzuschlag (KiZ)</h2>
+
+  <div class="faq-item">
+    <h3>Was ist der Kinderzuschlag?</h3>
+    <p>
+      Der Kinderzuschlag (KiZ) ist eine zusätzliche Leistung für Familien mit geringem Einkommen.
+      Er wird zusätzlich zum Kindergeld gezahlt und soll verhindern, dass Familien Bürgergeld beziehen müssen.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wie hoch ist der Kinderzuschlag 2026?</h3>
+    <p>
+      Der Kinderzuschlag beträgt bis zu <strong>297 Euro pro Kind und Monat</strong>.
+      Die tatsächliche Höhe hängt vom Einkommen, der Miete und der Anzahl der Kinder ab.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wer hat Anspruch auf Kinderzuschlag?</h3>
+    <p>
+      Anspruch haben Eltern, die ein Mindesteinkommen erzielen,
+      ihren eigenen Bedarf decken können, aber nicht ausreichend für den Bedarf der Kinder.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Kann ich Kinderzuschlag und Wohngeld gleichzeitig bekommen?</h3>
+    <p>
+      Ja. Kinderzuschlag und Wohngeld können kombiniert werden.
+      In vielen Fällen entsteht der Wohngeldanspruch erst durch den KiZ.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Lohnt sich eine Gehaltserhöhung trotz Kinderzuschlag?</h3>
+    <p>
+      Nicht immer. Eine Gehaltserhöhung kann dazu führen,
+      dass der Kinderzuschlag sinkt oder ganz entfällt.
+      Deshalb ist eine vorherige Simulation besonders sinnvoll.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wo beantrage ich den Kinderzuschlag?</h3>
+    <p>
+      Der Kinderzuschlag wird bei der Familienkasse der Bundesagentur für Arbeit beantragt –
+      online oder per Formular.
+    </p>
+  </div>
+</section>
+
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Kinderzuschlag:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-kiz.html" class="button button-secondary" title="Zur Info KIZ">Zur Info-Seite: KIZ</a>
+         <a href="info-wohngeld.html" class="button button-secondary" title="Zur Info Wohngeld">Zur Info-Seite: Wohngeld</a>
+        <a href="generator-widerspruch-kiz.html" class="button button-secondary" title="Zum Generator Widerspruch KIZ">Zum Generator Widerspruch KIZ</a>
+      </p>
+    </aside>
+
+    <h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://www.arbeitsagentur.de/familie-und-kinder/kinderzuschlag-verstehen" target="_blank" rel="noopener">Bundesagentur für Arbeit – KiZ-Lotse & Online-Antrag</a></li>
+    <li><a href="https://familienportal.de/familienportal/familienleistungen/kinderzuschlag" target="_blank" rel="noopener">Familienportal des Bundes – Wer hat Anspruch?</a></li>
+    <li><a href="https://www.bmfsfj.de" target="_blank" rel="noopener">BMFSFJ – Infos zum Starke-Familien-Gesetz</a></li>
+    <li><a href="https://finanztip.de/kinderzuschlag" target="_blank" rel="noopener">Finanztip – Ausfüllhilfe und Rechentipps</a></li>
+  </ul>
+</div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="kiz-super-rechner.js"></script>
+</body>
+</html>

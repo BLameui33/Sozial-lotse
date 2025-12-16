@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ratenplan berechnen & Schulden tilgen | Ratenplan-Generator | Kassen-Lotse</title>
+
+<meta name="description" content="Ratenplan für Schulden erstellen: Berechne Laufzeit, Monatsrate und Gesamtkosten. Ideal für Inkasso, Gläubiger & Zahlungsvereinbarungen.">
+<link rel="icon" href="/logo-lotse-fav.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Kassen-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Ratenplan-Generator: Schulden realistisch tilgen</h1>
+
+
+    <div class="highlight-box">
+  <p>
+    Ein realistischer <strong>Ratenplan für Schulden</strong> ist die Grundlage jeder erfolgreichen Zahlungsvereinbarung.
+    Berechne hier, wie lange die Tilgung dauert, wie hoch die monatliche Rate ist
+    und welche Gesamtkosten entstehen.
+  </p>
+</div>
+
+<aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Ratenzahlung oder den Generator womit du eine Ratenzahlung oder Vergleich anbieten kannst:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-ratenzahlung.html" class="button button-secondary" title="Zur Info Inkasso-Ratenzahlung">Zur Info-Seite: Inkasso-Ratenzahlung</a>
+        <a href="generator-ratenzahlung.html" class="button button-secondary" title="Zum Generator Inkasso-Ratenzahlung anbieten">Zum Generator: Inkasso-Ratenzahlung anbieten</a>
+      </p>
+    </aside>
+
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Hinweis:</strong> Diese Inhalte dienen der allgemeinen Information und ersetzen keine Rechtsberatung.
+  Bei Unsicherheiten wenden Sie sich bitte an eine Verbraucherzentrale oder eine qualifizierte Fachstelle.
+</p>
+
+  <p class="hinweis">
+  Fachlich geprüft und zuletzt aktualisiert am <strong>16.12.2025</strong>.
+</p>
+
+    <form id="rp-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Schulden und Budget</legend>
+
+        <label class="pflegegrad-label">
+          Gesamthöhe der Schuld in € (Hauptforderung)
+          <input type="number" id="rp_schuld" min="100" step="50" placeholder="z. B. 3500" />
+        </label>
+        
+        <label class="pflegegrad-label">
+          Maximal monatlich verfügbar für die Rate in €
+          <input type="number" id="rp_rate" min="10" step="5" placeholder="z. B. 120" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Gib nur den Betrag an, den du *sicher* jeden Monat zahlen kannst.</p>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Zinsen und Starttermin</legend>
+        
+        <label class="pflegegrad-label">
+          Geschätzter effektiver Jahreszins (%)
+          <input type="number" id="rp_zins" min="0" max="25" step="0.5" value="0" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Bei Ratenplänen mit Inkassobüros oder Gläubigern oft 0% oder Verzugszinsen (4% - 9% über Basiszinssatz).</p>
+
+        <label class="pflegegrad-label">
+          Geplanter Start der ersten Rate
+          <input type="date" id="rp_start" />
+        </label>
+        <p class="hinweis" style="margin-top:-10px;">Wir setzen den Start automatisch auf den 1. des nächsten Monats.</p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="rp_berechnen" class="button">Ratenplan erstellen</button>
+        <button type="reset" id="rp_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="rp_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline"><span class="icon" aria-hidden="true">🤖</span> Clerion – Dein Schulden-Lotse</h2>
+      <p class="lead">
+        Inkasso-Post ist einschüchternd. Clerion prüft die Forderung auf unzulässige Gebühren, hilft bei Ratenzahlungsbitten und erkennt Fake-Inkasso.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" target="_blank">Post prüfen lassen</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-headline">
+  <h2 id="faq-headline">Häufige Fragen zum Ratenplan & Schuldenabbau</h2>
+
+  <div class="faq-item">
+    <h3>Was ist ein Ratenplan?</h3>
+    <p>
+      Ein Ratenplan legt fest, in welcher Höhe und über welchen Zeitraum
+      eine Schuld in gleichmäßigen Monatsraten zurückgezahlt wird.
+      Er dient häufig als Grundlage für Vereinbarungen mit Gläubigern oder Inkassobüros.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Wie hoch sollte eine monatliche Rate sein?</h3>
+    <p>
+      Die Rate sollte so gewählt werden, dass sie dauerhaft zahlbar ist.
+      Es ist besser, eine niedrigere, realistische Rate zu vereinbaren
+      als einen zu hohen Betrag später nicht einhalten zu können.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Kann ich mit Inkasso-Unternehmen einen Ratenplan vereinbaren?</h3>
+    <p>
+      Ja. Viele Inkassobüros akzeptieren Ratenzahlungen,
+      sofern die Forderung berechtigt ist und der Plan realistisch erscheint.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Was passiert, wenn ich eine Rate nicht zahlen kann?</h3>
+    <p>
+      Wird eine Rate nicht gezahlt, kann die Vereinbarung hinfällig werden.
+      In diesem Fall drohen weitere Kosten oder rechtliche Schritte.
+      Daher sollte der Ratenplan immer vorsichtig kalkuliert werden.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Fallen bei einem Ratenplan Zinsen an?</h3>
+    <p>
+      Das hängt vom Gläubiger ab.
+      Manche Ratenvereinbarungen sind zinsfrei,
+      andere beinhalten Verzugszinsen oder Gebühren.
+    </p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Ersetzt dieser Ratenplan-Generator eine Schuldnerberatung?</h3>
+    <p>
+      Nein. Der Generator dient der Orientierung
+      und ersetzt keine individuelle Schuldner- oder Rechtsberatung.
+    </p>
+  </div>
+</section>
+
+
+   <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Inkasso und Schulden:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-p-konto.html" class="button button-secondary" title="Zur Info P-Konto">Zur Info-Seite: P-Konto (Details & Checkliste)</a>
+        <a href="info-zahlungsaufschub.html" class="button button-secondary" title="Zur Info Zahlungsaufschub">Zur Info-Seite: Zahlungsaufschub</a>
+        <a href="info-stundung.html" class="button button-secondary" title="Zur Info Stundung">Zur Info-Seite: Stundung</a>
+        <a href="info-ratenzahlung.html" class="button button-secondary" title="Zur Info Inkasso-Ratenzahlung">Zur Info-Seite: Inkasso-Ratenzahlung</a>
+        <a href="info-inkasso-forderung.html" class="button button-secondary" title="Zur Info Inkasso-Forderung">Zur Info-Seite: Inkasso-Forderung</a>
+      </p>
+    </aside>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="ratenplan-generator.js"></script>
+</body>
+</html>
