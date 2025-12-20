@@ -1,98 +1,101 @@
-// bafoeg-checker.js
-// BAföG Anspruch, Höhe und Bürgergeld-Abgrenzung (Werte Stand 2024/2025)
+// bafoeg-expert-checker.js - Update mit Vermögensprüfung
 
 document.addEventListener("DOMContentLoaded", () => {
-    const radios = document.getElementsByName("bafoeg_modus");
-    const divAnspruch = document.getElementById("div_anspruch_extra");
-    const divHoehe = document.getElementById("div_hoehe_extra");
-    const btn = document.getElementById("bf_berechnen");
-    const out = document.getElementById("bf_ergebnis");
+    const typSelect = document.getElementById("be_typ");
+    const wohnSelect = document.getElementById("be_wohnen");
+    const boxSchulweg = document.getElementById("box_schulweg");
+    const out = document.getElementById("be_ergebnis");
 
-    // Tab-Switch
-    radios.forEach(r => r.addEventListener("change", () => {
-        const mode = document.querySelector('input[name="bafoeg_modus"]:checked').value;
-        divAnspruch.style.display = (mode === "anspruch") ? "block" : "none";
-        divHoehe.style.display = (mode === "hoehe") ? "block" : "none";
-        out.innerHTML = "";
-    }));
+    const updateUI = () => {
+        const isSchule = (typSelect.value === "schule_allg" || typSelect.value === "schule_beruf");
+        const isAllein = (wohnSelect.value === "allein");
+        boxSchulweg.style.display = (isSchule && isAllein) ? "block" : "none";
+    };
+    typSelect.addEventListener("change", updateUI);
+    wohnSelect.addEventListener("change", updateUI);
 
-    btn.addEventListener("click", () => {
-        const mode = document.querySelector('input[name="bafoeg_modus"]:checked').value;
-        const typ = document.getElementById("bf_typ").value;
-        const alter = parseInt(document.getElementById("bf_alter").value);
-        const wohnen = document.getElementById("bf_wohnen").value;
-        
-        out.innerHTML = "";
+    document.getElementById("be_calc").addEventListener("click", () => {
+        const typ = typSelect.value;
+        const vorausb = document.getElementById("be_vorausbildung").value === "ja";
+        const alter = parseInt(document.getElementById("be_alter").value);
+        const arbeit = parseInt(document.getElementById("be_arbeit").value);
+        const wohnen = wohnSelect.value;
+        const fern = document.getElementById("be_fern").checked;
+        const hatKV = document.getElementById("be_kv").value === "ja";
+        const elternNetto = parseFloat(document.getElementById("be_eltern_netto").value || 0);
+        const vermoegen = parseFloat(document.getElementById("be_vermoegen").value || 0);
 
-        // --- BASIS-WERTE 2024/2025 (Gerundet) ---
-        let grundbedarf = (typ === "studium") ? 475 : 262; // Vereinfacht für Schüler/Studenten
-        let wohnpauschale = (wohnen === "allein") ? 380 : 0;
-        let kv_zuschlag = 0;
-        
-        if (mode === "hoehe") {
-            const hatKV = document.getElementById("bf_kv").value === "ja";
-            if (hatKV) kv_zuschlag = 122; // KV + PV Zuschlag
-        }
+        // --- 1. PRÜFUNG: ELTERNUNABHÄNGIGKEIT ---
+        let istUnabhaengig = false;
+        let grundUnabhaengig = "";
+        if (alter >= 30) { istUnabhaengig = true; grundUnabhaengig = "Alter über 30 Jahre."; }
+        else if (arbeit >= 5) { istUnabhaengig = true; grundUnabhaengig = "5 Jahre Erwerbstätigkeit."; }
+        else if (vorausb && arbeit >= 3) { istUnabhaengig = true; grundUnabhaengig = "Ausbildung + 3 Jahre Arbeit."; }
+        else if (typ === "kolleg" || typ === "abendgymnasium") { istUnabhaengig = true; grundUnabhaengig = "Kolleg / Abendgymnasium."; }
 
-        const maxSatz = grundbedarf + wohnpauschale + kv_zuschlag;
-
-        // --- LOGIK 1: ANSPRUCH & BÜRGERGELD ---
-        if (mode === "anspruch") {
-            const eltern = document.getElementById("bf_eltern_einkommen").value;
-            let wahrscheinlichkeit = "Hoch";
-            let farbe = "green";
-            let bg = "#e8f5e9";
-            
-            if (eltern === "hoch") { wahrscheinlichkeit = "Gering (wegen Elterneinkommen)"; farbe = "red"; bg = "#f8d7da"; }
-            if (eltern === "mittel") { wahrscheinlichkeit = "Grenzwertig / Teil-BAföG"; farbe = "orange"; bg = "#fff3cd"; }
-            if (alter > 45) { wahrscheinlichkeit = "Eher nicht (Altersgrenze 45 J.)"; farbe = "red"; bg = "#f8d7da"; }
-
-            // Bürgergeld Check
-            let bgInfo = "";
-            if (typ === "studium" && wohnen === "allein") {
-                bgInfo = "⚠️ <strong>Bürgergeld-Ausschluss:</strong> Als Student in eigener Wohnung hast du i.d.R. <strong>keinen</strong> Anspruch auf Bürgergeld, auch wenn das BAföG nicht reicht.";
-            } else if (typ === "schule" && wohnen === "eltern") {
-                bgInfo = "ℹ️ <strong>Bürgergeld-Kombi:</strong> Hier ist oft Bürgergeld vorrangig oder ergänzend möglich, da Schüler-BAföG oft nicht den vollen Bedarf deckt.";
+        // --- 2. PRÜFUNG: SCHÜLER-HÜRDE ---
+        let berechtigt = true;
+        let ablehnungsgrund = "";
+        if (typ === "schule_allg" || typ === "schule_beruf") {
+            if (wohnen === "eltern") {
+                berechtigt = false;
+                ablehnungsgrund = "Schüler bei den Eltern erhalten i.d.R. kein BAföG.";
+            } else if (!fern && !vorausb && alter < 30) {
+                berechtigt = false;
+                ablehnungsgrund = "Eigene Wohnung nur bei weitem Schulweg oder Vor-Ausbildung förderfähig.";
             }
-
-            out.innerHTML = `
-                <div class="pflegegrad-result-card" style="background:${bg}; border:1px solid ${farbe};">
-                    <h3 style="color:${farbe};">Ergebnis: ${wahrscheinlichkeit}</h3>
-                    <p>Typ: <strong>${typ === 'studium' ? 'Studenten-BAföG' : 'Schüler-BAföG'}</strong></p>
-                    <p>${bgInfo}</p>
-                    <p style="font-size:0.9em; margin-top:10px;"><strong>Nächster Schritt:</strong> Antrag beim zuständigen Studierendenwerk (Studium) oder Amt für Ausbildungsförderung (Schule) stellen.</p>
-                </div>
-            `;
         }
 
-        // --- LOGIK 2: HÖHEN-SCHÄTZER ---
-        else {
-            const job = parseFloat(document.getElementById("bf_job").value || 0);
-            let abzugJob = Math.max(0, job - 556); // Freibetrag Minijob ca. 556€
-            
-            const geschaetzterSatz = Math.max(0, maxSatz - abzugJob);
+        // --- 3. BEDARFSBERECHNUNG ---
+        let grundbedarf = (typ === "schule_allg") ? 262 : 475;
+        if (typ === "schule_beruf" && wohnen === "eltern") grundbedarf = 262;
+        let wohnkosten = (wohnen === "allein") ? 380 : 59;
+        let kvZuschlag = hatKV ? 122 : 0;
+        const gesamtbedarf = grundbedarf + wohnkosten + kvZuschlag;
 
-            out.innerHTML = `
-                <div class="pflegegrad-result-card">
-                    <h3>Geschätzter BAföG-Betrag</h3>
-                    <div style="font-size:2.5rem; font-weight:bold; color:#2980b9; margin:15px 0;">
-                        ca. ${geschaetzterSatz.toFixed(0)} € <span style="font-size:1rem; color:#666;">/ Monat</span>
-                    </div>
-                    <ul style="list-style:none; padding:0;">
-                        <li>📍 Grundbedarf: ${grundbedarf} €</li>
-                        <li>📍 Wohnpauschale: ${wohnpauschale} €</li>
-                        ${kv_zuschlag > 0 ? `<li>📍 KV/PV-Zuschlag: ${kv_zuschlag} €</li>` : ''}
-                        ${abzugJob > 0 ? `<li style="color:red;">📍 Abzug Einkommen: -${abzugJob.toFixed(0)} €</li>` : ''}
-                    </ul>
-                    <div class="highlight-box" style="margin-top:20px;">
-                        <strong>Finanzierungs-Info:</strong><br>
-                        ${typ === 'studium' 
-                            ? "Das Studium-BAföG besteht zur <strong>Hälfte aus einem Zuschuss</strong> (Geschenk) und zur <strong>Hälfte aus einem zinslosen Darlehen</strong> (Rückzahlung max. 10.010 €)." 
-                            : "Schüler-BAföG wird in der Regel als <strong>Vollzuschuss</strong> gewährt (du musst nichts zurückzahlen)."}
-                    </div>
-                </div>
-            `;
+        // --- 4. ANRECHNUNG ELTERN ---
+        let anrechnungEltern = 0;
+        if (!istUnabhaengig) {
+            const freibetrag = 2415;
+            anrechnungEltern = Math.max(0, (elternNetto - freibetrag) * 0.5);
         }
-        out.scrollIntoView({ behavior: "smooth" });
+
+        // --- 5. ANRECHNUNG VERMÖGEN (§ 11 Abs. 2) ---
+        let anrechnungVermoegen = 0;
+        const vermoegensFreibetrag = (alter >= 30) ? 45000 : 15000;
+        if (vermoegen > vermoegensFreibetrag) {
+            // Der übersteigende Betrag wird durch die BWZ-Dauer (meist 12 Monate) geteilt
+            anrechnungVermoegen = (vermoegen - vermoegensFreibetrag) / 12;
+        }
+
+        const voraussichtlichesBafoeg = Math.max(0, gesamtbedarf - anrechnungEltern - anrechnungVermoegen);
+
+        // --- OUTPUT ---
+        renderExpertResult(berechtigt, ablehnungsgrund, istUnabhaengig, grundUnabhaengig, voraussichtlichesBafoeg, gesamtbedarf, anrechnungEltern, anrechnungVermoegen, vermoegensFreibetrag, typ);
     });
+
+    function renderExpertResult(ok, grund, indep, indepReason, final, max, minusEltern, minusVermoegen, fVermoegen, typ) {
+        if (!ok) {
+            out.innerHTML = `<div class="pflegegrad-result-card" style="border-left:5px solid #c0392b;"><h3>Kein Anspruch</h3><p>${grund}</p></div>`;
+            return;
+        }
+
+        out.innerHTML = `
+            <div class="pflegegrad-result-card">
+                <h3>Voraussichtliches BAföG</h3>
+                <div style="font-size:2.5rem; font-weight:bold; color:#27ae60; margin:10px 0;">ca. ${final.toFixed(0)} €</div>
+                
+                <p>Status: <strong>${indep ? 'Elternunabhängig' : 'Elternabhängig'}</strong></p>
+                <ul style="list-style:none; padding:0; font-size:0.95rem; line-height:1.6;">
+                    <li><strong>Bedarf:</strong> ${max.toFixed(0)} €</li>
+                    ${minusEltern > 0 ? `<li style="color:#e67e22;">- Anrechnung Eltern: ${minusEltern.toFixed(0)} €</li>` : ''}
+                    ${minusVermoegen > 0 ? `<li style="color:#e67e22;">- Anrechnung Vermögen: ${minusVermoegen.toFixed(0)} € (Freibetrag ${fVermoegen.toLocaleString()}€ überschritten)</li>` : '<li>✓ Vermögen innerhalb des Freibetrags</li>'}
+                </ul>
+
+                <div class="highlight-box" style="margin-top:20px;">
+                    <strong>Förderungsart:</strong> ${(typ === 'uni' || typ === 'fachschule') ? '50% Zuschuss / 50% Darlehen' : '100% Zuschuss'}
+                </div>
+            </div>`;
+        out.scrollIntoView({ behavior: "smooth" });
+    }
 });

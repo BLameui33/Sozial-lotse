@@ -46,81 +46,73 @@
       Fachlich geprüft und zuletzt aktualisiert am <strong>20.12.2025</strong>. Berücksichtigt aktuelle BAföG-Sätze und Freibeträge.
     </p>
 
-    <form id="bafoeg-form" class="pflegegrad-form" onsubmit="return false;">
+    <form id="be-form" class="pflegegrad-form" onsubmit="return false;">
       
-      <div class="tabs-container">
-          <label class="tab-label">
-              <input type="radio" name="bafoeg_modus" value="anspruch" checked>
-              <span class="tab-button">🔍 Anspruchs-Check</span>
-          </label>
-          <label class="tab-label">
-              <input type="radio" name="bafoeg_modus" value="hoehe">
-              <span class="tab-button">💶 Höhen-Schätzer</span>
-          </label>
-      </div>
-
       <fieldset class="pflegegrad-fieldset active-step">
-        <legend id="bafoeg_legend">Deine Situation</legend>
+        <legend>1) Ausbildung & Status</legend>
+        <label class="pflegegrad-label">Was besuchst du?</label>
+        <select id="be_typ" class="pflegegrad-select">
+          <option value="uni">Hochschule / Uni / Akademie</option>
+          <option value="kolleg">Kolleg / Abendgymnasium / Berufsaufbauschule</option>
+          <option value="fachschule">Höhere Fachschule / Fachschule</option>
+          <option value="schule_beruf">Berufsfachschule (mit Berufsabschluss-Ziel)</option>
+          <option value="schule_allg">Allgemeinbildende Schule (ab Kl. 10)</option>
+        </select>
 
-        <label class="pflegegrad-label">
-          Was ist dein Ziel?
-          <select id="bf_typ">
-            <option value="studium">Studium (Uni / FH)</option>
-            <option value="berufsschule">Berufsfachschule / Kolleg</option>
-            <option value="abendgymnasium">Abendgymnasium / Fachoberschule</option>
-            <option value="schule">Allgemeinbildende Schule (ab Klasse 10)</option>
-          </select>
-        </label>
+        <label class="pflegegrad-label">Hast du bereits eine abgeschlossene Berufsausbildung?</label>
+        <select id="be_vorausbildung" class="pflegegrad-select">
+          <option value="nein">Nein</option>
+          <option value="ja">Ja, bereits abgeschlossen</option>
+        </select>
 
-        <label class="pflegegrad-label">
-          Wie alt bist du?
-          <input type="number" id="bf_alter" min="14" max="60" value="20" />
-        </label>
+        <label class="pflegegrad-label">Wie alt bist du?</label>
+        <input type="number" id="be_alter" value="20" min="14" max="65" />
+      </fieldset>
 
-        <label class="pflegegrad-label">
-          Wohnsituation
-          <select id="bf_wohnen">
-            <option value="eltern">Bei den Eltern</option>
-            <option value="allein" selected>Eigene Wohnung / WG</option>
-          </select>
-        </label>
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Erwerbsbiografie</legend>
+        <p class="hinweis">Wichtig für elternunabhängiges BAföG:</p>
+        <label class="pflegegrad-label">Wie viele Jahre warst du nach deinem 18. Lebensjahr erwerbstätig?</label>
+        <input type="number" id="be_arbeit" value="0" min="0" max="40" />
+        <p class="hinweis" style="margin-top:-5px;">(Regel: 5 Jahre Erwerbstätigkeit ODER Ausbildung + 3 Jahre Arbeit)</p>
+      </fieldset>
 
-        <div id="div_anspruch_extra">
-            <label class="pflegegrad-label">
-              Einkommen der Eltern (Netto-Summe beider Eltern / Monat)
-              <select id="bf_eltern_einkommen">
-                <option value="niedrig">Gering (bis ca. 2.500 €)</option>
-                <option value="mittel" selected>Mittel (bis ca. 4.500 €)</option>
-                <option value="hoch">Hoch (über 4.500 €)</option>
-              </select>
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3) Wohnen & Finanzen</legend>
+        <label class="pflegegrad-label">Wohnsituation</label>
+        <select id="be_wohnen" class="pflegegrad-select">
+          <option value="eltern">Bei den Eltern (oder Eigentum der Eltern)</option>
+          <option value="allein" selected>Eigene Wohnung / WG / Untermiete</option>
+
+          <label class="pflegegrad-label">Dein eigenes Vermögen (Ersparnisse, Auto, Krypto, etc.)</label>
+<input type="number" id="be_vermoegen" value="0" step="500" />
+<p class="hinweis" style="margin-top:-5px;">Freibetrag: 15.000 € (unter 30 J.) / 45.000 € (ab 30 J.).</p>
+        </select>
+
+        <div id="box_schulweg" style="display:none; background:#f0f7ff; padding:10px; border-radius:5px; margin-bottom:15px;">
+            <label style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="be_fern"> Schule zu weit weg von Eltern (> 2h Pendelzeit tgl.)?
             </label>
         </div>
 
-        <div id="div_hoehe_extra" style="display:none;">
-            <label class="pflegegrad-label">
-              Bist du selbst krankenversichert? (Nicht familienversichert)
-              <select id="bf_kv">
-                <option value="nein" selected>Nein (Familienversichert / Kostenlos)</option>
-                <option value="ja">Ja (Eigene Beiträge ca. 120€+)</option>
-              </select>
-            </label>
+        <label class="pflegegrad-label">Bist du selbst krankenversichert (nicht familienversichert)?</label>
+        <select id="be_kv">
+            <option value="nein" selected>Nein (Familienversichert)</option>
+            <option value="ja">Ja (Eigene Beiträge)</option>
+        </select>
 
-            <label class="pflegegrad-label">
-              Eigener Nebenjob (Netto-Verdienst im Monat)
-              <input type="number" id="bf_job" value="0" step="50" />
-            </label>
-            <p class="hinweis" style="margin-top:-10px;">Freibetrag: ca. 556 € im Monat (Minijob-Grenze).</p>
-        </div>
-
+        <label class="pflegegrad-label">Netto-Einkommen der Eltern (monatlich kombiniert)</label>
+        <input type="number" id="be_eltern_netto" value="3000" step="100" />
+        <p class="hinweis" style="margin-top:-5px;">Freibetrag für Eltern ca. 2.415 € + Geschwisterabzüge.</p>
       </fieldset>
 
       <div class="button-container">
-        <button type="button" id="bf_berechnen" class="button">Analyse starten</button>
-        <button type="reset" id="bf_reset" class="button button-secondary">Zurücksetzen</button>
+        <button type="button" id="be_calc" class="button">Ergebnis zeigen</button>
       </div>
     </form>
 
-    <section id="bf_ergebnis"></section>
+    <div id="be_ergebnis"></div>
+  </div>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
 
