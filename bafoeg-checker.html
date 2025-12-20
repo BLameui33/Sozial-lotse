@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>BAföG & Bürgergeld Navigator | Sozial-Lotse</title>
+  <meta name="description" content="Prüfe sofort deinen Anspruch auf BAföG für Studium & Ausbildung, schätze die Höhe der Förderung und kläre, ob dir vorrangig BAföG oder Bürgergeld zusteht.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online-Rechner von Sozial-Lotse",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+   <div class="page-container">
+    <h1>BAföG & Bürgergeld Navigator 2026: Anspruch für Studium & Ausbildung prüfen</h1>
+
+    <div class="highlight-box">
+      <p>
+        Studium, schulische Ausbildung oder Auszug geplant? Prüfe mit unserem Navigator, ob dir vorrangig <strong>BAföG</strong>, <strong>Berufsausbildungsbeihilfe (BAB)</strong> oder aufstockendes <strong>Bürgergeld</strong> zusteht.
+        Ermittle deinen voraussichtlichen <strong>Förderungshöchstsatz</strong>, prüfe Freibeträge der Eltern und erfahre, wann das Jobcenter für dich zuständig bleibt.
+      </p>
+    </div>
+    
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+      <strong>Rechtlicher Hinweis:</strong> Diese Berechnung dient der allgemeinen Orientierung und ersetzt keine verbindliche Auskunft. Die BAföG-Berechnung ist komplex; verbindliche Bescheide erhalten Sie nur beim zuständigen <strong>Amt für Ausbildungsförderung</strong> oder (für Bürgergeld) beim Jobcenter.
+    </p>
+    
+    <p class="hinweis">
+      Fachlich geprüft und zuletzt aktualisiert am <strong>20.12.2025</strong>. Berücksichtigt aktuelle BAföG-Sätze und Freibeträge.
+    </p>
+
+    <form id="bafoeg-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <div class="tabs-container">
+          <label class="tab-label">
+              <input type="radio" name="bafoeg_modus" value="anspruch" checked>
+              <span class="tab-button">🔍 Anspruchs-Check</span>
+          </label>
+          <label class="tab-label">
+              <input type="radio" name="bafoeg_modus" value="hoehe">
+              <span class="tab-button">💶 Höhen-Schätzer</span>
+          </label>
+      </div>
+
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend id="bafoeg_legend">Deine Situation</legend>
+
+        <label class="pflegegrad-label">
+          Was ist dein Ziel?
+          <select id="bf_typ">
+            <option value="studium">Studium (Uni / FH)</option>
+            <option value="berufsschule">Berufsfachschule / Kolleg</option>
+            <option value="abendgymnasium">Abendgymnasium / Fachoberschule</option>
+            <option value="schule">Allgemeinbildende Schule (ab Klasse 10)</option>
+          </select>
+        </label>
+
+        <label class="pflegegrad-label">
+          Wie alt bist du?
+          <input type="number" id="bf_alter" min="14" max="60" value="20" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Wohnsituation
+          <select id="bf_wohnen">
+            <option value="eltern">Bei den Eltern</option>
+            <option value="allein" selected>Eigene Wohnung / WG</option>
+          </select>
+        </label>
+
+        <div id="div_anspruch_extra">
+            <label class="pflegegrad-label">
+              Einkommen der Eltern (Netto-Summe beider Eltern / Monat)
+              <select id="bf_eltern_einkommen">
+                <option value="niedrig">Gering (bis ca. 2.500 €)</option>
+                <option value="mittel" selected>Mittel (bis ca. 4.500 €)</option>
+                <option value="hoch">Hoch (über 4.500 €)</option>
+              </select>
+            </label>
+        </div>
+
+        <div id="div_hoehe_extra" style="display:none;">
+            <label class="pflegegrad-label">
+              Bist du selbst krankenversichert? (Nicht familienversichert)
+              <select id="bf_kv">
+                <option value="nein" selected>Nein (Familienversichert / Kostenlos)</option>
+                <option value="ja">Ja (Eigene Beiträge ca. 120€+)</option>
+              </select>
+            </label>
+
+            <label class="pflegegrad-label">
+              Eigener Nebenjob (Netto-Verdienst im Monat)
+              <input type="number" id="bf_job" value="0" step="50" />
+            </label>
+            <p class="hinweis" style="margin-top:-10px;">Freibetrag: ca. 556 € im Monat (Minijob-Grenze).</p>
+        </div>
+
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="bf_berechnen" class="button">Analyse starten</button>
+        <button type="reset" id="bf_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="bf_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+    <h2>Häufig gestellte Fragen (FAQ)</h2>
+<div class="faq-section">
+  <h3>Wer kann BAföG beantragen und welche Faktoren beeinflussen die Höhe?</h3>
+  <p>Grundsätzlich können deutsche und unter bestimmten Bedingungen auch internationale Studierende und Schüler BAföG erhalten. Die Höhe der Förderung ist individuell und hängt von Ihrem eigenen Einkommen und Vermögen, dem Einkommen Ihrer Eltern sowie dem Einkommen Ihres Ehe- oder Lebenspartners ab. Auch Ihre Wohnsituation und die Anzahl von Geschwistern in Ausbildung spielen eine Rolle.</p>
+
+  <h3>Was muss ich tun, um meinen BAföG-Antrag zu optimieren?</h3>
+  <p>Stellen Sie den Antrag so früh wie möglich, da BAföG nicht rückwirkend gezahlt wird. Nutzen Sie das offizielle Online-Portal **„BAföG Digital“** und achten Sie darauf, alle erforderlichen Unterlagen vollständig und korrekt einzureichen, um Verzögerungen zu vermeiden. Machen Sie immer Kopien aller Dokumente für Ihre eigenen Unterlagen.</p>
+  
+  <h3>Wie lange ist die Frist für einen Widerspruch gegen den BAföG-Bescheid?</h3>
+  <p>Die Widerspruchsfrist beträgt **einen Monat** nach der Zustellung des Bescheides. Diese Frist ist sehr wichtig, da der Bescheid nach ihrem Ablauf rechtskräftig wird und ein Widerspruch in der Regel nicht mehr möglich ist. Sie finden die Frist in der Rechtsbehelfsbelehrung am Ende des Bescheides.</p>
+  
+  <h3>Wann ist ein Widerspruch gegen den BAföG-Bescheid sinnvoll?</h3>
+  <p>Ein Widerspruch ist sinnvoll, wenn Sie nach der Prüfung Ihres Bescheides Fehler feststellen. Häufige Gründe sind eine **falsche Anrechnung des Einkommens** der Eltern, des eigenen Einkommens oder von Vermögen, fehlende Freibeträge (z.B. für Geschwister) oder eine fehlerhafte Wohnpauschale.</p>
+  
+  <h3>Wie baue ich einen formal korrekten Widerspruch auf?</h3>
+  <p>Ein Widerspruch sollte Ihre persönlichen Daten, die genaue Adresse des Amtes, einen klaren Betreff mit dem Wort **„Widerspruch“** und dem Aktenzeichen des Bescheides enthalten. Fügen Sie eine sachliche Begründung für den Widerspruch sowie einen klaren Antrag (z.B. Neuberechnung) bei und vergessen Sie nicht, das Schreiben handschriftlich zu unterschreiben.</p>
+
+  <h3>Was passiert nach dem Einreichen des Widerspruchs?</h3>
+  <p>Das Amt überprüft seine ursprüngliche Entscheidung komplett neu. Es gibt drei mögliche Ausgänge: Das Amt stimmt Ihnen voll zu und korrigiert den Bescheid (**Abhilfebescheid**), es korrigiert ihn nur teilweise (**Teil-Abhilfebescheid**) oder es weist den Widerspruch zurück (**Widerspruchsbescheid**). Gegen letzteren können Sie Klage beim Verwaltungsgericht einreichen.</p>
+</div>
+
+<aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Arbeitsrecht:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-widerspruch-bafog.html" class="button button-secondary" title="Zur Info Bafög">Zur Info-Seite: Bafög (Details & Checkliste)</a>
+        <a href="generator-widerspruch-bafog.html" class="button button-secondary" title="Zum Generator Bafög Widerspruch">Zum Generator Bafög Widerspruch</a>
+      </p>
+    </aside>
+ 
+<h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://www.bafög.de" target="_blank" rel="noopener">Offizielle Seite des BMBF – Alle Infos und BAföG Digital</a></li>
+    <li><a href="https://www.bafoeg-rechner.de" target="_blank" rel="noopener">BAföG-Rechner – Wie viel steht mir zu? (Inoffiziell aber genau)</a></li>
+    <li><a href="https://www.studierendenwerke.de" target="_blank" rel="noopener">Deutsches Studentenwerk – Beratung vor Ort finden</a></li>
+    <li><a href="https://www.finanztip.de/bafoeg/" target="_blank" rel="noopener">Finanztip – BAföG-Ratgeber für Eltern und Studierende</a></li>
+    <li><a href="https://www.mystipendium.de/bafoeg/bafoeg-widerspruch" target="_blank" rel="noopener">MyStipendium – Muster für den Widerspruch</a></li>
+  </ul>
+</div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+
+  <script src="bafoeg-checker.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>BuT-Komplett-Checker | Sozial-Lotse</title>
+  <meta name="description" content="Prüfe deinen Anspruch auf Leistungen aus dem Bildungs- und Teilhabepaket (BuT). Unterstützung für Klassenfahrten, Nachhilfe und Schulbedarf.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online-Rechner von Sozial-Lotse",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+  <h1>BuT-Anspruchs-Finder 2026: Leistungen für Bildung und Teilhabe prüfen</h1>
+
+  <div class="highlight-box">
+    <p>
+      Das <strong>Bildungs- und Teilhabepaket (BuT)</strong> fördert Kinder mit Zuschüssen für <strong>Mittagessen, Schulbedarf, Ausflüge, Sportvereine</strong> oder <strong>Lernförderung (Nachhilfe)</strong>.
+      Prüfe hier sofort deinen Anspruch: Wenn deine Familie <strong>Bürgergeld, Kinderzuschlag (KiZ), Wohngeld</strong>, Sozialhilfe oder Asylbewerberleistungen bezieht, steht euch diese Unterstützung gesetzlich zu.
+    </p>
+  </div>
+
+  <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+    <strong>Hinweis:</strong> Diese Informationen ersetzen keine Rechtsberatung. Wenden Sie sich bei Unsicherheiten an eine Verbraucherzentrale oder einen Fachanwalt.
+  </p>
+      <p class="hinweis">
+  Stand der Informationen: 20.12.2025. Änderungen der Gesetzeslage werden laufend berücksichtigt.
+</p>
+
+
+
+    <form id="but-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Werden Sozialleistungen bezogen?</legend>
+        <label class="pflegegrad-label">
+          Aktueller Leistungsbezug:
+          <select id="but_bezug">
+            <option value="keiner">Kein Bezug / Nur Gehalt</option>
+            <option value="kiz" selected>Kinderzuschlag (KiZ)</option>
+            <option value="wohngeld">Wohngeld</option>
+            <option value="buergergeld">Bürgergeld</option>
+            <option value="asyl">Asylbewerber-Leistungen</option>
+            <option value="sozialhilfe">Sozialhilfe / Grundsicherung</option>
+          </select>
+        </label>
+        <p class="hinweis" id="but_bezug_hinweis">Info: Bei Bezug von Wohngeld oder KiZ hast du vollen BuT-Anspruch!</p>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Infos zum Kind</legend>
+        <label class="pflegegrad-label">
+          Alter des Kindes (in Jahren)
+          <input type="number" id="but_alter" min="0" max="25" value="10" />
+        </label>
+
+        <label class="pflegegrad-label">
+          Besucht das Kind eine Bildungseinrichtung?
+          <select id="but_schule">
+            <option value="kita">Kita / Kindergarten</option>
+            <option value="schule" selected>Allgemeinbildende Schule (bis 25 J.)</option>
+            <option value="ausbildung">Berufsschule (ohne Ausbildungsvergütung)</option>
+            <option value="keine">Keine / Studium</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3) Spezielle Kosten-Checks (Optional)</legend>
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                <input type="checkbox" id="check_fahrt" style="width:20px; height:20px;">
+                <strong>Klassenfahrt / Ausflug geplant?</strong>
+            </label>
+            <div id="box_fahrt" style="display:none; margin-top:10px; padding-left:30px;">
+                <label class="pflegegrad-label">Gesamtkosten (€): <input type="number" id="but_fahrt_kosten" placeholder="z.B. 350"></label>
+            </div>
+        </div>
+
+        <div>
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                <input type="checkbox" id="check_nachhilfe" style="width:20px; height:20px;">
+                <strong>Lernförderung (Nachhilfe) nötig?</strong>
+            </label>
+            <div id="box_nachhilfe" style="display:none; margin-top:10px; padding-left:30px;">
+                <label style="display:block; margin-bottom:10px;">
+                    <input type="checkbox" id="but_probleme"> Schulprobleme vorhanden (Versetzungsgefahr / Lernziele gefährdet)
+                </label>
+            </div>
+        </div>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="but_berechnen" class="button">Anspruch prüfen</button>
+        <button type="reset" id="but_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="but_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+    <h2>Häufig gestellte Fragen (FAQ)</h2>
+<div class="faq-section">
+  <h3>Was sind die Leistungen für Bildung und Teilhabe (BuT)?</h3>
+  <p>Die Leistungen für <strong>Bildung und Teilhabe (BuT)</strong>, auch bekannt als "Bildungspaket", sind finanzielle Hilfen und Zuschüsse für Kinder, Jugendliche und junge Erwachsene aus Familien mit geringem Einkommen. Sie sollen sicherstellen, dass diese Kinder bei schulischen und sozialen Aktivitäten nicht benachteiligt werden.</p>
+
+  <h3>Wer hat Anspruch auf BuT-Leistungen?</h3>
+  <p>Anspruchsberechtigt sind Kinder, Jugendliche und junge Erwachsene bis zum Alter von 25 Jahren, deren Familien eine der folgenden Leistungen beziehen: <strong>Bürgergeld</strong>, <strong>Sozialhilfe</strong>, <strong>Kinderzuschlag</strong>, <strong>Wohngeld</strong> oder Leistungen nach dem Asylbewerberleistungsgesetz.</p>
+
+  <h3>Welche Kosten werden vom Bildungspaket übernommen?</h3>
+  <p>Die Leistungen umfassen unter anderem Kosten für eintägige Ausflüge und mehrtägige Klassenfahrten, eine Pauschale für den persönlichen <strong>Schulbedarf</strong> (zweimal pro Jahr), Kosten für <strong>Lernförderung</strong> (Nachhilfe), das gemeinschaftliche Mittagessen in der Schule oder Kita und ein monatliches Budget für die Teilhabe am sozialen und kulturellen Leben (z.B. für Mitgliedschaften in Sportvereinen).</p>
+  
+  <h3>Wo und wie beantrage ich Bildung und Teilhabe?</h3>
+  <p>Der Antrag muss bei der für Sie zuständigen Stelle eingereicht werden. Beziehen Sie <strong>Bürgergeld</strong>, ist Ihr <strong>Jobcenter</strong> der richtige Ansprechpartner. Bei Bezug von <strong>Sozialhilfe, Wohngeld oder Kinderzuschlag</strong> ist die zuständige **Kommunalverwaltung** (z.B. das Sozialamt) zuständig. Für die meisten Leistungen benötigen Sie Nachweise von der Schule oder dem Verein.</p>
+</div>
+
+<aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unseren Info-Seiten findest du alles rund um das Bildung-und-Teilhabe:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="generator-antrag-but.html" class="button button-secondary" title="Zum Generator Antrag BuT-Leistungen">Zum Generator Antrag BuT-Leistungen</a>
+        <a href="info-but.html" class="button button-secondary" title="Zur Info BuT-Leistungen">Zur Info BuT-Leistungen</a>
+        <a href="generator-widerspruch-but.html" class="button button-secondary" title="Zum Generator Widerspruch BuT-Leistungen">Zum Generator Widerspruch BuT-Leistungen</a>
+      </p>
+    </aside>
+
+<h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://familienportal.de/familienportal/familienleistungen/bildung-und-teilhabe" target="_blank" rel="noopener">Familienportal des Bundes – Übersicht aller BuT-Leistungen</a></li>
+    <li><a href="https://www.arbeitsagentur.de/familie-und-kinder/informationen-zum-bildungspaket" target="_blank" rel="noopener">Bundesagentur für Arbeit – Infos zum Bildungspaket</a></li>
+    <li><a href="https://www.buerger-geld.org/news/familie/bildungs-und-teilhabepaket-2025-bis-zu-200-euro-monatlich-fuer-familien/" target="_blank" rel="noopener">Bürgergeld.org – Aktuelle Sätze 2025 (Schulbedarf etc.)</a></li>
+    <li><a href="https://www.betanet.de/teilhabe-und-bildungspaket.html" target="_blank" rel="noopener">Betanet – Detaillierte Infos zu Anspruchsvoraussetzungen</a></li>
+    <li><a href="https://www.familienratgeber.de/rechte-leistungen/geld/leistungen-fuer-bildung-und-teilhabe" target="_blank" rel="noopener">Familienratgeber – Praktische Tipps zur Antragstellung</a></li>
+  </ul>
+</div>
+<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">20.12.2025</span></p>
+</div>
+  </div>
+
+ <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="but-checker.js"></script>
+</body>
+</html>
