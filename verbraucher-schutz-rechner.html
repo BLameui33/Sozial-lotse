@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verbraucher-Check: Widerruf, Abo-Kündigung & Ratenkauf prüfen | Sozial-Lotse</title>
+  <meta name="description" content="Prüfe sofort deine Rechte: Kannst du den Vertrag widerrufen? Ist die Abo-Verlängerung zulässig? Berechne die echte Belastung bei Ratenkäufen. Kostenlos & aktuell 2025.">
+
+<!-- Open Graph Tags (für Social Media / WhatsApp Vorschauen) -->
+<meta property="og:title" content="Verbraucher-Rechte prüfen: Widerruf & Abo-Fallen Check">
+<meta property="og:description" content="Vertrag widerrufen oder Abo kündigen? Prüfe mit dem kostenlosen Sozial-Lotse Rechner sofort deine Fristen und Ansprüche nach aktuellem Recht.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sozialrecht-lotse.de/verbraucher-check.html"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online-Rechner von Sozial-Lotse",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Wann beginnt die 14-tägige Widerrufsfrist genau?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Die Frist beginnt grundsätzlich erst, wenn du die Ware erhalten hast UND ordnungsgemäß über dein Widerrufsrecht belehrt wurdest. Fehlt die Belehrung, verlängert sich das Widerrufsrecht auf bis zu 1 Jahr und 14 Tage."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Gilt das Gesetz für faire Verbraucherverträge auch für alte Verträge?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Die monatliche Kündbarkeit nach Ablauf der Mindestlaufzeit gilt für Verträge ab dem 01.03.2022. Für Altverträge (davor geschlossen) können noch automatische Verlängerungen um bis zu ein Jahr gelten."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Kann ich jeden Online-Kauf widerrufen?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nein. Ausnahmen sind z.B. entsiegelte Hygieneartikel, verderbliche Waren oder termingebundene Tickets. Bei digitalen Inhalten erlischt das Recht oft bei Beginn des Downloads."
+    }
+  }]
+}
+</script>
+
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Verbraucher-Check: Widerruf, Abo-Kündigung & Ratenkauf prüfen</h1>
+
+    <div class="highlight-box">
+  <p>
+    Prüfe mit unserem <strong>Verbraucher-Schutz-Check</strong> sofort deine Rechte bei Verträgen und Schulden.
+    Ermittle, ob du einen Vertrag noch <strong>widerrufen</strong> kannst (z.B. Online-Kauf oder Haustürgeschäft), ob dein <strong>Abo rechtmäßig gekündigt</strong> werden kann (nach dem Gesetz für faire Verbraucherverträge) und wie hoch die effektive <strong>Belastung durch Ratenkäufe</strong> wirklich ist.
+  </p>
+</div>
+
+<p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+  <strong>Rechtlicher Hinweis:</strong> Dieser Rechner bietet eine erste Einschätzung auf Basis aktueller Gesetze (BGB, Stand 2025). Er ersetzt keine anwaltliche Beratung. Bei strittigen Fällen (z.B. abgelehntem Widerruf) wenden Sie sich bitte an die <strong>Verbraucherzentrale oder Fachanwalt</strong>.
+</p>
+<p class="hinweis">
+  Stand der Informationen: 20.12.2025. Änderungen der Gesetzeslage werden laufend berücksichtigt.
+</p>
+
+    <div class="tabs-container">
+        <label class="tab-label">
+            <input type="radio" name="vs_modus" value="widerruf" checked>
+            <span class="tab-button">↩️ Widerruf</span>
+        </label>
+        <label class="tab-label">
+            <input type="radio" name="vs_modus" value="abo">
+            <span class="tab-button">📅 Abo-Kündigung</span>
+        </label>
+        <label class="tab-label">
+            <input type="radio" name="vs_modus" value="raten">
+            <span class="tab-button">💳 Ratenkauf</span>
+        </label>
+    </div>
+
+    <form id="vs-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset id="fs_widerruf" class="pflegegrad-fieldset">
+        <legend>Widerrufs-Fristen-Check</legend>
+        <label class="pflegegrad-label">Wo wurde der Vertrag geschlossen?</label>
+        <select id="wd_art" class="pflegegrad-select">
+          <option value="online">Online / Telefon (Fernabsatz)</option>
+          <option value="haustuer">Haustür / Arbeit / Straße</option>
+          <option value="laden">Im Ladengeschäft</option>
+        </select>
+
+        <label class="pflegegrad-label">Datum des Vertragsschlusses (oder Erhalt der Ware)</label>
+        <input type="date" id="wd_datum" />
+        <p class="hinweis">Die 14-tägige Frist beginnt meist mit Erhalt der Ware oder Belehrung.</p>
+      </fieldset>
+
+      <fieldset id="fs_abo" class="pflegegrad-fieldset" style="display:none;">
+        <legend>Abo-Kündigungs-Check</legend>
+        <label class="pflegegrad-label">Vertragsbeginn</label>
+        <input type="date" id="abo_start" />
+
+        <label class="pflegegrad-label">Mindestlaufzeit (in Monaten)</label>
+        <input type="number" id="abo_laufzeit" value="12" min="1" />
+
+        <label class="pflegegrad-label">Kündigungsfrist (nach der Laufzeit)</label>
+        <select id="abo_art" class="pflegegrad-select">
+          <option value="monatlich">Monatlich kündbar (Gesetz 2022)</option>
+          <option value="jaehrlich">Jährlich kündbar (Altvertrag vor 03/2022)</option>
+        </select>
+      </fieldset>
+
+      <fieldset id="fs_raten" class="pflegegrad-fieldset" style="display:none;">
+        <legend>Ratenkauf-Belastungs-Check</legend>
+        <label class="pflegegrad-label">Monatliche Rate (€)</label>
+        <input type="number" id="rk_rate" placeholder="z.B. 49.90" step="0.01" />
+
+        <label class="pflegegrad-label">Laufzeit (Monate)</label>
+        <input type="number" id="rk_monate" placeholder="z.B. 24" />
+
+        <label class="pflegegrad-label">Zinssatz (% p.a.) - falls bekannt</label>
+        <input type="number" id="rk_zins" value="0" step="0.1" />
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="vs_calc" class="button">Check starten</button>
+      </div>
+    </form>
+
+    <div id="vs_ergebnis"></div>
+  </div>
+
+
+  <div class="faq-section" style="margin-top: 2rem;">
+  <h2>Häufige Fragen zu Widerruf & Kündigung</h2>
+  
+  <details>
+    <summary><strong>Wann beginnt die 14-tägige Widerrufsfrist genau?</strong></summary>
+    <p>Die Frist beginnt grundsätzlich erst, wenn du die Ware erhalten hast <strong>UND</strong> ordnungsgemäß über dein Widerrufsrecht belehrt wurdest. Fehlt die Belehrung, verlängert sich das Widerrufsrecht auf bis zu 1 Jahr und 14 Tage.</p>
+  </details>
+
+  <details>
+    <summary><strong>Gilt das Gesetz für faire Verbraucherverträge auch für alte Verträge?</strong></summary>
+    <p>Teilweise. Die monatliche Kündbarkeit nach Ablauf der Mindestlaufzeit gilt für alle Verträge, die ab dem <strong>01.03.2022</strong> geschlossen wurden. Für ältere Verträge gelten oft noch automatische Verlängerungen um bis zu ein Jahr.</p>
+  </details>
+
+  <details>
+    <summary><strong>Kann ich jeden Online-Kauf widerrufen?</strong></summary>
+    <p>Nicht jeden. Ausnahmen sind z.B. entsiegelte Hygieneartikel, verderbliche Waren oder Tickets für termingebundene Veranstaltungen (Konzerte). Bei Downloads erlischt das Recht oft mit Beginn des Downloads, wenn du zugestimmt hast.</p>
+  </details>
+</div>
+
+ <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+<aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unserer Info-Seite findest du alles rund um das Thema Verbraucherrecht:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-reklamation.html" class="button button-secondary" title="Zur Info info-Reklamation">Zur Info-Seite: Reklamation (Details & Checkliste)</a>
+        <a href="info-widerruf.html" class="button button-secondary" title="Zur Info info-Widerruf">Zur Info-Seite: Widerruf (Details & Checkliste)</a>
+        <a href="info-kuendigung.html" class="button button-secondary" title="Zur Info Kündigung Verträge">Zur Info-Seite: Kündigung Verträge</a>
+        <a href="generator-widerruf.html" class="button button-secondary" title="Zum Generator Widerruf">Zum Generator: Widerruf</a>
+        <a href="generator-reklamation.html" class="button button-secondary" title="Zum Generator Reklamation">Zum Generator: Reklamation</a>
+        <a href="generator-kuendigung.html" class="button button-secondary" title="Zum Generator Kündigung">Zum Generator: Kündigung</a>
+      </p>
+    </aside>
+
+    <h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://www.verbraucherzentrale.de" target="_blank" rel="noopener">Verbraucherzentrale</a></li>
+    <li><a href="https://www.bmj.de" target="_blank" rel="noopener">BMJ – Gesetzliche Regelungen zum Widerrufsrecht (§ 355 BGB)</a></li>
+    <li><a href="https://www.evz.de" target="_blank" rel="noopener">Europäisches Verbraucherzentrum – Widerruf bei Auslandskäufen in der EU</a></li>
+    <li><a href="https://www.test.de" target="_blank" rel="noopener">Stiftung Warentest – Fallstricke bei der Rücksendung</a></li>
+  </ul>
+</div>
+
+  <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="verbraucher-schutz.js"></script>
+</body>
+</html>
