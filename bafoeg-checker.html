@@ -78,33 +78,34 @@
       </fieldset>
 
       <fieldset class="pflegegrad-fieldset">
-        <legend>3) Wohnen & Finanzen</legend>
-        <label class="pflegegrad-label">Wohnsituation</label>
-        <select id="be_wohnen" class="pflegegrad-select">
-          <option value="eltern">Bei den Eltern (oder Eigentum der Eltern)</option>
-          <option value="allein" selected>Eigene Wohnung / WG / Untermiete</option>
+  <legend>3) Wohnen & Finanzen</legend>
+  
+  <label class="pflegegrad-label" for="be_wohnen">Wohnsituation</label>
+  <select id="be_wohnen" class="pflegegrad-select">
+    <option value="eltern">Bei den Eltern (oder Eigentum der Eltern)</option>
+    <option value="allein" selected>Eigene Wohnung / WG / Untermiete</option>
+  </select>
 
-          <label class="pflegegrad-label">Dein eigenes Vermögen (Ersparnisse, Auto, Krypto, etc.)</label>
-<input type="number" id="be_vermoegen" value="0" step="500" />
-<p class="hinweis" style="margin-top:-5px;">Freibetrag: 15.000 € (unter 30 J.) / 45.000 € (ab 30 J.).</p>
-        </select>
+  <label class="pflegegrad-label" for="be_vermoegen">Dein eigenes Vermögen (Ersparnisse, Auto, Krypto, etc.)</label>
+  <input type="number" id="be_vermoegen" value="0" step="500" />
+  <p class="hinweis" style="margin-top:-5px;">Freibetrag: 15.000 € (unter 30 J.) / 45.000 € (ab 30 J.).</p>
 
-        <div id="box_schulweg" style="display:none; background:#f0f7ff; padding:10px; border-radius:5px; margin-bottom:15px;">
-            <label style="display:flex; align-items:center; gap:10px;">
-                <input type="checkbox" id="be_fern"> Schule zu weit weg von Eltern (> 2h Pendelzeit tgl.)?
-            </label>
-        </div>
+  <div id="box_schulweg" style="display:none; background:#f0f7ff; padding:10px; border-radius:5px; margin-bottom:15px;">
+      <label style="display:flex; align-items:center; gap:10px;">
+          <input type="checkbox" id="be_fern"> Schule zu weit weg von Eltern (> 2h Pendelzeit tgl.)?
+      </label>
+  </div>
 
-        <label class="pflegegrad-label">Bist du selbst krankenversichert (nicht familienversichert)?</label>
-        <select id="be_kv">
-            <option value="nein" selected>Nein (Familienversichert)</option>
-            <option value="ja">Ja (Eigene Beiträge)</option>
-        </select>
+  <label class="pflegegrad-label" for="be_kv">Bist du selbst krankenversichert (nicht familienversichert)?</label>
+  <select id="be_kv">
+      <option value="nein" selected>Nein (Familienversichert)</option>
+      <option value="ja">Ja (Eigene Beiträge)</option>
+  </select>
 
-        <label class="pflegegrad-label">Netto-Einkommen der Eltern (monatlich kombiniert)</label>
-        <input type="number" id="be_eltern_netto" value="3000" step="100" />
-        <p class="hinweis" style="margin-top:-5px;">Freibetrag für Eltern ca. 2.415 € + Geschwisterabzüge.</p>
-      </fieldset>
+  <label class="pflegegrad-label" for="be_eltern_netto">Netto-Einkommen der Eltern (monatlich kombiniert)</label>
+  <input type="number" id="be_eltern_netto" value="3000" step="100" />
+  <p class="hinweis" style="margin-top:-5px;">Freibetrag für Eltern ca. 2.415 € + Geschwisterabzüge.</p>
+</fieldset>
 
       <div class="button-container">
         <button type="button" id="be_calc" class="button">Ergebnis zeigen</button>
@@ -112,7 +113,7 @@
     </form>
 
     <div id="be_ergebnis"></div>
-  </div>
+  
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
 
