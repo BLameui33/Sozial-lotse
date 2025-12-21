@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aufenthalts-Check – Orientierungshilfe für Aufenthalt & Integration | Sozial-Lotse</title>
+  <meta name="description" content="Nutzen Sie unseren Orientierungs-Rechner für Aufenthaltstitel-Fristen, Fiktionsbescheinigungen und den Anspruch auf Integrationskurse.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <style>
+    /* Ergänzende Styles für die Ampel und Checklisten */
+    .result-card { padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #ccc; background: #f9f9f9; }
+    .status-green { border-left-color: #2ecc71; background: #eafaf1; }
+    .status-yellow { border-left-color: #f1c40f; background: #fef9e7; }
+    .status-red { border-left-color: #e74c3c; background: #fdedec; }
+    .checklist { margin: 10px 0; padding-left: 20px; }
+    .checklist li { margin-bottom: 5px; }
+  </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Online-Rechner von Sozial-Lotse",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Aufenthalts- & Integrations-Check</h1>
+
+    <div class="highlight-box">
+      <p>
+        Dieser Rechner hilft Ihnen, wichtige <strong>Fristen im Blick zu behalten</strong>, den Status einer <strong>Fiktionsbescheinigung</strong> besser zu verstehen und Ihren Anspruch auf einen <strong>Integrationskurs</strong> zu prüfen.
+      </p>
+    </div>
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+      <strong>Wichtiger Hinweis:</strong> Diese Tools dienen der allgemeinen Orientierung und stellen <strong>keine rechtliche Beratung</strong> dar. Die Ergebnisse sind unverbindlich. Bitte wenden Sie sich für verbindliche Informationen an eine Migrationsberatung oder einen Rechtsanwalt.
+    </p>
+    <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">21.12.2025</span></p>
+</div>
+
+    <form id="aufenthalt-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <div class="tabs-container">
+          <label class="tab-label">
+              <input type="radio" name="check_modus" value="reminder" checked>
+              <span class="tab-button">🕒 Titel-Reminder</span>
+          </label>
+          <label class="tab-label">
+              <input type="radio" name="check_modus" value="fiktion">
+              <span class="tab-button">🚦 Fiktions-Check</span>
+          </label>
+          <label class="tab-label">
+              <input type="radio" name="check_modus" value="kurs">
+              <span class="tab-button">🎓 Kurs-Finder</span>
+          </label>
+      </div>
+
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend id="tool_legend">Daten eingeben</legend>
+
+        <div id="group_reminder">
+            <label class="pflegegrad-label">
+              Art des aktuellen Titels
+              <select id="titel_art">
+                <option value="erlaubnis">Aufenthaltserlaubnis</option>
+                <option value="blauekarte">Blaue Karte EU</option>
+                <option value="duldung">Duldung / Grenzübertrittsbescheinigung</option>
+              </select>
+            </label>
+
+            <label class="pflegegrad-label">
+              Ablaufdatum (laut Dokument)
+              <input type="date" id="titel_datum" />
+            </label>
+        </div>
+
+        <div id="group_fiktion" style="display:none;">
+            <label class="pflegegrad-label">
+              Haben Sie den Antrag auf Verlängerung bereits gestellt?
+              <select id="fiktion_antrag">
+                <option value="ja">Ja, rechtzeitig vor Ablauf</option>
+                <option value="nein">Nein / Erst nach Ablauf</option>
+              </select>
+            </label>
+
+            <label class="pflegegrad-label">
+              Wie viele Monate ist der letzte Titel bereits abgelaufen?
+              <input type="number" id="fiktion_monate" value="0" min="0" />
+            </label>
+        </div>
+
+        <div id="group_kurs" style="display:none;">
+            <label class="pflegegrad-label">
+              Aktueller Aufenthaltsstatus
+              <select id="kurs_status">
+                <option value="neu">Neu eingereist (Aufenthaltserlaubnis frisch)</option>
+                <option value="alt">Länger hier (Verlängerung)</option>
+                <option value="gestattet">Aufenthaltsgestattung (Asylverfahren)</option>
+                <option value="duldung">Duldung</option>
+              </select>
+            </label>
+
+            <label class="pflegegrad-label">
+              Erhalten Sie Sozialleistungen?
+              <select id="kurs_leistungen">
+                <option value="nein">Nein / Selbstzahler</option>
+                <option value="ja">Ja (Bürgergeld / Sozialhilfe / AsylbLG)</option>
+              </select>
+            </label>
+        </div>
+
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="btn_berechnen" class="button">Analyse starten</button>
+        <button type="reset" id="btn_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="check_ergebnis"></section>
+
+    <section class="faq-section">
+      <h2>Wichtige Infos zum Aufenthaltsstatus</h2>
+      <div class="faq-item">
+        <h3>Was ist die Fiktionswirkung?</h3>
+        <p>Wenn Sie einen Antrag auf Verlängerung rechtzeitig stellen, gilt Ihr Aufenthalt oft als "fortbestehend" (§ 81 AufenthG), bis die Behörde entschieden hat. Das nennt man Fiktionswirkung.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Wann muss ich die Verlängerung beantragen?</h3>
+        <p>Idealerweise 4 bis 8 Wochen vor Ablauf Ihres aktuellen Titels. Vereinbaren Sie frühzeitig einen Termin bei der Ausländerbehörde.</p>
+      </div>
+    </section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">🤖</span>
+    Clerion – Die KI, die Ihnen bei Behördenpost und Anträgen hilft
+  </h2>
+
+  <p class="lead">
+    Ob Brief vom Amt, komplizierter Antrag oder langer Bescheid: 
+    Clerion erklärt Ihnen jedes Schreiben verständlich, erkennt Fristen,
+    prüft Dokumente und erstellt auf Wunsch ein fertiges Antwort-PDF. 
+    Einfach, sicher und entwickelt für Menschen, die im Alltag entlastet werden wollen.
+  </p>
+
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Jetzt kostenlos testen
+    </a>
+    <a href="https://clerion.de/preise" class="btn btn-secondary" rel="noopener" target="_blank">
+      Funktionen & Preise
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen kostenlose Infos oder Vorlagen? Hier finden Sie weitere Hilfsangebote:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">🏠 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">💳 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
+      <p>
+        Du möchtest tiefer einsteigen? Auf unseren Info-Seiten findest du alles rund um das Thema Asyl und Aufenthalt:  
+      </p>
+      <p style="margin-bottom:.4rem;">
+        <a href="info-klage-asyl.html" class="button button-secondary" title="Zur Info Asyl">Zur Info-Seite: Asyl (Details & Checkliste)</a>
+        <a href="info-untaetigkeitsklage.html" class="button button-secondary" title="Zur Info Untätigkeitsklage">Zur Info Untätigkeitsklage</a>
+        <a href="info-deckblatt-aufenthaltstitel.html" class="button button-secondary" title="Zur Info Deckblatt Aufenthaltstitel">Zur Info: Deckblatt Aufenhaltstitel</a>
+        <a href="info-antrag-erstausstattung.html" class="button button-secondary" title="Zur Info Erstausstattung">Zur Info: Erstausstattung</a>
+      
+      </p>
+    </aside>
+
+    <h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://handbookgermany.de/de/residence-permit" target="_blank" rel="noopener">Handbook Germany – Aufenthaltserlaubnis einfach erklärt</a></li>
+    <li><a href="https://bamf.de" target="_blank" rel="noopener">BAMF – Informationen zu Aufenthaltstiteln & Voraussetzungen</a></li>
+    <li><a href="https://www.anwalt.de/rechtstipps/untaetigkeitsklage-gegen-auslaenderbehoerde_184325.html" target="_blank" rel="noopener">Ratgeber Untätigkeitsklage – Wenn das Amt schweigt</a></li>
+    <li><a href="https://www.make-it-in-germany.com/de/visum-aufenthalt" target="_blank" rel="noopener">Make it in Germany – Offizielles Portal für Fachkräfte</a></li>
+    <li><a href="https://widerspruch.org" target="_blank" rel="noopener">Musterbriefe für Fristsetzung und Untätigkeitsklage</a></li>
+  </ul>
+</div>
+
+
+
+  </div>
+
+ <footer>
+    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  </footer>
+
+  <script src="aufenthalt-rechner.js"></script>
+</body>
+</html>
