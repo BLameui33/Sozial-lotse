@@ -194,6 +194,7 @@ textarea {
 
 /* --- Info-/Warnboxen --- */
 .info-box,
+.highlight-box,
 .warning-box {
   font-size: 0.96rem;
   padding: 1.2rem 1.5rem;
