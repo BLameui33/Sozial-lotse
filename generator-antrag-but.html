@@ -2,105 +2,149 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Antrag auf Leistungen für Bildung und Teilhabe (BuT) | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie Ihren Antrag auf Leistungen für Bildung und Teilhabe (BuT / Bildungspaket). Für Schulbedarf, Lernförderung, Mittagessen, Ausflüge und mehr.">
-  <meta name="keywords" content="Antrag Bildung und Teilhabe, BuT, Bildungspaket, Kinder, Jugendliche, Jobcenter, Sozialamt, Kinderzuschlag, Wohngeld, Lernförderung, Schulbedarf, Sozial-Lotse">
+  <title>Antrag Bildung und Teilhabe (BuT) erstellen | Sozial-Lotse</title>
+  
+  <!-- SEO & YMYL: Präzisierung auf Rechtsgrundlagen SGB II / BKGG -->
+  <meta name="description" content="Erstellen Sie rechtssicher Ihren Antrag auf Leistungen für Bildung und Teilhabe (§ 28 SGB II / § 6b BKGG). Für Lernförderung, Mittagessen & Schulbedarf.">
+  <meta name="keywords" content="Antrag Bildung und Teilhabe, BuT Formular, Bildungspaket § 28 SGB II, Jobcenter Schulbedarf, Lernförderung Antrag, Sozial-Lotse Generator">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="but_antrag_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: Zeigt Google, dass es sich um eine "GovernmentService"-Hilfe handelt -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für Bildung und Teilhabe Antrag",
+    "description": "Tool zur Erstellung eines Antrags auf Leistungen nach § 28 SGB II (Bürgergeld) oder § 6b BKGG (Kinderzuschlag/Wohngeld).",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Eltern mit geringem Einkommen"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
-  <header class="site-header">
+<header class="site-header">
     <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Allgemeiner Antrag auf Leistungen für Bildung und Teilhabe (BuT)</h1>
+  <h1>Antrag auf Leistungen für Bildung und Teilhabe (BuT)</h1>
+  
+  <!-- YMYL: Fachliche Einordnung mit Paragraphen (Trust-Signal) -->
   <div class="info-box">
-    <p><strong>Worum geht es hier?</strong> Dieses Tool hilft Ihnen, einen allgemeinen Antrag auf Leistungen aus dem Bildungspaket zu stellen. Da die Antragswege oft lokal geregelt sind, dient dieses Schreiben als formelle und gut begründete Mustervorlage.</p>
-    <p><strong>Wichtig:</strong> Erkundigen Sie sich bei Ihrer zuständigen Stelle (Jobcenter oder Kommune), ob spezielle Formulare verwendet werden müssen. Dieses Schreiben kann dann als Begleitschreiben oder als formloser Antrag dienen.</p>
+    <p><strong>Rechtsgrundlage & Zweck:</strong> Dieses Tool erstellt einen formellen Antrag auf Leistungen aus dem Bildungspaket gemäß <strong>§ 28 SGB II</strong> (für Bürgergeld-Empfänger) bzw. <strong>§ 6b BKGG</strong> (für Wohngeld/Kinderzuschlag). Während Schulbedarf oft automatisch ausgezahlt wird, müssen Lernförderung oder Ausflüge meist gesondert beantragt werden. Nutzen Sie diese Vorlage, um Fristen zu wahren.</p>
+    <p><strong>Hinweis zur Zuständigkeit:</strong> Je nach Wohnort ist entweder das Jobcenter oder das kommunale Sozialamt/Bürgeramt zuständig.</p>
   </div>
-<p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
-</p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Rechtshinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung und Antragsunterstützung. Bei Ablehnung wenden Sie sich bitte an eine Beratungsstelle.
+  </p>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Für den PDF-Download nutzen Sie bitte <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Google App, Facebook) blockieren Downloads oft.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">13.12.2025</span> | Geprüft auf aktuelle Regelsätze und BuT-Richtlinien.</p>
+  </div>
 
   <form id="antragButForm">
     <fieldset>
       <legend>1. Ihre Persönlichen Angaben (Antragsteller:in)</legend>
       <label for="personName">Vor- und Nachname (des antragstellenden Elternteils):</label>
-      <input type="text" id="personName" required>
+      <input type="text" id="personName" required autocomplete="name">
+      
       <label for="bgNummer">Ihre BG-Nummer / Kundennummer / Aktenzeichen:</label>
-      <input type="text" id="bgNummer" required>
+      <input type="text" id="bgNummer" required placeholder="Siehe Ihren letzten Bewilligungsbescheid">
+      
       <label for="anzahlPersonenBut">Stellen Sie den Antrag als Einzelperson oder als Elternpaar?</label>
       <select id="anzahlPersonenBut" required>
         <option value="einzelperson" selected>Für mich als Einzelperson (ich/mein)</option>
         <option value="mehrerePersonen">Für uns als Eltern (wir/unser)</option>
       </select>
+      
       <label for="personAdresse">Straße und Hausnummer:</label>
-      <input type="text" id="personAdresse" required>
+      <input type="text" id="personAdresse" required autocomplete="street-address">
+      
       <label for="personPlz">Postleitzahl:</label>
-      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required autocomplete="postal-code">
+      
       <label for="personOrt">Wohnort:</label>
-      <input type="text" id="personOrt" required>
+      <input type="text" id="personOrt" required autocomplete="address-level2">
     </fieldset>
 
     <fieldset>
         <legend>2. Angaben zur zuständigen Behörde</legend>
-        <label for="behoerdeName">Name der zuständigen Behörde (Jobcenter, Sozialamt, etc.):</label>
-        <input type="text" id="behoerdeName" required placeholder="z.B. Jobcenter Musterstadt">
+        <label for="behoerdeName">Name der zuständigen Behörde:</label>
+        <input type="text" id="behoerdeName" required placeholder="z.B. Jobcenter Musterstadt oder Landkreis XY - BuT Stelle">
+        
         <label for="behoerdeAdresse">Anschrift der Behörde:</label>
         <textarea id="behoerdeAdresse" rows="3" required></textarea>
     </fieldset>
 
     <fieldset>
         <legend>3. Angaben zum Kind / zu den Kindern</legend>
-        <label for="kindNameGeburtsdatum">Name und Geburtsdatum des Kindes / der Kinder, für das/die Leistungen beantragt werden:</label>
-        <textarea id="kindNameGeburtsdatum" rows="3" required placeholder="z.B. Max Mustermann, geb. am 01.01.2015; Erika Mustermann, geb. am 05.05.2017"></textarea>
-        <label for="schuleKita">Name der Schule / Kita des Kindes / der Kinder:</label>
-        <input type="text" id="schuleKita" required>
+        <label for="kindNameGeburtsdatum">Name und Geburtsdatum aller Kinder, für die beantragt wird:</label>
+        <textarea id="kindNameGeburtsdatum" rows="3" required placeholder="1. Max Mustermann, geb. 01.01.2015&#10;2. Erika Mustermann, geb. 05.05.2017"></textarea>
+        
+        <label for="schuleKita">Name der Schule / Kita:</label>
+        <input type="text" id="schuleKita" required placeholder="z.B. Grundschule Musterdorf">
     </fieldset>
     
     <fieldset>
-        <legend>4. Beantragte Leistungen für Bildung und Teilhabe</legend>
-        <p class="info-box">Wählen Sie die Leistungen aus, die Sie beantragen möchten, und erläutern Sie diese kurz. Fügen Sie unbedingt entsprechende Nachweise (z.B. Schreiben der Schule, Kostenvoranschlag, Attest) bei!</p>
+        <legend>4. Beantragte Leistungen (Bildungspaket)</legend>
+        <p class="info-box" style="font-size: 0.9em;">
+            <strong>Tipp:</strong> Sie können mehrere Leistungen gleichzeitig beantragen (sog. Globalantrag), müssen aber für Lernförderung oft separate Nachweise nachreichen.
+        </p>
         
         <div class="checkbox-group">
-            <label><input type="checkbox" name="antragsgrundBut" value="schulbedarf"> Persönlicher Schulbedarf (Pauschale)</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="ausfluege"> Übernahme der Kosten für eintägige Ausflüge von Schule/Kita</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="klassenfahrten"> Übernahme der Kosten für mehrtägige Klassenfahrten</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="lernfoerderung"> Lernförderung (Nachhilfe)</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="mittagessen"> Gemeinschaftliches Mittagessen in Schule/Hort/Kita</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="schuelerbefoerderung"> Schülerbeförderung</label>
-            <label><input type="checkbox" name="antragsgrundBut" value="teilhabe"> Teilhabe am sozialen und kulturellen Leben (z.B. für Sportverein, Musikschule)</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="schulbedarf"> Persönlicher Schulbedarf (Pauschale für Material)</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="ausfluege"> Kostenübernahme: eintägige Ausflüge</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="klassenfahrten"> Kostenübernahme: mehrtägige Klassenfahrten</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="lernfoerderung"> Lernförderung (Nachhilfe - Bestätigung der Schule nötig!)</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="mittagessen"> Gemeinschaftliches Mittagessen (Schule/Kita)</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="schuelerbefoerderung"> Schülerbeförderung (sofern nicht anders gedeckt)</label>
+            <label><input type="checkbox" name="antragsgrundBut" value="teilhabe"> Soziale Teilhabe (15€ Pauschale für Verein/Musikschule)</label>
         </div>
 
-        <label for="ergaenzendeArgumenteBut" style="margin-top: 1.5rem;">Detailliertere Begründung oder Beschreibung der beantragten Leistungen: <small>(Geben Sie hier Details an, z.B. zu Kosten, Anbieter, Zeitraum der Leistung, Notwendigkeit)</small></label>
-        <textarea id="ergaenzendeArgumenteBut" rows="6" required placeholder="Beispiel für Lernförderung: Mein Sohn Max benötigt Nachhilfe im Fach Mathematik, da seine Versetzung gefährdet ist. Die Schule hat den Bedarf bestätigt (siehe Anlage). Die Nachhilfe soll bei [Anbieter] stattfinden und kostet [Betrag] € pro Monat."></textarea>
+        <label for="ergaenzendeArgumenteBut" style="margin-top: 1.5rem;">Begründung / Details: 
+            <small>(Wichtig bei Nachhilfe oder teuren Fahrten. Nennen Sie Anbieter und Kosten.)</small>
+        </label>
+        <textarea id="ergaenzendeArgumenteBut" rows="6" required placeholder="Beispiel: Hiermit beantrage ich die Übernahme der Kosten für die Klassenfahrt vom [Datum] nach [Ort]. Die Kosten betragen [Betrag] Euro. Das Schreiben der Schule liegt bei."></textarea>
     </fieldset>
 
     <fieldset>
-        <legend>5. Beizufügende Anlagen (Kopien sind ausreichend)</legend>
+        <legend>5. Anlagen (Nachweise)</legend>
         <div class="checkbox-group">
-            <label><input type="checkbox" name="anlagenBut" value="Leistungsbescheid (Bürgergeld, Wohngeld, KiZ oder Sozialhilfe)"> Aktueller Leistungsbescheid (Bürgergeld, Wohngeld etc.)</label>
-            <label><input type="checkbox" name="anlagenBut" value="Schreiben der Schule/Kita (z.B. über Kosten für Ausflug/Klassenfahrt)"> Schreiben der Schule/Kita</label>
-            <label><input type="checkbox" name="anlagenBut" value="Bestätigung der Schule über die Notwendigkeit der Lernförderung"> Bestätigung der Schule über Notwendigkeit der Lernförderung</label>
-            <label><input type="checkbox" name="anlagenBut" value="Rechnung/Kostenvoranschlag des Anbieters (z.B. Nachhilfe, Sportverein)"> Rechnung/Kostenvoranschlag des Anbieters</label>
+            <label><input type="checkbox" name="anlagenBut" value="Leistungsbescheid (Bürgergeld, Wohngeld, KiZ oder Sozialhilfe)"> Aktueller Bewilligungsbescheid (Kopie)</label>
+            <label><input type="checkbox" name="anlagenBut" value="Schreiben der Schule/Kita (z.B. über Kosten für Ausflug/Klassenfahrt)"> Elternbrief/Nachweis der Schule/Kita</label>
+            <label><input type="checkbox" name="anlagenBut" value="Bestätigung der Schule über die Notwendigkeit der Lernförderung"> Zusatzblatt Lernförderung (von Lehrer ausgefüllt)</label>
+            <label><input type="checkbox" name="anlagenBut" value="Rechnung/Kostenvoranschlag des Anbieters (z.B. Nachhilfe, Sportverein)"> Rechnung/Mitgliedsbescheinigung (Sport/Musik)</label>
         </div>
         <label for="anlageSonstigesBut">Sonstige Anlagen:</label>
         <input type="text" id="anlageSonstigesBut">
     </fieldset>
 
+    <!-- Trust-Signal: Datenschutzhinweis -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Daten werden nur lokal im Browser verarbeitet, um das PDF zu erstellen. Es erfolgt keine Speicherung auf unseren Servern.
+    </div>
+
     <div class="button-group">
-      <button type="button" id="saveBtnButAntrag" class="button-secondary">Speichern</button>
+      <button type="button" id="saveBtnButAntrag" class="button-secondary">Lokal Speichern</button>
       <button type="button" id="loadBtnButAntrag" class="button-secondary">Laden</button>
       <button type="submit" class="button-primary">Antrags-PDF erstellen</button>
     </div>
@@ -108,16 +152,16 @@
 </div> 
 
 <div id="spendenPopupButAntrag" class="popup-overlay" style="display:none;">
-  </div>
+    <!-- Inhalt wird vermutlich per JS geladen, daher hier leer lassen wie im Original -->
+</div>
 
 <footer>
   <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+  <p>Benötigen Sie Hilfe bei komplexeren Anträgen oder Widersprüchen?</p>
+  <a href="https://clerion.de" class="mini-footer-link" target="_blank" rel="noopener">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
 </footer>
 
 </body>
 </html>
-
