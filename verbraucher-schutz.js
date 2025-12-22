@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             out.innerHTML = `<div class="pflegegrad-result-card" style="border-left:5px solid #e67e22;">
                 <h3>Kein gesetzliches Widerrufsrecht</h3>
                 <p>Bei Kauf im Laden gibt es kein gesetzliches Rückgaberecht ("Gekauft ist gekauft").</p>
-                <p><strong>Tipp:</strong> Viele Händler bieten Kulanz (z.B. 14 Tage Umtausch). Prüfe deinen Kassenbon!</p>
+                <p><strong>Tipp:</strong> Viele Händler bieten Kulanz (z.B. 14 Tage Umtausch).</p>
             </div>`;
             return;
         }

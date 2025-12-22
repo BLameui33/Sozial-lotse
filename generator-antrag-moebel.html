@@ -1,91 +1,158 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Generator: Antrag auf Möbel und Hausrat | Sozial-Lotse</title>
-    <meta name="description" content="Erstellen Sie hier Ihren Antrag auf Erstausstattung für Ihre Wohnung beim Jobcenter oder Sozialamt. Inklusive Checkliste für Möbel und Haushaltsgeräte.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/logo-lotse-fav.png">
-    <link rel="stylesheet" href="/css/generator.css">
+  <meta charset="UTF-8">
+  <title>Antrag Erstausstattung Wohnung & Möbel (Muster) | Sozial-Lotse</title>
+  
+
+  <meta name="description" content="Erstellen Sie einen Antrag auf Erstausstattung für Möbel und Hausrat (§ 24 SGB II). Sichern Sie sich den Zuschuss (kein Darlehen!) für Ihre Wohnungseinrichtung.">
+  <meta name="keywords" content="Antrag Erstausstattung Möbel Muster, Jobcenter Erstausstattung Liste, § 24 SGB II Hausrat, Schwangerschaftsbekleidung Antrag, Babyerstausstattung Jobcenter, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="erstausstattung-script.js"></script>
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: GovernmentService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für Erstausstattungs-Antrag",
+    "description": "Tool zur Beantragung von Möbeln, Hausrat und Babykleidung nach § 24 Abs. 3 SGB II.",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Bürgergeld-Empfänger in Neusituationen"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
-    <header class="site-header"><a href="index.html" class="site-logo">Sozial-Lotse</a></header>
 
-    <div class="page-container">
-        <h1>Generator: Antrag auf Möbel und Hausrat</h1>
-        <div class="warning-box"><p><strong>Wichtig:</strong> Stellen Sie diesen Antrag, **bevor** Sie Möbel oder Geräte kaufen! Reichen Sie ihn schriftlich bei Ihrem zuständigen Jobcenter oder Sozialamt ein.</p></div>
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
 
-<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+<div class="page-container">
+  <h1>Antrag: Erstausstattung (Möbel & Hausrat)</h1>
+  
+  
+  <div class="info-box">
+    <p>Die Erstausstattung nach <strong>§ 24 Abs. 3 SGB II</strong> ist eine gesonderte Leistung, die als <strong>Zuschuss</strong> (Geld oder Gutscheine) gewährt wird. Sie müssen das Geld <strong>nicht zurückzahlen</strong>! Dies gilt für die erste eigene Wohnung, nach einer Trennung, nach Haftentlassung oder Wohnungsbrand.</p>
+  </div>
+
+  <div class="warning-box">
+    <p><strong>Wichtig: Kein Ersatz für kaputte Möbel!</strong>
+    <br>Wenn Ihr alter Kühlschrank nur kaputt geht, ist das "Ersatzbeschaffung". Das müssen Sie vom Regelsatz bezahlen (oder ein Darlehen beantragen). Erstausstattung gibt es nur, wenn Sie die Gegenstände *noch nie* hatten oder durch ein besonderes Ereignis (Brand, Trennung) verloren haben.</p>
+  </div>
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Schwangerschaft & Geburt:</strong> Auch Umstandskleidung und Baby-Erstausstattung (Kinderwagen, Bettchen) können hierüber beantragt werden. Nutzen Sie dafür das Feld "Sonstiges" oder unsere separate Checkliste.
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Facebook) blockieren oft den PDF-Download.
+  </p>
 
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">13.12.2025</span> | Geprüft auf § 24 SGB II.</p>
+  </div>
 
-        <form id="formErstausstattung">
-            <fieldset>
-                <legend>1. Ihre Persönlichen Angaben</legend>
-                <label for="personName">Vor- und Nachname:</label><input type="text" id="personName" required>
-                <label for="personAdresse">Aktuelle Anschrift:</label><textarea id="personAdresse" rows="3" required></textarea>
-                <label for="kundennummer">Ihre BG-Nummer / Kundennummer / Aktenzeichen:</label><input type="text" id="kundennummer" required>
-            </fieldset>
+  <form id="formErstausstattung">
+    <fieldset>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname:</label>
+      <input type="text" id="personName" required autocomplete="name">
+      
+      <label for="personAdresse">Aktuelle Anschrift:</label>
+      <textarea id="personAdresse" rows="3" required autocomplete="street-address"></textarea>
+      
+      <label for="kundennummer">BG-Nummer / Kundennummer:</label>
+      <input type="text" id="kundennummer" required placeholder="Siehe Bewilligungsbescheid">
+    </fieldset>
 
-            <fieldset>
-                <legend>2. Angaben zur neuen Wohnung</legend>
-                <label for="adresseNeueWohnung">Anschrift der neuen Wohnung, für die die Ausstattung beantragt wird:</label><textarea id="adresseNeueWohnung" rows="3" required></textarea>
-                <label for="mietbeginn">Datum des Mietbeginns:</label><input type="date" id="mietbeginn" required>
-                <label for="begruendung">Begründung für den Bedarf:<small>Warum benötigen Sie eine Erstausstattung? z.B. "Einzug in die erste eigene Wohnung nach Aufenthalt in einer Gemeinschaftsunterkunft."</small></label><textarea id="begruendung" rows="4" required></textarea>
-            </fieldset>
+    <fieldset>
+      <legend>2. Angaben zur Situation</legend>
+      <label for="adresseNeueWohnung">Anschrift der neuen Wohnung (falls Umzug):</label>
+      <textarea id="adresseNeueWohnung" rows="3"></textarea>
+      
+      <label for="mietbeginn">Mietbeginn / Einzugsdatum:</label>
+      <input type="date" id="mietbeginn" required>
+      
+      <label for="begruendung">Warum brauchen Sie Erstausstattung?</label>
+      <textarea id="begruendung" rows="4" required placeholder="Beispiel: Ich ziehe erstmals aus dem Elternhaus aus. / Ich habe mich von meinem Partner getrennt und musste die gemeinsame Wohnung ohne Möbel verlassen. / Nach Haftentlassung beziehe ich eine eigene Wohnung."></textarea>
+    </fieldset>
 
-            <fieldset>
-                <legend>3. Benötigte Gegenstände (Bedarfsliste)</legend>
-                <p>Wählen Sie alle Gegenstände aus, die Sie für Ihre Haushaltsführung benötigen.</p>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="bedarf" value="Bett mit Matratze"> Bett mit Matratze</label>
-                    <label><input type="checkbox" name="bedarf" value="Kleiderschrank"> Kleiderschrank</label>
-                    <label><input type="checkbox" name="bedarf" value="Tisch"> Tisch</label>
-                    <label><input type="checkbox" name="bedarf" value="Stühle (ausreichende Anzahl)"> Stühle</label>
-                    <label><input type="checkbox" name="bedarf" value="Sofa oder Sitzgelegenheit"> Sofa / Sitzgelegenheit</label>
-                    <label><input type="checkbox" name="bedarf" value="Kühlschrank"> Kühlschrank</label>
-                    <label><input type="checkbox" name="bedarf" value="Waschmaschine"> Waschmaschine</label>
-                    <label><input type="checkbox" name="bedarf" value="Herd / Kochplatten"> Herd / Kochplatten</label>
-                    <label><input type="checkbox" name="bedarf" value="Spüle"> Spüle</label>
-                    <label><input type="checkbox" name="bedarf" value="Töpfe und Pfannen"> Töpfe und Pfannen</label>
-                    <label><input type="checkbox" name="bedarf" value="Geschirr und Besteck"> Geschirr und Besteck</label>
-                    <label><input type="checkbox" name="bedarf" value="Lampen für alle Räume"> Lampen</label>
-                    <label><input type="checkbox" name="bedarf" value="Gardinen / Sichtschutz"> Gardinen / Sichtschutz</label>
-                    <label><input type="checkbox" name="bedarf" value="Staubsauger"> Staubsauger</label>
-                </div>
-                <label for="bedarfSonstiges" style="margin-top: 1.5rem;">Weitere benötigte Gegenstände:<small>Falls Sie weitere wichtige Dinge benötigen, die nicht aufgelistet sind.</small></label>
-                <textarea id="bedarfSonstiges" rows="3"></textarea>
-            </fieldset>
+    <fieldset>
+      <legend>3. Bedarfsliste (Was fehlt?)</legend>
+      <p style="font-size:0.9em; color:#555;">Haken Sie nur an, was Sie wirklich nicht besitzen.</p>
+      
+      <div class="checkbox-group">
+          <!-- Möbel -->
+          <label><input type="checkbox" name="bedarf" value="Bett mit Matratze"> Bett mit Matratze</label>
+          <label><input type="checkbox" name="bedarf" value="Kleiderschrank"> Kleiderschrank</label>
+          <label><input type="checkbox" name="bedarf" value="Tisch und Stühle"> Tisch und Stühle</label>
+          <label><input type="checkbox" name="bedarf" value="Sofa / Sitzgelegenheit"> Sofa / Sessel</label>
+          <label><input type="checkbox" name="bedarf" value="Lampen"> Lampen (Deckenleuchten)</label>
+          <label><input type="checkbox" name="bedarf" value="Gardinen / Rollos"> Gardinen / Sichtschutz</label>
+          
+          <!-- E-Geräte -->
+          <label><input type="checkbox" name="bedarf" value="Waschmaschine"> Waschmaschine</label>
+          <label><input type="checkbox" name="bedarf" value="Kühlschrank"> Kühlschrank</label>
+          <label><input type="checkbox" name="bedarf" value="Elektroherd"> Elektroherd / Kochplatten</label>
+          <label><input type="checkbox" name="bedarf" value="Staubsauger"> Staubsauger</label>
+          
+          <!-- Hausrat -->
+          <label><input type="checkbox" name="bedarf" value="Kochutensilien (Töpfe, Pfannen)"> Töpfe & Pfannen</label>
+          <label><input type="checkbox" name="bedarf" value="Geschirr und Besteck"> Geschirr & Besteck</label>
+          <label><input type="checkbox" name="bedarf" value="Bettwäsche und Handtücher"> Bettwäsche & Handtücher</label>
+      </div>
+      
+      <label for="bedarfSonstiges" style="margin-top: 1.5rem;">Sonstiges (z.B. Babybedarf, Renovierungsmaterial):</label>
+      <textarea id="bedarfSonstiges" rows="3" placeholder="z.B. Babybett, Wickelkommode, Wandfarbe für Einzugsrenovierung..."></textarea>
+    </fieldset>
 
-            <fieldset>
-                <legend>4. Zuständige Behörde</legend>
-                <label for="behoerdeName">Name des Jobcenters oder Sozialamts:</label><input type="text" id="behoerdeName" required>
-                <label for="behoerdeAdresse">Anschrift der Behörde:</label><textarea id="behoerdeAdresse" rows="3" required></textarea>
-            </fieldset>
+    <fieldset>
+      <legend>4. Zuständige Behörde</legend>
+      <label for="behoerdeName">Name des Jobcenters / Sozialamts:</label>
+      <input type="text" id="behoerdeName" required placeholder="z.B. Jobcenter Dortmund">
+      
+      <label for="behoerdeAdresse">Anschrift der Behörde:</label>
+      <textarea id="behoerdeAdresse" rows="3" required></textarea>
+    </fieldset>
 
-            <div class="button-group">
-                <button type="submit" class="button-primary">PDF erstellen und weiter</button>
-            </div>
-        </form>
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Bedarfsliste wird nicht gespeichert.
     </div>
 
-    <footer>
-        <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
-  </div>
-        <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p></footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="pdf-generators.js"></script>
-    <script src="erstausstattung-script.js"></script>
-</body>
+    <div class="button-group">
+      <button type="submit" class="button-primary" style="background-color: #d35400; color: white;">PDF Antrag erstellen</button>
+    </div>
+  </form>
+</div>
 
+<footer>
+  <div class="mini-footer-hint">
+  <p>Renovierungskosten abgelehnt?</p>
+  <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+  </div>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
 </html>

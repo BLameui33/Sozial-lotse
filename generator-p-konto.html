@@ -2,15 +2,34 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>P-Konto-Schreiben an die Bank erstellen | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie Ihr Schreiben an die Bank: Antrag auf Umwandlung in ein P-Konto oder Einreichung einer Bescheinigung zur Erhöhung der Freibeträge.">
-  <meta name="keywords" content="P-Konto, Pfändungsschutzkonto, P-Konto Bescheinigung, Freibetrag erhöhen, Kontopfändung, Antrag, Bank, Vorlage, Generator, Sozial-Lotse">
+  <title>P-Konto Antrag & Bescheinigung (§ 850k ZPO) | Sozial-Lotse</title>
+  
+  <!-- SEO & YMYL: Fokus auf ZPO und Existenzsicherung -->
+  <meta name="description" content="Erstellen Sie rechtssicher Ihren Antrag auf P-Konto-Umwandlung (§ 850k ZPO) oder reichen Sie eine Bescheinigung zur Freibetragserhöhung bei Ihrer Bank ein.">
+  <meta name="keywords" content="P-Konto Umwandlung, § 850k ZPO, Pfändungsschutz Erhöhung, P-Konto Bescheinigung einreichen, Kontopfändung Schutz, Bank Antrag, Sozial-Lotse">
   <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="p-konto_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: FinancialProduct / LegalService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für P-Konto Umwandlung & Bescheinigung",
+    "description": "Tool zur Beantragung eines Pfändungsschutzkontos nach § 850k ZPO zur Sicherung des Existenzminimums.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
@@ -19,78 +38,110 @@
 </header>
 
 <div class="page-container">
-  <h1>Schreiben für Pfändungsschutzkonto (P-Konto)</h1>
+  <h1>Antrag auf P-Konto (Pfändungsschutz)</h1>
+  
+  <!-- YMYL: Rechtsanspruch und Fristen -->
   <div class="info-box">
-    <p>Ein P-Konto schützt Ihr Guthaben bis zu einem bestimmten Freibetrag vor Pfändungen. Jede Person darf nur **ein** P-Konto führen. Ihre Bank ist gesetzlich verpflichtet, Ihr Girokonto auf Antrag in ein P-Konto umzuwandeln.</p>
+    <p>Jede natürliche Person hat gemäß <strong>§ 850k ZPO</strong> einen Rechtsanspruch darauf, dass ihr Girokonto in ein Pfändungsschutzkonto (P-Konto) umgewandelt wird. Die Bank ist gesetzlich verpflichtet, diese Umwandlung innerhalb von <strong>4 Geschäftstagen</strong> durchzuführen. Nutzen Sie dieses Schreiben, um den Basisschutz oder erhöhte Freibeträge (mit Bescheinigung) einzufordern.</p>
   </div>
+
   <div class="warning-box">
-    <p><strong>Handeln Sie schnell!</strong> Sobald Sie von einer drohenden oder bereits erfolgten Kontopfändung erfahren, sollten Sie die Umwandlung sofort beantragen. Sie haben nach Eingang der Pfändung bei der Bank **einen Monat** Zeit, die Umwandlung zu beantragen, um den Schutz rückwirkend zu erhalten.</p>
+    <p><strong>Wichtige Frist bei Pfändung:</strong> Wenn Ihr Konto bereits gepfändet wurde, müssen Sie die Umwandlung innerhalb von <strong>einem Monat</strong> (ab Eingang der Pfändung bei der Bank) beantragen. Nur dann gilt der Schutz rückwirkend und Sie kommen wieder an Ihr Geld!</p>
   </div>
+
   <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+    <strong>Rechtshinweis:</strong> Pro Person darf nur <strong>ein einziges</strong> P-Konto geführt werden. Falschangaben sind strafbar. Kündigen Sie ggf. alte P-Konten bei anderen Banken vorher.
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen für den Download <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Google App, Facebook) blockieren aus Sicherheitsgründen oft Downloads.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">13.12.2025</span> | Geprüft auf aktuelle Pfändungsfreigrenzen.</p>
+  </div>
 
   <form id="pKontoForm">
     <fieldset>
       <legend>1. Ihre Persönlichen Angaben</legend>
       <label for="personName">Vor- und Nachname:</label>
-      <input type="text" id="personName" required>
+      <input type="text" id="personName" required autocomplete="name">
+      
       <label for="personAdresse">Straße und Hausnummer:</label>
-      <input type="text" id="personAdresse" required>
+      <input type="text" id="personAdresse" required autocomplete="street-address">
+      
       <label for="personPlzOrt">Postleitzahl und Ort:</label>
-      <input type="text" id="personPlzOrt" required>
+      <input type="text" id="personPlzOrt" required autocomplete="postal-code">
+      
       <label for="geburtsdatum">Geburtsdatum:</label>
-      <input type="date" id="geburtsdatum" required>
+      <input type="date" id="geburtsdatum" required autocomplete="bday">
     </fieldset>
 
     <fieldset>
       <legend>2. Ihre Bankverbindung</legend>
       <label for="bankName">Name der Bank / Sparkasse:</label>
-      <input type="text" id="bankName" required>
-      <label for="bankAdresse">Anschrift der Bank (Ihrer Filiale):</label>
+      <input type="text" id="bankName" required placeholder="z.B. Sparkasse Musterstadt">
+      
+      <label for="bankAdresse">Anschrift der Bank (Ihre Filiale):</label>
       <textarea id="bankAdresse" rows="3" required></textarea>
+      
       <label for="iban">IBAN Ihres Kontos:</label>
-      <input type="text" id="iban" required>
+      <input type="text" id="iban" required placeholder="DE..." autocomplete="off">
+      
+      <!-- Trust-Signal direkt bei der IBAN -->
+      <div style="font-size: 0.8em; color: #2e7d32; margin-top: 5px; padding: 5px; background: #e8f5e9; border-radius: 4px;">
+        🔒 <strong>Datenschutz-Garantie:</strong> Ihre IBAN wird nicht übertragen. Das PDF wird sicher und lokal in Ihrem Browser erstellt.
+      </div>
     </fieldset>
 
     <fieldset>
       <legend>3. Art des Schreibens</legend>
       <div class="radio-group">
-        <label><input type="radio" name="schreibenTyp" value="umwandlung" required> Ich möchte mein Konto in ein P-Konto <strong>umwandeln</strong>.</label>
-        <label><input type="radio" name="schreibenTyp" value="bescheinigung"> Ich habe bereits ein P-Konto und möchte eine <strong>Bescheinigung für höhere Freibeträge</strong> einreichen.</label>
-        <label><input type="radio" name="schreibenTyp" value="beides"> Ich möchte mein Konto umwandeln <strong>UND</strong> gleichzeitig eine Bescheinigung einreichen.</label>
+        <label>
+            <input type="radio" name="schreibenTyp" value="umwandlung" required> 
+            Ich möchte mein bestehendes Konto in ein P-Konto <strong>umwandeln</strong> (Basisschutz).
+        </label>
+        
+        <label>
+            <input type="radio" name="schreibenTyp" value="bescheinigung"> 
+            Ich habe bereits ein P-Konto und reiche eine <strong>P-Konto-Bescheinigung</strong> ein (für Kinder, Kindergeld etc.).
+        </label>
+        
+        <label>
+            <input type="radio" name="schreibenTyp" value="beides"> 
+            <strong>Kombi-Antrag:</strong> Umwandlung UND Einreichung einer Bescheinigung gleichzeitig.
+        </label>
       </div>
       
       <div id="detailsBescheinigung" class="sub-details">
         <label for="ausstellerBescheinigung">Wer hat die Bescheinigung ausgestellt?
-          <small>(z.B. Jobcenter, Familienkasse, Arbeitgeber, Schuldnerberatung)</small>
+          <small>(Nur anerkannte Stellen: Arbeitgeber, Familienkasse, Jobcenter, Rechtsanwalt oder Schuldnerberatung)</small>
         </label>
-        <input type="text" id="ausstellerBescheinigung" placeholder="z.B. Jobcenter Musterstadt">
+        <input type="text" id="ausstellerBescheinigung" placeholder="z.B. Jobcenter Musterstadt oder RA Müller">
       </div>
     </fieldset>
 
     <div class="button-group">
-      <button type="button" id="saveBtnPKonto" class="button-secondary">Speichern</button>
-      <button type="button" id="loadBtnPKonto" class="button-secondary">Laden</button>
-      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+      <button type="button" id="saveBtnPKonto" class="button-secondary" title="Speichert Eingaben lokal">Lokal Speichern</button>
+      <button type="button" id="loadBtnPKonto" class="button-secondary" title="Lädt letzte Eingaben">Laden</button>
+      <button type="submit" class="button-primary">PDF Antrag erstellen</button>
     </div>
   </form>
 </div>
 
 <footer>
   <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+  <p>Benötigen Sie Hilfe bei der Kommunikation mit Inkasso-Diensten oder Behörden?</p>
+  <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
 </footer>
 
 </body>
-
 </html>

@@ -2,15 +2,41 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Budget- & Haushaltsplan erstellen | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie einen detaillierten Haushaltsplan, um Ihre Einnahmen und Ausgaben zu überblicken. Berechnen Sie Ihren frei verfügbaren Betrag und laden Sie den Plan als PDF herunter.">
-  <meta name="keywords" content="Haushaltsplan, Budgetplan, Einnahmen, Ausgaben, Finanzen, Schulden, Übersicht, Generator, PDF, Sozial-Lotse">
+  <title>Budget- & Haushaltsplan Rechner (Kostenlos & Sicher) | Sozial-Lotse</title>
+  
+  
+  <meta name="description" content="Erstellen Sie einen ehrlichen Haushaltsplan. Berechnen Sie Ihr frei verfügbares Einkommen unter Berücksichtigung von Pfändungsfreigrenzen und jährlichen Kosten.">
+  <meta name="keywords" content="Haushaltsplan Vorlage PDF, Budgetplaner kostenlos, Schulden Übersicht, Pfändungsfreigrenze Rechner, Einnahmen Ausgaben Liste, Sozial-Lotse">
   <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="haushaltsplan_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: FinancialProduct / Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Sozial-Lotse Haushaltsrechner",
+    "applicationCategory": "FinanceApplication",
+    "description": "Tool zur Ermittlung des monatlichen Budgets und des frei verfügbaren Einkommens.",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
@@ -20,34 +46,65 @@
 
 <div class="page-container">
   <h1>Ihr persönlicher Budget- & Haushaltsplan</h1>
+  
+  
   <div class="info-box">
-    <p>Schaffen Sie sich einen klaren Überblick über Ihre Finanzen! Ein Haushaltsplan ist der wichtigste Schritt, um die Kontrolle über Ihr Geld zu gewinnen, Sparpotenziale zu entdecken und eine solide Grundlage für Verhandlungen mit Gläubigern oder Anträge bei Ämtern zu schaffen.</p>
+    <p>Ein ehrlicher Kassensturz ist der erste Schritt aus den Schulden. Dieser Rechner hilft Ihnen, nicht nur den aktuellen Monat zu sehen, sondern auch <strong>versteckte Kosten</strong> aufzudecken. Das Ergebnis dient als Grundlage für Beratungsstellen oder Anträge.</p>
   </div>
+
+  <div class="warning-box">
+    <p><strong>Die "Jahresfalle":</strong> KFZ-Versicherung, GEZ oder Vereinsbeiträge werden oft jährlich oder vierteljährlich abgebucht. <br><strong>Tipp:</strong> Teilen Sie diese Beträge durch 12, um die <em>echte</em> monatliche Belastung zu sehen. Sonst fehlt Ihnen im Abbuchungsmonat das Geld!</p>
+  </div>
+
   <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+    <strong>Existenzminimum & Pfändung:</strong> Beachten Sie die Pfändungsfreigrenze (aktuell ca. 1.491 € für Alleinstehende). Alles darunter sichert Ihr Überleben (Miete, Strom, Essen) und sollte absolute Priorität bei Zahlungen haben ("Primärschulden").
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Facebook) blockieren oft den PDF-Download.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">13.12.2025</span> | Geprüft auf Pfändungsgrenzen 2025.</p>
+  </div>
 
   <form id="haushaltsplanForm">
     <fieldset>
       <legend>1. Allgemeine Angaben</legend>
-      <label for="personName">Haushaltsplan für:</label>
-      <input type="text" id="personName" placeholder="Max Mustermann" required>
+      <label for="personName">Name / Haushalt:</label>
+      <input type="text" id="personName" placeholder="Max Mustermann" required autocomplete="name">
+      
       <div class="input-group" style="grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
         <div>
             <label for="zeitraumMonat">Monat:</label>
-            <select id="zeitraumMonat" required></select> </div>
-        <div>
-            <label for="zeitraumJahr">Jahr:</label>
-            <input type="number" id="zeitraumJahr" placeholder="z.B. 2025" required>
+            <select id="zeitraumMonat" required>
+                <!-- Fallback, falls JS nicht lädt -->
+                <option value="Januar">Januar</option>
+                <option value="Februar">Februar</option>
+                <option value="März">März</option>
+                <option value="April">April</option>
+                <option value="Mai">Mai</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="Oktober">Oktober</option>
+                <option value="November">November</option>
+                <option value="Dezember">Dezember</option>
+            </select> 
         </div>
         <div>
-            <label for="anzahlPersonenHaushalt">Personen im Haushalt:</label>
+            <label for="zeitraumJahr">Jahr:</label>
+            <input type="number" id="zeitraumJahr" placeholder="2025" required>
+        </div>
+        <div>
+            <label for="anzahlPersonenHaushalt">Personen:</label>
             <input type="number" id="anzahlPersonenHaushalt" value="1" required>
         </div>
       </div>
@@ -56,36 +113,39 @@
     <h2>Einnahmen & Ausgaben</h2>
 
     <fieldset>
-      <legend>2. Monatliche Einnahmen</legend>
-      <div class="input-group"><label for="einkommenNetto">Lohn/Gehalt (Netto)</label><input type="number" id="einkommenNetto" class="einnahme" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="einkommenBuergergeld">Bürgergeld / Sozialleistungen</label><input type="number" id="einkommenBuergergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <legend>2. Monatliche Einnahmen (Netto)</legend>
+      <div class="input-group"><label for="einkommenNetto">Lohn / Gehalt</label><input type="number" id="einkommenNetto" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenBuergergeld">Bürgergeld / Sozialhilfe</label><input type="number" id="einkommenBuergergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
       <div class="input-group"><label for="einkommenRente">Rente / Pension</label><input type="number" id="einkommenRente" class="einnahme" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="einkommenKindergeld">Kindergeld</label><input type="number" id="einkommenKindergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenKindergeld">Kindergeld / Kinderzuschlag</label><input type="number" id="einkommenKindergeld" class="einnahme" step="0.01" placeholder="0.00"></div>
       <div class="input-group"><label for="einkommenUnterhalt">Unterhalt (erhalten)</label><input type="number" id="einkommenUnterhalt" class="einnahme" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="einkommenWohngeld">Wohngeld / Lastenzuschuss</label><input type="number" id="einkommenWohngeld" class="einnahme" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="einkommenSonstige">Sonstiges (z.B. Minijob)</label><input type="number" id="einkommenSonstige" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenWohngeld">Wohngeld</label><input type="number" id="einkommenWohngeld" class="einnahme" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="einkommenSonstige">Sonstiges (Minijob/Pflegegeld)</label><input type="number" id="einkommenSonstige" class="einnahme" step="0.01" placeholder="0.00"></div>
     </fieldset>
 
     <fieldset>
       <legend>3. Monatliche Ausgaben</legend>
-      <h3>Wohnen</h3>
-      <div class="input-group"><label for="ausgabeMiete">Miete (warm, inkl. NK/HK)</label><input type="number" id="ausgabeMiete" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeStrom">Strom</label><input type="number" id="ausgabeStrom" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeRundfunk">Rundfunkbeitrag</label><input type="number" id="ausgabeRundfunk" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <h3>Versicherungen & Finanzen</h3>
-      <div class="input-group"><label for="ausgabeVersicherungen">Versicherungen (Haftpflicht, KFZ etc.)</label><input type="number" id="ausgabeVersicherungen" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeKredite">Bestehende Kreditraten</label><input type="number" id="ausgabeKredite" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeUnterhalt">Unterhaltszahlungen</label><input type="number" id="ausgabeUnterhalt" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <h3>Allgemeine Lebenshaltung</h3>
-      <div class="input-group"><label for="ausgabeLebensmittel">Lebensmittel & Drogerie</label><input type="number" id="ausgabeLebensmittel" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeMobilitaet">Mobilität (Fahrkarten, Tanken)</label><input type="number" id="ausgabeMobilitaet" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeKommunikation">Telefon, Internet, Handy</label><input type="number" id="ausgabeKommunikation" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeFreizeit">Freizeit, Kultur, Hobbies</label><input type="number" id="ausgabeFreizeit" class="ausgabe" step="0.01" placeholder="0.00"></div>
-      <div class="input-group"><label for="ausgabeSonstige">Sonstige Ausgaben</label><input type="number" id="ausgabeSonstige" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      
+      <h3 style="color:#2c3e50; border-bottom:1px solid #ddd; padding-bottom:5px;">Existenzsicherung (Wohnen & Energie)</h3>
+      <div class="input-group"><label for="ausgabeMiete">Miete (warm)</label><input type="number" id="ausgabeMiete" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeStrom">Stromabschlag</label><input type="number" id="ausgabeStrom" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeRundfunk">Rundfunkbeitrag (GEZ)</label><input type="number" id="ausgabeRundfunk" class="ausgabe" step="0.01" placeholder="18.36"></div>
+      
+      <h3 style="color:#2c3e50; border-bottom:1px solid #ddd; padding-bottom:5px; margin-top:20px;">Verpflichtungen (Verträge & Schulden)</h3>
+      <div class="input-group"><label for="ausgabeVersicherungen">Versicherungen (Anteilig/Monat!)</label><input type="number" id="ausgabeVersicherungen" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeKredite">Kreditraten / Ratenzahlungen</label><input type="number" id="ausgabeKredite" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeUnterhalt">Unterhalt (gezahlt)</label><input type="number" id="ausgabeUnterhalt" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeKommunikation">Handy / Internet</label><input type="number" id="ausgabeKommunikation" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      
+      <h3 style="color:#2c3e50; border-bottom:1px solid #ddd; padding-bottom:5px; margin-top:20px;">Lebenshaltung (Variabel)</h3>
+      <div class="input-group"><label for="ausgabeLebensmittel">Lebensmittel / Drogerie / Tabak</label><input type="number" id="ausgabeLebensmittel" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeMobilitaet">Fahrtkosten (Ticket/Tank)</label><input type="number" id="ausgabeMobilitaet" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeFreizeit">Freizeit / Kleidung</label><input type="number" id="ausgabeFreizeit" class="ausgabe" step="0.01" placeholder="0.00"></div>
+      <div class="input-group"><label for="ausgabeSonstige">Sonstiges / Puffer</label><input type="number" id="ausgabeSonstige" class="ausgabe" step="0.01" placeholder="0.00"></div>
     </fieldset>
 
     <div class="summary-box">
-        <h2>Zusammenfassung</h2>
+        <h2>Ergebnis</h2>
         <div class="summary-row">
             <span>Gesamteinnahmen:</span>
             <span id="summeEinnahmen">0,00 €</span>
@@ -94,16 +154,24 @@
             <span>Gesamtausgaben:</span>
             <span id="summeAusgaben">0,00 €</span>
         </div>
-        <div class="summary-row total">
-            <span>Überschuss / Defizit:</span>
-            <span id="ergebnis" class="surplus">0,00 €</span>
+        <div class="summary-row total" style="border-top: 2px solid #333; margin-top: 10px; padding-top: 10px;">
+            <span style="font-weight:bold;">Frei verfügbar / Defizit:</span>
+            <span id="ergebnis" class="surplus" style="font-weight:bold; font-size:1.2em;">0,00 €</span>
+        </div>
+        <div style="font-size: 0.9em; margin-top: 15px; color: #666; font-style: italic;">
+            Ist das Ergebnis negativ? Handeln Sie sofort! Prüfen Sie, ob Sie Anspruch auf Wohngeld oder Kinderzuschlag haben.
         </div>
     </div>
 
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Finanzdaten werden nicht gespeichert. Die Berechnung erfolgt nur in Ihrem Browser.
+    </div>
+
     <div class="button-group">
-      <button type="button" id="saveBtnHaushaltsplan" class="button-secondary">Speichern</button>
-      <button type="button" id="loadBtnHaushaltsplan" class="button-secondary">Laden</button>
-      <button type="submit" id="createPdfBtn" class="button-primary">PDF erstellen und weiter</button>
+      <button type="button" id="saveBtnHaushaltsplan" class="button-secondary" title="Lokal Speichern">Speichern</button>
+      <button type="button" id="loadBtnHaushaltsplan" class="button-secondary" title="Laden">Laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF Plan erstellen</button>
     </div>
   </form>
 </div>
@@ -113,9 +181,8 @@
   <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
   <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
 </footer>
 
 </body>
-
 </html>

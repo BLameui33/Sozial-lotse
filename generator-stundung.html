@@ -2,15 +2,34 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Antrag auf Stundung (Zahlungsaufschub) erstellen | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie einen formellen Antrag auf Stundung, um die Fälligkeit einer Rechnung (z.B. vom Finanzamt oder Unternehmen) aufzuschieben. Begründen Sie Ihren Zahlungsengpass.">
-  <meta name="keywords" content="Stundung, Zahlungsaufschub, Stundungsantrag, Finanzamt, Rechnung, Fälligkeit, Generator, Vorlage, Sozial-Lotse">
+  <title>Stundungsantrag beim Finanzamt (§ 222 AO) | Sozial-Lotse</title>
+  
+  <!-- SEO & YMYL: Fokus auf Abgabenordnung und Härtefall -->
+  <meta name="description" content="Erstellen Sie einen rechtssicheren Stundungsantrag gemäß § 222 AO (Steuern) oder für privatrechtliche Forderungen. Begründen Sie die unbillige Härte korrekt.">
+  <meta name="keywords" content="Stundung Finanzamt Muster, § 222 AO, Zahlungsaufschub beantragen, unbillige Härte, Steuerschulden Stundung, Ratenzahlung Steuer, Sozial-Lotse">
   <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="stundung_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: GovernmentService / FinancialService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für Stundungsantrag (Finanzamt/Gläubiger)",
+    "description": "Tool zur Beantragung eines Zahlungsaufschubs bei erheblicher Härte gemäß § 222 Abgabenordnung oder BGB.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
@@ -20,86 +39,113 @@
 
 <div class="page-container">
   <h1>Antrag auf Stundung (Zahlungsaufschub)</h1>
+  
+  <!-- YMYL: Unterscheidung Privatrecht vs. Steuerrecht -->
   <div class="info-box">
-    <p>Mit einem Antrag auf Stundung bitten Sie einen Gläubiger (z.B. das Finanzamt, die Stadtkasse oder ein Unternehmen), die Fälligkeit einer Rechnung nach hinten zu verschieben. Sie beantragen also, die **gesamte Summe zu einem späteren Zeitpunkt** zahlen zu dürfen. Dies ist sinnvoll bei einem kurzfristigen, unvorhersehbaren finanziellen Engpass.</p>
+    <p>Beim Finanzamt richtet sich eine Stundung nach <strong>§ 222 Abgabenordnung (AO)</strong>. Sie müssen darlegen, dass die sofortige Zahlung eine <strong>"erhebliche Härte"</strong> wäre (z.B. vorübergehender Liquiditätsengpass), die Zahlung aber später gesichert ist. Bei privaten Gläubigern ist die Stundung Verhandlungssache. Nutzen Sie dieses Schreiben für beide Fälle.</p>
   </div>
+
   <div class="warning-box">
-    <p>Eine Stundung ist kein Schuldenerlass! Die Forderung bleibt in voller Höhe bestehen. Behörden erheben für den Zeitraum der Stundung oft Zinsen (ca. 0,5% pro Monat). Stellen Sie den Antrag immer so früh wie möglich, am besten vor dem Fälligkeitsdatum.</p>
+    <p><strong>Achtung Kostenfalle:</strong> Eine Stundung ist meist nicht kostenlos. Das Finanzamt verlangt in der Regel <strong>Stundungszinsen (0,5 % pro Monat)</strong>. Stellen Sie den Antrag unbedingt <em>vor</em> Fälligkeit der Rechnung, um Säumniszuschläge oder Vollstreckungsmaßnahmen zu vermeiden.</p>
   </div>
+
   <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Diese Seite ersetzt keine Rechtsberatung. Alle Inhalte dienen der allgemeinen Orientierung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+    <strong>Tipp für die Begründung:</strong> Schreiben Sie niemals nur "Ich habe kein Geld". Begründen Sie, warum der Engpass <em>vorübergehend</em> ist und wie Sie das Geld später aufbringen werden (z.B. erwartete Rückerstattung, neuer Job).
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. über Gmail oder Facebook) blockieren oft den PDF-Download.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">22.12.2025</span> | Geprüft auf AO-Konformität.</p>
+  </div>
 
   <form id="stundungForm">
     <fieldset>
       <legend>1. Ihre Angaben</legend>
       <label for="personName">Vor- und Nachname:</label>
-      <input type="text" id="personName" required>
+      <input type="text" id="personName" required autocomplete="name">
+      
       <label for="personAdresse">Straße und Hausnummer:</label>
-      <input type="text" id="personAdresse" required>
+      <input type="text" id="personAdresse" required autocomplete="street-address">
+      
       <label for="personPlz">Postleitzahl und Ort:</label>
-      <input type="text" id="personPlzOrt" required placeholder="z.B. 12345 Musterstadt">
-      <label for="steuernummer">Steuernummer / Kunden- oder Aktenzeichen (falls vorhanden):</label>
-      <input type="text" id="steuernummer">
+      <input type="text" id="personPlzOrt" required autocomplete="postal-code" placeholder="z.B. 12345 Musterstadt">
+      
+      <label for="steuernummer">Steuernummer / Aktenzeichen:
+        <small>(Beim Finanzamt zwingend erforderlich, Format oft 12/345/67890)</small>
+      </label>
+      <input type="text" id="steuernummer" placeholder="Siehe Steuerbescheid oben links">
     </fieldset>
 
     <fieldset>
       <legend>2. Angaben zum Empfänger (Gläubiger)</legend>
-      <label for="empfaengerName">Name des Empfängers (z.B. Finanzamt Musterstadt):</label>
-      <input type="text" id="empfaengerName" required>
+      <label for="empfaengerName">Name des Empfängers:</label>
+      <input type="text" id="empfaengerName" required placeholder="z.B. Finanzamt Musterstadt oder Stadtkasse XY">
+      
       <label for="empfaengerAdresse">Anschrift des Empfängers:</label>
       <textarea id="empfaengerAdresse" rows="3" required></textarea>
     </fieldset>
 
     <fieldset>
       <legend>3. Angaben zur Forderung</legend>
-      <label for="rechnungsnummer">Rechnungsnummer / Bescheid-Nummer / Aktenzeichen:</label>
+      <label for="rechnungsnummer">Rechnungsnummer / Bescheid-Nummer:</label>
       <input type="text" id="rechnungsnummer" required>
-      <label for="rechnungsdatum">Datum der Rechnung / des Bescheids:</label>
+      
+      <label for="rechnungsdatum">Datum des Bescheids / der Rechnung:</label>
       <input type="date" id="rechnungsdatum" required>
-      <label for="forderungshoehe">Höhe der Forderung in €:</label>
-      <input type="number" id="forderungshoehe" step="0.01" required>
+      
+      <label for="forderungshoehe">Höhe der offenen Forderung in €:</label>
+      <input type="number" id="forderungshoehe" step="0.01" required placeholder="0,00">
+      
       <label for="faelligkeitsdatum">Ursprüngliches Fälligkeitsdatum:</label>
       <input type="date" id="faelligkeitsdatum" required>
     </fieldset>
 
     <fieldset>
-      <legend>4. Begründung für den Stundungsantrag</legend>
-      <label for="begruendungText">Erläutern Sie hier kurz, warum Sie einen vorübergehenden Zahlungsengpass haben:
-        <small>Eine gute Begründung ist entscheidend. Nennen Sie den unvorhergesehenen Grund (z.B. plötzliche Arbeitslosigkeit, hohe Reparaturkosten, Krankheit) und betonen Sie, dass es sich um eine vorübergehende Situation handelt.</small>
+      <legend>4. Begründung der "Erheblichen Härte"</legend>
+      <div class="instruction-text" style="margin-bottom:10px; font-size:0.9em; color:#555;">
+          <p>Das Finanzamt genehmigt Stundungen nur, wenn die Einziehung jetzt eine Härte wäre UND der Anspruch nicht gefährdet ist.</p>
+      </div>
+      <label for="begruendungText">Warum können Sie aktuell nicht zahlen?
       </label>
-      <textarea id="begruendungText" required placeholder="Beispiel: Durch eine unerwartete und hohe Reparaturrechnung für mein Auto, das ich für den Arbeitsweg benötige, bin ich kurzfristig nicht liquide. Die Begleichung der Forderung zu einem späteren Zeitpunkt ist jedoch gesichert."></textarea>
+      <textarea id="begruendungText" required placeholder="Muster-Formulierung: 'Aufgrund einer unvorhergesehenen Reparatur bin ich kurzfristig in einen Liquiditätsengpass geraten. Die sofortige Einziehung würde für mich eine erhebliche Härte bedeuten. Meine Zahlungsfähigkeit ist jedoch ab dem [Datum] wieder hergestellt, da ich dann eine Zahlung von XY erwarte.'"></textarea>
     </fieldset>
 
     <fieldset>
       <legend>5. Ihr Stundungsvorschlag</legend>
-      <label for="stundungBisDatum">Ich bitte um Stundung der Forderung bis zum:</label>
+      <label for="stundungBisDatum">Ich bitte um Aufschub der Zahlung bis zum:</label>
       <input type="date" id="stundungBisDatum" required>
-      <small>Wählen Sie ein realistisches Datum, an dem Sie die gesamte Summe sicher zahlen können (z.B. in 1-3 Monaten, wenn Sie wieder Lohn oder eine Nachzahlung erwarten).</small>
+      <small>Seien Sie realistisch. Ein Aufschub von mehr als 6 Monaten wird selten ohne Sicherheitsleistung genehmigt.</small>
     </fieldset>
 
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Steuerdaten und Finanzinformationen werden nicht übertragen.
+    </div>
+
     <div class="button-group">
-      <button type="button" id="saveBtnStundung" class="button-secondary">Speichern</button>
-      <button type="button" id="loadBtnStundung" class="button-secondary">Laden</button>
-      <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+      <button type="button" id="saveBtnStundung" class="button-secondary" title="Speichert Eingaben lokal">Lokal Speichern</button>
+      <button type="button" id="loadBtnStundung" class="button-secondary" title="Laden">Laden</button>
+      <button type="submit" class="button-primary">PDF Antrag erstellen</button>
     </div>
   </form>
 </div>
 
 <footer>
   <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+  <p>Brauchen Sie Hilfe bei der Kommunikation mit dem Finanzamt?</p>
+  <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="index.html">Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
 </footer>
 
 </body>
-
 </html>

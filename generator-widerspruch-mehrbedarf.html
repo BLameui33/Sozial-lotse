@@ -2,146 +2,198 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Widerspruch Mehrbedarf (Bürgergeld) | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen Bescheid des Jobcenters, der Ihren Anspruch auf Mehrbedarf (z.B. für Schwangerschaft, Alleinerziehende, kostenaufwändige Ernährung) ablehnt oder nicht berücksichtigt.">
-  <meta name="keywords" content="Widerspruch Mehrbedarf, Bürgergeld, Jobcenter, Schwangerschaft, Alleinerziehend, kostenaufwändige Ernährung, unabweisbarer Bedarf, SGB II, Generator, Vorlage, Sozial-Lotse">
+  <title>Widerspruch Mehrbedarf Bürgergeld (§ 21 SGB II) | Sozial-Lotse</title>
+  
+  
+  <meta name="description" content="Erstellen Sie einen Widerspruch gegen die Ablehnung von Mehrbedarfen im Bürgergeld. Für Schwangere, Alleinerziehende, kostenaufwändige Ernährung oder Warmwasser.">
+  <meta name="keywords" content="Widerspruch Mehrbedarf Muster, § 21 SGB II, Schwangerschaftsmehrbedarf, Alleinerziehendenzuschlag, kostenaufwändige Ernährung Attest, Durchlauferhitzer Mehrbedarf, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="mehrbedarf_widerspruch_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: LegalService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für Mehrbedarf-Widerspruch",
+    "description": "Tool zur Durchsetzung von Mehrbedarfen im SGB II (Schwangerschaft, Krankheit, Behinderung, Warmwasser).",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Bürgergeld-Empfänger mit besonderem Bedarf"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
-  <header class="site-header">
+<header class="site-header">
     <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Widerspruch wegen nicht anerkanntem Mehrbedarf (Bürgergeld)</h1>
+  <h1>Widerspruch: Mehrbedarf (Bürgergeld)</h1>
+  
+  
   <div class="info-box">
-    <p><strong>Worum geht es hier?</strong> Dieses Tool hilft Ihnen, Widerspruch einzulegen, wenn das Jobcenter Ihren Antrag auf einen gesetzlichen Mehrbedarf abgelehnt hat. Mehrbedarfe sind zusätzliche Leistungen für Menschen in besonderen Lebenssituationen.</p>
-    <p><strong>Wichtig:</strong> Legen Sie Widerspruch immer schriftlich und innerhalb eines Monats nach Erhalt des Bescheides ein!</p>
+    <p>Der Regelsatz deckt den normalen Lebensunterhalt. Für besondere Situationen gibt es <strong>Mehrbedarfe nach § 21 SGB II</strong>. Diese werden *zusätzlich* gezahlt und dürfen nicht miteinander verrechnet werden (außer sie decken denselben Zweck). Ein Widerspruch lohnt sich, wenn Nachweise (z.B. Mutterpass, Schwerbehindertenausweis) vorliegen, aber ignoriert wurden.</p>
   </div>
-<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+
+  <div class="warning-box">
+    <p><strong>Falle "Ernährung":</strong> Ein Mehrbedarf für Ernährung wird nur bei Krankheiten gewährt, die *zwingend* eine teurere Kost erfordern (z.B. Zöliakie, Niereninsuffizienz). Bei Diabetes, Gicht oder Laktoseintoleranz lehnen Jobcenter meist ab, da "Vollkost" aus dem Regelsatz bezahlbar sei.</p>
+  </div>
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Warmwasser-Mehrbedarf (§ 21 Abs. 7 SGB II):</strong> Wird Ihr Warmwasser durch Strom (Boiler/Durchlauferhitzer) erzeugt? Dann steht Ihnen pauschal ein Mehrbedarf zu! Prüfen Sie Ihren Bescheid, ob dieser Posten fehlt.
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Facebook) blockieren oft den PDF-Download.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">22.12.2025</span> | Geprüft auf aktuelle DV des Deutschen Vereins.</p>
+  </div>
 
   <form id="widerspruchMehrbedarfForm">
     <fieldset>
       <legend>1. Ihre Persönlichen Angaben</legend>
-      <label for="personName">Vor- und Nachname (des Hauptantragstellers der BG):</label>
-      <input type="text" id="personName" required>
-      <label for="bgNummer">Ihre BG-Nummer / Kundennummer:</label>
-      <input type="text" id="bgNummer" required>
-      <label for="anzahlPersonenMehrbedarf">Für wie viele Personen legen Sie Widerspruch ein?</label>
+      <label for="personName">Vor- und Nachname (Hauptantragsteller):</label>
+      <input type="text" id="personName" required autocomplete="name">
+      
+      <label for="bgNummer">BG-Nummer / Kundennummer:</label>
+      <input type="text" id="bgNummer" required placeholder="Format oft: 12345//0012345">
+      
+      <label for="anzahlPersonenMehrbedarf">Für wen legen Sie Widerspruch ein?</label>
       <select id="anzahlPersonenMehrbedarf" required>
         <option value="einzelperson" selected>Für mich als Einzelperson</option>
-        <option value="mehrerePersonen">Für mehrere Personen der Bedarfsgemeinschaft / uns als BG</option>
+        <option value="mehrerePersonen">Für die gesamte Bedarfsgemeinschaft</option>
       </select>
+      
       <label for="personAdresse">Straße und Hausnummer:</label>
-      <input type="text" id="personAdresse" required>
+      <input type="text" id="personAdresse" required autocomplete="street-address">
+      
       <label for="personPlz">Postleitzahl:</label>
-      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required autocomplete="postal-code">
+      
       <label for="personOrt">Wohnort:</label>
-      <input type="text" id="personOrt" required>
+      <input type="text" id="personOrt" required autocomplete="address-level2">
     </fieldset>
 
     <fieldset>
         <legend>2. Angaben zum Jobcenter</legend>
-        <label for="jcName">Name des Jobcenters (laut Bescheid):</label>
-        <input type="text" id="jcName" required>
+        <label for="jcName">Name des Jobcenters:</label>
+        <input type="text" id="jcName" required placeholder="z.B. Jobcenter Berlin Mitte">
+        
         <label for="jcAdresse">Anschrift des Jobcenters:</label>
         <textarea id="jcAdresse" rows="3" required></textarea>
     </fieldset>
 
     <fieldset>
-        <legend>3. Angaben zum angefochtenen Bescheid</legend>
-        <label for="bescheidDatum">Datum des Bescheides, mit dem der Mehrbedarf abgelehnt wurde:</label>
+        <legend>3. Angaben zum Bescheid</legend>
+        <label for="bescheidDatum">Datum des Ablehnungsbescheides:</label>
         <input type="date" id="bescheidDatum" required>
-        <label for="bescheidAktenzeichen">Aktenzeichen / Geschäftszeichen des Bescheides:</label>
+        
+        <label for="bescheidAktenzeichen">Aktenzeichen (falls abweichend):</label>
         <input type="text" id="bescheidAktenzeichen">
-        <label for="antragDatumMehrbedarf">Datum Ihres ursprünglichen Antrags auf Mehrbedarf (falls bekannt):</label>
+        
+        <label for="antragDatumMehrbedarf">Datum Ihres Antrags (optional):</label>
         <input type="date" id="antragDatumMehrbedarf">
     </fieldset>
     
     <fieldset>
-        <legend>4. Grund Ihres Widerspruchs: Nicht anerkannter Mehrbedarf</legend>
-        <p class="info-box">Wählen Sie aus, welcher Mehrbedarf zu Unrecht nicht anerkannt wurde, und erläutern Sie Ihre Situation. Fügen Sie unbedingt die notwendigen Nachweise (z.B. Atteste, Mutterpass) bei!</p>
+        <legend>4. Welcher Mehrbedarf fehlt?</legend>
+        <div class="instruction-text" style="font-size:0.9em; color:#555;">
+            Bitte wählen Sie aus und fügen Sie Nachweise bei.
+        </div>
         
         <div class="checkbox-group">
-            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="schwangerschaft"> <strong>Mehrbedarf für Schwangere (§ 21 Abs. 2 SGB II)</strong></label>
+            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="schwangerschaft"> <strong>Schwangerschaft (§ 21 Abs. 2):</strong> Ab der 13. SSW (17% vom Regelbedarf).</label>
         </div>
         <div id="detailsSchwangerschaft" class="sub-details">
-            <label for="textSchwangerschaft">Erläuterung: <small>(Ab der 13. Schwangerschaftswoche besteht ein Anspruch. Geben Sie den voraussichtlichen Entbindungstermin an.)</small></label>
-            <textarea id="textSchwangerschaft" rows="2" placeholder="z.B. Ich befinde mich aktuell in der [XX.] Schwangerschaftswoche. Der voraussichtliche Entbindungstermin ist der TT.MM.JJJJ. Eine Kopie des Mutterpasses liegt bei."></textarea>
+            <label for="textSchwangerschaft">Begründung:</label>
+            <textarea id="textSchwangerschaft" rows="2" placeholder="Ich bin in der [Woche] SSW. Der voraussichtliche Entbindungstermin ist der [Datum]. Nachweis (Mutterpass/Attest) liegt bei."></textarea>
         </div>
 
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="alleinerziehend"> <strong>Mehrbedarf für Alleinerziehende (§ 21 Abs. 3 SGB II)</strong></label>
+            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="alleinerziehend"> <strong>Alleinerziehende (§ 21 Abs. 3):</strong> Je nach Anzahl/Alter der Kinder (12-60%).</label>
         </div>
         <div id="detailsAlleinerziehend" class="sub-details">
-            <label for="textAlleinerziehend">Erläuterung: <small>(Geben Sie an, für welche/s Kind/er Sie allein sorge- und erziehungsberechtigt sind und wie alt diese sind.)</small></label>
-            <textarea id="textAlleinerziehend" rows="3" placeholder="z.B. Ich bin alleinerziehend für mein Kind [Name], [Alter] Jahre, und für die Betreuung und Erziehung allein verantwortlich."></textarea>
+            <label for="textAlleinerziehend">Begründung:</label>
+            <textarea id="textAlleinerziehend" rows="3" placeholder="Ich lebe mit meinen [Anzahl] minderjährigen Kindern allein und trage die alleinige Sorge. Ein weiterer Erwachsener lebt nicht im Haushalt."></textarea>
         </div>
 
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="ernaehrung"> <strong>Mehrbedarf für kostenaufwändige Ernährung (§ 21 Abs. 5 SGB II)</strong></label>
+            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="ernaehrung"> <strong>Kostenaufwändige Ernährung (§ 21 Abs. 5):</strong> Nur bei bestimmten Krankheiten.</label>
         </div>
         <div id="detailsErnaehrung" class="sub-details">
-            <label for="textErnaehrung">Erläuterung: <small>(Welche Krankheit liegt vor? Ein ärztliches Attest, das die Notwendigkeit einer speziellen, teureren Ernährung bescheinigt, ist hier zwingend erforderlich!)</small></label>
-            <textarea id="textErnaehrung" rows="3" placeholder="z.B. Aufgrund meiner ärztlich diagnostizierten [Krankheit] benötige ich eine besondere, kostenaufwändige Ernährung. Das entsprechende Attest von Dr. [Name] vom TT.MM.JJJJ liegt diesem Schreiben bei."></textarea>
+            <label for="textErnaehrung">Begründung: <small>(Liegt ein ausgefülltes Formular 'Anlage MEB' vom Arzt vor?)</small></label>
+            <textarea id="textErnaehrung" rows="3" placeholder="Ich leide an [Krankheit, z.B. Zöliakie/Niereninsuffizienz]. Diese erfordert zwingend eine kostenaufwändige Ernährung. Das ärztliche Attest (Anlage MEB) liegt bei."></textarea>
         </div>
         
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="behinderung"> <strong>Mehrbedarf für erwerbsfähige Menschen mit Behinderung (§ 21 Abs. 4 SGB II)</strong></label>
+            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="behinderung"> <strong>Behinderung & Teilhabe (§ 21 Abs. 4):</strong> 35% bei Leistungen zur Teilhabe.</label>
         </div>
         <div id="detailsBehinderung" class="sub-details">
-            <label for="textBehinderung">Erläuterung: <small>(Wenn Sie Leistungen zur Teilhabe am Arbeitsleben nach § 49 SGB IX erhalten oder Eingliederungshilfe nach § 112 SGB IX.)</small></label>
-            <textarea id="textBehinderung" rows="3" placeholder="z.B. Ich erhalte Leistungen zur Teilhabe am Arbeitsleben in Form von [Bezeichnung der Leistung]. Daher steht mir ein Mehrbedarf von 35% des Regelbedarfs zu."></textarea>
+            <label for="textBehinderung">Begründung:</label>
+            <textarea id="textBehinderung" rows="3" placeholder="Ich beziehe Leistungen zur Teilhabe am Arbeitsleben (§ 49 SGB IX) bzw. Eingliederungshilfe. Der Mehrbedarf von 35% wurde nicht berücksichtigt."></textarea>
         </div>
         
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="unabweisbar"> <strong>Unabweisbarer, laufender, besonderer Bedarf (§ 21 Abs. 6 SGB II)</strong></label>
+            <label><input type="checkbox" name="widerspruchsgrundMehrbedarf" value="unabweisbar"> <strong>Besonderer Bedarf / Umgangsrecht (§ 21 Abs. 6):</strong> Härtefälle / Warmwasser.</label>
         </div>
         <div id="detailsUnabweisbar" class="sub-details">
-            <label for="textUnabweisbar">Erläuterung: <small>(Hier geht es um besondere, laufende Kosten, die nicht vom Regelbedarf gedeckt sind und nicht anders ausgeglichen werden können, z.B. Kosten für die Wahrnehmung des Umgangsrechts, langlebige Hygieneartikel bei bestimmten Krankheiten.)</small></label>
-            <textarea id="textUnabweisbar" rows="4" placeholder="Beschreiben Sie hier genau, welcher besondere, regelmäßige Bedarf besteht und warum dieser unabweisbar ist."></textarea>
+            <label for="textUnabweisbar">Begründung: <small>(z.B. Fahrtkosten zum Kind, Warmwasser über Strom)</small></label>
+            <textarea id="textUnabweisbar" rows="4" placeholder="Beispiel 1: Ich übe mein Umgangsrecht mit meinem Kind (lebt getrennt) regelmäßig aus. Hierfür entstehen Fahrtkosten/Verpflegungskosten, die unabweisbar sind.
+Beispiel 2: Mein Warmwasser wird dezentral über einen Durchlauferhitzer erzeugt. Mir steht der Mehrbedarf nach § 21 Abs. 7 SGB II zu."></textarea>
         </div>
 
-        <label for="ergaenzendeArgumenteMehrbedarf" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente zu Ihrem Widerspruch:</label>
-        <textarea id="ergaenzendeArgumenteMehrbedarf" rows="4" placeholder="Hier können Sie Ihren Fall detaillierter schildern oder weitere Punkte anführen."></textarea>
+        <label for="ergaenzendeArgumenteMehrbedarf" style="margin-top: 1.5rem;">Ergänzende Begründung:</label>
+        <textarea id="ergaenzendeArgumenteMehrbedarf" rows="4"></textarea>
     </fieldset>
 
     <fieldset>
-        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
-        <label for="forderungMehrbedarf">Was fordern Sie vom Jobcenter?</label>
-        <textarea id="forderungMehrbedarf" rows="3" required placeholder="z.B. Ich beantrage die Aufhebung des genannten Bescheides und die Gewährung des Mehrbedarfs für [Grund] ab dem [Datum]."></textarea>
+        <legend>5. Konkreter Antrag</legend>
+        <label for="forderungMehrbedarf">Was soll das Jobcenter tun?</label>
+        <textarea id="forderungMehrbedarf" rows="3" required placeholder="Ich beantrage die Aufhebung des Ablehnungsbescheides und die Gewährung des gesetzlichen Mehrbedarfs ab Antragstellung."></textarea>
     </fieldset>
 
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Gesundheitsdaten bleiben lokal. Keine Speicherung.
+    </div>
 
     <div class="button-group">
-      <button type="button" id="saveBtnMehrbedarf" class="button-secondary">Speichern</button>
-      <button type="button" id="loadBtnMehrbedarf" class="button-secondary">Laden</button>
-      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF erstellen und weiter</button>
+      <button type="button" id="saveBtnMehrbedarf" class="button-secondary" title="Lokal Speichern">Speichern</button>
+      <button type="button" id="loadBtnMehrbedarf" class="button-secondary" title="Laden">Laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF Widerspruch erstellen</button>
     </div>
   </form>
 </div> 
 
 <footer>
   <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+  <p>Ernährungsmehrbedarf abgelehnt?</p>
+  <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
 </footer>
 
 </body>
 </html>
-

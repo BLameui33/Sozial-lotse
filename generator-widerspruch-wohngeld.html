@@ -2,123 +2,180 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Widerspruch gegen Wohngeldbescheid erstellen | Sozial-Lotse</title>
-  <meta name="description" content="Erstellen Sie Ihren Widerspruch gegen einen fehlerhaften Wohngeldbescheid. Für Ablehnung, falsche Berechnung der Miete, des Einkommens oder der Haushaltsmitglieder.">
-  <meta name="keywords" content="Widerspruch Wohngeld, Wohngeldbescheid, Wohngeldstelle, Ablehnung, Berechnung, Miete, Einkommen, Generator, Vorlage, Sozial-Lotse">
+  <title>Widerspruch Wohngeldbescheid (Wohngeld-Plus) | Sozial-Lotse</title>
+  
+  
+  <meta name="description" content="Erstellen Sie einen Widerspruch gegen Ihren Wohngeldbescheid. Nutzen Sie die Verbesserungen durch Wohngeld-Plus (Heizkostenzuschuss, Klimakomponente) und klären Sie Mindesteinkommen.">
+  <meta name="keywords" content="Widerspruch Wohngeld Muster, Wohngeld Plus Berechnung falsch, Heizkostenzuschuss Wohngeld fehlt, Mindesteinkommen Plausibilitätsprüfung, Klimakomponente vergessen, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
   <link rel="icon" href="/logo-lotse-fav.png">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="wohngeld_widerspruch_script.js"></script>
   <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org: GovernmentService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator für Wohngeld-Widerspruch",
+    "description": "Tool zur Korrektur von Wohngeldbescheiden unter Berücksichtigung der Wohngeld-Plus-Reform (Heizkosten, Klima, Einkommen).",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Mieter und Eigentümer mit geringem Einkommen"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2025-12-13"
+  }
+  </script>
 </head>
 <body>
 
-  <header class="site-header">
+<header class="site-header">
     <a href="index.html" class="site-logo">Sozial-Lotse</a>
 </header>
 
 <div class="page-container">
-  <h1>Widerspruch gegen einen Wohngeldbescheid</h1>
-  <div class="warning-box">
-    <p><strong>Wichtiger Hinweis:</strong> Ein Widerspruch gegen einen Wohngeldbescheid muss in der Regel <strong>innerhalb eines Monats</strong> nach Erhalt schriftlich bei der zuständigen Wohngeldbehörde eingehen. Prüfen Sie die Rechtsbehelfsbelehrung am Ende Ihres Bescheides!</p>
-    <p>Dieses Tool hilft Ihnen, einen begründeten Widerspruch zu formulieren.</p>
+  <h1>Widerspruch: Wohngeldbescheid</h1>
+  
+  
+  <div class="info-box">
+    <p>Durch die <strong>"Wohngeld-Plus"-Reform</strong> sind die Leistungen deutlich gestiegen. Prüfen Sie, ob der neue <strong>dauerhafte Heizkostenzuschuss</strong> (nach Haushaltsgröße gestaffelt) und die <strong>Klimakomponente</strong> (bei neueren/sanierten Gebäuden) in Ihrem Bescheid enthalten sind. Fehlen diese, ist der Bescheid falsch!</p>
   </div>
-<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+
+  <div class="warning-box">
+    <p><strong>Ablehnung wegen "fehlendem Mindesteinkommen"?</strong>
+    <br>Das Amt darf nur ablehnen, wenn Ihre Angaben zur Finanzierung des Lebensunterhalts unplausibel sind. Haben Sie Ersparnisse oder erhalten Sie Unterstützung von Verwandten? Geben Sie das an! Damit erfüllen Sie die Plausibilitätsprüfung oft doch noch.</p>
+  </div>
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Rentner & Freibeträge:</strong> Für Menschen mit Schwerbehinderung ("G" oder 100%) oder Pflegegrad (häusliche Pflege) gibt es hohe Freibeträge (bis zu 1.800 € jährlich) beim Einkommen. Wurden diese abgezogen?
+  </p>
+
+  <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+  
+  <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+    <strong>Technischer Hinweis:</strong> Wir empfehlen <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser (z.B. Facebook) blockieren oft den PDF-Download.
+  </p>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">22.12.2025</span> | Geprüft auf Wohngeld-Plus-Gesetz (WoGG).</p>
+  </div>
 
   <form id="widerspruchWohngeldForm">
     <fieldset>
-      <legend>1. Ihre Persönlichen Angaben (Antragsteller:in)</legend>
-      <label for="personName">Vor- und Nachname (aller im Haushalt lebenden Antragsteller):</label>
-      <input type="text" id="personName" required>
-      <label for="aktenzeichenWohngeld">Ihr Aktenzeichen / Ihre Wohngeldnummer:</label>
-      <input type="text" id="aktenzeichenWohngeld" required>
-      <label for="anzahlPersonenWohngeld">Legen Sie Widerspruch für den gesamten Haushalt ein?</label>
+      <legend>1. Ihre Persönlichen Angaben</legend>
+      <label for="personName">Vor- und Nachname (Antragsteller):</label>
+      <input type="text" id="personName" required autocomplete="name">
+      
+      <label for="aktenzeichenWohngeld">Wohngeldnummer / Aktenzeichen:</label>
+      <input type="text" id="aktenzeichenWohngeld" required placeholder="Steht oben rechts im Bescheid">
+      
+      <label for="anzahlPersonenWohngeld">Für wen legen Sie Widerspruch ein?</label>
       <select id="anzahlPersonenWohngeld" required>
-        <option value="mehrerePersonen" selected>Ja, für unseren gesamten Haushalt (wir)</option>
-        <option value="einzelperson">Nein, nur für mich als Einzelperson (ich)</option>
+        <option value="mehrerePersonen" selected>Für den gesamten Haushalt (wir)</option>
+        <option value="einzelperson">Nur für mich (Einzelperson)</option>
       </select>
+      
       <label for="personAdresse">Straße und Hausnummer:</label>
-      <input type="text" id="personAdresse" required>
+      <input type="text" id="personAdresse" required autocomplete="street-address">
+      
       <label for="personPlz">Postleitzahl:</label>
-      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required>
+      <input type="text" id="personPlz" pattern="[0-9]{5}" title="Bitte 5-stellige PLZ eingeben" required autocomplete="postal-code">
+      
       <label for="personOrt">Wohnort:</label>
-      <input type="text" id="personOrt" required>
+      <input type="text" id="personOrt" required autocomplete="address-level2">
     </fieldset>
 
     <fieldset>
-        <legend>2. Angaben zur Wohngeldbehörde</legend>
-        <label for="behoerdeName">Name der Wohngeldbehörde (laut Bescheid):</label>
-        <input type="text" id="behoerdeName" required placeholder="z.B. Landkreis Muster, Fachdienst Soziales, Wohngeldstelle">
+        <legend>2. Angaben zur Behörde</legend>
+        <label for="behoerdeName">Wohngeldbehörde:</label>
+        <input type="text" id="behoerdeName" required placeholder="z.B. Stadtamt Bremen, Wohngeldstelle">
+        
         <label for="behoerdeAdresse">Anschrift der Behörde:</label>
         <textarea id="behoerdeAdresse" rows="3" required></textarea>
     </fieldset>
 
     <fieldset>
-        <legend>3. Angaben zum angefochtenen Bescheid</legend>
-        <label for="bescheidDatum">Datum des Wohngeldbescheides:</label>
+        <legend>3. Angaben zum Bescheid</legend>
+        <label for="bescheidDatum">Datum des Bescheides:</label>
         <input type="date" id="bescheidDatum" required>
-        <label for="bescheidInhalt">Was hat die Behörde entschieden? <small>(z.B. Ablehnung des Antrags, zu geringe Höhe des Wohngeldes)</small></label>
-        <textarea id="bescheidInhalt" rows="2" required placeholder="z.B. Ablehnung meines Antrags auf Wohngeld. / Bewilligung von nur 50 € Wohngeld pro Monat."></textarea>
+        
+        <label for="bescheidInhalt">Entscheidung der Behörde:</label>
+        <textarea id="bescheidInhalt" rows="2" required placeholder="z.B. Ablehnung wegen fehlendem Mindesteinkommen oder zu geringe Bewilligung."></textarea>
     </fieldset>
     
     <fieldset>
-        <legend>4. Gründe für Ihren Widerspruch</legend>
-        <p class="info-box">Wählen Sie die zutreffenden Gründe aus, warum die Entscheidung falsch ist, und erläutern Sie diese so genau wie möglich.</p>
+        <legend>4. Widerspruchsgründe</legend>
+        <div class="instruction-text" style="font-size:0.9em; color:#555;">
+            Warum ist der Bescheid falsch?
+        </div>
         
         <div class="checkbox-group">
-            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="ablehnung"> Der Antrag auf Wohngeld wurde zu Unrecht vollständig abgelehnt.</label>
+            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="ablehnung"> <strong>Ablehnung / Mindesteinkommen:</strong> Lebensunterhalt ist gesichert.</label>
         </div>
         <div id="detailsAblehnung" class="sub-details">
-            <label for="textAblehnung">Begründung: <small>(Warum sind die Voraussetzungen für Wohngeld Ihrer Meinung nach erfüllt? Wurde z.B. Ihr Anspruch fälschlicherweise ausgeschlossen, weil Sie angeblich eine andere Sozialleistung erhalten, die Wohngeld ausschließt?)</small></label>
-            <textarea id="textAblehnung" rows="3" placeholder="z.B. Sie begründen die Ablehnung damit, dass ich Anspruch auf BAföG hätte. Dies ist nicht korrekt, da..."></textarea>
+            <label for="textAblehnung">Begründung: 
+                <small>(Wie decken Sie die Lücke? Ersparnisse? Verwandte?)</small>
+            </label>
+            <textarea id="textAblehnung" rows="3" placeholder="Beispiel: Die Ablehnung wegen fehlender Plausibilität ist unbegründet. Ich bestreite meinen Lebensunterhalt zusätzlich durch Ersparnisse / Unterstützung durch Verwandte (siehe Anlage). Damit ist das Mindesteinkommen gedeckt."></textarea>
         </div>
 
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="haushaltsmitglieder"> Die Anzahl der zu berücksichtigenden Haushaltsmitglieder ist falsch.</label>
+            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="miete"> <strong>Miete & Zuschüsse:</strong> Heizkosten/Klima-Komponente fehlen.</label>
         </div>
-        <div id="detailsHaushaltsmitglieder" class="sub-details">
-            <label for="textHaushaltsmitglieder">Erläuterung: <small>(Welche Personen wurden nicht oder fälschlicherweise mitgezählt? Die Anzahl der Haushaltsmitglieder ist entscheidend für die Höhe des Anspruchs.)</small></label>
-            <textarea id="textHaushaltsmitglieder" rows="3" placeholder="z.B. Sie haben unser Kind [Name], geboren am TT.MM.JJJJ, nicht als Haushaltsmitglied berücksichtigt. Wir sind somit ein 3-Personen-Haushalt."></textarea>
+        <div id="detailsMiete" class="sub-details">
+            <label for="textMiete">Erläuterung:</label>
+            <textarea id="textMiete" rows="3" placeholder="Beispiel: Der pauschale Heizkostenzuschuss nach § 12 Abs. 6 WoGG wurde nicht berücksichtigt. Zudem fehlt die Klimakomponente, obwohl mein Gebäude energetisch saniert ist (Nachweis liegt bei)."></textarea>
         </div>
         
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="miete"> Die Höhe der zu berücksichtigenden Miete ist falsch angesetzt.</label>
+            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="haushaltsmitglieder"> <strong>Haushaltsmitglieder:</strong> Personenzahl ist falsch.</label>
         </div>
-        <div id="detailsMiete" class="sub-details">
-            <label for="textMiete">Erläuterung: <small>(Wurde Ihre Kaltmiete oder wurden die kalten Nebenkosten falsch erfasst? Wurde die Miete als unangemessen hoch bewertet, obwohl sie den lokalen Höchstbeträgen entspricht?)</small></label>
-            <textarea id="textMiete" rows="3" placeholder="z.B. Sie haben nur einen Teil meiner tatsächlichen Miete von [Betrag] € berücksichtigt. Die Miete liegt jedoch innerhalb der für [Ort] geltenden Angemessenheitsgrenze."></textarea>
+        <div id="detailsHaushaltsmitglieder" class="sub-details">
+            <label for="textHaushaltsmitglieder">Erläuterung:</label>
+            <textarea id="textHaushaltsmitglieder" rows="3" placeholder="Beispiel: Unser neugeborenes Kind [Name] wurde bei der Berechnung der Haushaltsgröße noch nicht berücksichtigt. Wir sind nun [Anzahl] Personen."></textarea>
         </div>
 
         <div class="checkbox-group" style="margin-top: 1rem;">
-            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="einkommen"> Das zu berücksichtigende Gesamteinkommen wurde falsch berechnet.</label>
+            <label><input type="checkbox" name="widerspruchsgrundWohngeld" value="einkommen"> <strong>Einkommensberechnung:</strong> Abzüge/Freibeträge fehlen.</label>
         </div>
         <div id="detailsEinkommen" class="sub-details">
-            <label for="textEinkommen">Erläuterung: <small>(Wurde Einkommen angerechnet, das nicht anrechenbar ist? Wurden gesetzliche Freibeträge (z.B. 10%, 20%, 30% vom Einkommen je nach Höhe) oder Abzugsbeträge für Steuern und Sozialabgaben nicht oder falsch berücksichtigt?)</small></label>
-            <textarea id="textEinkommen" rows="4" placeholder="z.B. Sie haben bei der Berechnung meines Einkommens die gesetzlichen Freibeträge nicht berücksichtigt. / Das Einkommen meines Kindes wurde falsch angerechnet."></textarea>
+            <label for="textEinkommen">Erläuterung: 
+                <small>(Schwerbehindertenfreibetrag? Werbungskosten?)</small>
+            </label>
+            <textarea id="textEinkommen" rows="4" placeholder="Beispiel: Der Freibetrag für Schwerbehinderung (§ 17 WoGG) von 1.800 € wurde nicht vom Einkommen abgezogen. Auch die Werbungskosten wurden zu niedrig angesetzt."></textarea>
         </div>
 
-        <label for="ergaenzendeArgumenteWohngeld" style="margin-top: 1.5rem;">Weitere/ergänzende Argumente zu Ihrem Widerspruch:</label>
-        <textarea id="ergaenzendeArgumenteWohngeld" rows="5" placeholder="Hier können Sie weitere wichtige Aspekte anführen, die für Ihren Widerspruch relevant sind."></textarea>
+        <label for="ergaenzendeArgumenteWohngeld" style="margin-top: 1.5rem;">Ergänzende Begründung:</label>
+        <textarea id="ergaenzendeArgumenteWohngeld" rows="5"></textarea>
     </fieldset>
 
     <fieldset>
-        <legend>5. Ihr Antrag im Widerspruchsverfahren</legend>
-        <label for="forderungWohngeld">Was fordern Sie von der Wohngeldbehörde?</label>
-        <textarea id="forderungWohngeld" rows="3" required placeholder="z.B. Ich beantrage die Aufhebung des Bescheides und die Neuberechnung meines Wohngeldanspruchs unter Berücksichtigung der korrekten Daten sowie die Nachzahlung der Differenzbeträge."></textarea>
+        <legend>5. Konkreter Antrag</legend>
+        <label for="forderungWohngeld">Was fordern Sie?</label>
+        <textarea id="forderungWohngeld" rows="3" required placeholder="Ich beantrage die Aufhebung des Bescheides und eine Neuberechnung unter Berücksichtigung der Wohngeld-Plus-Leistungen sowie der korrekten Einkommensdaten."></textarea>
     </fieldset>
 
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Finanzdaten bleiben lokal. Die PDF wird im Browser erstellt.
+    </div>
+
     <div class="button-group">
-      <button type="button" id="saveBtnWohngeld" class="button-secondary">Speichern</button>
-      <button type="button" id="loadBtnWohngeld" class="button-secondary">Laden</button>
-      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF erstellen und weiter</button>
+      <button type="button" id="saveBtnWohngeld" class="button-secondary" title="Lokal Speichern">Speichern</button>
+      <button type="button" id="loadBtnWohngeld" class="button-secondary" title="Laden">Laden</button>
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white;">PDF Widerspruch erstellen</button>
     </div>
   </form>
 </div> 
@@ -128,9 +185,8 @@
   <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
   <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
   </div>
-    <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
+  <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
 </footer>
 
 </body>
 </html>
-

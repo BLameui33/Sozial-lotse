@@ -2,89 +2,138 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Generator: Antrag auf Fiktionsbescheinigung | Sozial-Lotse</title>
-    <meta name="description" content="Erstellen Sie hier Ihren formalen Antrag auf eine Fiktionsbescheinigung bei Ihrer Ausländerbehörde, wenn Ihr Aufenthaltstitel abläuft und kein Termin verfügbar ist.">
+    <title>Antrag auf Fiktionsbescheinigung (§ 81 AufenthG) | Sozial-Lotse</title>
+    
+    <!-- SEO & YMYL: Spezifische Keywords zur Fiktionswirkung -->
+    <meta name="description" content="Erstellen Sie einen formlosen Antrag auf Fiktionsbescheinigung gemäß § 81 Abs. 4 AufenthG. Sichern Sie Ihren Aufenthaltsstatus bei untätiger Ausländerbehörde.">
+    <meta name="keywords" content="Fiktionsbescheinigung Antrag, § 81 AufenthG, Aufenthaltstitel abgelaufen, Ausländerbehörde Termin, Fiktionswirkung, Sozial-Lotse">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Sozial-Lotse Redaktion">
     <link rel="icon" href="/logo-lotse-fav.png">
-   <link rel="stylesheet" href="/css/generator.css">
+    <link rel="stylesheet" href="/css/generator.css">
+
+    <!-- Externe Libs hier laden, damit sie verfügbar sind -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Schema.org für Behörden-Dienstleistung -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Generator für Fiktionsbescheinigungs-Antrag",
+      "description": "Tool zur Erstellung eines Antrags auf Fortgeltung des Aufenthaltstitels nach § 81 AufenthG.",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Menschen mit befristetem Aufenthaltstitel"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Sozial-Lotse"
+      },
+      "dateModified": "2025-12-13"
+    }
+    </script>
 </head>
 <body>
     <header class="site-header"><a href="index.html" class="site-logo">Sozial-Lotse</a></header>
 
     <div class="page-container">
-        <h1>Generator: Antrag auf Fiktionsbescheinigung</h1>
-        <div class="warning-box"><p>Stellen Sie diesen Antrag, **bevor** Ihr aktueller Aufenthaltstitel abläuft! Senden Sie das erstellte PDF am besten per Einschreiben an Ihre Ausländerbehörde, um einen Nachweis zu haben.</p></div>
+        <h1>Antrag auf Fiktionsbescheinigung erstellen</h1>
+        
+       
+        <div class="info-box">
+            <p><strong>Wichtige Rechtsinfo:</strong> Wenn Sie diesen Antrag stellen, <strong>bevor</strong> Ihr aktueller Titel abläuft, tritt meist die sogenannte <strong>Fiktionswirkung nach § 81 Abs. 4 AufenthG</strong> ein. Das bedeutet: Ihr Aufenthalt gilt als erlaubt weiter, bis die Behörde über Ihren Antrag entschieden hat. Nutzen Sie dieses Schreiben, wenn Sie keinen Termin bekommen.</p>
+        </div>
 
-<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
-  <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
+        <div class="warning-box">
+            <p><strong>Nachweis ist alles!</strong> Senden Sie diesen Antrag unbedingt per <strong>Einwurf-Einschreiben</strong> oder Fax mit Sendebericht. Sie müssen im Zweifel beweisen können, dass der Antrag <em>vor</em> Ablauf Ihres alten Titels bei der Behörde einging.</p>
+        </div>
+
+        <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+          <strong>Hinweis:</strong> Dieses Tool ersetzt keine anwaltliche Vertretung im Ausländerrecht. Es dient als Erste-Hilfe-Maßnahme zur Fristwahrung.
+        </p>
+
+        <p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+  <strong>Wichtiger Hinweis:</strong> Dieses Tool stellt keine Rechtsberatung dar und ersetzt keine individuelle Prüfung Ihres Bescheides.
+  Es dient als Unterstützung bei der Formulierung eines Widerspruchs.  
+  Bitte prüfen Sie das erzeugte Schreiben sorgfältig selbst und wenden Sie sich bei Unsicherheiten an eine anerkannte Beratungsstelle oder eine Fachanwältin / einen Fachanwalt.
 </p>
-<p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
-  <strong>Technischer Hinweis:</strong> Um das PDF erfolgreich herunterzuladen, öffnen Sie diese Seite bitte in einem Internet-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In der Google-App (z. B. über die Suchleiste auf dem Startbildschirm) funktioniert der Download leider nicht zuverlässig.
-</p>
-<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">13.12.2025</span></p>
-</div>
+
+        <p class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 10px;">
+          <strong>Technischer Hinweis:</strong> Bitte nutzen Sie <strong>Chrome, Firefox oder Safari</strong> für den PDF-Download. In-App-Browser (Instagram, Facebook, Google App) verursachen oft Fehler.
+        </p>
+
+        <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+          <p><strong>Redaktionell geprüft:</strong> <span id="pruefdatum">22.12.2025</span> | Basis: AufenthG & VwVfG</p>
+        </div>
 
         <form id="formFiktion">
             <fieldset>
                 <legend>1. Ihre Persönlichen Angaben</legend>
                 <label for="personName">Vor- und Nachname:</label>
-                <input type="text" id="personName" required>
+                <input type="text" id="personName" required autocomplete="name">
 
                 <label for="geburtsdatum">Geburtsdatum:</label>
-                <input type="date" id="geburtsdatum" required>
+                <input type="date" id="geburtsdatum" required autocomplete="bday">
                 
                 <label for="staatsangehoerigkeit">Staatsangehörigkeit:</label>
                 <input type="text" id="staatsangehoerigkeit" required>
 
                 <label for="personAdresse">Aktuelle Anschrift (Straße, Hausnummer, PLZ, Ort):</label>
-                <textarea id="personAdresse" rows="3" required></textarea>
+                <textarea id="personAdresse" rows="3" required autocomplete="street-address"></textarea>
             </fieldset>
 
             <fieldset>
                 <legend>2. Angaben zum aktuellen Aufenthaltstitel</legend>
-                <label for="artTitel">Art Ihres Aufenthaltstitels:<small>z.B. Aufenthaltserlaubnis nach § 25 Abs. 3, Blaue Karte EU, etc.</small></label>
-                <input type="text" id="artTitel" required>
+                <label for="artTitel">Art Ihres Aufenthaltstitels:<small>Schauen Sie auf Ihre Karte/Zusatzblatt (z.B. "Aufenthaltserlaubnis gem. § 18b Abs. 1")</small></label>
+                <input type="text" id="artTitel" required placeholder="z.B. Aufenthaltserlaubnis zum Studium § 16b">
 
-                <label for="ablaufDatum">Gültig bis (Ablaufdatum):</small></label>
+                <label for="ablaufDatum">Gültig bis (Ablaufdatum):</label>
                 <input type="date" id="ablaufDatum" required>
 
-                <label for="aktenzeichen">Aktenzeichen / AZR-Nummer (falls bekannt):<small>Diese Nummern finden Sie auf Schreiben der Ausländerbehörde oder auf Ihrem Titel.</small></label>
+                <label for="aktenzeichen">Aktenzeichen / AZR-Nummer (falls bekannt):<small>Hilft der Behörde, Ihre Akte schneller zu finden.</small></label>
                 <input type="text" id="aktenzeichen">
             </fieldset>
             
             <fieldset>
                 <legend>3. Nachweis der Terminsuche</legend>
-                <label for="terminNachweis">Wie und wann haben Sie versucht, einen Verlängerungsantrag zu stellen?<small>Beschreiben Sie hier genau Ihre Bemühungen. Dies ist der wichtigste Teil des Antrags!</small></label>
-                <textarea id="terminNachweis" rows="5" required placeholder="z.B.&#10;- Ich habe am [Datum] versucht, über das Online-Portal einen Termin zu buchen. Es wurden keine Termine angezeigt.&#10;- Ich habe am [Datum] eine E-Mail an [E-Mail-Adresse] geschrieben und um einen Termin gebeten (siehe Kopie in Anlage).&#10;- Ich habe mehrfach versucht, telefonisch durchzukommen."></textarea>
+                <div class="instruction-text" style="font-size: 0.9em; color:#555; margin-bottom:10px;">
+                    <p><strong>Warum ist das wichtig?</strong> Sie müssen zeigen, dass Sie sich gekümmert haben. Dokumentieren Sie jeden Anruf und jeden Screenshot der Webseite.</p>
+                </div>
+                <label for="terminNachweis">Dokumentation Ihrer Bemühungen:</label>
+                <textarea id="terminNachweis" rows="5" required placeholder="Beispiel:&#10;Am [Datum] habe ich vergeblich versucht, online einen Termin zu buchen (Screenshot anbei).&#10;Am [Datum] habe ich eine E-Mail an [Adresse] gesendet, aber keine Antwort erhalten."></textarea>
             </fieldset>
 
             <fieldset>
                 <legend>4. Zuständige Ausländerbehörde</legend>
                 <label for="behoerdeName">Name der Ausländerbehörde:</label>
-                <input type="text" id="behoerdeName" required placeholder="z.B. Ausländerbehörde Lüneburg">
+                <input type="text" id="behoerdeName" required placeholder="z.B. Landesamt für Einwanderung (LEA) Berlin">
                 
                 <label for="behoerdeAdresse">Vollständige Anschrift der Behörde:</label>
                 <textarea id="behoerdeAdresse" rows="3" required></textarea>
             </fieldset>
             
+            <!-- Trust-Signal Datenschutz -->
+            <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+                <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Keine Datenübertragung an uns. Das PDF wird lokal in Ihrem Gerät generiert.
+            </div>
+
             <div class="button-group">
-                <button type="submit" class="button-primary">PDF erstellen und weiter</button>
+                <button type="submit" class="button-primary">PDF Antrag erstellen</button>
             </div>
         </form>
     </div>
 
     <footer>
         <div class="mini-footer-hint">
-  <p>Brauchen Sie mehr Unterstützung bei Anträgen, Behördenbriefen oder komplexen Schreiben?</p>
-  <a href="https://clerion.de" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
-  </div>
-        <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
+            <p>Brauchen Sie Unterstützung im Ausländerrecht?</p>
+            <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Ihr digitaler Behörden-Assistent</a>
+        </div>
+        <p>&copy; 2025 Sozial-Lotse | <a href="über.html">Redaktion</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="index.html">Zurück zur Startseite</a></p>
     </footer>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Scripts am Ende laden (JSPDF wurde oben bereits geladen, hier nur die Custom Scripts) -->
     <script src="pdf-generators.js"></script>
     <script src="fiktionsbescheinigung-script.js"></script>
 </body>
-
 </html>
