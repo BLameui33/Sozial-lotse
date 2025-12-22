@@ -1,6 +1,6 @@
 // mahnung-ampel.js
-// Bewertet das Eskalationsrisiko bei Schulden/Mahnungen
-// YMYL-Optimiert: Klare Unterscheidung zwischen privatem Inkasso und gerichtlichem Mahnverfahren.
+// Tool zur strukturierten Einschätzung des Eskalationsrisikos bei offenen Forderungen.
+// Hinweis: Keine Rechtsberatung. Die Ergebnisse dienen ausschließlich der Orientierung.
 
 /* --- Hilfsfunktionen --- */
 function n(el) { 
@@ -17,15 +17,14 @@ function euro(v) {
 document.addEventListener("DOMContentLoaded", () => {
     const inputs = {
         betrag: document.getElementById("mr_betrag"),
-        stufe: document.getElementById("mr_stufe"),         // 1, 2, 3, inkasso, mb
-        vereinbarung: document.getElementById("mr_vereinbarung") // nein, ja, gebrochen
+        stufe: document.getElementById("mr_stufe"),
+        vereinbarung: document.getElementById("mr_vereinbarung")
     };
 
     const btn = document.getElementById("mr_berechnen");
     const reset = document.getElementById("mr_reset");
     const out = document.getElementById("mr_ergebnis");
 
-    // --- LOGIK ---
     btn.addEventListener("click", () => {
         out.innerHTML = ""; 
 
@@ -34,83 +33,82 @@ document.addEventListener("DOMContentLoaded", () => {
         const agreement = inputs.vereinbarung.value; 
 
         if (amount <= 0) {
-            out.innerHTML = `<div class="warning-box" style="background:#fff3cd; color:#856404; padding:10px; border-radius:4px;">Bitte geben Sie einen Betrag größer 0 an.</div>`;
+            out.innerHTML = `<div class="warning-box" style="background:#fff3cd; color:#856404; padding:10px; border-radius:4px;">
+            Bitte geben Sie einen offenen Betrag an, um eine Einschätzung zu erhalten.
+            </div>`;
             return;
         }
 
-        // Variablen initialisieren
-        let colorCode = "green"; // green, yellow, orange, red
+        let colorCode = "green";
         let headline = "";
         let analysis = "";
         let todos = [];
         let urgentNote = "";
 
-        // --- RISIKO-ANALYSE ---
+        // --- RISIKO-EINORDNUNG ---
 
-        // Prio 1: Gerichtlicher Mahnbescheid (Der "Gelbe Brief")
+        // Gerichtlicher Mahnbescheid
         if (level === "mb") {
             colorCode = "red";
-            headline = "AKUTE GEFAHR: Gerichtlicher Mahnbescheid";
-            analysis = "Sie haben Post vom Amtsgericht erhalten. Dies ist <strong>keine normale Mahnung</strong> mehr! Wenn Sie jetzt nichts tun, wird die Forderung in wenigen Wochen vollstreckbar (Gerichtsvollzieher/Kontopfändung), selbst wenn sie unberechtigt war.";
+            headline = "Sehr dringender Handlungsbedarf: Gerichtlicher Mahnbescheid";
+            analysis = "Sie geben an, ein Schreiben vom Amtsgericht erhalten zu haben. Dabei handelt es sich nicht mehr um eine einfache Mahnung, sondern um einen formellen gerichtlichen Schritt.";
             
-            urgentNote = "Handeln Sie sofort! Die Frist beträgt genau 2 Wochen ab Zustellung.";
+            urgentNote = "Für einen Widerspruch gilt eine gesetzliche Frist von 14 Tagen ab Zustellung.";
             
-            todos.push("<strong>Schritt 1:</strong> Prüfen Sie sofort: Ist die Forderung berechtigt?");
-            todos.push("<strong>Wenn NEIN:</strong> Senden Sie den beiliegenden Widerspruchsvordruck binnen 14 Tagen an das Gericht zurück (Einschreiben).");
-            todos.push("<strong>Wenn JA:</strong> Zahlen Sie sofort die Gesamtsumme, um einen Vollstreckungsbescheid zu verhindern.");
+            todos.push("Prüfen Sie sorgfältig, ob die Forderung Ihrer Ansicht nach berechtigt ist.");
+            todos.push("Wenn Sie die Forderung bestreiten möchten, nutzen Sie den offiziellen Widerspruchsvordruck des Gerichts innerhalb der Frist.");
+            todos.push("Wenn Sie die Forderung anerkennen, kann eine zeitnahe Zahlung weitere Schritte vermeiden.");
 
-        // Prio 2: Gebrochene Ratenzahlungsvereinbarung
+        // Gebrochene Ratenzahlung
         } else if (agreement === "gebrochen") {
             colorCode = "red";
-            headline = "Hohes Risiko: Vereinbarung geplatzt";
-            analysis = "Da die vereinbarte Ratenzahlung nicht eingehalten wurde, wird meist die <strong>gesamte Restschuld sofort fällig</strong>. Der Gläubiger wird vermutlich Inkasso oder Anwälte einschalten.";
+            headline = "Erhöhtes Risiko nach Nichteinhaltung einer Vereinbarung";
+            analysis = "Wenn eine vereinbarte Ratenzahlung nicht eingehalten wird, können Gläubiger weitere Maßnahmen prüfen oder zusätzliche Stellen einschalten.";
             
-            todos.push("Rufen Sie den Gläubiger **heute** an. Erklären Sie ehrlich, warum die Rate ausgefallen ist.");
-            todos.push("Bieten Sie sofort eine Ersatz-Zahlung an, um 'Goodwill' zu zeigen.");
-            todos.push("Schlagen Sie schriftlich einen neuen, realistischen Ratenplan vor.");
+            todos.push("Nehmen Sie zeitnah Kontakt mit dem Gläubiger auf und erläutern Sie Ihre Situation.");
+            todos.push("Prüfen Sie, ob eine kurzfristige Teilzahlung möglich ist.");
+            todos.push("Erwägen Sie, einen neuen realistischen Zahlungsplan vorzuschlagen.");
 
-        // Prio 3: Inkasso oder Letzte Mahnung
+        // Inkasso oder letzte Mahnung
         } else if (level === "inkasso" || level === "3") {
             colorCode = "orange";
-            headline = "Kritische Phase: Kostenfalle";
+            headline = "Kritische Phase: Zusätzliche Kosten möglich";
             
             if (level === "inkasso") {
-                analysis = "Ein Inkassobüro wurde beauftragt. Das verursacht hohe Zusatzkosten. Ein SCHUFA-Eintrag droht, wenn die Forderung unbestritten bleibt.";
-                todos.push("Prüfen Sie die Inkasso-Gebühren (oft überhöht!). Zahlen Sie nur berechtigte Kosten.");
+                analysis = "Nach Ihrer Angabe wurde ein Inkassounternehmen eingeschaltet. Dadurch können zusätzliche Gebühren entstehen. Nicht jede Kostenposition ist automatisch berechtigt.";
+                todos.push("Überprüfen Sie die geltend gemachten Inkassokosten sorgfältig.");
             } else {
-                analysis = "Dies ist die letzte Warnung vor der Übergabe an ein Inkassobüro oder einen Anwalt. Handeln Sie jetzt, um teure Gebühren zu vermeiden.";
+                analysis = "Dies scheint eine fortgeschrittene Mahnstufe zu sein. Häufig folgt danach die Übergabe an Inkasso oder anwaltliche Vertretung.";
             }
             
-            todos.push("Wenn Sie zahlen können: Überweisen Sie sofort (am besten direkt an den Ursprungsgläubiger).");
-            todos.push("Wenn Sie NICHT zahlen können: Suchen Sie eine Schuldnerberatung auf. Ignorieren macht es teurer!");
+            todos.push("Wenn möglich, klären Sie die Forderung zeitnah, um weitere Kosten zu vermeiden.");
+            todos.push("Falls eine Zahlung aktuell nicht möglich ist, kann eine Schuldnerberatungsstelle unterstützen.");
 
-        // Prio 4: Vereinbarung läuft aktiv
+        // Laufende Vereinbarung
         } else if (agreement === "ja") {
             colorCode = "green";
-            headline = "Situation unter Kontrolle";
-            analysis = "Solange Sie die vereinbarte Ratenzahlung pünktlich leisten, sind keine weiteren rechtlichen Schritte zu befürchten.";
+            headline = "Aktuell stabile Situation";
+            analysis = "Solange die vereinbarte Ratenzahlung eingehalten wird, bestehen in der Regel keine unmittelbaren weiteren Schritte.";
             
-            todos.push("Richten Sie einen Dauerauftrag ein, um keine Rate zu vergessen.");
-            todos.push("Sollte es finanziell eng werden: Melden Sie sich **vor** der Fälligkeit beim Gläubiger.");
+            todos.push("Achten Sie auf pünktliche Zahlungen, z.B. per Dauerauftrag.");
+            todos.push("Sollten sich finanzielle Schwierigkeiten abzeichnen, informieren Sie den Gläubiger frühzeitig.");
 
-        // Prio 5: Frühe Mahnstufen
+        // Frühe Mahnstufen
         } else {
-            // Stufe 1 oder 2
             if (level === "2") {
                 colorCode = "yellow";
-                headline = "Handlungsbedarf: Erste Gebühren";
-                analysis = "Es fallen erste Mahngebühren an. Noch besteht keine akute Gefahr für SCHUFA oder Gericht, aber das Zeitfenster schließt sich.";
-                todos.push("Zahlen Sie die Rechnung jetzt, um weitere Kosten zu vermeiden.");
+                headline = "Früher Handlungsbedarf";
+                analysis = "Es fallen möglicherweise erste Mahngebühren an. Rechtliche Schritte sind in dieser Phase meist noch nicht eingeleitet.";
+                todos.push("Prüfen Sie die Forderung und begleichen Sie sie zeitnah, sofern sie berechtigt ist.");
             } else {
                 colorCode = "green";
                 headline = "Zahlungserinnerung";
-                analysis = "Das kann jedem mal passieren. In dieser Stufe fallen oft noch keine oder nur sehr geringe Gebühren an.";
-                todos.push("Überweisen Sie den Betrag in den nächsten Tagen.");
-                todos.push("Prüfen Sie, ob sich Ihre Zahlung mit dem Brief überschnitten hat.");
+                analysis = "Diese Stufe ist häufig noch mit geringen oder keinen Zusatzkosten verbunden.";
+                todos.push("Prüfen Sie, ob die Zahlung bereits erfolgt ist oder zeitnah erfolgen kann.");
             }
         }
 
-        // Styling Logik
+        // Styling
         let bgCol = "#d4edda"; 
         let textCol = "#155724";
         let icon = "🟢";
@@ -119,89 +117,38 @@ document.addEventListener("DOMContentLoaded", () => {
         if (colorCode === "orange") { bgCol = "#ffe5d0"; textCol = "#e67e22"; icon = "🟠"; }
         if (colorCode === "red") { bgCol = "#f8d7da"; textCol = "#721c24"; icon = "🔴"; }
 
-        // HTML Output
         const resultHtml = `
-            <h2>Ergebnis Ihres Risiko-Checks</h2>
+            <h2>Ergebnis Ihrer Orientierungshilfe</h2>
             <div id="mr_result_card" class="result-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff;">
                 
-                <div style="background:${bgCol}; color:${textCol}; padding:20px; border-radius:8px; text-align:center; margin-bottom:20px; border:1px solid rgba(0,0,0,0.1);">
-                    <div style="font-size:3rem; line-height:1; margin-bottom:10px;">${icon}</div>
-                    <h3 style="margin:0; font-size:1.4rem;">${headline}</h3>
+                <div style="background:${bgCol}; color:${textCol}; padding:20px; border-radius:8px; text-align:center; margin-bottom:20px;">
+                    <div style="font-size:3rem; margin-bottom:10px;">${icon}</div>
+                    <h3 style="margin:0;">${headline}</h3>
                     ${urgentNote ? `<p style="font-weight:bold; margin-top:10px;">${urgentNote}</p>` : ''}
                 </div>
 
-                <h3>Analyse der Lage</h3>
+                <h3>Einordnung auf Basis Ihrer Angaben</h3>
                 <p>${analysis}</p>
-                <p><strong>Offener Betrag:</strong> ${euro(amount)}</p>
+                <p><strong>Genannter Betrag:</strong> ${euro(amount)}</p>
 
-                <h3>Empfohlene nächste Schritte</h3>
-                <div class="highlight-box" style="background-color:#f9f9f9; border:1px solid #ddd; border-left:4px solid ${colorCode === 'red' ? '#c0392b' : '#2980b9'}; padding:15px;">
-                    <ul style="margin:0; padding-left:20px;">
-                        ${todos.map(t => `<li style="margin-bottom:8px;">${t}</li>`).join('')}
-                    </ul>
-                </div>
+                <h3>Mögliche nächste Schritte</h3>
+                <ul>
+                    ${todos.map(t => `<li>${t}</li>`).join('')}
+                </ul>
 
                 ${amount > 1300 && (colorCode === 'red' || colorCode === 'orange') ? 
-                `<div class="warning-box" style="margin-top:20px; background-color: #fff8e1; border: 1px solid #ffcc00; padding: 15px; border-radius: 5px;">
-                    <strong>Wichtiger Tipp:</strong> Bei Schulden in dieser Höhe (${euro(amount)}) und drohender Zwangsvollstreckung sollten Sie über ein <strong>P-Konto</strong> (Pfändungsschutzkonto) nachdenken, um Ihren monatlichen Grundfreibetrag zu sichern.
+                `<div class="warning-box" style="margin-top:20px; background-color:#fff8e1; padding:15px;">
+                    <strong>Hinweis:</strong> Bei höheren Schulden kann es sinnvoll sein, sich über Schutzmechanismen wie ein Pfändungsschutzkonto (P-Konto) zu informieren.
                  </div>` : ''}
 
-                <div class="button-container" style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-                    <button id="mr_pdf_btn" class="button-secondary">📄 Checkliste als PDF speichern</button>
-                </div>
-                
-                <p style="font-size: 0.8rem; color: #777; margin-top: 20px; text-align: center;">
-                    Hinweis: Dies ist eine automatische Einschätzung zur Orientierung. Sie ersetzt keine Rechtsberatung.
+                <p style="font-size:0.8rem; color:#777; margin-top:20px; text-align:center;">
+                    Diese Einschätzung dient der allgemeinen Orientierung und ersetzt keine individuelle Rechts- oder Schuldnerberatung.
                 </p>
             </div>
         `;
 
         out.innerHTML = resultHtml;
         out.scrollIntoView({ behavior: "smooth" });
-
-        // --- PDF EXPORT (Robust mit cloneNode) ---
-        setTimeout(() => {
-            const pdfBtn = document.getElementById("mr_pdf_btn"); // ID korrigiert!
-            const elementToPrint = document.getElementById("mr_result_card"); // ID korrigiert!
-
-            if(pdfBtn && elementToPrint) {
-                pdfBtn.addEventListener("click", () => {
-                    const originalText = pdfBtn.innerText;
-                    pdfBtn.innerText = "⏳ PDF wird erstellt...";
-                    
-                    // Klonen für sauberen Druck
-                    const clonedElement = elementToPrint.cloneNode(true);
-                    
-                    // Buttons ausblenden
-                    const btnContainer = clonedElement.querySelector('.button-container');
-                    if(btnContainer) btnContainer.style.display = 'none';
-
-                    // Temporär einfügen
-                    clonedElement.style.position = 'absolute';
-                    clonedElement.style.left = '-9999px';
-                    clonedElement.style.width = '700px'; 
-                    clonedElement.style.backgroundColor = '#ffffff';
-                    document.body.appendChild(clonedElement);
-
-                    const opt = {
-                        margin:       [10, 10], 
-                        filename:     'Mahnungs-Check-Ergebnis.pdf',
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    };
-
-                    html2pdf().from(clonedElement).set(opt).save().then(() => {
-                        document.body.removeChild(clonedElement);
-                        pdfBtn.innerText = originalText;
-                    }).catch(err => {
-                        console.error("PDF Fehler:", err);
-                        pdfBtn.innerText = "Fehler!";
-                        document.body.removeChild(clonedElement);
-                    });
-                });
-            }
-        }, 500);
     });
 
     if (reset) {
