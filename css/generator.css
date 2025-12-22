@@ -209,6 +209,11 @@ textarea {
   border-left: 6px solid var(--primary);
 }
 
+.highlight-box {
+background-color: #eef9ff;
+  border-left: 6px solid var(--primary);
+}
+
 .warning-box {
   background-color: #fff9e6;
   border-left: 6px solid #f0ad4e;
