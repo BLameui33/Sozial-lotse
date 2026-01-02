@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Widerrufs-Generator: Widerruf & Anfechtung (Haustür, online, Abofalle) | Sozial-Lotse</title>
+  
+  <!-- YMYL: Fokus auf Verbraucherrechte und Fristwahrung -->
+  <meta name="description" content="Kostenloser Widerrufs-Generator: Widerruf von Haustürgeschäften, Online-/Telefonverträgen und Abofallen. Optional: Anfechtung wegen Täuschung (§ 123 BGB) + Hinweis auf Widerrufsfrist (i.d.R. 14 Tage).">
+  <meta name="keywords" content="Widerruf, Widerrufsrecht, Widerruf Generator, Haustürgeschäft widerrufen, Fernabsatz widerruf, Online Vertrag widerrufen, Abofalle widerrufen, Vertrag anfechten, § 355 BGB, § 123 BGB, arglistige Täuschung, Musterbrief Widerruf, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://sozial-lotse.de/generator-widerruf-anfechtung.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Widerrufs-Generator: Widerruf & Anfechtung (Haustür, online, Abofalle)">
+  <meta property="og:description" content="PDF-Musterbrief erstellen: Widerruf (i.d.R. 14 Tage) und optional Anfechtung wegen Täuschung. Versandhinweis zur Beweisbarkeit (Einwurf-Einschreiben/Fax).">
+  <meta property="og:url" content="https://sozial-lotse.de/generator-widerruf-anfechtung.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Widerrufs-Generator: Verträge widerrufen/anfechten">
+  <meta name="twitter:description" content="Generator für Widerruf + optional Anfechtung wegen Täuschung. PDF lokal im Browser.">
+
+  <!-- PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Widerrufs-Generator Sozial-Lotse",
+    "applicationCategory": "LegalApplication",
+    "description": "Erstellt ein Standardschreiben für den Widerruf von Verbraucherverträgen (Widerrufsfrist i.d.R. 14 Tage) und optional eine hilfsweise Anfechtung wegen Täuschung. Das Tool ersetzt keine Rechtsberatung.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+
+<div class="page-container">
+  <h1>Widerruf & Anfechtung: Verträge stoppen</h1>
+  
+  <div class="info-box">
+    <p>
+      Sie haben an der Haustür einen Vertrag unterschrieben, weil Sie überrumpelt wurden?
+      Oder sind im Internet in eine Abofalle geraten?
+      Viele Verbraucherverträge können innerhalb der <strong>Widerrufsfrist</strong> widerrufen werden (häufig 14 Tage, je nach Vertragsart und Belehrung).
+    </p>
+  </div>
+
+
+  <div class="warning-box">
+    <p><strong>Wichtig bei Täuschung/Druck:</strong> Wenn Sie falsch informiert oder unter Druck gesetzt wurden (z.B. „nur Zähler ablesen“, „kostenlos“), kann zusätzlich eine <strong>hilfsweise Anfechtung</strong> in Betracht kommen. Nutzen Sie dafür unten die Option <strong>„Anfechtung wegen Täuschung“</strong>.</p>
+  </div>
+
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Hinweis (YMYL):</strong> Für die Frist zählt oft die rechtzeitige Absendung. Senden Sie den Widerruf möglichst <strong>nachweisbar</strong> (z.B. Einwurf-Einschreiben oder Fax mit Sendebericht). E-Mail kann ausreichen, ist im Streitfall aber häufig schwerer zu beweisen.
+  </p>
+
+
+  <form id="widerrufForm">
+    
+    <!-- 1. Absender -->
+    <fieldset>
+      <legend>1. Wer widerruft? (Ihre Daten)</legend>
+      <label for="absenderName">Vor- und Nachname:</label>
+      <input type="text" id="absenderName" required autocomplete="name">
+      
+      <label for="absenderAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="absenderAdresse" required autocomplete="street-address">
+      
+      <label for="absenderPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="absenderPlzOrt" required autocomplete="postal-code">
+    </fieldset>
+
+
+    <!-- 2. Empfänger -->
+    <fieldset>
+      <legend>2. An wen geht der Widerruf? (Unternehmen)</legend>
+      <label for="empfaengerName">Name der Firma:</label>
+      <input type="text" id="empfaengerName" required placeholder="z.B. Energieversorger XY, Dating-Portal GmbH...">
+      
+      <label for="empfaengerAdresse">Anschrift:</label>
+      <textarea id="empfaengerAdresse" rows="3" required placeholder="Straße, PLZ, Ort"></textarea>
+    </fieldset>
+
+
+    <!-- 3. Vertragsdaten -->
+    <fieldset>
+      <legend>3. Um welchen Vertrag geht es?</legend>
+      <label for="vertragsArt">Art des Vertrags:</label>
+      <select id="vertragsArt">
+        <option value="Vertrag">Allgemeiner Vertrag</option>
+        <option value="Strom-/Gasliefervertrag">Strom- oder Gasvertrag (Haustür)</option>
+        <option value="Abonnement">Abonnement / Online-Mitgliedschaft</option>
+        <option value="Kaufvertrag">Kaufvertrag (Online-Shop)</option>
+        <option value="Dienstleistungsvertrag">Handwerker / Dienstleistung</option>
+      </select>
+      
+      <label for="datumVertrag">Wann wurde bestellt / unterschrieben?</label>
+      <input type="date" id="datumVertrag" required>
+
+      <label for="kundennummer">Kundennummer / Vertragsnummer (falls bekannt):</label>
+      <input type="text" id="kundennummer" placeholder="Sonst leer lassen">
+    </fieldset>
+    
+    <!-- 4. Die "Waffe": Widerruf & Anfechtung -->
+    <fieldset style="border-left: 4px solid #3498db;">
+      <legend>4. Art der Gegenwehr</legend>
+      
+      <div class="checkbox-group">
+        <!-- Standard -->
+        <label>
+            <input type="checkbox" id="checkWiderruf" checked disabled> 
+            <strong>Widerruf (Standard):</strong> Ich widerrufe den Vertrag innerhalb der gesetzlichen Frist (§ 355 BGB).
+        </label>
+
+        <!-- Anfechtung (Täuschung) -->
+        <label style="background: #fff3f3; padding: 5px; border-radius: 4px;">
+            <input type="checkbox" id="checkAnfechtung" onchange="toggleTaeuschung()"> 
+            <strong>Hilfsweise Anfechtung (bei Täuschung/Druck):</strong> Ich wurde getäuscht oder unter Druck gesetzt (kann § 123 BGB betreffen).
+        </label>
+        
+        <div id="boxTaeuschung" style="display:none; margin-top:10px; padding-left:20px;">
+            <label for="grundTaeuschung" style="font-size:0.9em;">Wie wurden Sie getäuscht? (Kurzstichpunkte für den Brief):</label>
+            <textarea id="grundTaeuschung" rows="2" placeholder="Z.B.: 'Der Vertreter sagte, er sei vom Grundversorger und müsse nur den Zähler ablesen.' oder 'Es hieß, das Abo sei kostenlos.'"></textarea>
+        </div>
+
+        <!-- Fehlende Belehrung -->
+        <label>
+            <input type="checkbox" id="checkBelehrung"> 
+            <strong>Hinweis:</strong> Ich habe bei Vertragsschluss keine oder eine fehlerhafte Widerrufsbelehrung erhalten (dies kann die Widerrufsfrist verlängern).
+        </label>
+      </div>
+    </fieldset>
+    
+    <!-- 5. Optionen -->
+    <fieldset>
+        <legend>5. Abschluss</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="checkSEPA" checked> Einzugsermächtigung (Lastschrift) sofort widerrufen.</label>
+            <label><input type="checkbox" id="checkDaten" checked> Aufforderung zur Datenlöschung (DSGVO).</label>
+            <label><input type="checkbox" id="checkWerbung" checked> Werbewiderspruch einlegen.</label>
+        </div>
+    </fieldset>
+
+
+    <div class="button-group">
+      <button type="submit" class="button-primary">PDF Widerruf erstellen</button>
+    </div>
+  </form>
+</div>
+
+
+<footer>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+
+<script src="generator-widerruf.js"></script>
+
+
+</body>
+</html>

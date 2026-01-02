@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Phishing-Radar: E-Mail & SMS prüfen (Warnsignale, Links, Absender) | Sozial-Lotse</title>
+  
+  <!-- YMYL: Vertrauen aufbauen, klare Grenzen setzen -->
+  <meta name="description" content="Verdächtige E-Mail oder SMS? Kostenloser Phishing-Radar: Text einfügen und Warnsignale prüfen (Druck, Drohungen, Link/Absender, Anhang) – als Risiko-Einschätzung, keine Garantie.">
+  <meta name="keywords" content="Phishing Checker, Phishing Radar, Fake Mail erkennen, Smishing, Spam Prüfung, E-Mail Betrug, Bank Phishing, Sparkasse Phishing, Amazon Fake Mail, PayPal Phishing, DHL SMS Betrug, Sicherheits-Check">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/checker-phishing-mail.html">
+
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Phishing-Radar: E-Mail & SMS auf Betrug prüfen">
+  <meta property="og:description" content="Text einfügen, Warnsignale prüfen, Risiko einschätzen. Analyse läuft lokal im Browser – keine Speicherung.">
+  <meta property="og:url" content="https://sozialrecht-lotse.de/checker-phishing-mail.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Phishing-Radar: E-Mail & SMS prüfen">
+  <meta name="twitter:description" content="Text einfügen, Warnsignale prüfen, Risiko einschätzen. Analyse läuft lokal im Browser – keine Speicherung.">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Phishing-Radar Sozial-Lotse",
+      "operatingSystem": "Web",
+      "applicationCategory": "SecurityApplication",
+      "description": "Kostenloses Analyse-Tool für verdächtige E-Mails und SMS (Smishing). Sucht nach typischen Phishing-Merkmalen wie Druckausübung, ungewöhnlichen Links/Absendern und Aufforderungen zur Dateneingabe. Ergebnis ist eine Risiko-Einschätzung, keine Garantie.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    }
+  </script>
+
+  <style>
+    /* Spezifische Styles für den Text-Input */
+    .phishing-textarea {
+      width: 100%;
+      height: 200px;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 10px;
+      transition: border-color 0.3s;
+    }
+    .phishing-textarea:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+    .keyword-tag {
+      display: inline-block;
+      background: #ffebee;
+      color: #c0392b;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      margin: 2px;
+      border: 1px solid #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+
+<header class="site-header">
+  <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+
+<div class="page-container">
+  <h1>Phishing-Radar: Ist diese E-Mail echt?</h1>
+
+
+  <p class="highlight-box">
+    Sie haben eine verdächtige E-Mail oder SMS von Amazon, PayPal, DHL oder Ihrer Bank erhalten?
+    Unser <strong>Phishing-Radar</strong> hilft Ihnen, typische Warnsignale zu erkennen.
+    Kopieren Sie den Text der Nachricht in das Feld – die Auswertung liefert eine Risiko-Einschätzung (keine Garantie).
+  </p>
+
+
+  <p class="highlight-box" style="background-color:#e8f5e9; border-left:4px solid #2ecc71;">
+    <span style="font-size:1.2em;">🔒</span> <strong>Lokal & anonym:</strong> Ihre Eingaben verlassen Ihren Browser nicht. Es wird nichts gespeichert oder übertragen.
+  </p>
+
+
+  <form id="phishing-form" class="pflegegrad-form" onsubmit="return false;">
+    
+    <fieldset class="pflegegrad-fieldset active-step">
+      <legend>E-Mail-Text prüfen</legend>
+      
+      <label class="pflegegrad-label" for="mail_text">
+        Fügen Sie hier den Text der verdächtigen E-Mail oder SMS ein (Copy & Paste):
+      </label>
+      <textarea id="mail_text" class="phishing-textarea" placeholder="Beispiel: Sehr geehrter Kunde, Ihr Konto wurde gesperrt. Bitte klicken Sie hier, um Ihre Daten zu bestätigen..."></textarea>
+
+
+      <div style="margin-top:15px;">
+        <label class="pflegegrad-label">Zusatz-Check (optional):</label>
+        
+        <label style="display:block; margin-bottom:8px; cursor:pointer;">
+          <input type="checkbox" id="check_link"> Der Link wirkt untypisch oder verkürzt (z.B. <em>bit.ly</em>) bzw. passt nicht zur offiziellen Domain.
+        </label>
+        
+        <label style="display:block; margin-bottom:8px; cursor:pointer;">
+          <input type="checkbox" id="check_sender"> Die Absender-Adresse wirkt unplausibel (z.B. <em>service@paypal-support24.com</em> statt einer offiziellen Domain).
+        </label>
+
+        <label style="display:block; margin-bottom:8px; cursor:pointer;">
+          <input type="checkbox" id="check_attachment"> Es gibt einen Anhang (ZIP, Word, Excel), obwohl ich nichts erwartet oder bestellt habe.
+        </label>
+      </div>
+
+
+    </fieldset>
+
+
+    <div class="button-container">
+      <button type="button" id="btn_analyze" class="button">Jetzt prüfen</button>
+      <button type="button" id="btn_reset" class="button button-secondary">Löschen</button>
+    </div>
+  </form>
+
+
+  <section id="result_area"></section>
+
+
+  <hr>
+
+
+  <section class="faq-section">
+    <h2>Woran erkenne ich Phishing selbst?</h2>
+    <div class="faq-item">
+      <h3>Druck & Drohungen</h3>
+      <p>Phishing arbeitet häufig mit Stress („sofort“, „letzte Warnung“, „Konto gesperrt“) und will schnelle Reaktionen. Seriöse Anbieter verlangen sensible Daten nicht per E-Mail oder SMS.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Link/URL prüfen (ohne zu klicken)</h3>
+      <p>Am PC kann ein Mouseover helfen: Fahren Sie mit der Maus über den Link, ohne zu klicken, und prüfen Sie die Zieladresse. Wenn Domain oder Schreibweise nicht stimmt (z.B. Zusatzwörter, ungewöhnliche Endungen), ist Vorsicht angesagt.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Absender & Anrede</h3>
+      <p>Unpersönliche Anreden („Sehr geehrter Kunde“) oder auffällige Absenderadressen sind häufige Warnsignale. Tipp: Antworten Sie nicht auf die verdächtige Mail, sondern kontaktieren Sie den Anbieter über die offizielle Website oder App.</p>
+    </div>
+  </section>
+
+
+  <aside class="highlight-box" role="complementary">
+    <h2 style="margin-top:0">Was tun, wenn es Phishing ist?</h2>
+    <p>
+      1. Nicht antworten. <br>
+      2. Nicht klicken / keine Anhänge öffnen. <br>
+      3. Als Spam/Phishing markieren und löschen. <br>
+      4. Falls Sie schon Daten eingegeben haben: <a href="info-erste-hilfe-betrug.html">Zum Erste-Hilfe-Guide</a>.
+    </p>
+  </aside>
+
+
+</div>
+
+
+<footer>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+
+<script src="phishing-radar.js"></script>
+</body>
+</html>

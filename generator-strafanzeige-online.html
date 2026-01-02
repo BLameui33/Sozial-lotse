@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Online-Strafanzeige Hilfe: Sachverhalt-Text erstellen (Generator) | Sozial-Lotse</title>
+  
+  <!-- YMYL: Klare Trennung zwischen unserem Tool und der echten Polizei -->
+  <meta name="description" content="Formulierungshilfe für Ihre Online-Strafanzeige: Beantworten Sie ein paar Fragen – der Generator erstellt einen sachlichen Sachverhaltstext zum Kopieren in die offizielle Onlinewache der Polizei (keine Übermittlung durch Sozial-Lotse).">
+  <meta name="keywords" content="Online Strafanzeige Textvorlage, Sachverhalt schildern, Anzeige erstatten online, Onlinewache Polizei, Internetwache, Betrug Anzeige Vorlage, Identitätsdiebstahl Anzeige, Phishing Anzeige, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/generator-strafanzeige-text.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Online-Strafanzeige Hilfe: Sachverhalt-Text erstellen (Generator)">
+  <meta property="og:description" content="Generator erstellt einen sachlichen Text zum Einfügen in die offizielle Onlinewache. Notfall-Hinweis: 110 bei akuter Gefahr.">
+  <meta property="og:url" content="https://sozialrecht-lotse.de/generator-strafanzeige-text.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Online-Strafanzeige: Text-Helfer">
+  <meta name="twitter:description" content="Sachverhalt-Text generieren und in die offizielle Onlinewache kopieren. Sozial-Lotse übermittelt nichts.">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Strafanzeige Text-Helfer",
+    "applicationCategory": "UtilityApplication",
+    "description": "Erstellt strukturierte Sachverhalts-Texte zur Verwendung in offiziellen Onlinewachen der Polizei. Das Tool sendet keine Anzeige ab und ersetzt keine Rechtsberatung.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+
+  <style>
+    /* Spezielle Styles für das Kopier-Feld */
+    .result-area {
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 8px;
+        display: none; /* Erst unsichtbar */
+    }
+    .copy-textarea {
+        width: 100%;
+        height: 300px;
+        font-family: monospace;
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    .police-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .police-link-btn {
+        background: #34495e;
+        color: white;
+        text-align: center;
+        padding: 8px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    .police-link-btn:hover {
+        background: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+
+<div class="page-container">
+  <h1>Hilfe zur Online-Strafanzeige: Der Text-Helfer</h1>
+  
+  <div class="info-box">
+    <p>
+      Sie möchten Strafanzeige erstatten, sind aber unsicher, wie der Vorfall im Feld „Sachverhalt“ am besten beschrieben wird?
+      Beantworten Sie hier ein paar Fragen. Daraus entsteht ein <strong>sachlicher, strukturierter Text</strong>,
+      den Sie in der <strong>offiziellen Onlinewache</strong> Ihres Bundeslandes einfügen können.
+    </p>
+  </div>
+
+
+  <div class="warning-box">
+    <p><strong>Wichtig (Abgrenzung):</strong> Dies ist <strong>nicht</strong> die Polizei. Sozial-Lotse übermittelt keine Anzeige und speichert den Vorgang nicht. Sie müssen die Anzeige anschließend selbst auf der offiziellen Polizei-Webseite abschicken (Links unten).</p>
+  </div>
+
+  <p class="highlight-box" style="background-color:#ffebee; border-left:4px solid #c0392b;">
+    <strong>Notfall-Hinweis:</strong> Bei akuter Gefahr oder wenn sofortiges Eingreifen nötig ist: wählen Sie <strong>110</strong>. Online-Formulare sind dafür nicht gedacht.
+  </p>
+
+
+  <form id="anzeigeForm">
+    
+    <!-- 1. Was? -->
+    <fieldset>
+      <legend>1. Was ist passiert? (Delikt)</legend>
+      <label for="deliktArt">Art des Vorfalls:</label>
+      <select id="deliktArt">
+        <option value="Warenbetrug">Ware bezahlt, aber nicht erhalten (Fakeshop/eBay)</option>
+        <option value="Identitätsdiebstahl">Jemand hat auf meinen Namen bestellt</option>
+        <option value="Phishing">Daten auf gefälschter Bank-Seite eingegeben</option>
+        <option value="Enkeltrick/Schockanruf">Geld an Betrüger übergeben/überwiesen (Enkeltrick)</option>
+        <option value="Unberechtigte Abbuchung">Unbekannte Abbuchung vom Konto/Kreditkarte</option>
+        <option value="Sonstiger Betrug">Sonstiges</option>
+      </select>
+      
+      <label for="datumTat">Wann ist es passiert? (Datum/Uhrzeit):</label>
+      <input type="datetime-local" id="datumTat">
+    </fieldset>
+
+
+    <!-- 2. Wo? -->
+    <fieldset>
+      <legend>2. Wo ist es passiert?</legend>
+      <label for="plattform">Plattform / Ort:</label>
+      <input type="text" id="plattform" placeholder="z.B. eBay Kleinanzeigen, WhatsApp, an der Haustür, per E-Mail...">
+      
+      <label for="url">Internetadresse (falls vorhanden):</label>
+      <input type="text" id="url" placeholder="z.B. www.shopname.tld oder Link aus der Nachricht">
+    </fieldset>
+
+
+    <!-- 3. Wer? -->
+    <fieldset>
+      <legend>3. Wer ist der Täter? (Soweit bekannt)</legend>
+      <p style="font-size:0.9em; color:#666;">Tragen Sie ein, was Sie wissen. Wenn unbekannt: leer lassen. Keine Sorge – Anzeige ist auch gegen Unbekannt möglich.</p>
+      
+      <label for="taeterName">Name / Nutzername des Täters:</label>
+      <input type="text" id="taeterName" placeholder="z.B. Max Mustermann oder Nutzer „Verkäufer123“">
+      
+      <label for="taeterKontakt">Kontakt-Daten (Telefon, E-Mail):</label>
+      <input type="text" id="taeterKontakt" placeholder="z.B. 017x-xxxxxxx, email@adresse.com">
+      
+      <label for="bankDaten">Wohin ging das Geld? (IBAN / PayPal):</label>
+      <textarea id="bankDaten" rows="2" placeholder="Empfängername, IBAN, Bankname oder PayPal-Adresse"></textarea>
+    </fieldset>
+    
+    <!-- 4. Schaden -->
+    <fieldset>
+      <legend>4. Der Schaden</legend>
+      <label for="schadenshoehe">Höhe des finanziellen Schadens (in Euro):</label>
+      <input type="number" id="schadenshoehe" step="0.01" placeholder="z.B. 150.00">
+      
+      <label for="beschreibung">Kurze Beschreibung des Ablaufs (Stichpunkte):</label>
+      <textarea id="beschreibung" rows="4" placeholder="Z.B.: Artikel gekauft. Verkäufer wollte Zahlung per Überweisung. Nach Zahlung keine Ware/kein Kontakt. Link/Shop jetzt offline."></textarea>
+    </fieldset>
+
+
+    <div class="button-group">
+      <button type="button" id="btnGenerate" class="button-primary">Text für Polizei erstellen</button>
+    </div>
+  </form>
+
+
+  <!-- ERGEBNIS BEREICH -->
+  <div id="resultBox" class="result-area">
+    <h2>Ihr Text für die Polizei</h2>
+    <p>Kopieren Sie diesen Text und fügen Sie ihn im Feld „Sachverhalt“ der offiziellen Onlinewache ein. Ergänzen Sie dort ggf. Uploads (Screenshots, Belege, Kontoauszug, Chatverlauf).</p>
+    
+    <textarea id="finalText" class="copy-textarea" readonly></textarea>
+    
+    <button type="button" id="btnCopy" class="button-primary" style="background-color:#27ae60;">Text kopieren</button>
+    
+    <hr style="margin: 30px 0;">
+
+
+    <h3>Schritt 2: Zur Onlinewache Ihres Bundeslandes</h3>
+    <p>Wählen Sie Ihr Bundesland (Sie gelangen auf die offizielle Polizei-Seite):</p>
+    
+    <div class="police-links">
+        <a href="https://www.polizei-bw.de/internetwache/" target="_blank" class="police-link-btn" rel="noopener">Baden-Württ.</a>
+        <a href="https://www.polizei.bayern.de/service/anzeige-erstatten/index.html" target="_blank" class="police-link-btn" rel="noopener">Bayern</a>
+        <a href="https://www.internetwache-polizei-berlin.de/" target="_blank" class="police-link-btn" rel="noopener">Berlin</a>
+        <a href="https://polizei.brandenburg.de/onlineservice/anzeige-erstatten" target="_blank" class="police-link-btn" rel="noopener">Brandenburg</a>
+        <a href="https://www.service.bremen.de/dienstleistungen/strafanzeige-online-erstatten-1457" target="_blank" class="police-link-btn" rel="noopener">Bremen</a>
+        <a href="https://www.hamburg.de/polizei/onlinewache/" target="_blank" class="police-link-btn" rel="noopener">Hamburg</a>
+        <a href="https://www.polizei.hessen.de/Service/Onlinewache/" target="_blank" class="police-link-btn" rel="noopener">Hessen</a>
+        <a href="https://www.polizei.mvnet.de/Service/Onlinewache/" target="_blank" class="police-link-btn" rel="noopener">Meckl.-Vorp.</a>
+        <a href="https://www.onlinewache.polizei.niedersachsen.de/" target="_blank" class="police-link-btn" rel="noopener">Niedersachsen</a>
+        <a href="https://polizei.nrw/artikel/anzeige-erstatten" target="_blank" class="police-link-btn" rel="noopener">NRW</a>
+        <a href="https://www.polizei.rlp.de/onlinewache" target="_blank" class="police-link-btn" rel="noopener">Rheinl.-Pfalz</a>
+        <a href="https://www.saarland.de/polizei/DE/onlinewache/onlinewache_node.html" target="_blank" class="police-link-btn" rel="noopener">Saarland</a>
+        <a href="https://polizei.sachsen.de/onlinewache.html" target="_blank" class="police-link-btn" rel="noopener">Sachsen</a>
+        <a href="https://polizei.sachsen-anhalt.de/das-sind-wir/e-revier/strafanzeige" target="_blank" class="police-link-btn" rel="noopener">Sachsen-Anh.</a>
+        <a href="https://www.schleswig-holstein.de/DE/Landesregierung/POLIZEI/DasSindWir/Onlinewache/Onlinewache_node.html" target="_blank" class="police-link-btn" rel="noopener">Schleswig-H.</a>
+        <a href="https://polizei.thueringen.de/landespolizeiinspektionen/lpi-gera/anzeige-erstatten" target="_blank" class="police-link-btn" rel="noopener">Thüringen</a>
+    </div>
+
+    <p style="margin-top:16px; font-size:0.9em; color:#666;">
+      Tipp: Für allgemeine Infos zu Onlinewachen gibt es auch ein offizielles Portal der Länderpolizeien.
+    </p>
+  </div>
+
+
+</div>
+
+
+<footer>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+
+<script src="generator-strafanzeige.js"></script>
+
+
+</body>
+</html>

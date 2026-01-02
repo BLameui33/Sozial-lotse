@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Identitätsdiebstahl: Musterbrief gegen Mahnung & Inkasso (Widerspruch) | Sozial-Lotse</title>
+  
+  <!-- YMYL: Fokus auf Rechtssicherheit und klare Abwehr von Schulden -->
+  <meta name="description" content="Mahnung oder Inkasso für nie bestellte Ware? Erstellen Sie kostenlos ein Widerspruchsschreiben bei Identitätsdiebstahl/Identitätsmissbrauch – inkl. Aktenzeichen, Nachweisforderung & Schufa-Hinweis.">
+  <meta name="keywords" content="Identitätsdiebstahl Musterbrief, Identitätsmissbrauch, Inkasso Widerspruch Vorlage, unberechtigte Forderung, Mahnung widersprechen, Warenbetrug nicht bestellt, Schufa Eintrag verhindern, Sozial-Lotse">
+
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/generator-identitaetsdiebstahl-widerspruch.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Identitätsdiebstahl: Musterbrief gegen Mahnung & Inkasso (Widerspruch)">
+  <meta property="og:description" content="Generator für ein Widerspruchsschreiben bei unberechtigten Forderungen nach Identitätsmissbrauch (Warenbetrug). PDF wird lokal im Browser erstellt.">
+  <meta property="og:url" content="https://sozialrecht-lotse.de/generator-identitaetsdiebstahl-widerspruch.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Identitätsdiebstahl: Musterbrief gegen Inkasso">
+  <meta name="twitter:description" content="Kostenloser Generator: Widerspruch bei unberechtigten Forderungen nach Identitätsmissbrauch. PDF lokal im Browser.">
+
+  <!-- PDF Library (jsPDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Eigenes Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Generator: Widerspruch bei Identitätsdiebstahl (unberechtigte Forderung)",
+    "description": "Tool zur Erstellung eines Standardschreibens für den Widerspruch gegen Mahnungen/Inkassoforderungen, wenn die Forderung auf Identitätsmissbrauch beruht. Das Tool ersetzt keine Rechtsberatung.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    },
+    "dateModified": "2026-01-02"
+  }
+  </script>
+</head>
+<body>
+
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+
+<div class="page-container">
+  <h1>Widerspruch: Identitätsdiebstahl & unberechtigte Forderungen</h1>
+  
+  <div class="info-box">
+    <p>
+      Sie haben eine Mahnung oder ein Inkassoschreiben für Waren erhalten, die Sie <strong>nie bestellt</strong> haben?
+      Das kann auf <strong>Identitätsmissbrauch</strong> (Identitätsdiebstahl/Warenbetrug) hindeuten.
+      Mit diesem Generator erstellen Sie ein Standardschreiben, um die Forderung schriftlich zu bestreiten und Nachweise anzufordern (z.B. Bestelldaten, Liefernachweis).
+    </p>
+  </div>
+
+
+  <div class="warning-box">
+    <p><strong>Wichtig:</strong> Eine <strong>Strafanzeige</strong> (auch online möglich) ist in solchen Fällen oft sinnvoll, weil ein Aktenzeichen die Kommunikation mit Gläubiger/Inkasso erleichtern kann (Sie können es im Schreiben angeben).</p>
+  </div>
+
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+    <strong>Hinweis:</strong> Dieses Tool erstellt ein Standardschreiben und ersetzt keine Rechtsberatung.
+    Versenden Sie den Brief möglichst <strong>nachweisbar</strong> (z.B. Einwurf-Einschreiben) und bewahren Sie Kopien/Belege auf.
+    Grundlage sind gängige Musterformulierungen, wie sie auch Verbraucherstellen für „Identitätsdiebstahl – gegen Forderungen wehren“ bereitstellen.
+  </p>
+  
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+    <p><strong>Redaktioneller Stand:</strong> <span id="pruefdatum">02.01.2026</span></p>
+  </div>
+
+
+  <form id="idTheftForm">
+    
+    <!-- 1. Absender -->
+    <fieldset>
+      <legend>1. Ihre Daten (Absender)</legend>
+      <label for="absenderName">Vor- und Nachname:</label>
+      <input type="text" id="absenderName" required autocomplete="name" placeholder="Max Mustermann">
+      
+      <label for="absenderAdresse">Straße und Hausnummer:</label>
+      <input type="text" id="absenderAdresse" required autocomplete="street-address">
+      
+      <label for="absenderPlzOrt">Postleitzahl und Ort:</label>
+      <input type="text" id="absenderPlzOrt" required autocomplete="postal-code">
+    </fieldset>
+
+
+    <!-- 2. Empfänger -->
+    <fieldset>
+      <legend>2. An wen geht der Brief? (Gläubiger/Inkasso)</legend>
+      <label for="empfaengerName">Name des Unternehmens / Inkassobüros:</label>
+      <input type="text" id="empfaengerName" required placeholder="z.B. Riverty, Klarna, Paigo...">
+      
+      <label for="empfaengerAdresse">Anschrift:</label>
+      <textarea id="empfaengerAdresse" rows="3" required placeholder="Musterstraße 1, 12345 Musterstadt"></textarea>
+    </fieldset>
+
+
+    <!-- 3. Falldaten -->
+    <fieldset>
+      <legend>3. Details zur Forderung</legend>
+      <label for="aktenzeichen">Aktenzeichen / Rechnungsnummer des Gläubigers:</label>
+      <input type="text" id="aktenzeichen" required placeholder="Steht meist oben rechts im Brief">
+      
+      <label for="datumBrief">Datum des erhaltenen Briefes:</label>
+      <input type="date" id="datumBrief" required>
+    </fieldset>
+    
+    <!-- 4. Beweise -->
+    <fieldset>
+      <legend>4. Nachweise (Wichtig!)</legend>
+      <p style="font-size:0.9rem; margin-bottom:10px;">Haben Sie bereits Strafanzeige erstattet?</p>
+      
+      <div class="radio-group">
+        <label>
+            <input type="radio" name="anzeigeStatus" value="ja" checked onchange="toggleAnzeigeInput(true)"> 
+            Ja, ich habe Anzeige erstattet.
+        </label>
+        <div id="anzeigeDetails" class="sub-details" style="display:block;">
+            <label for="polizeiAktenzeichen">Aktenzeichen der Polizei / Online-Wache:</label>
+            <input type="text" id="polizeiAktenzeichen" placeholder="z.B. ST/123456/2026">
+            <small>Tipp: Legen Sie – wenn vorhanden – später eine Kopie der Anzeigenbestätigung bei (oder reichen Sie sie nach).</small>
+        </div>
+
+
+        <label>
+            <input type="radio" name="anzeigeStatus" value="nein" onchange="toggleAnzeigeInput(false)"> 
+            Nein, noch nicht (Werde ich aber tun).
+        </label>
+      </div>
+    </fieldset>
+    
+    <!-- 5. Optionen -->
+    <fieldset>
+        <legend>5. Forderungen an den Gläubiger</legend>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="schufaCheck" checked> Ich weise darauf hin, dass die Forderung bestritten wird, und fordere die Unterlassung bzw. Korrektur negativer Schufa-Meldungen, die auf dieser Forderung beruhen könnten.</label>
+            <label><input type="checkbox" id="nachweisCheck" checked> Ich verlange Nachweise zur angeblichen Bestellung (z.B. Bestelldaten, Lieferanschrift, Lieferbeleg, ggf. IP-/Logdaten, soweit vorhanden).</label>
+        </div>
+    </fieldset>
+
+
+    <!-- Trust-Signal Datenschutz -->
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Daten werden nicht übertragen. Die PDF-Erstellung erfolgt lokal in Ihrem Browser.
+    </div>
+
+
+    <div class="button-group">
+      <button type="submit" class="button-primary">PDF Widerspruch erstellen</button>
+    </div>
+  </form>
+</div>
+
+
+<footer>
+  <div class="mini-footer-hint">
+  <p>Sie brauchen Hilfe beim Sortieren Ihrer Unterlagen?</p>
+  <a href="https://clerion.de" target="_blank" rel="noopener" class="mini-footer-link">Clerion - Der KI-Assistent für Papierkram</a>
+  </div>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+
+<script src="generator-identitaetsdiebstahl.js"></script>
+
+
+</body>
+</html>

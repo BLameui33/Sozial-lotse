@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fakeshop-Checker: Online-Shop prüfen (Impressum, Zahlung, Preis) | Sozial-Lotse</title>
+
+  <!-- YMYL: Klare Kommunikation, dass es sich um eine Risikoeinschätzung handelt -->
+  <meta name="description" content="Online-Shop wirkt verdächtig? Kostenloser Fakeshop-Check: 6 Fragen zu Impressum, URL, Preisen, Zahlungsmethoden, Verfügbarkeit & Siegeln – mit Risiko-Einschätzung und nächsten Schritten.">
+
+  <meta name="keywords" content="Fakeshop Checker, Fakeshop erkennen, Online-Shop seriös, Shop prüfen, Impressum prüfen, nur Vorkasse, Überweisung Betrug, Trusted Shops Siegel prüfen, Fake Shop Finder, Verbraucherzentrale, Sozial-Lotse">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/checker-fakeshop.html">
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/logo-lotse-fav.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Fakeshop-Checker: Online-Shop prüfen (Impressum, Zahlung, Preis)">
+  <meta property="og:description" content="Schnelltest mit 6 Fragen: Impressum, URL, Preis, Zahlungsarten, Verfügbarkeit & Siegel. Ergebnis = Risiko-Einschätzung, keine Garantie.">
+  <meta property="og:url" content="https://sozialrecht-lotse.de/checker-fakeshop.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fakeshop-Checker: Online-Shop prüfen">
+  <meta name="twitter:description" content="6 Fragen zu Impressum, URL, Preis, Zahlung, Verfügbarkeit & Siegeln – mit Risiko-Einschätzung und nächsten Schritten.">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Fakeshop-Schnelltest Sozial-Lotse",
+      "operatingSystem": "Web",
+      "applicationCategory": "ShoppingApplication",
+      "description": "Interaktiver Test zur Erkennung von betrügerischen Online-Shops (Fakeshops) anhand typischer Warnsignale. Das Ergebnis ist eine Risikoeinschätzung, keine Garantie.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+    <h1>Fakeshop-Checker: Ist der Shop seriös?</h1>
+
+    <div class="highlight-box">
+      <p>
+        <strong>Der Preis ist unschlagbar günstig?</strong> Genau damit arbeiten viele Fakeshops.
+        Beantworten Sie 6 Fragen zum Shop, um das Betrugsrisiko schnell einzuschätzen – und sehen Sie danach, was im Zweifel als nächster Schritt sinnvoll ist.
+      </p>
+    </div>
+
+    <p class="highlight-box" style="background-color:#fff8e1; border-left:4px solid #ff9800;">
+      <strong>Wichtiger Hinweis:</strong> Dieses Tool liefert eine Risiko-/Wahrscheinlichkeits-Einschätzung anhand typischer Merkmale.
+      Es kann keine Garantie für die Sicherheit eines Shops geben – auch echte Shops können problematisch sein, und Betrüger können einzelne Merkmale nachahmen.
+    </p>
+
+    <p class="hinweis">
+      Redaktionell geprüft: Stand <strong>02.01.2026</strong>.
+    </p>
+
+    <form id="fs-form" class="pflegegrad-form" onsubmit="return false;">
+      
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1) Der erste Eindruck & das Impressum</legend>
+
+        <label class="pflegegrad-label" for="fs_impressum">
+          Finden Sie ein vollständiges Impressum auf der Seite?
+        </label>
+        <select id="fs_impressum">
+          <option value="ja" selected>Ja, mit Adresse, E-Mail und klarer Anbieterangabe (Firma/Vertretungsberechtigte).</option>
+          <option value="nein">Nein, es fehlt ganz oder ist unvollständig/auffällig.</option>
+          <option value="ausland">Ja, aber die Adresse ist im Ausland (außerhalb EU) oder wirkt unplausibel.</option>
+        </select>
+        <small style="display:block; margin-top:5px; color:#666;">
+            Ein fehlendes oder widersprüchliches Impressum ist ein häufiges Warnsignal.
+            Prüfen Sie die Angaben (Adresse/Firmennamen) bei Unsicherheit zusätzlich per Suche.
+        </small>
+
+        <label class="pflegegrad-label" for="fs_domain" style="margin-top:15px;">
+          Wie sieht die Internetadresse (URL) oben im Browser aus?
+        </label>
+        <select id="fs_domain">
+          <option value="ok" selected>Ganz normal (z.B. markenname.de oder .com)</option>
+          <option value="komisch">Seltsam (z.B. marke-berlin-billig.xyz oder schuhe-kaufen-24.net)</option>
+          <option value="unsicher">Ich bin unsicher</option>
+        </select>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2) Preis & Bezahlung (Wichtig!)</legend>
+        
+        <label class="pflegegrad-label" for="fs_preis">
+          Wie ist der Preis im Vergleich zu anderen großen Shops (Amazon, MediaMarkt etc.)?
+        </label>
+        <select id="fs_preis">
+          <option value="normal" selected>Ähnlich oder etwas günstiger (z.B. 5–15% Rabatt).</option>
+          <option value="billig">Deutlich billiger (über 20–30% günstiger als alle anderen).</option>
+          <option value="unrealistisch">Unrealistisch billig (z.B. 50% Rabatt auf aktuelle Ware).</option>
+        </select>
+        
+        <label class="pflegegrad-label" for="fs_zahlung" style="margin-top:15px;">
+          Welche Zahlungsart funktioniert <strong>am Ende an der Kasse</strong> wirklich?
+        </label>
+        <select id="fs_zahlung">
+          <option value="alle" selected>Mehrere sichere Optionen (z.B. Rechnung/Lastschrift/PayPal).</option>
+          <option value="vorkasse">Nur Vorkasse / Überweisung (andere Methoden gehen plötzlich „technisch“ nicht).</option>
+          <option value="kreditkarte">Nur Kreditkartendaten-Eingabe direkt auf der Seite (ohne bekannten Zahlungsdienst).</option>
+        </select>
+        <small style="display:block; margin-top:5px; color:#666;">
+            Achtung: Fakeshops zeigen oft Zahlungs-Logos, aber am Ende bleibt nur die Überweisung übrig.
+            Bei Unsicherheit lieber abbrechen und nicht zahlen.
+        </small>
+      </fieldset>
+
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3) Verfügbarkeit & Siegel</legend>
+
+        <label class="pflegegrad-label" for="fs_verfuegbar">
+          Ist die Ware verfügbar?
+        </label>
+        <select id="fs_verfuegbar">
+          <option value="normal" selected>Manches ja, manches ausverkauft (realistisch).</option>
+          <option value="alles">Alles ist lieferbar – in allen Größen und Farben (auffällig).</option>
+        </select>
+
+        <label class="pflegegrad-label" for="fs_siegel" style="margin-top:15px;">
+          Gibt es Gütesiegel (z.B. Trusted Shops)?
+        </label>
+        <select id="fs_siegel">
+          <option value="klickbar" selected>Ja, und wenn ich draufklicke, lande ich beim Zertifikat.</option>
+          <option value="bild">Ja, aber es ist nur ein Bild (kein Link / keine Funktion).</option>
+          <option value="keine">Nein, keine Siegel.</option>
+        </select>
+      </fieldset>
+
+      <!-- Trust Signal -->
+      <div style="font-size: 0.85em; color: #555; margin-bottom: 15px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Anonym:</strong> Ihre Eingaben werden nicht gespeichert.
+      </div>
+
+      <div class="button-container">
+        <button type="button" id="fs_berechnen" class="button">Shop jetzt prüfen</button>
+        <button type="reset" id="fs_reset" class="button button-secondary">Zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="fs_ergebnis"></section>
+
+    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+      <h2 id="promo-headline">
+        <span class="icon" aria-hidden="true">🤖</span>
+        Hilfe bei Betrugsfällen
+      </h2>
+      <p class="lead">
+        Sie haben bereits bezahlt und keine Ware erhalten?
+        <strong>Clerion</strong> hilft Ihnen, Belege zu strukturieren und eine saubere Dokumentation für Bank und Polizei zu erstellen.
+      </p>
+      <div class="promo-ctas">
+        <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+          Jetzt kostenlos testen
+        </a>
+      </div>
+    </section>
+
+    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
+      <h2 style="margin-top:0">Weiterführende Hilfen</h2>
+      <p style="margin-bottom:.4rem; display: flex; flex-wrap: wrap; gap: 10px;">
+        <a href="info-internet-betrug.html" class="button button-secondary">Infos: Internet-Betrug</a>
+        <a href="info-erste-hilfe-betrug.html" class="button button-secondary">Erste Hilfe: Was tun?</a>
+        <a href="generator-strafanzeige-online.html" class="button button-secondary">Tool: Strafanzeige</a>
+      </p>
+    </aside>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+  </footer>
+
+  <script src="fakeshop-checker.js"></script>
+</body>
+</html>

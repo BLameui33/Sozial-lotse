@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Finanz-Schutz-Rechner: Rückbuchung/Chargeback, Kredit-Check & Rendite-Warnsignale | Sozial-Lotse</title>
+  
+  <!-- YMYL: Hochwertige Finanz-Informationen zur Schadensvermeidung -->
+  <meta name="description" content="Kostenlose Finanz-Schutz-Tools: Fristen & nächste Schritte bei Lastschrift, Überweisung, Kreditkarte/Chargeback & PayPal. Plus Warnsignale für Kredit-Vorkosten und unrealistische Renditeversprechen (Anlagebetrug).">
+  <meta name="keywords" content="Lastschrift zurückbuchen 8 Wochen, unberechtigte Lastschrift 13 Monate, Überweisung zurückholen, Chargeback, Kreditkarte Rückbuchung, PayPal Käuferschutz, Kredit Vorkosten Betrug, Anlagebetrug erkennen, Renditeversprechen Warnung, Schneeballsystem, Sozial-Lotse">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/finanz-schutz-rechner.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Sozial-Lotse">
+  <meta property="og:title" content="Finanz-Schutz-Rechner: Rückbuchung/Chargeback, Kredit-Check & Rendite-Warnsignale">
+  <meta property="og:description" content="3 Rechner: Geld zurückholen (Fristen/Wege), Kredit-Vorkosten prüfen, Renditeversprechen einschätzen. Orientierungshilfe – keine Beratung/keine Garantie.">
+  <meta property="og:url" content="https://sozialrecht-lotse.de/finanz-schutz-rechner.html">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Finanz-Schutz-Rechner | Sozial-Lotse">
+  <meta name="twitter:description" content="Rückbuchung/Chargeback, Kredit-Vorkosten prüfen, Rendite-Warnsignale erkennen. Orientierungshilfe – keine Garantie.">
+
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- Schema.org für Financial Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Finanz-Schutz-Rechner (Verbraucher-Schutz-Rechner)",
+    "description": "Rechner-Sammlung zur ersten Orientierung bei Rückbuchungen/Chargeback sowie zur Einschätzung typischer Betrugs-Warnsignale bei Kreditangeboten und Kapitalanlagen.",
+    "brand": {
+      "@type": "Organization",
+      "name": "Sozial-Lotse"
+    }
+  }
+  </script>
+
+  <style>
+    /* Tabs für die Auswahl */
+    .calc-switch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .calc-btn {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #ddd;
+        background: #f8f9fa;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+    .calc-btn:hover {
+        background: #e9ecef;
+    }
+    .calc-btn.active {
+        background: #3498db;
+        color: white;
+        border-color: #2980b9;
+    }
+    
+    /* Container für die einzelnen Rechner */
+    .calc-container {
+        display: none; /* Standardmäßig ausgeblendet */
+        animation: fadeIn 0.5s;
+    }
+    .calc-container.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+
+<div class="page-container">
+  <h1>Finanz-Schutz-Rechner</h1>
+  
+  <div class="highlight-box">
+    <p>
+      Diese Rechner helfen bei einer ersten Einschätzung: Welche Schritte sind bei einer Zahlung möglich, wo sind typische Kostenfallen – und welche Renditeversprechen sind auffällig.
+      Wählen Sie aus, was Sie prüfen möchten:
+    </p>
+  </div>
+
+
+  <!-- AUSWAHL TABS -->
+  <div class="calc-switch">
+    <div class="calc-btn active" onclick="switchCalc('recovery')">💸 Geld zurückholen?</div>
+    <div class="calc-btn" onclick="switchCalc('credit')">📉 Kredit-Check</div>
+    <div class="calc-btn" onclick="switchCalc('invest')">📈 Rendite-Check</div>
+  </div>
+
+
+  <!-- RECHNER 1: GELD ZURÜCK (RECOVERY) -->
+  <div id="calc-recovery" class="calc-container active">
+    <h2>Geld zurückholen: Fristen & nächste Schritte</h2>
+    <p>Prüfen Sie abhängig von der Zahlungsart, ob Rückbuchung/Chargeback/Käuferschutz noch möglich sein könnte (Orientierung, keine Garantie).</p>
+    
+    <form class="pflegegrad-form" onsubmit="return false;">
+      <fieldset class="pflegegrad-fieldset active-step">
+        <label class="pflegegrad-label">Wie haben Sie bezahlt?</label>
+        <select id="rec_method">
+            <option value="sepa">Lastschrift (Abbuchung vom Konto)</option>
+            <option value="transfer">Überweisung (selbst getätigt)</option>
+            <option value="creditcard">Kreditkarte (Visa/Mastercard)</option>
+            <option value="paypal_buyer">PayPal (Waren & Dienstleistungen)</option>
+            <option value="paypal_friends">PayPal (Freunde & Familie)</option>
+            <option value="klarna">Klarna / Rechnungskauf</option>
+            <option value="cash">Barzahlung / Western Union / Gutscheinkarten</option>
+        </select>
+
+        <label class="pflegegrad-label">Wann wurde abgebucht/gezahlt?</label>
+        <input type="date" id="rec_date">
+        
+        <label class="pflegegrad-label">Betrag (in €):</label>
+        <input type="number" id="rec_amount" placeholder="z.B. 49.99">
+        
+        <div class="button-container">
+            <button type="button" class="button" onclick="calcRecovery()">Prüfen</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+  <!-- RECHNER 2: KREDIT (WUCHER/SCAM) -->
+  <div id="calc-credit" class="calc-container">
+    <h2>Kredit-Check: Kostenfallen & Vorkosten-Warnung</h2>
+    <p>Prüfen Sie „Kredit ohne Schufa“-Angebote auf typische Vorkosten-/Vermittlungsfallen (Orientierungshilfe).</p>
+    
+    <form class="pflegegrad-form" onsubmit="return false;">
+      <fieldset class="pflegegrad-fieldset active-step">
+        <label class="pflegegrad-label">Gewünschte Kreditsumme:</label>
+        <input type="number" id="cred_amount" placeholder="z.B. 5000">
+
+        <label class="pflegegrad-label">Verlangt der Vermittler Geld VOR der Auszahlung?</label>
+        <select id="cred_upfront">
+            <option value="no">Nein, keine Vorkosten.</option>
+            <option value="yes_fee">Ja, Bearbeitungsgebühr / Auslagenpauschale</option>
+            <option value="yes_cod">Ja, per Nachnahme (Postbote)</option>
+            <option value="yes_insurance">Ja, Abschluss einer Versicherung / Finanzsanierung</option>
+        </select>
+
+        <div id="cred_fee_input" style="display:none;">
+            <label class="pflegegrad-label">Höhe der geforderten Gebühr:</label>
+            <input type="number" id="cred_fee_val" placeholder="z.B. 250">
+        </div>
+
+        <div class="button-container">
+            <button type="button" class="button" onclick="calcCredit()">Angebot prüfen</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+  <!-- RECHNER 3: INVESTMENT (RENDITE/SCAM) -->
+  <div id="calc-invest" class="calc-container">
+    <h2>Rendite-Check: Warnsignale bei „zu guten“ Versprechen</h2>
+    <p>Unrealistische Renditen, „garantierte Gewinne“ und Promi-/KI-Werbung sind häufige Warnsignale bei Anlagebetrug (Orientierungshilfe). </p>
+    
+    <form class="pflegegrad-form" onsubmit="return false;">
+      <fieldset class="pflegegrad-fieldset active-step">
+        <label class="pflegegrad-label">Versprochener Gewinn (Rendite):</label>
+        <div style="display:flex; gap:10px;">
+            <input type="number" id="inv_return" placeholder="z.B. 10" style="flex:1;">
+            <select id="inv_period" style="flex:1;">
+                <option value="year">Prozent pro Jahr</option>
+                <option value="month">Prozent pro Monat (!)</option>
+                <option value="day">Prozent pro Tag (!!)</option>
+            </select>
+        </div>
+
+        <label class="pflegegrad-label">Wie wird das Risiko beschrieben?</label>
+        <select id="inv_risk">
+            <option value="high">Hohes Risiko (Totalverlust möglich)</option>
+            <option value="medium">Mittleres Risiko</option>
+            <option value="none">Garantiert sicher / Kein Risiko</option>
+        </select>
+        
+        <label class="pflegegrad-label">Womit wird geworben?</label>
+        <div class="checkbox-group">
+             <label><input type="checkbox" id="inv_kw1"> "Geheimer Algorithmus" / KI-Trading</label>
+             <label><input type="checkbox" id="inv_kw2"> Prominente (Höhle der Löwen, Elon Musk)</label>
+             <label><input type="checkbox" id="inv_kw3"> Sitz im Ausland (Zypern, Karibik)</label>
+        </div>
+
+        <div class="button-container">
+            <button type="button" class="button" onclick="calcInvest()">Analyse starten</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+
+  <!-- ERGEBNIS AREA (Universal) -->
+  <section id="universal_result"></section>
+
+
+  <p class="highlight-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; margin-top:30px;">
+    <strong>Wichtiger Hinweis (YMYL):</strong> Diese Rechner dienen der ersten Orientierung und prüfen typische Muster/Fristen.
+    Sie ersetzen keine individuelle Beratung (z.B. Bank, Verbraucherzentrale, Anwalt) und bieten keine Garantie.
+    Fristen und Möglichkeiten können je nach Zahlungsdienst, Vertrag und Einzelfall abweichen (z.B. bei SEPA-Lastschrift gelten häufig 8 Wochen, bei unberechtigten Lastschriften teils bis zu 13 Monate).
+  </p>
+
+
+</div>
+
+
+<footer>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+
+<script src="finanz-schutz-rechner.js"></script>
+</body>
+</html>
