@@ -10,39 +10,110 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnReset = document.getElementById("btn_reset");
     const resultArea = document.getElementById("result_area");
 
-    // Datenbank der Signalwörter (Trigger)
-    // Wir gruppieren sie nach Kategorien für detailliertes Feedback
+    // Datenbank der Signalwörter
     const patterns = {
         urgency: {
             label: "Druck & Panikmache",
-            words: ["sofort", "dringend", "gesperrt", "eingeschränkt", "letzte warnung", "innerhalb von 24 stunden", "sicherheitsmaßnahme", "unautorisierter zugriff", "identität bestätigen", "konto deaktiviert", "verifizieren sie", "handlungsbedarf"]
+            words: [
+                "sofort", "dringend", "umgehend", "unverzüglich",
+                "gesperrt", "eingeschränkt", "blockiert",
+                "letzte warnung", "letzte erinnerung",
+                "innerhalb von 24 stunden", "innerhalb von 48 stunden",
+                "frist abgelaufen", "frist läuft ab",
+                "sicherheitsmaßnahme", "sicherheitsüberprüfung",
+                "unautorisierter zugriff", "verdächtige aktivität",
+                "identität bestätigen", "konto deaktiviert",
+                "handlungsbedarf", "aktion erforderlich",
+                "reaktion erforderlich"
+            ]
         },
         money: {
-            label: "Geld & Gewinne",
-            words: ["gewonnen", "erbschaft", "millionen", "lotterie", "auszahlung", "überweisen", "bitcoin", "krypto", "schnell geld", "investition", "guthaben", "rückerstattung", "fällige zahlung"]
+            label: "Geld & Finanzen",
+            words: [
+                "gewonnen", "gewinnbenachrichtigung",
+                "erbschaft", "millionen", "lotterie",
+                "auszahlung", "überweisen", "überweisung",
+                "bitcoin", "krypto", "wallet",
+                "schnell geld", "investition",
+                "guthaben", "kontostand",
+                "rückerstattung", "steuererstattung",
+                "fällige zahlung", "offene rechnung",
+                "zahlung fehlgeschlagen",
+                "abbuchung", "belastung",
+                "mahnung"
+            ]
         },
         action: {
-            label: "Aufforderung zum Klick/Daten",
-            words: ["hier klicken", "link folgen", "anhang öffnen", "daten aktualisieren", "passwort ändern", "tan eingeben", "pin", "login bestätigen", "formular ausfüllen"]
+            label: "Aufforderung zum Klick / zur Dateneingabe",
+            words: [
+                "hier klicken", "jetzt klicken",
+                "link folgen", "weiter zum login",
+                "anhang öffnen", "rechnung öffnen",
+                "daten aktualisieren", "daten überprüfen",
+                "passwort ändern", "zugang erneuern",
+                "tan eingeben", "pin eingeben",
+                "login bestätigen", "anmeldung bestätigen",
+                "formular ausfüllen",
+                "verifizierung abschließen",
+                "konto wiederherstellen"
+            ]
+        },
+        impersonation: {
+            label: "Vorgeblicher bekannter Anbieter",
+            words: [
+                "paypal", "amazon", "ebay",
+                "dhl", "hermes", "ups",
+                "post", "paket", "sendung",
+                "sparkasse", "volksbank",
+                "ing", "comdirect",
+                "apple", "icloud", "microsoft",
+                "netflix", "spotify"
+            ]
+        },
+        technical: {
+            label: "Formale Auffälligkeiten",
+            words: [
+                "klicken sie auf den untenstehenden link",
+                "umgehend ausführen",
+                "aus sicherheitsgründen",
+                "wir konnten ihre daten nicht verifizieren",
+                "ihr konto wurde eingeschränkt",
+                "bitte antworten sie nicht auf diese e-mail"
+            ]
+        },
+        psychology: {
+            label: "Psychologischer Druck",
+            words: [
+                "zu ihrem schutz",
+                "um schäden zu vermeiden",
+                "um betrug zu verhindern",
+                "wir sind besorgt",
+                "verdächtiges verhalten festgestellt",
+                "zu ihrer sicherheit"
+            ]
         },
         salutation: {
             label: "Unpersönliche Ansprache",
-            words: ["lieber kunde", "sehr geehrter kunde", "lieber nutzer", "hallo freund", "sehr geehrte damen und herren", "werte kunden"]
+            words: [
+                "lieber kunde", "sehr geehrter kunde",
+                "lieber nutzer", "sehr geehrter nutzer",
+                "sehr geehrte damen und herren",
+                "werte kunden",
+                "hallo lieber kunde",
+                "guten tag"
+            ]
         }
     };
 
     btnAnalyze.addEventListener("click", () => {
         resultArea.innerHTML = "";
-        
         const text = textField.value.toLowerCase();
-        
-        // Einfache Validierung
+
         if (text.length < 10 && !checkLink.checked && !checkSender.checked && !checkAttachment.checked) {
             resultArea.innerHTML = `
                 <div class="warning-box" style="background:#fff3cd; color:#856404; padding:15px; border-radius:4px; margin-top:20px;">
-                    <strong>Bitte geben Sie etwas Text ein</strong> oder wählen Sie mindestens ein Merkmal (Checkboxen) aus, damit eine Risiko-Einschätzung möglich ist.
-                </div>
-            `;
+                    <strong>Bitte geben Sie etwas Text ein</strong> oder wählen Sie mindestens ein Merkmal (Checkboxen) aus.
+                </div>`;
             return;
         }
 
@@ -51,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let foundKeywords = [];
 
         // 1. Textanalyse
-        for (const [category, data] of Object.entries(patterns)) {
+        for (const data of Object.values(patterns)) {
             let catMatches = [];
             data.words.forEach(word => {
                 if (text.includes(word)) {
@@ -61,85 +132,101 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (catMatches.length > 0) {
-                score += catMatches.length * 15; // Jedes Wort gibt Punkte
-                findings.push(`<li><strong>${data.label}:</strong> Gefunden wurden z.B. <em>"${catMatches.join('", "')}"</em>. Solche Formulierungen werden bei Phishing häufig genutzt, um Druck aufzubauen oder zu schnellen Handlungen zu bewegen.</li>`);
+                score += catMatches.length * 15;
+                findings.push(
+                    `<li><strong>${data.label}:</strong> Gefunden wurden z.B. <em>"${catMatches.join('", "')}"</em>.</li>`
+                );
             }
         }
 
-        // 2. Checkboxen Analyse (Wiegen schwer!)
-        if (checkLink.checked) {
-            score += 40;
-            findings.push("<li><strong>Verdächtiger Link:</strong> Wenn ein Link verkürzt, kryptisch oder domain-fremd wirkt, ist das ein starkes Warnsignal. Klicken Sie nicht, sondern prüfen Sie den Anbieter über die offizielle Website/App.</li>");
-        }
-        if (checkSender.checked) {
-            score += 35;
-            findings.push("<li><strong>Unplausibler Absender:</strong> Wenn die Absenderadresse nicht zur offiziellen Domain passt, ist das ein sehr häufiges Betrugsmerkmal. Zur Sicherheit: niemals über „Antworten“ reagieren, sondern den Anbieter selbst kontaktieren.</li>");
-        }
-        if (checkAttachment.checked) {
-            score += 30;
-            findings.push("<li><strong>Unerwarteter Anhang:</strong> Unerwartete Anhänge können Schadsoftware enthalten. Öffnen Sie den Anhang nicht und prüfen Sie den Vorgang über einen sicheren, offiziellen Weg.</li>");
+        // 1b. Kombinationslogik (NEU)
+        const hasUrgency = foundKeywords.some(w =>
+            ["sofort", "dringend", "umgehend", "letzte warnung"].includes(w)
+        );
+
+        const hasAction = foundKeywords.some(w =>
+            ["hier klicken", "jetzt klicken", "link folgen", "login bestätigen"].includes(w)
+        );
+
+        const hasBrand = foundKeywords.some(w =>
+            ["paypal", "amazon", "dhl", "sparkasse", "netflix", "apple"].includes(w)
+        );
+
+        const hasMoney = foundKeywords.some(w =>
+            ["zahlung", "rechnung", "guthaben", "kontostand"].includes(w)
+        );
+
+        const hasPsychology = foundKeywords.some(w =>
+            ["zu ihrer sicherheit", "zu ihrem schutz", "wir sind besorgt"].includes(w)
+        );
+
+        if (hasUrgency && hasAction) {
+            score += 20;
+            findings.push("<li><strong>Kritische Kombination:</strong> Zeitdruck + Klickaufforderung.</li>");
         }
 
-        // 3. Ergebnisberechnung
-        let resultTitle = "";
-        let resultColor = "";
-        let resultIcon = "";
-        let resultText = "";
-        let bgColor = "";
+        if (hasBrand && hasAction) {
+            score += 25;
+            findings.push("<li><strong>Vortäuschung eines bekannten Anbieters:</strong> In Kombination mit Klickaufforderung.</li>");
+        }
+
+        if (hasMoney && checkAttachment.checked) {
+            score += 25;
+            findings.push("<li><strong>Finanzthema + Anhang:</strong> Häufige Malware-Taktik.</li>");
+        }
+
+        if (hasPsychology && hasUrgency) {
+            score += 15;
+            findings.push("<li><strong>Emotionaler Sicherheitsdruck:</strong> Manipulatives Social Engineering.</li>");
+        }
+
+        // Score begrenzen (optional, aber sinnvoll)
+        score = Math.min(score, 100);
+
+        // 2. Checkboxen
+        if (checkLink.checked) score += 40;
+        if (checkSender.checked) score += 35;
+        if (checkAttachment.checked) score += 30;
+
+        // 3. Ergebnis
+        let resultTitle, resultColor, bgColor, resultIcon, resultText;
 
         if (score >= 40) {
-            // Rotes Ergebnis (Hohes Risiko)
             resultTitle = "Achtung: hohes Phishing-Risiko";
             resultColor = "#c0392b";
             bgColor = "#fadbd8";
             resultIcon = "🚨";
-            resultText = "Diese Nachricht enthält mehrere starke Warnsignale. Klicken Sie nicht auf Links, öffnen Sie keine Anhänge und geben Sie keine Zugangsdaten (z.B. PIN/TAN/Passwort) ein.";
+            resultText = "Mehrere starke Warnsignale erkannt. Nicht reagieren!";
         } else if (score >= 15) {
-            // Gelbes Ergebnis (Verdacht)
             resultTitle = "Vorsicht: auffällige Merkmale";
             resultColor = "#d35400";
             bgColor = "#fdebd0";
             resultIcon = "⚠️";
-            resultText = "Es wurden einige Warnsignale gefunden. Prüfen Sie den Vorgang über die offizielle Website/App (selbst eintippen) und nicht über Links in der Nachricht.";
+            resultText = "Einige Warnsignale erkannt. Vorgang separat prüfen.";
         } else {
-            // Grünes Ergebnis (Entwarnung, aber Vorsicht)
             resultTitle = "Keine eindeutigen Warnsignale gefunden";
             resultColor = "#27ae60";
             bgColor = "#d5f5e3";
             resultIcon = "✅";
-            resultText = "Im Text wurden keine typischen Signalwörter erkannt. <strong>Wichtig:</strong> Das ist keine Garantie. Wenn Absender/Link/Anhang trotzdem komisch wirkt, lieber nicht reagieren und den Anbieter über offizielle Wege prüfen.";
+            resultText = "Keine typischen Phishing-Muster erkannt (keine Garantie).";
         }
 
-        // HTML zusammenbauen
-        let keywordsHtml = foundKeywords.length > 0 
-            ? `<div style="margin-top:10px;"><strong>Gefundene Signalwörter:</strong><br>${foundKeywords.map(k => `<span class="keyword-tag">${k}</span>`).join(' ')}</div>` 
+        let keywordsHtml = foundKeywords.length
+            ? `<div style="margin-top:10px;"><strong>Gefundene Signalwörter:</strong><br>${foundKeywords.map(k => `<span class="keyword-tag">${k}</span>`).join(" ")}</div>`
             : "";
 
-        const html = `
-            <div class="result-card" style="margin-top:30px; border: 2px solid ${resultColor}; border-radius: 8px; overflow: hidden; background: #fff;">
-                <div style="background:${bgColor}; color:${resultColor}; padding:20px; text-align:center;">
+        resultArea.innerHTML = `
+            <div class="result-card" style="margin-top:30px; border:2px solid ${resultColor}; border-radius:8px;">
+                <div style="background:${bgColor}; padding:20px; text-align:center;">
                     <div style="font-size:3rem;">${resultIcon}</div>
-                    <h2 style="margin:10px 0 0 0; color:${resultColor};">${resultTitle}</h2>
-                    <p style="margin:8px 0 0 0; font-size:0.95em; opacity:0.9;">
-                        Hinweis: Automatisierte Risiko-Einschätzung anhand von Textmerkmalen (keine Garantie).
-                    </p>
+                    <h2 style="color:${resultColor};">${resultTitle}</h2>
                 </div>
                 <div style="padding:20px;">
-                    <p class="lead" style="font-weight:bold;">${resultText}</p>
-                    
-                    ${findings.length > 0 ? `<h3>Analyse-Details:</h3><ul>${findings.join('')}</ul>` : ""}
-                    
+                    <p><strong>${resultText}</strong></p>
+                    ${findings.length ? `<ul>${findings.join("")}</ul>` : ""}
                     ${keywordsHtml}
-                    
-                    <div style="margin-top:25px; padding-top:15px; border-top:1px solid #eee; font-size:0.9em; color:#666;">
-                        <strong>Sicherer nächster Schritt:</strong> Öffnen Sie die Website/App des Anbieters selbst (Adresse eintippen) oder rufen Sie über eine offizielle, selbst recherchierte Nummer an – niemals über Kontakte aus der Nachricht.
-                    </div>
                 </div>
-            </div>
-        `;
-
-        resultArea.innerHTML = html;
-        resultArea.scrollIntoView({ behavior: "smooth" });
+            </div>`;
     });
 
     btnReset.addEventListener("click", () => {
