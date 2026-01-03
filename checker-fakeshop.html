@@ -43,48 +43,31 @@
     }
   </script>
 
-  <style>
-/* ==== Mobile-Fix für zu breite Select-Felder in Fieldsets ==== */
+ <style>
+/* ===== Fix für zu breite Selects in Flex/Grid ===== */
 
-/* Fieldset: Safari/iOS Bugfix */
+/* Wichtig: erlaubt Schrumpfen */
 .pflegegrad-fieldset {
-  min-inline-size: 0;
+  min-width: 0;
 }
 
-/* Labels sauber umbrechen */
-.pflegegrad-label {
-  display: block;
-  max-width: 100%;
-}
-
-/* Select-Felder: mobile-sicher */
+/* Select-Felder selbst */
 .pflegegrad-fieldset select {
   display: block;
   width: 100%;
   max-width: 100%;
-  min-width: 0;
+  min-width: 0;        /* DER entscheidende Fix */
   box-sizing: border-box;
-
-  /* verhindert horizontales Überlaufen durch lange Optionen */
-  white-space: normal;
 }
 
-/* Extra-Schutz speziell für Mobile */
+/* Sicherheit für mobile Layouts */
 @media (max-width: 768px) {
-  .pflegegrad-fieldset,
-  .pflegegrad-fieldset select {
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* iOS/Safari spezifischer Fallback */
-@supports (-webkit-touch-callout: none) {
-  .pflegegrad-fieldset select {
+  .pflegegrad-fieldset {
     width: 100%;
   }
 }
 </style>
+
 
 </head>
 <body>
