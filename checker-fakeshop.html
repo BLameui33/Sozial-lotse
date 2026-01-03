@@ -43,30 +43,40 @@
     }
   </script>
 
- <style>
-/* ===== Fix für zu breite Selects in Flex/Grid ===== */
+<style>
+/* ===== ABSOLUTER NOTFALL-FIX GEGEN HORIZONTALES ÜBERLAUFEN ===== */
 
-/* Wichtig: erlaubt Schrumpfen */
+/* 1. Viewport darf NIEMALS breiter werden */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 2. Hauptcontainer begrenzen */
+.page-container,
+.pflegegrad-form,
 .pflegegrad-fieldset {
+  max-width: 100%;
   min-width: 0;
 }
 
-/* Select-Felder selbst */
+/* 3. Selects brutal einschränken */
 .pflegegrad-fieldset select {
   display: block;
   width: 100%;
   max-width: 100%;
-  min-width: 0;        /* DER entscheidende Fix */
+  min-width: 0;
   box-sizing: border-box;
 }
 
-/* Sicherheit für mobile Layouts */
+/* 4. LETZTER SCHUTZ: selbst wenn alles andere versagt */
 @media (max-width: 768px) {
-  .pflegegrad-fieldset {
-    width: 100%;
+  .pflegegrad-fieldset select {
+    width: calc(100vw - 2rem);
   }
 }
 </style>
+
 
 
 </head>
