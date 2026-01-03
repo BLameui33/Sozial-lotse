@@ -42,6 +42,50 @@
       }
     }
   </script>
+
+  <style>
+/* ==== Mobile-Fix für zu breite Select-Felder in Fieldsets ==== */
+
+/* Fieldset: Safari/iOS Bugfix */
+.pflegegrad-fieldset {
+  min-inline-size: 0;
+}
+
+/* Labels sauber umbrechen */
+.pflegegrad-label {
+  display: block;
+  max-width: 100%;
+}
+
+/* Select-Felder: mobile-sicher */
+.pflegegrad-fieldset select {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  /* verhindert horizontales Überlaufen durch lange Optionen */
+  white-space: normal;
+}
+
+/* Extra-Schutz speziell für Mobile */
+@media (max-width: 768px) {
+  .pflegegrad-fieldset,
+  .pflegegrad-fieldset select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* iOS/Safari spezifischer Fallback */
+@supports (-webkit-touch-callout: none) {
+  .pflegegrad-fieldset select {
+    width: 100%;
+  }
+}
+</style>
+
 </head>
 <body>
   <header class="site-header">
@@ -179,6 +223,18 @@
         <a href="generator-strafanzeige-online.html" class="button button-secondary">Tool: Strafanzeige</a>
       </p>
     </aside>
+
+    <h2>Quellen & weiterführende Links</h2>
+<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+  <ul>
+    <li><a href="https://www.verbraucherzentrale.de/wissen/vertraege-reklamation/abzocke/fake-shops-im-internet-woran-sie-sie-erkennen-und-was-sie-tun-koennen-13166" target="_blank" rel="noopener">Verbraucherzentrale – Fake-Shops erkennen</a></li>
+    <li><a href="https://www.polizei-beratung.de/themen-und-tipps/betrug/betrug-bei-wohnungssuche/" target="_blank" rel="noopener">Polizei-Beratung – Betrug bei der Wohnungssuche</a></li>
+    <li><a href="https://www.evz.de/einkaufen-internet/abofallen.html" target="_blank" rel="noopener">Europäisches Verbraucherzentrum – Abofallen im Internet</a></li>
+  </ul>
+</div>
+<div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
+  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">03.01.2026</span></p>
+</div>
 
   </div>
 
