@@ -470,11 +470,11 @@ h1, h2, h3, p, li, td, th {
 }
 
 .button.jump-button {
-  display: block;
+  display: block !important;          
   width: fit-content;
   max-width: 90%;
 
-  margin: 20px auto;
+  margin: 20px auto !important;      
   padding: 12px 20px;
 
   background-color: #4da3ff;
@@ -488,14 +488,9 @@ h1, h2, h3, p, li, td, th {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-
-  /* Zentrierung */
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
-/* Hover nur Desktop */
+/* Hover nur für Geräte mit Maus */
 @media (hover: hover) {
   .button.jump-button:hover {
     background-color: #3390ff;
@@ -503,21 +498,21 @@ h1, h2, h3, p, li, td, th {
   }
 }
 
-/* Active ohne Verschieben → kein Wackeln */
+/* Active (kein Wackeln) */
 .button.jump-button:active {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-/* Mobile Fix */
+
+
 @media (max-width: 600px) {
   .button.jump-button {
-    width: 100%;
+    width: 100% !important;
     max-width: 100%;
+    box-sizing: border-box;   /* 🔥 DAS fixt das Rechts-Rutschen */
 
-    left: 0;
-    transform: none;
-
-    margin: 20px 0;
+    font-size: 15px;
+    padding: 14px;
   }
 }
 
@@ -633,6 +628,65 @@ details p {
     width: 100%;
     text-align: center;
   }
+}
+
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+    font-family: sans-serif;
+}
+
+.usp-item {
+    display: flex;
+    align-items: center;
+    background: #f0f7ff; /* Sehr helles Blau passend zum Design */
+    color: #0056b3;      /* Dein Logo-Blau */
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #d0e3ff;
+}
+
+.usp-item svg {
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+    fill: #2e7d32; /* Ein dezentes Grün für die Haken */
+}
+
+/* Desktop-Standard (hast du schon) */
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+}
+
+/* Mobile Optimierung (Neu hinzufügen) */
+@media (max-width: 600px) {
+    .usp-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Zwei gleich breite Spalten */
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .usp-item {
+        justify-content: center; /* Zentriert Inhalt in der Kachel */
+        font-size: 0.75rem;      /* Etwas kleiner auf dem Handy */
+        padding: 8px 4px;
+        text-align: center;
+    }
+    
+    .usp-item svg {
+        width: 14px;
+        height: 14px;
+    }
 }
 
 

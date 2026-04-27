@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const resultHTML = `
             <div class="result-card" style="margin-top:30px; border: 2px solid ${textColor}; border-radius: 8px; overflow: hidden; background: #fff;">
                 <div style="background:${bgColor}; color:${textColor}; padding:20px; text-align:center;">
-                    <div style="font-size:3rem;">${riskLevel === "red" ? "🚨" : (riskLevel === "yellow" ? "⚠️" : "✅")}</div>
+                    <div style="font-size:3rem;">${riskLevel === "red" ? "" : (riskLevel === "yellow" ? "⚠️" : "✅")}</div>
                     <h2 style="margin:10px 0 0 0; color:${textColor};">${headline}</h2>
                     <p style="margin:8px 0 0 0; font-size:0.95em; opacity:0.9;">
                         Automatisierte Risiko-Einschätzung anhand Ihrer Antworten (keine Garantie).

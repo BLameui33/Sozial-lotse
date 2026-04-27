@@ -663,6 +663,65 @@ footer a:hover {
     width: 100%;
   }
 }
+
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+    font-family: sans-serif;
+}
+
+.usp-item {
+    display: flex;
+    align-items: center;
+    background: #f0f7ff; /* Sehr helles Blau passend zum Design */
+    color: #0056b3;      /* Dein Logo-Blau */
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #d0e3ff;
+}
+
+.usp-item svg {
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+    fill: #2e7d32; /* Ein dezentes Grün für die Haken */
+}
+
+/* Desktop-Standard (hast du schon) */
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+}
+
+/* Mobile Optimierung (Neu hinzufügen) */
+@media (max-width: 600px) {
+    .usp-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Zwei gleich breite Spalten */
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .usp-item {
+        justify-content: center; /* Zentriert Inhalt in der Kachel */
+        font-size: 0.75rem;      /* Etwas kleiner auf dem Handy */
+        padding: 8px 4px;
+        text-align: center;
+    }
+    
+    .usp-item svg {
+        width: 14px;
+        height: 14px;
+    }
+}
   </style>
 </head>
 <body>
@@ -673,6 +732,25 @@ footer a:hover {
 
   <div class="page-container">
     <h1>Sozial-Lotse: Rechtssichere Schreiben einfach selbst erstellen</h1>
+
+<div class="usp-bar">
+  <div class="usp-item">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+    Ohne Anmeldung
+  </div>
+  <div class="usp-item">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+    100% Kostenlos
+  </div>
+  <div class="usp-item">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+    Sofort-PDF
+  </div>
+  <div class="usp-item">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+    Anonym & Sicher
+  </div>
+</div>
 
     <div class="intro-text">
       <h3>Behördenpost? Falsche Rechnung? Vertragsprobleme?</h3>

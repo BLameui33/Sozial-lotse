@@ -684,3 +684,227 @@ h1, h2, h3, p, li, td, th {
     margin-right: 5px;
     font-size: 0.95em;
 }
+
+
+.button.jump-button {
+  display: block !important;          
+  width: fit-content;
+  max-width: 90%;
+
+  margin: 20px auto !important;      
+  padding: 12px 20px;
+
+  background-color: #4da3ff;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover nur für Geräte mit Maus */
+@media (hover: hover) {
+  .button.jump-button:hover {
+    background-color: #3390ff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Active (kein Wackeln) */
+.button.jump-button:active {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+
+@media (max-width: 600px) {
+  .button.jump-button {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;   /* 🔥 DAS fixt das Rechts-Rutschen */
+
+    font-size: 15px;
+    padding: 14px;
+  }
+}
+
+details {
+  background: #f4f9ff;
+  border: 1px solid #d6e9ff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+}
+
+details[open] {
+  background: #eaf4ff;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #2a6fb5;
+  position: relative;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Pfeil */
+summary::after {
+  content: "▾";
+  position: absolute;
+  right: 0;
+  transition: transform 0.2s ease;
+}
+
+details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+details p {
+  margin-top: 10px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.highlight-box {
+  background: #f4f9ff;
+  border: 1px solid #d6e9ff;
+  border-left: 4px solid #4da3ff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Buttons darin */
+.button.button-secondary {
+  display: inline-block;
+  margin: 6px 8px 6px 0;
+  padding: 10px 14px;
+
+  background: #eaf4ff;
+  color: #2a6fb5;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+
+  border-radius: 6px;
+  border: 1px solid #cfe4ff;
+
+  transition: all 0.2s ease;
+}
+
+.button.button-secondary:hover {
+  background: #d6e9ff;
+  color: #1d5c99;
+}
+
+.kl-sources-box {
+  background: #f4f9ff;
+  border: 1px solid #d6e9ff;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.kl-sources-box ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.kl-sources-box li {
+  margin-bottom: 10px;
+}
+
+.kl-sources-box a {
+  color: #2a6fb5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.kl-sources-box a:hover {
+  text-decoration: underline;
+  color: #1d5c99;
+}
+.info-box.warning {
+  border-left: 4px solid #4da3ff !important;
+  background: #f4f9ff;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .button.button-secondary {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+    font-family: sans-serif;
+}
+
+.usp-item {
+    display: flex;
+    align-items: center;
+    background: #f0f7ff; /* Sehr helles Blau passend zum Design */
+    color: #0056b3;      /* Dein Logo-Blau */
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #d0e3ff;
+}
+
+.usp-item svg {
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+    fill: #2e7d32; /* Ein dezentes Grün für die Haken */
+}
+
+/* Desktop-Standard (hast du schon) */
+.usp-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+}
+
+/* Mobile Optimierung (Neu hinzufügen) */
+@media (max-width: 600px) {
+    .usp-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Zwei gleich breite Spalten */
+        gap: 8px;
+        padding: 0 10px;
+    }
+
+    .usp-item {
+        justify-content: center; /* Zentriert Inhalt in der Kachel */
+        font-size: 0.75rem;      /* Etwas kleiner auf dem Handy */
+        padding: 8px 4px;
+        text-align: center;
+    }
+    
+    .usp-item svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+
+

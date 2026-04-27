@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             html = `
                 <div class="result-card" style="margin-top:30px; border: 2px solid #c0392b; border-radius: 8px; overflow: hidden; background: #fff;">
                     <div style="background:#fadbd8; color:#c0392b; padding:20px; text-align:center;">
-                        <div style="font-size:3rem;">🚨</div>
+                        <div style="font-size:3rem;"></div>
                         <h2 style="margin:10px 0 0 0; color:#c0392b;">ACHTUNG: Hohes Risiko / starke Warnsignale</h2>
                         <p style="font-weight:bold; font-size:1.2em;">Verdacht auf: ${scamType}</p>
                         <p style="margin:8px 0 0 0; font-size:0.95em; opacity:0.9;">
