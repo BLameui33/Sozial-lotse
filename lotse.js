@@ -43,6 +43,7 @@ const lotseBaum = {
         frage: "Wobei gibt es Ärger oder Fragen zur Wohnung?",
         antworten: [
             { text: "Mängel & Wohnalltag (Schimmel, Lärm, Mietminderung)", link: "https://mieter-lotse.de/maengel-wohnalltag.html" },
+            { text: "Wohnungssuche, Anschreiben, Bewerbung", link: "https://mieter-lotse.de/wohnungsbewerbung.html" },
             { text: "Miete & Nebenkosten (Mieterhöhung, Kaution, Abrechnung)", link: "https://mieter-lotse.de/miete-nebenkosten.html" },
             { text: "Einzug, Auszug & Kündigung (Übergabe, Renovierung)", link: "https://mieter-lotse.de/einzug-auszug-kuendigung.html" },
             { text: "Erste Hilfe bei Mietschulden", link: "https://mieter-lotse.de/mietschulden-erste-hilfe.html" }
