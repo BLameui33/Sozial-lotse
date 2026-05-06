@@ -1432,21 +1432,7 @@ a:not(.button):not(.site-logo):not(.category-badge):hover {
   background: rgba(0, 80, 200, 0.32);
 }
 
-/* --- Smooth Scroll global --- */
-html {
-  scroll-behavior: smooth;
-}
 
-/* --- Reduced Motion: Animationen respektieren --- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
 
 /* =========================================
    Kassen-Lotse – Upgrade v2
