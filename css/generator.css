@@ -689,5 +689,94 @@ details p {
     }
 }
 
+/* ─── HEADER: Von schlicht zu charakterstark ─── */
 
+.site-header {
+  padding: 0 !important;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Schmale Akzentlinie oben – bleibt, wird aber feiner */
+.site-header::before {
+  height: 3px !important;
+  background: linear-gradient(90deg, #003d80 0%, #0070f3 50%, #60b0ff 100%) !important;
+  opacity: 0.85;
+}
+
+/* Logo-Wrapper: gibt dem einfachen <a> mehr Charakter */
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.4rem 0.55rem 1rem;
+  font-size: 1.55rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+
+  /* Gradient-Text */
+  background: linear-gradient(135deg, #003d80 0%, #0070f3 55%, #3b9eff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+
+  /* Subtile Kapsel im Hintergrund */
+  position: relative;
+  border-radius: 999px;
+  transition: all 0.3s ease !important;
+}
+
+/* Hintergrund-Kapsel beim Hover */
+.site-logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 112, 243, 0.06);
+  border-radius: 999px;
+  border: 1px solid rgba(0, 112, 243, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.site-logo:hover::before {
+  opacity: 1;
+}
+
+/* Kleines Kompass/Lotse-Icon vor dem Namen */
+
+
+.site-logo:hover::after {
+  opacity: 0.9;
+  transform: rotate(-12deg);
+}
+
+.site-logo:hover {
+  letter-spacing: -0.025em !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Tagline unter dem Logo – optional, HTML nicht nötig */
+/* Falls du eine Tagline ergänzen möchtest, einfach ein <span class="header-tagline"> ins HTML */
+.header-tagline {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b8cba;
+  -webkit-text-fill-color: #6b8cba;
+  background: none;
+  margin-top: -2px;
+}
+
+
+/* ─── Responsive ─── */
+@media (max-width: 700px) {
+  .site-logo {
+    font-size: 1.35rem !important;
+    padding: 0.45rem 1rem 0.45rem 0.8rem;
+  }
+}
 

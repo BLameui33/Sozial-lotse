@@ -906,5 +906,695 @@ details p {
     }
 }
 
+/* =========================================
+  Lotse – Design-Erweiterung (Modern Upgrade)
+   
+   ========================================= */
+
+/* --- Neue CSS-Variablen (ergänzend) --- */
+:root {
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-blue: 0 8px 24px rgba(0, 112, 243, 0.22);
+  --shadow-blue-sm: 0 3px 10px rgba(0, 112, 243, 0.18);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --glass: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --primary-glow: rgba(0, 112, 243, 0.12);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Hintergrund mit lebendigem Verlauf --- */
+body {
+  background: linear-gradient(155deg, #eef5ff 0%, #f4f7fc 40%, #f8f9fb 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Page Container: Glasmorphism & Tiefe --- */
+.page-container {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.03),
+    0 4px 24px rgba(0, 0, 0, 0.07),
+    0 20px 48px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtile blaue Glanzlinie oben am Container */
+.page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #003d80 0%, #0070f3 50%, #3b9eff 100%);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.page-container:hover {
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.09),
+    0 24px 56px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  transition: all 0.4s var(--ease-smooth);
+}
+
+/* --- H1: lebendiger animierter Gradient --- */
+h1 {
+  background: linear-gradient(135deg, #003d80 0%, #0070f3 40%, #3b9eff 70%, #0059c9 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: h1-gradient 8s ease infinite;
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+@keyframes h1-gradient {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* --- H2: moderneres Styling --- */
+h2 {
+  scroll-margin-top: 5rem;
+  text-wrap: balance;
+  letter-spacing: -0.015em;
+}
+
+/* Entfernt altes ::before, ersetzt mit eleganterem Akzent */
+h2::before {
+  display: none;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  margin-top: 0.5rem;
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), rgba(0, 112, 243, 0));
+  border-radius: 99px;
+}
+
+/* --- H3: verfeinert --- */
+h3 {
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+/* --- Paragraphen: bessere Lesbarkeit --- */
+p {
+  text-wrap: pretty;
+}
+
+/* --- Focus-Stile (modern & zugänglich) --- */
+:focus-visible {
+  outline: 2.5px solid rgba(0, 112, 243, 0.5);
+  outline-offset: 3px;
+  border-radius: 5px;
+  transition: outline-offset 0.15s ease;
+}
+
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3.5px rgba(0, 112, 243, 0.18) !important;
+}
+
+/* --- Buttons: Glow & Präzision --- */
+.button {
+  border-radius: 10px;
+  letter-spacing: 0.01em;
+  font-size: 1rem;
+  position: relative;
+  will-change: transform;
+}
+
+.button:hover {
+  box-shadow: var(--shadow-blue);
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: var(--shadow-blue-sm);
+  transition: all 0.1s ease;
+}
+
+/* Shimmer-Effekt beim Hover */
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.button:hover::after {
+  opacity: 1;
+  animation: shimmer 0.6s ease forwards;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* --- Jump Button: moderner --- */
+.button.jump-button {
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  background: linear-gradient(135deg, #2e8eff, #0070f3);
+  box-shadow: 0 4px 14px rgba(0, 112, 243, 0.3);
+}
+
+.button.jump-button:hover {
+  background: linear-gradient(135deg, #3b9eff, #0060d9);
+  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.38);
+}
+
+/* --- Highlight Box: Tiefe & Glaseffekt --- */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(230, 242, 255, 0.9), rgba(240, 248, 255, 0.95));
+  border: 1px solid rgba(0, 112, 243, 0.15);
+  border-left: 4px solid var(--primary);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-md);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s ease;
+}
+
+.highlight-box:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* --- Warning Box: wärmer & moderner --- */
+.warning-box {
+  background: linear-gradient(135deg, #fffdf0, #fff9e3);
+  border: 1px solid rgba(240, 173, 78, 0.2);
+  border-left: 4px solid #f0ad4e;
+  box-shadow: 0 2px 8px rgba(240, 173, 78, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-md);
+}
+
+.warning-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(240, 173, 78, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* --- Details/Summary: sanfteres Öffnen --- */
+details {
+  background: linear-gradient(135deg, #f4f9ff, #eef5ff);
+  border: 1px solid rgba(100, 160, 255, 0.2);
+  border-radius: var(--radius-md);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+details[open] {
+  background: linear-gradient(135deg, #eaf4ff, #e3f0ff);
+  box-shadow: 0 4px 18px rgba(0, 100, 220, 0.1);
+}
+
+details p {
+  animation: detail-fade-in 0.28s var(--ease-smooth);
+}
+
+@keyframes detail-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+summary {
+  transition: color 0.2s ease;
+  padding-right: 1.5rem;
+}
+
+summary:hover {
+  color: var(--primary);
+}
+
+/* Pfeil: modernerer Stil */
+summary::after {
+  content: "›";
+  font-size: 1.3rem;
+  line-height: 1;
+  transform: rotate(90deg);
+  transition: transform 0.25s var(--ease-spring);
+  top: 50%;
+  translate: 0 -50%;
+}
+
+details[open] summary::after {
+  transform: rotate(270deg);
+}
+
+/* --- USP-Bar: polierter --- */
+.usp-item {
+  background: linear-gradient(135deg, #f0f7ff, #e5f1ff);
+  box-shadow: 0 1px 4px rgba(0, 80, 180, 0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid rgba(0, 112, 243, 0.12);
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
+}
+
+.usp-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 80, 180, 0.14);
+}
+
+/* --- Category Badge: verfeinert --- */
+.category-badge {
+  background: linear-gradient(135deg, #eef6ff, #deeeff);
+  box-shadow: 0 2px 8px rgba(0, 80, 200, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.25s var(--ease-spring);
+}
+
+.category-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 80, 200, 0.16);
+}
+
+/* --- Quellen-Box (kl-sources-box) --- */
+.kl-sources-box {
+  background: linear-gradient(135deg, #f4f9ff, #eef5ff);
+  border: 1px solid rgba(0, 112, 243, 0.12);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s ease;
+}
+
+.kl-sources-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Checklist moderner --- */
+.kl-checklist {
+  background: linear-gradient(135deg, #fafbff, #f4f8ff);
+  border: 1px solid rgba(0, 80, 200, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.kl-checklist li {
+  transition: background 0.15s ease;
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+
+.kl-checklist li:hover {
+  background: rgba(0, 112, 243, 0.04);
+}
+
+/* Custom Checkbox-Styling */
+.kl-checklist input[type="checkbox"] {
+  accent-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.kl-btn {
+  background: linear-gradient(135deg, #fff, #f4f8ff);
+  border: 1px solid rgba(0, 80, 200, 0.15);
+  border-radius: var(--radius-sm);
+  color: #2a6fb5;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.kl-btn:hover {
+  background: linear-gradient(135deg, #eef5ff, #e0edff);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.kl-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* --- Pflegegrad Fieldset --- */
+.pflegegrad-fieldset {
+  background: linear-gradient(135deg, #fafbff, #f5f9ff);
+  border: 1px solid rgba(0, 80, 200, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.pflegegrad-fieldset:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1), var(--shadow-sm);
+}
+
+.pflegegrad-label select,
+.pflegegrad-label input {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 0.5rem 0.7rem;
+  font-family: inherit;
+  color: var(--text);
+  appearance: auto;
+}
+
+.pflegegrad-label select:hover,
+.pflegegrad-label input:hover {
+  border-color: rgba(0, 112, 243, 0.4);
+}
+
+/* --- Ergebniskarte --- */
+.pflegegrad-result-card {
+  background: linear-gradient(135deg, rgba(230, 242, 255, 0.95), rgba(215, 235, 255, 0.9));
+  border: 1px solid rgba(0, 112, 243, 0.2);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.8);
+  border-radius: var(--radius-md);
+  animation: result-appear 0.4s var(--ease-spring);
+}
+
+@keyframes result-appear {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Tabelle: moderner --- */
+.pflegegrad-tabelle {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.pflegegrad-tabelle th {
+  background: rgba(0, 112, 243, 0.05);
+}
+
+.pflegegrad-tabelle tr:hover td {
+  background: rgba(0, 112, 243, 0.03);
+}
+
+/* --- Promo Teaser: aufgewertet --- */
+.promo-teaser {
+  background: linear-gradient(135deg, #eef7ff 0%, #e5f2ff 100%);
+  border: 1px solid rgba(0, 112, 243, 0.12);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.8);
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtiler Glanzfleck oben rechts */
+.promo-teaser::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(0, 112, 243, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+/* --- Fall-Beispiele --- */
+.kl-fall {
+  background: #fff;
+  border: 1px solid rgba(0, 80, 200, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s ease;
+}
+
+.kl-fall:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.kl-fallbeispiele {
+  background: linear-gradient(135deg, #f6fbff, #eef5ff);
+  border: 1px solid rgba(0, 112, 243, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Footer: eleganter --- */
+footer {
+  background: linear-gradient(180deg, #fdfdff 0%, #f4f7fb 100%);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* --- Header: stärkere Glaswirkung --- */
+.site-header {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(14px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.6) !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* --- Allgemeine Links: sanfterer Underline-Effekt --- */
+a:not(.button):not(.site-logo):not(.category-badge) {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:not(.button):not(.site-logo):not(.category-badge):hover {
+  text-decoration-thickness: 2px;
+}
+
+/* --- Scroll-getriggerte Einblend-Animation (progressive enhancement) --- */
+@supports (animation-timeline: scroll()) {
+  .page-container {
+    animation: page-fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 12%;
+  }
+}
+
+@keyframes page-fade-up {
+  from { opacity: 0.4; transform: translateY(16px); }
+  to   { opacity: 1;   transform: translateY(0); }
+}
+
+/* --- Selektion: markenkonform einfärben --- */
+::selection {
+  background: rgba(0, 112, 243, 0.15);
+  color: inherit;
+}
+
+/* --- Scrollbar: dezent & modern (Chromium) --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 80, 200, 0.18);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 80, 200, 0.32);
+}
+
+/* --- Smooth Scroll global --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Reduced Motion: Animationen respektieren --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   Kassen-Lotse – Upgrade v2
+   H2 + Header-Verbesserungen
+   Ans Ende der style.css hängen (nach der ersten Extension)
+   ========================================= */
+
+
+/* ─── H2: Eleganter Ersatz für border-left + ::before ─── */
+
+h2 {
+  border-left: none !important;       /* alten Balken entfernen */
+  padding-left: 0 !important;         /* altes Einrücken entfernen */
+  margin-bottom: 1.4rem;
+}
+
+h2::before {
+  display: none !important;           /* alten blauen Strich entfernen */
+}
+
+h2::after {
+  content: "";
+  display: block;
+  margin-top: 0.45rem;
+  width: 36px;
+  height: 2.5px;
+  background: linear-gradient(90deg, #0070f3 0%, rgba(0, 112, 243, 0) 100%);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+h2:hover::after {
+  width: 64px;
+}
+
+
+/* ─── HEADER: Von schlicht zu charakterstark ─── */
+
+.site-header {
+  padding: 0 !important;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Schmale Akzentlinie oben – bleibt, wird aber feiner */
+.site-header::before {
+  height: 3px !important;
+  background: linear-gradient(90deg, #003d80 0%, #0070f3 50%, #60b0ff 100%) !important;
+  opacity: 0.85;
+}
+
+/* Logo-Wrapper: gibt dem einfachen <a> mehr Charakter */
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.4rem 0.55rem 1rem;
+  font-size: 1.55rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+
+  /* Gradient-Text */
+  background: linear-gradient(135deg, #003d80 0%, #0070f3 55%, #3b9eff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+
+  /* Subtile Kapsel im Hintergrund */
+  position: relative;
+  border-radius: 999px;
+  transition: all 0.3s ease !important;
+}
+
+/* Hintergrund-Kapsel beim Hover */
+.site-logo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 112, 243, 0.06);
+  border-radius: 999px;
+  border: 1px solid rgba(0, 112, 243, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.site-logo:hover::before {
+  opacity: 1;
+}
+
+/* Kleines Kompass/Lotse-Icon vor dem Namen */
+
+
+.site-logo:hover::after {
+  opacity: 0.9;
+  transform: rotate(-12deg);
+}
+
+.site-logo:hover {
+  letter-spacing: -0.025em !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Tagline unter dem Logo – optional, HTML nicht nötig */
+/* Falls du eine Tagline ergänzen möchtest, einfach ein <span class="header-tagline"> ins HTML */
+.header-tagline {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b8cba;
+  -webkit-text-fill-color: #6b8cba;
+  background: none;
+  margin-top: -2px;
+}
+
+
+/* ─── Responsive ─── */
+@media (max-width: 700px) {
+  .site-logo {
+    font-size: 1.35rem !important;
+    padding: 0.45rem 1rem 0.45rem 0.8rem;
+  }
+}
+
+h2::after {
+  content: "";
+  display: block;
+  margin-top: 0.5rem;
+  width: 80px;
+  height: 1.5px;
+  background: linear-gradient(90deg, #0070f3 0%, rgba(0, 112, 243, 0.15) 100%);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s ease;
+  opacity: 0.85;
+}
+ 
+h2:hover::after {
+  width: 120px;
+  opacity: 1;
+}
+
+
+
+
+
 
 
