@@ -932,7 +932,7 @@ details p {
 /* --- Hintergrund mit lebendigem Verlauf --- */
 body {
   background: linear-gradient(155deg, #eef5ff 0%, #f4f7fc 40%, #f8f9fb 100%);
-  background-attachment: fixed;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
