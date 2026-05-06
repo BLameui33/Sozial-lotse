@@ -941,8 +941,8 @@ body {
 /* --- Page Container: Glasmorphism & Tiefe --- */
 .page-container {
   background: var(--glass);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  
+ 
   border: 1px solid var(--glass-border);
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.03),
@@ -1395,13 +1395,7 @@ a:not(.button):not(.site-logo):not(.category-badge):hover {
 }
 
 /* --- Scroll-getriggerte Einblend-Animation (progressive enhancement) --- */
-@supports (animation-timeline: scroll()) {
-  .page-container {
-    animation: page-fade-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 12%;
-  }
-}
+
 
 @keyframes page-fade-up {
   from { opacity: 0.4; transform: translateY(16px); }
