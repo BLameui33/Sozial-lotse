@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>WBS-Rechner 2026: Anspruch auf Wohnberechtigungsschein prüfen</title>
+  <meta name="description" content="WBS-Rechner 2026: Prüfen Sie kostenlos, ob Ihr Einkommen für einen Wohnberechtigungsschein (Sozialwohnung) ausreicht. Inklusive länderspezifischer Grenzen.">
+  <meta name="keywords" content="WBS Rechner, Wohnberechtigungsschein Anspruch, Sozialwohnung, Einkommensgrenze WBS, Paragraph 9 WoFG, Freibeträge WBS, Sozial-Lotse">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Schema.org: HowTo + FAQ für bessere SERP-Snippets -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WBS-Anspruchs-Check 2026",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "description": "Online-Rechner zur Prüfung des Anspruchs auf einen Wohnberechtigungsschein (WBS) basierend auf Haushaltsgröße, Einkommen und Bundesland.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist ein Wohnberechtigungsschein (WBS)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Wohnberechtigungsschein ist eine amtliche Bescheinigung, die belegt, dass Sie aufgrund Ihres Einkommens berechtigt sind, eine staatlich geförderte Sozialwohnung zu beziehen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Welches Einkommen zählt für den WBS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es zählt das Jahresbruttoeinkommen aller im Haushalt lebenden Personen. Davon werden pauschale Abzüge (bis zu 30 %) für Steuern, Kranken- und Rentenversicherung sowie individuelle Freibeträge abgezogen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sind die WBS-Einkommensgrenzen überall gleich?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Der Bund gibt zwar Basisgrenzen nach dem Wohnraumförderungsgesetz (WoFG) vor, die meisten Bundesländer (und sogar einige Städte) haben diese Grenzen jedoch deutlich nach oben angepasst."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gibt es Freibeträge beim WBS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Es gibt zusätzliche Freibeträge, die Ihr maßgebliches Einkommen senken, zum Beispiel für Alleinerziehende, schwerbehinderte Menschen oder junge Ehepaare."
+      }
+    }
+  ]
+}
+</script>
+
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="site-logo" aria-label="Zur Startseite Sozial-Lotse">Sozial-Lotse</a>
+  </header>
+
+  <div class="page-container">
+
+  <h1>Rechner: WBS-Check (Bekomme ich eine Sozialwohnung?)</h1>
+
+  <div class="usp-bar" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; font-weight: bold; font-size: 0.9em;">
+    <div class="usp-item" style="display: flex; align-items: center; gap: 5px;">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+      Ohne Anmeldung
+    </div>
+    <div class="usp-item" style="display: flex; align-items: center; gap: 5px;">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+      100% Kostenlos
+    </div>
+    <div class="usp-item" style="display: flex; align-items: center; gap: 5px;">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+      Rechner
+    </div>
+    <div class="usp-item" style="display: flex; align-items: center; gap: 5px;">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+      Anonym & Sicher
+    </div>
+  </div>
+
+  <a href="familie-wohnen-bildung.html" class="category-badge">
+    Zur Übersicht: Wohnen & Miete
+  </a>
+
+  <p><em>Fachlich geprüft | Stand: 07.05.2026</em></p>
+
+  <a href="#wbs-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zur kostenlosen WBS-Berechnung springen</a>
+
+  <div class="info-box">
+    <p>
+      Bezahlbarer Wohnraum wird immer knapper. Mit einem <strong>Wohnberechtigungsschein (WBS)</strong> erhalten Sie Zugang zu staatlich geförderten Sozialwohnungen, die auf dem freien Markt oft deutlich teurer wären. Doch viele Menschen wissen gar nicht, dass sie Anspruch auf einen WBS haben!
+    </p>
+    <p>
+      <strong>Mit unserem WBS-Anspruchs-Check verschaffen Sie sich Klarheit.</strong> Der Rechner ermittelt Ihr "maßgebliches Einkommen" anhand von gesetzlichen Pauschalen und Freibeträgen. Anschließend gleichen wir den Wert mit den aktuellen Einkommensgrenzen ab, um Ihnen eine schnelle Ersteinschätzung zu geben.
+    </p>
+  </div>
+
+  <div class="info-box warning" style="border-left: 4px solid #e53935; padding: 15px; margin-top: 20px;">
+    <h2>WICHTIG: Das maßgebliche Einkommen (§ 14 WoFG)</h2>
+    <p>
+      Ob Sie einen WBS erhalten, hängt <strong>nicht</strong> einfach von Ihrem Bruttogehalt ab. Die Behörde berechnet das sogenannte maßgebliche Gesamteinkommen:
+    </p>
+    <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px;">
+      <li><strong>Alle zählen mit:</strong> Es wird das Jahreseinkommen <em>aller</em> Personen zusammengerechnet, die in die neue Wohnung einziehen sollen.</li>
+      <li><strong>Die 30%-Regel:</strong> Von Ihrem Bruttoeinkommen werden pauschal jeweils 10 % abgezogen, wenn Sie 1. Steuern zahlen, 2. Pflichtbeiträge zur gesetzlichen Krankenversicherung und 3. Pflichtbeiträge zur gesetzlichen Rentenversicherung leisten. Das reduziert Ihr Einkommen für die WBS-Prüfung um bis zu 30 %.</li>
+      <li><strong>Föderalismus:</strong> Die Einkommensgrenzen unterscheiden sich von Bundesland zu Bundesland teils extrem. In Bayern oder NRW dürfen Sie weitaus mehr verdienen als beispielsweise im Saarland.</li>
+    </ul>
+  </div>
+
+  <div class="info-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin-top: 15px;">
+    <strong>Strategie-Tipp: Freibeträge nicht vergessen!</strong> Neben den pauschalen Abzügen gibt es weitere Freibeträge, die Sie unter die magische Grenze drücken können. Dazu gehören Freibeträge für Alleinerziehende, schwerbehinderte Menschen (ab GdB 50) oder Unterhaltszahlungen. Geben Sie diese unbedingt im Rechner an.
+  </div>
+
+  <div class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 15px;">
+    <strong>Wichtiger Hinweis:</strong> Dieser Rechner bietet eine erste Orientierung und stellt keine rechtsverbindliche Auskunft dar. Einzelne Kommunen und Städte haben mitunter eigene Satzungen und abweichende WBS-Kategorien (z. B. WBS Typ A und B). Die endgültige Prüfung erfolgt immer durch Ihr örtliches Wohnungsamt.
+  </div>
+
+  <div class="info-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin-top: 15px;">
+    <strong>Hinweis zur Datenspeicherung:</strong> Ihre Einkommensdaten bleiben privat. Alle Berechnungen erfolgen lokal in Ihrem Browser. Es werden keine Daten an unsere Server übertragen.
+  </div>
+
+  <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
+    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">07.05.2026</span></p>
+  </div>
+
+    <form id="wbs-form" class="pflegegrad-form" aria-describedby="wbs_ergebnis" novalidate>
+      
+      <!-- 1. Haushaltsgröße & Ort -->
+      <fieldset class="pflegegrad-fieldset active-step">
+        <legend>1. Haushalt & Bundesland</legend>
+
+        <label class="pflegegrad-label" for="wbs_bundesland">
+          In welchem Bundesland möchten Sie den WBS beantragen?
+          <select id="wbs_bundesland" required>
+            <option value="" disabled selected>Bitte wählen...</option>
+            <option value="BW">Baden-Württemberg</option>
+            <option value="BY">Bayern</option>
+            <option value="BE">Berlin</option>
+            <option value="BB">Brandenburg</option>
+            <option value="HB">Bremen</option>
+            <option value="HH">Hamburg</option>
+            <option value="HE">Hessen</option>
+            <option value="MV">Mecklenburg-Vorpommern</option>
+            <option value="NI">Niedersachsen</option>
+            <option value="NW">Nordrhein-Westfalen</option>
+            <option value="RP">Rheinland-Pfalz</option>
+            <option value="SL">Saarland</option>
+            <option value="SN">Sachsen</option>
+            <option value="ST">Sachsen-Anhalt</option>
+            <option value="SH">Schleswig-Holstein</option>
+            <option value="TH">Thüringen</option>
+          </select>
+        </label>
+        <div class="hinweis-box">
+    <strong>Hinweis:</strong> Dieser Rechner nutzt die Einkommensgrenzen für den allgemeinen Wohnberechtigungsschein (Grundstufe / 1. Förderweg). Bitte beachten Sie, dass einige Bundesländer (z. B. Berlin, Bayern) zusätzliche WBS-Klassen mit höheren Einkommensgrenzen für spezielle Wohnungen anbieten.
+  </div>
+
+        <label class="pflegegrad-label" for="wbs_erwachsene">
+          Anzahl der Erwachsenen im Haushalt
+          <input type="number" id="wbs_erwachsene" min="1" max="10" step="1" value="1" required />
+        </label>
+
+        <label class="pflegegrad-label" for="wbs_kinder">
+          Anzahl der Kinder im Haushalt (kindergeldberechtigt)
+          <input type="number" id="wbs_kinder" min="0" max="10" step="1" value="0" />
+        </label>
+        
+        <div class="hinweis">Zählen Sie alle Personen mit, die gemeinsam in die Sozialwohnung einziehen werden.</div>
+      </fieldset>
+
+      <!-- 2. Einkommen -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>2. Jährliches Bruttoeinkommen</legend>
+
+        <label class="pflegegrad-label" for="wbs_brutto_jahr">
+          Gesamtes Jahresbruttoeinkommen aller Personen (in Euro)
+          <input type="number" id="wbs_brutto_jahr" min="0" step="500" placeholder="z. B. 35000" required />
+        </label>
+
+        <p class="hinweis">
+          Geben Sie das gesamte Bruttoeinkommen der letzten 12 Monate an (inkl. Weihnachtsgeld, Urlaubsgeld). Kindergeld oder Wohngeld zählen <strong>nicht</strong> zum Einkommen!
+        </p>
+
+        <p style="margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Zahlen Sie von diesem Einkommen...</p>
+        
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+          <input type="checkbox" id="wbs_abzug_steuer" checked style="width: 20px; height: 20px;">
+          Lohn- oder Einkommensteuer? (-10%)
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+          <input type="checkbox" id="wbs_abzug_kv" checked style="width: 20px; height: 20px;">
+          Beiträge zur Krankenversicherung? (-10%)
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer;">
+          <input type="checkbox" id="wbs_abzug_rv" checked style="width: 20px; height: 20px;">
+          Beiträge zur Rentenversicherung? (-10%)
+        </label>
+      </fieldset>
+
+      <!-- 3. Besondere Freibeträge -->
+      <fieldset class="pflegegrad-fieldset">
+        <legend>3. Freibeträge & Besonderheiten (Optional)</legend>
+
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+          <input type="checkbox" id="wbs_alleinerziehend" style="width: 20px; height: 20px;">
+          Sind Sie alleinerziehend und gehen einer Erwerbstätigkeit/Ausbildung nach?
+        </label>
+
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
+          <input type="checkbox" id="wbs_schwerbehindert" style="width: 20px; height: 20px;">
+          Leben schwerbehinderte Menschen (GdB ab 50) im Haushalt?
+        </label>
+
+        <label class="pflegegrad-label" for="wbs_werbungskosten">
+          Jährliche Werbungskosten (falls höher als 1.230 € Pauschale)
+          <input type="number" id="wbs_werbungskosten" min="0" step="10" placeholder="z.B. 1500" />
+        </label>
+        
+        <p class="hinweis">Werbungskosten mindern das Ausgangs-Bruttoeinkommen, bevor die pauschalen Abzüge (10-30%) greifen.</p>
+      </fieldset>
+
+      <div class="button-container">
+        <button type="button" id="wbs_berechnen" class="button">WBS-Anspruch prüfen</button>
+        <button type="reset" id="wbs_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+      </div>
+    </form>
+
+    <section id="wbs_ergebnis" aria-live="polite"></section>
+
+    <div class="warning-box">
+      <p>
+  <strong>Wichtig:</strong> Die Berechnung ist stark vereinfacht. Einige Kommunen wenden noch großzügigere Grenzen an (z. B. München) oder bieten verschiedene WBS-Klassen (z. B. für mittlere Einkommen). Im Zweifel lohnt sich die formlose Antragstellung beim Wohnungsamt immer.
+</p>
+    </div>
+  
+
+  <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
+
+  <h2 id="promo-headline">
+    <span class="icon" aria-hidden="true">💡</span>
+    Haben Sie Ärger mit dem Amt oder dem Vermieter?
+  </h2>
+  <p class="lead">
+    Unsere kostenlosen Generatoren helfen bei Standardfragen. Wenn Ihr Mietvertrag gekündigt wurde, die Nebenkostenabrechnung zu hoch ist oder das Jobcenter einen Antrag ablehnt, unterstützt Sie unsere KI Clerion bei der rechtlichen Einschätzung.
+  </p>
+  <div class="promo-ctas">
+    <a href="https://clerion.de" class="btn btn-primary" rel="noopener" target="_blank">
+      Individuelle Fall-Analyse starten
+    </a>
+  </div>
+
+  <div class="free-help">
+    <p class="muted">Sie suchen weitere kostenlose Infos? Hier finden Sie unsere Netzwerke:</p>
+
+    <nav aria-label="Kostenlose Hilfsseiten">
+      <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank">💳 Mieter-Lotse</a>
+      <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank">🩺 Kassen-Lotse</a>
+    </nav>
+  </div>
+
+</section>
+
+<h2>Häufige Fragen (FAQ) zum Wohnberechtigungsschein</h2>
+  <details>
+    <summary>Darf mein Vermieter den WBS verlangen?</summary>
+    <p>Ja, wenn es sich um eine mit öffentlichen Mitteln geförderte Wohnung (Sozialwohnung) handelt. Der Vermieter darf diese Wohnung rechtlich nur an Personen vermieten, die ihm vor Einzug einen gültigen Wohnberechtigungsschein vorlegen.</p>
+  </details>
+  <details>
+    <summary>Wie lange ist der WBS gültig?</summary>
+    <p>Ein ausgestellter Wohnberechtigungsschein ist in der Regel für <strong>ein Jahr</strong> (12 Monate) gültig. In dieser Zeit müssen Sie eine Wohnung gefunden und den Mietvertrag unterschrieben haben. Danach müssten Sie den WBS neu beantragen. Wichtig: Einmal eingezogen, dürfen Sie in der Wohnung bleiben, auch wenn Ihr Einkommen später steigt!</p>
+  </details>
+  <details>
+    <summary>Gilt mein WBS in ganz Deutschland?</summary>
+    <p>Nein. Ein Wohnberechtigungsschein gilt immer nur für das Bundesland, in dem er ausgestellt wurde. Wenn Sie von Berlin nach Brandenburg ziehen möchten, müssen Sie den WBS in Brandenburg beantragen.</p>
+  </details>
+
+  <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen" style="margin-top: 30px;">
+    <h2 style="margin-top:0">Finanzielle Hilfen rund ums Wohnen</h2>
+    <p>
+      Sichern Sie sich ab und prüfen Sie weitere Ansprüche auf staatliche Unterstützung:
+    </p>
+    <p style="margin-bottom:.4rem;">
+      <a href="wohngeld.html" class="button button-secondary" title="Zur Übersicht Wohngeld">Wohngeld-Plus: Anspruch & Antrag</a>
+      <a href="buergergeld-miete.html" class="button button-secondary" title="Bürgergeld Miete">Bürgergeld: Übernahme der Mietkosten</a>
+      <a href="generator-mietschulden.html" class="button button-secondary" title="Mietschulden Hilfe">Mietschulden: Ratenzahlung vereinbaren</a>
+    </p>
+  </aside>
+
+  <h2>Quellen &amp; weiterführende Links</h2>
+  <div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
+    <ul>
+      <li>
+        <a href="https://www.gesetze-im-internet.de/wofg/" target="_blank" rel="noopener">
+          Bundesministerium der Justiz – Gesetz über die soziale Wohnraumförderung (WoFG)
+        </a>
+      </li>
+      <li>
+        <a href="https://www.bmwsb.bund.de/Webs/BMWSB/DE/themen/stadt-wohnen/wohnraumfoerderung/wohnraumfoerderung-node.html" target="_blank" rel="noopener">
+          BMWSB – Soziale Wohnraumförderung des Bundes
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+  <div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
+    
+    <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
+    <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        <br><br>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standardauswertungen zur Selbsthilfe und ersetzt keine anwaltliche oder behördliche Einzelfallprüfung.</em>
+    </p>
+    
+    <div style="margin-bottom: 25px;">
+        <a href="ueber-uns.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
+            Mehr über unsere Redaktion & Arbeitsweise erfahren
+        </a>
+    </div>
+
+    <div style="margin: 0 auto 20px auto; max-width: 600px; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="margin: 0; font-size: 0.95em; color: #333; line-height: 1.4;">
+             <strong>Sie wissen nicht genau, wo Sie anfangen sollen?</strong><br>
+            Nutzen Sie unseren <a href="index.html" style="color: #0056b3; font-weight: bold; text-decoration: none; border-bottom: 2px solid #0056b3;">Digitalen Lotsen</a>. Er führt Sie in wenigen Klicks zielsicher zum passenden Ratgeber, Rechner oder Generator für Ihr Anliegen.
+        </p>
+    </div>
+    <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@sozial-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+    </p>
+    
+</div>
+<footer>
+    <p>&copy; 2026 Sozial-Lotse | <a href="ueber-uns.html">Über uns & Redaktionsrichtlinien</a> | <a href="datenschutz.html">Datenschutz</a> | <a href="index.html">Zurück zur Startseite</a> | <a href="impressum.html">Impressum</a></p>
+  </footer>
+
+  <script src="wbs-check.js"></script>
+</body>
+</html>
