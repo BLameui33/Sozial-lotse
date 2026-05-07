@@ -839,6 +839,23 @@ details p {
   border-radius: 8px;
 }
 
+/* --- Info-/Warnboxen --- */
+.info-box,
+.highlight-box,
+.warning-box {
+  font-size: 0.96rem;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius);
+  margin: 1.8rem 0;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.info-box {
+  background-color: #eef9ff;
+  border-left: 6px solid var(--primary);
+}
+
 @media (max-width: 600px) {
   .button.button-secondary {
     display: block;
