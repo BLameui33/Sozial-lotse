@@ -6,7 +6,7 @@
   <meta name="description" content="Schneller Wohngeld-Vorcheck 2026: Wir schätzen eine Spanne und ordnen ein: wahrscheinlich, grenzwertig oder eher nicht. Verständlich erklärt, mit anpassbaren Parametern.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://www.sozialrecht-lotse.tld/wohngeld-vorcheck.html">
+  <link rel="canonical" href="https://www.sozialrecht-lotse.de/wohngeld-vorcheck.html">
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
   <meta property="og:title" content="Wohngeld-Vorcheck 2026 – Grobe Spanne in 2 Minuten">
@@ -103,77 +103,53 @@
   </div>
 
     <form id="wg-form" class="pflegegrad-form" aria-describedby="wg_ergebnis" novalidate>
-      <!-- 1) Haushalt -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Haushalt</legend>
+  
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>Deine Daten in 4 einfachen Schritten</legend>
 
-        <label class="pflegegrad-label" for="wg_personen">
-          Personen im Haushalt (wohngeldrechtlich)
-          <input type="number" id="wg_personen" min="1" max="8" step="1" value="2" />
-        </label>
+    <label class="pflegegrad-label" for="wg_personen">
+      1. Wie viele Personen leben im Haushalt?
+      <input type="number" id="wg_personen" min="1" max="8" step="1" value="1" />
+    </label>
 
-        <label class="pflegegrad-label" for="wg_netto">
-          Haushalts-Nettoeinkommen pro Monat
-          <input type="number" id="wg_netto" min="0" step="50" placeholder="z. B. 2.200" />
-        </label>
-        <p class="hinweis">
-          In der Realität zählt das <em>zu berücksichtigende Einkommen</em> (mit Abzügen). Hier nutzen wir dein Netto als Näherung.
-        </p>
-      </fieldset>
+    <label class="pflegegrad-label" for="wg_netto">
+      2. Monatliches Nettoeinkommen (gesamter Haushalt)
+      <input type="number" id="wg_netto" min="0" step="50" placeholder="z. B. 2200" />
+    </label>
+    <p class="hinweis" style="margin-top:-5px; margin-bottom:15px; font-size:0.85em; color:#666;">
+      Tipp: Nimm das Gehalt, das am Ende des Monats auf dem Konto landet.
+    </p>
 
-      <!-- 2) Miete -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Unterkunftskosten</legend>
+    <label class="pflegegrad-label" for="wg_kaltmiete">
+      3. Bruttokaltmiete (Miete inkl. kalter Nebenkosten)
+      <input type="number" id="wg_kaltmiete" min="0" step="10" placeholder="z. B. 820" />
+    </label>
 
-        <label class="pflegegrad-label" for="wg_kaltmiete">
-          Bruttokaltmiete (Miete + kalte Nebenkosten)
-          <input type="number" id="wg_kaltmiete" min="0" step="10" placeholder="z. B. 820" />
-        </label>
+    <label class="pflegegrad-label" for="wg_mietstufe">
+      4. Wie teuer ist deine Wohnregion? (Mietstufe)
+      <select id="wg_mietstufe">
+        <option value="" disabled selected>Bitte wählen...</option>
+        <option value="1">Stufe I (sehr günstig, ländlich)</option>
+        <option value="2">Stufe II (günstig)</option>
+        <option value="3">Stufe III (durchschnittlich)</option>
+        <option value="4">Stufe IV (etwas teurer, Vorstädte)</option>
+        <option value="5">Stufe V (teuer, größere Städte)</option>
+        <option value="6">Stufe VI (sehr teuer, Großstädte)</option>
+        <option value="7">Stufe VII (extrem teuer, z.B. München)</option>
+      </select>
+    </label>
+    <p class="hinweis" style="margin-top:-5px; margin-bottom:15px; font-size:0.85em; color:#666;">
+      Das Gesetz deckelt die Miete je nach Wohnort. Weißt du deine Stufe nicht? Schätze sie einfach grob ein.
+    </p>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="wg_mietstufe">
-          Mietstufe / Ort (optional)
-          <input type="text" id="wg_mietstufe" placeholder="z. B. Mietstufe D – Musterstadt" />
-        </label>
+  <div class="button-container">
+    <button type="button" id="wg_berechnen" class="button">Vorcheck starten</button>
+    <button type="reset" id="wg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
 
-        <label class="pflegegrad-label" for="wg_cap">
-          Angemessene Kaltmieten-Obergrenze (Cap)
-          <input type="number" id="wg_cap" min="0" step="10" value="900" />
-        </label>
-        <p class="hinweis">
-          Nutze die <strong>lokale Höchstgrenze</strong> für deine Personenanzahl. Die Miete wird darauf gedeckelt.
-        </p>
-      </fieldset>
-
-      <!-- 3) Parametrisierung -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Parametrisierung (einfach)</legend>
-
-        <label class="pflegegrad-label" for="wg_zumutbar_pct">
-          Zumutbare Eigenbelastung (in % vom Netto)
-          <input type="number" id="wg_zumutbar_pct" min="10" max="40" step="0.5" value="30" />
-        </label>
-
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label" for="wg_tol_minus">Spannen-Toleranz (− %)
-            <input type="number" id="wg_tol_minus" min="0" max="50" step="1" value="10" />
-          </label>
-          <label class="pflegegrad-label" for="wg_tol_plus">Spannen-Toleranz (+ %)
-            <input type="number" id="wg_tol_plus" min="0" max="50" step="1" value="10" />
-          </label>
-        </div>
-
-        <p class="hinweis">
-          Aus der Punkt-Schätzung wird mit ±-Toleranz eine <strong>Spanne</strong>. Das ist bewusst grob – die echte Berechnung ist komplexer.
-        </p>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="wg_berechnen" class="button">Vorcheck starten</button>
-        <button type="reset" id="wg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
-
-    <section id="wg_ergebnis" aria-live="polite"></section>
+<section id="wg_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
@@ -237,7 +213,7 @@
     <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
         Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
         <br><br>
-        <em>Wichtiger Hinweis: Unser Tool generiert Standardverträge zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
     </p>
     
     <div style="margin-bottom: 25px;">
