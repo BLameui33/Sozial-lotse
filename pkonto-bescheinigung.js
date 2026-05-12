@@ -199,8 +199,12 @@ function generierePDF(daten, berechnung) {
   doc.save("P-Konto_Bescheinigung.pdf");
 
   // WEITERLEITUNG
+ // POPUP ÖFFNEN
   setTimeout(() => {
-    window.location.href = "danke.html";
+    const popup = document.getElementById("spendenPopup");
+    if (popup) {
+      popup.style.display = "flex";
+    }
   }, 1500);
 }
 
@@ -267,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="background: #e8f5e9; border: 1px solid #c8e6c9; padding: 20px; border-radius: 6px; margin-top: 30px; text-align: center;">
           <h3 style="margin-top: 0; color: #2e7d32;">✅ Bescheinigung generiert! Ihr neuer Freibetrag: ${euro(berechnung.gesamt)}</h3>
           <p>Das amtliche PDF wird heruntergeladen. <strong>Achtung: Unterschreiben Sie es nicht selbst!</strong> Legen Sie es Ihrem Arbeitgeber oder einer Behörde zum Abstempeln vor.</p>
-          <p><a href="danke.html" style="color: #2e7d32; text-decoration: underline;">Klicken Sie hier, falls Sie nicht automatisch weitergeleitet werden.</a></p>
+          
         </div>
       `;
       out.scrollIntoView({ behavior: "smooth" });

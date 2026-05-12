@@ -300,7 +300,83 @@
     }]
   }
   </script>
+  <script>document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("spendenPopup");
+  if (!popup) return;
+
+  const closeBtn = document.getElementById("closePopupBtn");
+  const form = document.getElementById("paypal-form");
+  const amountInput = document.getElementById("donation_amount");
+  const donateBtns = document.querySelectorAll(".btn-donate");
+  const customDonateBtn = document.getElementById("btn-donate-custom");
+
+  // Wenn ein Betrags-Button (3, 5, 10) geklickt wird
+  donateBtns.forEach(btn => {
+    btn.addEventListener("click", function() {
+      // Setzt den Betrag ins unsichtbare Feld
+      amountInput.value = this.getAttribute("data-amount");
+      // Schickt das Formular ab
+      form.submit();
+      // Optional: Popup danach schließen
+      popup.style.display = "none";
+    });
+  });
+
+  // Wenn "Anderer Betrag" geklickt wird
+  if (customDonateBtn) {
+    customDonateBtn.addEventListener("click", () => {
+      amountInput.value = ""; // Feld leeren, PayPal fragt dann selbst nach
+      form.submit();
+      popup.style.display = "none";
+    });
+  }
+
+  // Popup schließen
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      popup.style.display = "none";
+    });
+  }
+
+  // Schließen, wenn man neben das Popup klickt
+  popup.addEventListener("click", (e) => {
+    if (e.target === popup) {
+      popup.style.display = "none";
+    }
+  });
+});</script>
 
   <script src="pkonto-bescheinigung.js"></script>
+
+  <!-- Spenden-Popup Overlay -->
+<div id="spendenPopup" class="popup-overlay" style="display: none;">
+  <div class="popup-content">
+    <h2 style="margin-top: 0; color: #0d47a1;">Danke für deine Nutzung 💛</h2>
+    <p style="color: #444; line-height: 1.5; font-size: 0.95em;">
+      Dein PDF wurde erfolgreich erstellt! Wenn dir dieses Tool geholfen hat, unterstütze das Projekt gerne mit einer kleinen Spende. So können wir unsere Hilfsangebote dauerhaft kostenlos und werbefrei halten.
+    </p>
+    
+    <form id="paypal-form" action="https://www.paypal.com/donate" method="post" target="_blank">
+      <input type="hidden" name="business" value="info@kassen-lotse.de" />
+      <input type="hidden" name="charset" value="utf-8">
+      <input type="hidden" name="item_name" value="Unterstützung für Sozial-Lotse Generatoren" />
+      <input type="hidden" name="currency_code" value="EUR" />
+      <!-- Hier wird der Betrag durch den Button-Klick eingetragen -->
+      <input type="hidden" name="amount" id="donation_amount" value="" />
+
+      <div class="donation-buttons">
+        <button type="button" class="btn-donate" data-amount="3.00">3 €</button>
+        <button type="button" class="btn-donate" data-amount="5.00">5 €<br><small style="font-weight:normal; font-size:0.7em;">Tipp</small></button>
+        <button type="button" class="btn-donate" data-amount="10.00">10 €</button>
+      </div>
+      
+      <button type="button" id="btn-donate-custom" style="background: none; border: none; color: #0d47a1; text-decoration: underline; cursor: pointer; font-size: 0.9em;">
+        Anderer Betrag / Ohne Vorgabe spenden
+      </button>
+    </form>
+    
+    <button id="closePopupBtn" class="popup-close-button">Nein, danke (Schließen)</button>
+  </div>
+</div>
 </body>
 </html>

@@ -119,8 +119,12 @@ function generierePDF(daten) {
   doc.save("Schufa_Loeschantrag_DSGVO.pdf");
 
   // WEITERLEITUNG ZUR DANKE-SEITE
+  // POPUP ÖFFNEN
   setTimeout(() => {
-    window.location.href = "danke.html";
+    const popup = document.getElementById("spendenPopup");
+    if (popup) {
+      popup.style.display = "flex";
+    }
   }, 1500);
 }
 
@@ -229,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="background: #e8f5e9; border: 1px solid #c8e6c9; padding: 20px; border-radius: 6px; margin-top: 30px; text-align: center;">
           <h3 style="margin-top: 0; color: #2e7d32;">✅ Ihr Löschantrag wurde erfolgreich generiert!</h3>
           <p>Das PDF wird nun heruntergeladen. Drucken Sie es aus, unterschreiben Sie es und senden Sie es am besten per Einwurf-Einschreiben an die Schufa.</p>
-          <p><a href="danke.html" style="color: #2e7d32; text-decoration: underline;">Klicken Sie hier, falls Sie nicht automatisch weitergeleitet werden.</a></p>
+          
         </div>
       `;
       out.scrollIntoView({ behavior: "smooth" });

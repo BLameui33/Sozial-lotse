@@ -1590,6 +1590,76 @@ h2:hover::after {
 }
 
 
+/* Styling für das Spenden-Popup */
+.popup-overlay {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px); /* Macht den Hintergrund leicht unscharf */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.donation-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 20px 0 15px 0;
+}
+
+.btn-donate {
+  flex: 1;
+  background-color: #ffc439; /* PayPal Gelb */
+  color: #111;
+  border: 1px solid #c29b16;
+  padding: 12px 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-donate:hover {
+  background-color: #f4bb33;
+}
+
+.btn-donate:active {
+  transform: scale(0.96);
+}
+
+.popup-close-button {
+  margin-top: 25px;
+  background: #f1f3f5;
+  color: #555;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.popup-close-button:hover {
+  background: #e2e6ea;
+}
+
 
 
 
