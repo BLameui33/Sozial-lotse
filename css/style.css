@@ -1660,6 +1660,20 @@ h2:hover::after {
   background: #e2e6ea;
 }
 
+.wizard-buttons {
+  display: flex;
+  flex-wrap: wrap;        /* Buttons umbrechen statt quetschen */
+  gap: 8px;
+}
+
+.wizard-buttons .button {
+  flex: 1 1 auto;         /* wächst mit, schrumpft aber nicht unter min-content */
+  min-width: min-content; /* verhindert Text-Abschneiden */
+  white-space: normal;    /* erlaubt Zeilenumbruch im Button-Text */
+  word-break: break-word; /* Notfall-Umbruch bei sehr langen Wörtern */
+  text-align: center;
+}
+
 
 
 
