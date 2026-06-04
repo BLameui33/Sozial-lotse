@@ -92,27 +92,105 @@ function generateKizWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Kindergeldnummer: ${kindergeldnummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    // Kombiniert Straße und PLZ/Ort zu einem mehrzeiligen String
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = kindergeldnummer ? `Kindergeldnummer: ${kindergeldnummer}` : "";
 
-    // Empfänger
-    writeLine(familienkasseName);
-    familienkasseAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = familienkasseName;
+    let empfaengerAdresse = familienkasseAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Kindergeldnummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Familienkasse)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid zum Kinderzuschlag (KiZ) vom ${bescheidDatumFormatiert}`;
@@ -290,27 +368,104 @@ function generateButWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+   // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer / Aktenzeichen: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer / Aktenzeichen: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer / Aktenzeichen formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert}`;
@@ -478,27 +633,104 @@ function generateWohngeldWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+   // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Wohngeldnummer / Aktenzeichen: ${aktenzeichenWohngeld}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = aktenzeichenWohngeld ? `Wohngeldnummer / Aktenzeichen: ${aktenzeichenWohngeld}` : "";
 
-    // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Wohngeldnummer / Aktenzeichen formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Wohngeldbescheid vom ${bescheidDatumFormatiert}`;
@@ -674,27 +906,104 @@ function generateSozialhilfeWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Aktenzeichen: ${aktenzeichenSozialamt}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = aktenzeichenSozialamt ? `Aktenzeichen: ${aktenzeichenSozialamt}` : "";
 
-    // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Aktenzeichen formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert}`;
@@ -871,27 +1180,104 @@ function generateAlg1AblehnungWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Kundennummer: ${kundenNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = kundenNummer ? `Kundennummer: ${kundenNummer}` : "";
 
-    // Empfänger
-    writeLine(agenturName);
-    agenturAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = agenturName;
+    let empfaengerAdresse = agenturAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Kundennummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Agentur)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Ablehnungsbescheid zum Arbeitslosengeld I vom ${bescheidDatumFormatiert}`;
@@ -1072,27 +1458,104 @@ function generateAlg1BescheidWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Kundennummer: ${kundenNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = kundenNummer ? `Kundennummer: ${kundenNummer}` : "";
 
-    // Empfänger
-    writeLine(agenturName);
-    agenturAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = agenturName;
+    let empfaengerAdresse = agenturAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Kundennummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Agentur)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid über Arbeitslosengeld I vom ${bescheidDatumFormatiert}`;
@@ -1261,27 +1724,104 @@ function generateAlg1SperrzeitWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+   // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`Kundennummer: ${kundenNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = kundenNummer ? `Kundennummer: ${kundenNummer}` : "";
 
-    // Empfänger
-    writeLine(agenturName);
-    agenturAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = agenturName;
+    let empfaengerAdresse = agenturAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Kundennummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Agentur)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Sperrzeitbescheid vom ${bescheidDatumFormatiert}`;
@@ -1457,27 +1997,104 @@ function generateVermoegenWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(jcName);
-    jcAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcName;
+    let empfaengerAdresse = jcAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert} wegen fehlerhafter Vermögensanrechnung`;
@@ -1662,27 +2279,104 @@ function generateMehrbedarfWiderspruchPDF(data) {
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
     const antragDatumFormatiert = getFormattedDateValue(antragDatumMehrbedarf, "");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(jcName);
-    jcAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcName;
+    let empfaengerAdresse = jcAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert} – Ablehnung von Mehrbedarfen nach § 21 SGB II`;
@@ -1889,27 +2583,104 @@ function generateEinkommenWiderspruchPDF(data) {
     const berechnungJobcenterNum = parseFloat(berechnungJobcenter) || 0;
 
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(jcName);
-    jcAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcName;
+    let empfaengerAdresse = jcAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Berechnungsbescheid vom ${bescheidDatumFormatiert}`;
@@ -2088,27 +2859,104 @@ function generateKduWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(jcName);
-    jcAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcName;
+    let empfaengerAdresse = jcAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert} zu den Kosten der Unterkunft und Heizung (KdU)`;
@@ -2311,27 +3159,104 @@ function generateUeberpruefungPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(antragstellerName);
-    writeLine(antragstellerAdresse);
-    writeLine(`${antragstellerPlz} ${antragstellerOrt}`);
-    writeLine(`BG-Nummer / Kundennummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten (Achtung: neue Variablen für Antragsteller)
+    let absenderName = antragstellerName;
+    let absenderAdresse = `${antragstellerAdresse}\n${antragstellerPlz} ${antragstellerOrt}`;
+    let infoText = bgNummer ? `BG-Nummer / Kundennummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer / Kundennummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Antrag auf Überprüfung eines Verwaltungsaktes nach § 44 SGB X`;
@@ -2483,27 +3408,104 @@ function generateSanktionWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatumSanktion, "UNBEKANNT");
 
+   // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten (Sanktions-Variablen beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = bgNummer ? `BG-Nummer: ${bgNummer}` : "";
 
-    // Empfänger
-    writeLine(jcNameSanktion);
-    jcAdresseSanktion.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcNameSanktion;
+    let empfaengerAdresse = jcAdresseSanktion;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach der Adresse
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter Sanktion)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Sanktionsbescheid vom ${bescheidDatumFormatiert}`;
@@ -2708,29 +3710,118 @@ function generateBuergergeldWiderspruchPDF(data) {
     const jobcenterFullAddress = `${jcStrasseNr || ""}\n${jcPlzJobcenter || ""} ${jcOrtJobcenter || ""}`.trim();
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+   // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // Absender
-    writeLine(`${bgVorname} ${bgNachname}`);
-    writeLine(bgStrasseNr);
-    writeLine(`${bgPlz} ${bgOrt}`);
-    if (bgTelefon && bgTelefon.trim() !== "") writeLine(`Tel.: ${bgTelefon}`);
-    if (bgEmail && bgEmail.trim() !== "") writeLine(`E-Mail: ${bgEmail}`);
-    writeLine(`BG-Nummer: ${bgBedarfsgemeinschaft}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // Absender- & Empfängerdaten vorbereiten (Achtung: Komplett neue BG-Variablen)
+    let absenderName = `${bgVorname} ${bgNachname}`;
+    let absenderAdresse = `${bgStrasseNr}\n${bgPlz} ${bgOrt}`;
+    let absenderTelefon = bgTelefon || "";
+    let absenderEmail = bgEmail || "";
+    let infoText = bgBedarfsgemeinschaft ? `BG-Nummer: ${bgBedarfsgemeinschaft}` : "";
 
-    // Empfänger
-    writeLine(jcName);
-    jobcenterFullAddress.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    let empfaengerName = jcName;
+    let empfaengerAdresse = jobcenterFullAddress;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // Datum
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Optionale Telefonnummer rechts einbauen
+    if (absenderTelefon && absenderTelefon.trim() !== "") {
+        doc.text("Tel.: " + absenderTelefon.trim(), rightColumnX, rightY);
+        rightY += defaultLineHeight;
+    }
+
+    // Optionale E-Mail rechts einbauen
+    if (absenderEmail && absenderEmail.trim() !== "") {
+        doc.text("E-Mail: " + absenderEmail.trim(), rightColumnX, rightY);
+        rightY += defaultLineHeight;
+    }
+
+    // BG-Nummer formatiert darunter setzen
+    if (infoText !== "") {
+        rightY += 2; // Kleiner Abstand nach den Kontaktdaten
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Jobcenter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    empfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreffText = `Widerspruch gegen Ihren Bescheid vom ${bescheidDatumFormatiert}`;
@@ -2924,25 +4015,107 @@ function generateBafogWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT");
 
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
 
-    // 1. Absenderblock
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    y += defaultLineHeight;
+    // Absender- & Empfängerdaten vorbereiten (BAfÖG-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = ""; // BAföG-Block besitzt im Original kein Aktenzeichen
 
-    // 2. Empfängerblock
-    writeLine("An das");
-    writeLine(amtName);
-    amtAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    y += defaultLineHeight * 2;
+    // "An das" harmonisch vor den Namen des Amtes setzen
+    let empfaengerName = amtName ? `An das ${amtName}` : "An das Amt für Ausbildungsförderung";
+    let empfaengerAdresse = amtAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
-    // 3. Datum (rechtsbündig)
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // Optionale Info-Zeilen (falls später eine Förderungsnummer ergänzt wird)
+    if (infoText !== "") {
+        rightY += 2;
+        doc.setFont("times", "italic");
+        doc.setFontSize(10);
+        
+        let infoLines = doc.splitTextToSize(infoText, 60);
+        infoLines.forEach(line => {
+            doc.text(line, rightColumnX, rightY);
+            rightY += 4;
+        });
+    }
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Amt)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    if (empfaengerAdresse) {
+        empfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // 4. Betreff (aussagekräftiger)
     let betreffText = `Widerspruch gegen den Bescheid über Leistungen nach dem Bundesausbildungsförderungsgesetz (BAföG) vom ${bescheidDatumFormatiert}`;
@@ -3076,21 +4249,91 @@ function generateKlageAsylPDF(data) {
 
     const { personName, geburtsdatum, staatsangehoerigkeit, personAdresse, bescheidDatum, bamfAktenzeichen, gerichtName, gerichtAdresse, kurzeBegruendung } = data;
 
-    // Absenderblock
-    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
-    doc.setFontSize(8);
-    doc.text(absenderText, margin, y);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(gerichtName, { fontStyle: "bold" });
-    writeParagraph(gerichtAdresse);
-    y += 14;
+    // Absender- & Empfängerdaten vorbereiten (Gerichts-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = personAdresse; // Enthält bereits die komplette Adresse
+    let infoText = ""; // Gerichts-Block besitzt in diesem Entwurf kein Aktenzeichen im Kopf
+
+    let empfaengerName = gerichtName;
+    let empfaengerAdresse = gerichtAdresse;
     
-    // Datum
-    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
-    y += 7;
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
 
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Gericht)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    gerichtAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
     // Betreff
     writeLine(`Klage`, { fontStyle: "bold", lineHeight: 10 });
     writeParagraph(`des Herrn/der Frau ${personName}, geboren am ${new Date(geburtsdatum).toLocaleDateString("de-DE")}, Staatsangehörigkeit: ${staatsangehoerigkeit}, wohnhaft: ${personAdresse.replace(/\n/g, ', ')},`);
@@ -3202,20 +4445,91 @@ function generateFiktionsbescheinigungPDF(data) {
 
     const { personName, geburtsdatum, personAdresse, artTitel, ablaufDatum, aktenzeichen, terminNachweis, behoerdeName, behoerdeAdresse } = data;
 
-    // Absenderblock
-    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
-    doc.setFontSize(8);
-    doc.text(absenderText, margin, y);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(behoerdeName, { fontStyle: "bold" });
-    writeParagraph(behoerdeAdresse);
-    y += 14;
+    // Absender- & Empfängerdaten vorbereiten (Allgemeine Behörden-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = personAdresse; // Enthält bereits die komplette Adresse
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
+
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
     
-    // Datum
-    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
-    y += 7;
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    behoerdeAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreff = `Antrag auf Ausstellung einer Fiktionsbescheinigung nach § 81 Abs. 3 AufenthG`;
@@ -3326,20 +4640,91 @@ function generateUntaetigkeitsklagePDF(data) {
 
     const { personName, geburtsdatum, personAdresse, antragDatum, antragArt, antragAktenzeichen, verklagteBehoerdeName, verklagteBehoerdeAdresse, gerichtName, gerichtAdresse } = data;
 
-    // Absenderblock
-    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
-    doc.setFontSize(8);
-    doc.text(absenderText, margin, y);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(gerichtName, { fontStyle: "bold" });
-    writeParagraph(gerichtAdresse);
-    y += 14;
+    // Absender- & Empfängerdaten vorbereiten (Klage-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = personAdresse; // Enthält bereits die komplette Adresse
+    let infoText = ""; // Bei Klageerhebung gibt es im Kopf noch kein Aktenzeichen des Gerichts
+
+    let empfaengerName = gerichtName;
+    let empfaengerAdresse = gerichtAdresse;
     
-    // Datum
-    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
-    y += 7;
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Gericht)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    gerichtAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeLine(`Untätigkeitsklage gemäß § 75 VwGO`, { fontStyle: "bold", lineHeight: 10 });
@@ -3447,20 +4832,91 @@ function generateErstausstattungPDF(data) {
 
     const { personName, personAdresse, kundennummer, adresseNeueWohnung, mietbeginn, begruendung, bedarf, bedarfSonstiges, behoerdeName, behoerdeAdresse } = data;
 
-    // Absenderblock
-    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
-    doc.setFontSize(8);
-    doc.text(absenderText, margin, y);
-    y += 10;
+   // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(behoerdeName, { fontStyle: "bold" });
-    writeParagraph(behoerdeAdresse);
-    y += 14;
+    // Absender- & Empfängerdaten vorbereiten (Behörden-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = personAdresse; // Enthält bereits die komplette Adresse
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
+
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
     
-    // Datum
-    writeLine(new Date().toLocaleDateString("de-DE"), { align: 'right' });
-    y += 7;
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    behoerdeAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeLine(`Antrag auf Leistungen für die Erstausstattung der Wohnung`, { fontStyle: "bold", lineHeight: 8 });
@@ -3570,21 +5026,91 @@ function generateDeckblattAufenthaltPDF(data) {
 
     const { personName, personAdresse, aktenzeichen, antragArt, anlagen, anlagenSonstige, behoerdeName, behoerdeAdresse } = data;
 
-    // Absenderblock (klein über der Anschrift)
-    const absenderText = `${personName} • ${personAdresse.replace(/\n/g, ' • ')}`;
-    doc.setFontSize(8);
-    doc.text(absenderText, margin, y);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(behoerdeName, { fontStyle: "bold" });
-    writeParagraph(behoerdeAdresse);
-    y += 14;
+    // Absender- & Empfängerdaten vorbereiten (Behörden-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = personAdresse; // Enthält bereits die komplette Adresse
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
+
+    let empfaengerName = behoerdeName;
+    let empfaengerAdresse = behoerdeAdresse;
     
-    // Datum rechtsbündig
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    behoerdeAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    writeLine(datumHeute, { align: 'right' });
-    y += 7;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreff = `Betreff: ${antragArt}`;
@@ -3682,23 +5208,93 @@ function generateMahnbescheidWiderspruchPDF(data) {
 
     const bescheidDatumFormatiert = getFormattedDateValue(bescheidDatum, "UNBEKANNT"); // Nutzt deine globale Hilfsfunktion
 
-    // Absender (klein oben links)
-    doc.setFontSize(9);
+    // Schriftart setzen wie vorgegeben
     doc.setFont("times", "normal");
-    const absenderText = `${personName} · ${personAdresse} · ${personPlz} ${personOrt}`;
-    doc.text(absenderText, margin, margin - 10);
 
-    // Empfänger (Gericht)
-    y += 15;
-    writeLine(mahngerichtName);
-    mahngerichtAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Mahngerichts-Variablen)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = ""; // Mahngerichts-Block besitzt in diesem Entwurf kein Aktenzeichen im Kopf
 
-    // Datum (rechtsbündig)
+    let empfaengerName = mahngerichtName;
+    let empfaengerAdresse = mahngerichtAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Mahngericht)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(empfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    if (empfaengerAdresse) {
+        empfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     const betreffText = `Widerspruch gegen den Mahnbescheid vom ${bescheidDatumFormatiert}`;
@@ -3799,21 +5395,93 @@ function generateForderungWiderspruchPDF(data) {
 
     const schreibenDatumFormatiert = getFormattedDateValue(schreibenDatum, "UNBEKANNT");
 
-    // Absender (klein oben links)
-    doc.setFontSize(9);
-    doc.text(`${personName} · ${personAdresse} · ${personPlz} ${personOrt}`, margin, margin - 10);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeLine(empfaengerName, defaultLineHeight, "normal", textFontSize);
-    empfaengerAdresse.split("\n").forEach(line => writeLine(line.trim(), defaultLineHeight, "normal", textFontSize));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Generische Variablen)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = ""; // Universeller Block besitzt standardmäßig kein vordefiniertes Aktenzeichen im Kopf
 
-    // Datum (rechtsbündig)
-    const datumHeute = new Date().toLocaleString("de-DE");
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2;
+    let targetEmpfaengerName = empfaengerName;
+    let targetEmpfaengerAdresse = empfaengerAdresse;
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    doc.text(targetEmpfaengerName, margin, leftY);
+    leftY += defaultLineHeight;
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
+    const datumHeute = new Date().toLocaleDateString("de-DE");
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Widerspruch gegen Ihre Forderung vom ${schreibenDatumFormatiert}`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
@@ -3930,20 +5598,98 @@ function generateRatenzahlungPDF(data) {
     const wunschrateFormatted = (parseFloat(wunschrate) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
     const vergleichsbetragFormatted = (parseFloat(vergleichsbetrag) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
 
-    // Absender (klein oben)
-    doc.setFontSize(9);
-    doc.text(`${personName} · ${personAdresse} · ${personPlz} ${personOrt}`, margin, margin - 10);
-    y += 10;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    empfaengerName.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlz} ${personOrt}`;
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
+
+    let targetEmpfaengerName = empfaengerName || "";
+    let targetEmpfaengerAdresse = empfaengerAdresse || "";
     
-    // Datum
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    // Mehrzeilige Empfängernamen abfangen
+    targetEmpfaengerName.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+    
+    // Empfängeradresse anhängen
+    targetEmpfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Angebot zur außergerichtlichen Einigung Ihrer Forderung, Zeichen: ${aktenzeichen}`, { fontSize: betreffFontSize, fontStyle: "bold" });
@@ -4153,18 +5899,96 @@ function generateStundungPDF(data) {
     const stundungBisDatumFmt = getFormattedDateValue(stundungBisDatum);
     const forderungshoeheFmt = (parseFloat(forderungshoehe) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
 
-    // Absender
-    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(empfaengerName);
-    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Beachten: personPlzOrt ist bereits kombiniert)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`;
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = empfaengerName || "";
+    let targetEmpfaengerAdresse = empfaengerAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    // Empfängernamen ausgeben
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    // Empfängeradresse anhängen
+    targetEmpfaengerAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), margin, leftY);
+            leftY += defaultLineHeight;
+        }
+    });
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreff = `Antrag auf Stundung der Forderung vom ${rechnungsdatumFmt}`;
@@ -4245,18 +6069,96 @@ function generatePKontoPDF(data) {
     
     const geburtsdatumFmt = getFormattedDateValue(geburtsdatum);
 
-    // Absender
-    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+   // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger (Bank)
-    writeParagraph(bankName);
-    bankAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Bank-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = bankName || "";
+    let targetEmpfaengerAdresse = bankAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Bank)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff (dynamisch)
     let betreff = "";
@@ -4358,18 +6260,96 @@ function generateZahlungsaufschubPDF(data) {
     const neuesDatumVorschlagFmt = getFormattedDateValue(neuesDatumVorschlag);
     const forderungshoeheFmt = (parseFloat(forderungshoehe) || 0).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
 
-    // Absender
-    writeParagraph(`${personName}\n${personAdresse}\n${personPlzOrt}`, { extraSpacingAfter: defaultLineHeight * 2 });
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(empfaengerName);
-    empfaengerAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = empfaengerName || "";
+    let targetEmpfaengerAdresse = empfaengerAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreff = `Bitte um Zahlungsaufschub für Rechnung Nr. ${rechnungsnummer}`;
@@ -4454,22 +6434,96 @@ function generateLohnforderungPDF(data) {
     const zahlungsfristFmt = getFormattedDateValue(zahlungsfrist);
     const offenerBetragFmt = (parseFloat(offenerBetrag) || 0).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(arbeitgeberName);
-    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Arbeitgeber-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = arbeitgeberName || "";
+    let targetEmpfaengerAdresse = arbeitgeberAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Arbeitgeber)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     let betreff = `Geltendmachung von Lohn- und Gehaltsansprüchen`;
@@ -4555,22 +6609,96 @@ function generateArbeitszeugnisPDF(data) {
     const austrittsdatumFmt = getFormattedDateValue(austrittsdatum);
     const fristsetzungFmt = getFormattedDateValue(fristsetzung);
 
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(arbeitgeberName);
-    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Arbeitgeber-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = arbeitgeberName || "";
+    let targetEmpfaengerAdresse = arbeitgeberAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Arbeitgeber)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph("Aufforderung zur Ausstellung eines qualifizierten Arbeitszeugnisses", { fontSize: betreffFontSize, fontStyle: "bold" });
@@ -4646,22 +6774,96 @@ function generateAbmahnungPDF(data) {
     // Formatierung
     const datumAbmahnungFmt = getFormattedDateValue(datumAbmahnung);
 
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(arbeitgeberName);
-    arbeitgeberAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Arbeitgeber-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = arbeitgeberName || "";
+    let targetEmpfaengerAdresse = arbeitgeberAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Arbeitgeber)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Widerspruch gegen die Abmahnung vom ${datumAbmahnungFmt} / Gegendarstellung`, { fontSize: betreffFontSize, fontStyle: "bold" });
@@ -4738,22 +6940,96 @@ function generateWiderrufPDF(data) {
     // Formatierung
     const vertragsdatumFmt = getFormattedDateValue(vertragsdatum);
 
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(unternehmenName);
-    unternehmenAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Unternehmens-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = unternehmenName || "";
+    let targetEmpfaengerAdresse = unternehmenAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Unternehmen)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Widerruf des Vertrages "${vertragsbezeichnung}"`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
@@ -4832,22 +7108,96 @@ function generateReklamationPDF(data) {
     const kaufdatumFmt = getFormattedDateValue(kaufdatum);
     const fristsetzungFmt = getFormattedDateValue(fristsetzung);
 
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(verkaeuferName);
-    verkaeuferAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Verkäufer-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = verkaeuferName || "";
+    let targetEmpfaengerAdresse = verkaeuferAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Verkäufer)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph("Reklamation und Aufforderung zur Nacherfüllung gemäß § 439 BGB", { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
@@ -4929,22 +7279,96 @@ function generateKuendigungPDF(data) {
         sonderkuendigungGrund, widerrufEinzugsermaechtigung, keineWerbung
     } = data;
     
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(anbieterName);
-    anbieterAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Anbieter-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = anbieterName || "";
+    let targetEmpfaengerAdresse = anbieterAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Anbieter)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Kündigung des Vertrages "${vertragsbezeichnung}"`, { fontSize: betreffFontSize, fontStyle: "bold", extraSpacingAfter: 2 });
@@ -5032,22 +7456,96 @@ function generateUnterhaltsvorschussPDF(data) {
         andererElternteilName, adresseBekannt, andererElternteilAdresse
     } = data;
     
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Behörden-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = behoerdeName || "";
+    let targetEmpfaengerAdresse = behoerdeAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     writeParagraph(`Antrag auf Leistungen nach dem Unterhaltsvorschussgesetz (UVG)`, { fontSize: betreffFontSize, fontStyle: "bold" });
@@ -5164,22 +7662,96 @@ function generateKitaGebuehrenPDF(data) {
         kitaName, kitaAdresse, antragArt
     } = data;
     
-    // Absender
-    doc.setFontSize(9);
-    const absenderZeile = `${personName} · ${personAdresse} · ${personPlzOrt}`;
-    doc.text(absenderZeile, margin, margin - 10);
-    doc.setFontSize(textFontSize); // Wichtig: Schriftgröße für den Rest zurücksetzen
-    y += 15;
+    // Schriftart setzen wie vorgegeben
+    doc.setFont("times", "normal");
 
-    // Empfänger
-    writeParagraph(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeParagraph(line.trim(), { extraSpacingAfter: 0 }));
-    y += defaultLineHeight * 2;
+    // Absender- & Empfängerdaten vorbereiten (Behörden-Variablen, personPlzOrt beachten)
+    let absenderName = personName;
+    let absenderAdresse = `${personAdresse}\n${personPlzOrt}`; 
+    let infoText = ""; // Dieser Block besitzt standardmäßig kein Aktenzeichen im Kopf
 
-    // Datum
+    let targetEmpfaengerName = behoerdeName || "";
+    let targetEmpfaengerAdresse = behoerdeAdresse || "";
+    
+    // Dynamische Schriftgröße nutzen
+    let fSize = textFontSize || 11;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF START ---
+    // ==========================================
+    
+    // 1. RECHTER BLOCK: Haupt-Absenderblock (Oben rechts)
+    const rightColumnX = pageWidth - margin - 60; // Startpunkt rechts (ca. 130mm)
+    let rightY = margin;
+    
+    doc.setFont("times", "bold");
+    doc.setFontSize(10);
+    doc.text("Absender:", rightColumnX, rightY);
+    rightY += 5;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(fSize);
+    doc.text(absenderName, rightColumnX, rightY);
+    rightY += defaultLineHeight;
+    
+    absenderAdresse.split("\n").forEach(line => {
+        if (line.trim() !== "") {
+            doc.text(line.trim(), rightColumnX, rightY);
+            rightY += defaultLineHeight;
+        }
+    });
+
+    // 2. LINKER BLOCK: Kleine Rücksendezeile + Empfänger (Behörde)
+    let leftY = margin + 15; 
+    
+    // Inline-Rücksendezeile generieren
+    const cleanAddressInline = absenderAdresse.replace(/\r?\n/g, " · ");
+    const ruecksendeZeile = `${absenderName} · ${cleanAddressInline}`;
+    
+    doc.setFont("times", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120); // Dezentes Grau
+    doc.text(ruecksendeZeile, margin, leftY);
+    
+    // Die feine Trennlinie unter dem Mini-Absender
+    doc.setDrawColor(180, 180, 180); 
+    doc.setLineWidth(0.2);
+    doc.line(margin, leftY + 1.5, margin + 85, leftY + 1.5); 
+    
+    // Empfänger platzieren (Name & Adresse)
+    leftY += 6; 
+    doc.setFontSize(fSize);
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz
+    
+    if (targetEmpfaengerName !== "") {
+        doc.text(targetEmpfaengerName, margin, leftY);
+        leftY += defaultLineHeight;
+    }
+    
+    if (targetEmpfaengerAdresse) {
+        targetEmpfaengerAdresse.split("\n").forEach(line => {
+            if (line.trim() !== "") {
+                doc.text(line.trim(), margin, leftY);
+                leftY += defaultLineHeight;
+            }
+        });
+    }
+
+    // 3. DATUM: Rechtsbündig unterhalb der Blöcke
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.text(datumHeute, pageWidth - margin - doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor, y);
-    y += defaultLineHeight * 2;
+    doc.setFontSize(fSize);
+    const datumsBreite = doc.getStringUnitWidth(datumHeute) * fSize / doc.internal.scaleFactor;
+    
+    // Kollisionsschutz (gleicht asymmetrische Spaltenhöhen perfekt aus)
+    let datumY = Math.max(leftY, rightY) + 5; 
+    doc.text(datumHeute, pageWidth - margin - datumsBreite, datumY);
+
+    // Übergabe an die globale Y-Koordinate für den nachfolgenden Inhalt
+    y = datumY + 12;
+
+    // ==========================================
+    // --- UNIFORMER BRIEFKOPF ENDE ---
+    // ==========================================
 
     // Betreff
     const antragArtText = antragArt === 'befreiung' ? 'Übernahme' : 'Ermäßigung';
