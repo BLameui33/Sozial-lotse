@@ -16,14 +16,14 @@ function errorBox(msgs){
 
 // -------------------------------------------------------------------
 // DATENGRUNDLAGE: Pfändungsfreigrenzen (§ 850c ZPO)
-// Hinweis: Diese Werte basieren auf der Bekanntmachung vom April 2025
-// und gelten vom 01. Juli 2025 bis zum 30. Juni 2026.
+// Hinweis: Diese Werte basieren auf der Bekanntmachung vom April 2026
+// und gelten vom 01. Juli 2026 bis zum 30. Juni 2027.
 // -------------------------------------------------------------------
 const ZPO_WERTE = {
-  grundfreibetrag: 1555.00,        // Bisher: 1402.28
-  zuschlagErstePerson: 585.23,     // Bisher: 527.76
-  zuschlagWeiterePersonen: 326.04, // je Person (Max. bis zur 5. Person) - Bisher: 294.12
-  maximalEinkommen: 4766.99        // Darüber hinaus wird alles zu 100% gepfändet - Bisher: 4275.59
+  grundfreibetrag: 1590.00,        // Bisher: 1402.28
+  zuschlagErstePerson: 597.42,     // Bisher: 527.76
+  zuschlagWeiterePersonen: 332.83, // je Person (Max. bis zur 5. Person) - Bisher: 294.12
+  maximalEinkommen: 4866.30        // Darüber hinaus wird alles zu 100% gepfändet - Bisher: 4275.59
 };
 
 // Anteil des "Mehrverdienstes" (über dem Freibetrag), der dem Schuldner bleibt.

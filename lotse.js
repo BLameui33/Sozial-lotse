@@ -5,7 +5,7 @@ const lotseBaum = {
         frage: "Wobei benötigen Sie heute Hilfe?",
         antworten: [
             { text: "Krankheit, Pflege & Rente", next: "hub_kassen", icon: "⚕️" },
-            { text: "Bürgergeld, Soziales & Recht", next: "hub_sozial", icon: "§" },
+            { text: "Grundsicherungsgeld, Soziales & Recht", next: "hub_sozial", icon: "§" },
             { text: "Miete & Wohnen", next: "hub_miete", icon: "🏠" }
         ]
     },
@@ -29,7 +29,7 @@ const lotseBaum = {
     hub_sozial: {
         frage: "Welches Thema im Sozial- oder Rechtsbereich betrifft Sie?",
         antworten: [
-            { text: "Existenzsicherung (Bürgergeld, ALG 1, Sozialhilfe)", link: "https://sozialrecht-lotse.de/existenzsicherung.html" },
+            { text: "Existenzsicherung (Grundsicherungsgeld, ALG 1, Sozialhilfe)", link: "https://sozialrecht-lotse.de/existenzsicherung.html" },
             { text: "Familie, Wohnen & Bildung (Kinderzuschlag, Wohngeld)", link: "https://sozialrecht-lotse.de/familie-wohnen-bildung.html" },
             { text: "Arbeit & Beruf (Kündigung, Lohn, Abmahnung)", link: "https://sozialrecht-lotse.de/arbeitsrecht.html" },
             { text: "Schulden & Finanzen (Inkasso, Mahnungen, P-Konto)", link: "https://sozialrecht-lotse.de/schulden-finanzen.html" },

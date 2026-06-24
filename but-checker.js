@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
             out.innerHTML = `
                 <div class="warning-box" style="background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; padding:20px; border-radius:8px;">
                     <h3>❌ Kein Anspruch über BuT</h3>
-                    <p>BuT-Leistungen stehen nur Familien zu, die Sozialleistungen (KiZ, Wohngeld, Bürgergeld etc.) beziehen. Dein Einkommen scheint dafür aktuell zu hoch zu sein.</p>
+                    <p>BuT-Leistungen stehen nur Familien zu, die Sozialleistungen (KiZ, Wohngeld, Grundsicherungsgeld etc.) beziehen. Dein Einkommen scheint dafür aktuell zu hoch zu sein.</p>
                 </div>`;
             return;
         }

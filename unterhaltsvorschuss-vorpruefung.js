@@ -127,7 +127,7 @@ function buildOutput(result, eingaben, errors) {
           }</td></tr>
           <tr><td>Monatliche Zahlung (falls vorhanden)</td><td>${euro(eingaben.betrag)}</td></tr>
           <tr><td>Eigenes Netto</td><td>${euro(eingaben.netto)}</td></tr>
-          <tr><td>Bürgergeld (SGB II)</td><td>${eingaben.buergergeld === "ja" ? "Ja" : "Nein"}</td></tr>
+          <tr><td>Grundsicherungsgeld (SGB II)</td><td>${eingaben.buergergeld === "ja" ? "Ja" : "Nein"}</td></tr>
         </tbody>
       </table>
 

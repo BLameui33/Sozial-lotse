@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const minLimit = isSingle ? MIN_INCOME_SINGLE : MIN_INCOME_COUPLE;
             if (brutto < minLimit) {
                  renderResult("red", "Absage wahrscheinlich (Mindesteinkommen)", 
-                    `Dein Brutto-Einkommen liegt unter ${minLimit} €. Damit besteht vorrangig Anspruch auf <strong>Bürgergeld</strong>, nicht auf Kinderzuschlag.`, [], mode);
+                    `Dein Brutto-Einkommen liegt unter ${minLimit} €. Damit besteht vorrangig Anspruch auf <strong>Grundsicherungsgeld</strong>, nicht auf Kinderzuschlag.`, [], mode);
                  return;
             }
 

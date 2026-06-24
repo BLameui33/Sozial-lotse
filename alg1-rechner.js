@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h3>Ergebnis: Kein Anspruch</h3>
                     <p>Du hast angegeben, dass du in den letzten 30 Monaten nur <strong>${months} Monate</strong> versicherungspflichtig beschäftigt warst.</p>
                     <p>Für ALG I benötigst du in der Regel mindestens <strong>12 Monate</strong> (Anwartschaftszeit).</p>
-                    <p class="hinweis">Tipp: Prüfe, ob du Anspruch auf Bürgergeld hast oder ob Sonderregelungen (z.B. kurze befristete Jobs) greifen.</p>
+                    <p class="hinweis">Tipp: Prüfe, ob du Anspruch auf Grundsicherungsgeld hast oder ob Sonderregelungen (z.B. kurze befristete Jobs) greifen.</p>
                 </div>
             `;
             return;

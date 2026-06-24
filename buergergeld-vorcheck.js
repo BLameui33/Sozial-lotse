@@ -64,7 +64,7 @@ function baueErgebnisHTML(input, bedarfRes, einkRes){
   const urteil = urteilVorcheck(luecke);
 
   return `
-    <h2>Ergebnis: Bürgergeld-Vorcheck</h2>
+    <h2>Ergebnis: Grundsicherungsgeld-Vorcheck</h2>
 
     <div class="pflegegrad-result-card">
       <h3>Haushaltsbedarf (vereinfacht)</h3>
@@ -101,7 +101,7 @@ function baueErgebnisHTML(input, bedarfRes, einkRes){
       </table>
 
       <p class="hinweis">
-        Unverbindliche Orientierung. Für eine verbindliche Prüfung (inkl. Vermögen,
+        Unverbindliche Orientierung. Für eine verbindliche Prüfung (inkl. den strengeren Grenzen beim Schonvermögen ab 2026,
         genaue Freibeträge, Kinder-/Unterhaltsanrechnung, besondere Konstellationen)
         bitte das <strong>Jobcenter</strong> kontaktieren oder unabhängige Beratung nutzen.
         Passe die Pauschalen oben an deine Region/Jahr an.

@@ -1933,7 +1933,7 @@ function generateAlg1SperrzeitWiderspruchPDF(data) {
 // ===================================================================================
 
 // ===================================================================================
-// START:  Vermögen Bürgergeld
+// START:  Vermögen Grundsicherungsgeld
 // ===================================================================================
 
 function generateVermoegenWiderspruchPDF(data) {
@@ -2120,7 +2120,7 @@ function generateVermoegenWiderspruchPDF(data) {
         writeParagraph(`Die von Ihnen vorgenommene Anrechnung unseres Vermögens ist aus den folgenden, gesetzlich verankerten Gründen unzulässig:`, defaultLineHeight, textFontSize, {fontStyle:"italic"});
 
         if (widerspruchsgruende.includes("freibetrag") && textFreibetrag && textFreibetrag.trim() !== "") {
-            writeLine("Das Vermögen liegt innerhalb der gesetzlichen Vermögensfreibeträge (§ 12 Abs. 2 und 3 SGB II):", defaultLineHeight, "bold", textFontSize);
+            writeLine("Das Vermögen liegt innerhalb der gesetzlichen Vermögensfreibeträge (§ 12 Abs. 2 SGB II):", defaultLineHeight, "bold", textFontSize);
             writeParagraph(textFreibetrag);
         }
         if (widerspruchsgruende.includes("altersvorsorge") && textAltersvorsorge && textAltersvorsorge.trim() !== "") {
@@ -2158,7 +2158,7 @@ function generateVermoegenWiderspruchPDF(data) {
         writeParagraph(`Die von Ihnen vorgenommene Anrechnung meines Vermögens ist aus den folgenden, gesetzlich verankerten Gründen unzulässig:`, defaultLineHeight, textFontSize, {fontStyle:"italic"});
 
         if (widerspruchsgruende.includes("freibetrag") && textFreibetrag && textFreibetrag.trim() !== "") {
-            writeLine("Das Vermögen liegt innerhalb der gesetzlichen Vermögensfreibeträge (§ 12 Abs. 2 und 3 SGB II):", defaultLineHeight, "bold", textFontSize);
+            writeLine("Das Vermögen liegt innerhalb der gesetzlichen Vermögensfreibeträge (§ 12 Abs. 2 SGB II):", defaultLineHeight, "bold", textFontSize);
             writeParagraph(textFreibetrag);
         }
         if (widerspruchsgruende.includes("altersvorsorge") && textAltersvorsorge && textAltersvorsorge.trim() !== "") {
@@ -2211,11 +2211,11 @@ function generateVermoegenWiderspruchPDF(data) {
     doc.save("widerspruch_vermoegensanrechnung.pdf");
 }
 // ===================================================================================
-// ENDE:  Vermögen Bürgergeld
+// ENDE:  Vermögen Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  Mehrbedarf Bürgergeld
+// START:  Mehrbedarf Grundsicherungsgeld
 // ===================================================================================
 
 function generateMehrbedarfWiderspruchPDF(data) {
@@ -2513,11 +2513,11 @@ function generateMehrbedarfWiderspruchPDF(data) {
     doc.save("widerspruch_mehrbedarf_buergergeld.pdf");
 }
 // ===================================================================================
-// ENDE:  Mehrbedarf Bürgergeld
+// ENDE:  Mehrbedarf Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  Einkommen Bürgergeld
+// START:  Einkommen Grundsicherungsgeld
 // ===================================================================================
 
 function generateEinkommenWiderspruchPDF(data) {
@@ -2792,11 +2792,11 @@ function generateEinkommenWiderspruchPDF(data) {
     doc.save("widerspruch_einkommensanrechnung.pdf");
 }
 // ===================================================================================
-// ENDE:  Einkommen Bürgergeld
+// ENDE:  Einkommen Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  KDU Bürgergeld
+// START:  KDU Grundsicherungsgeld
 // ===================================================================================
 
 function generateKduWiderspruchPDF(data) {
@@ -3094,11 +3094,11 @@ function generateKduWiderspruchPDF(data) {
     doc.save("widerspruch_kdu.pdf");
 }
 // ===================================================================================
-// ENDE:  KDU Bürgergeld
+// ENDE:  KDU Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  Überprüfung sgb x Bürgergeld
+// START:  Überprüfung sgb x Grundsicherungsgeld
 // ===================================================================================
 
 function generateUeberpruefungPDF(data) {
@@ -3340,11 +3340,11 @@ function generateUeberpruefungPDF(data) {
     doc.save("antrag_ueberpruefung_sgbx.pdf");
 }
 // ===================================================================================
-// ENDE:  überprüfung sbg x Bürgergeld
+// ENDE:  überprüfung sbg x Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  Sanktion Bürgergeld
+// START:  Sanktion Grundsicherungsgeld
 // ===================================================================================
 
 function generateSanktionWiderspruchPDF(data) {
@@ -3563,7 +3563,7 @@ function generateSanktionWiderspruchPDF(data) {
         }
 
         const fristsetzungDatumText = new Date(Date.now() + 3 * 7 * 24 * 60 * 60 * 1000).toLocaleDateString("de-DE"); 
-        writeParagraph(`Bitte bestätigen Sie uns den Eingang dieses Widerspruchs schriftlich. Da der Widerspruch aufschiebende Wirkung hat, gehen wir davon aus, dass die Leistungsminderung bis zur Entscheidung über diesen Widerspruch nicht vollzogen wird.`);
+                writeParagraph(`Bitte bestätigen Sie uns den Eingang dieses Widerspruchs schriftlich. Da die Kürzung des Existenzminimums weitreichende Folgen für uns hat, bitten wir um eine zügige Bearbeitung und Aussetzung des Vollzugs.`);
         writeParagraph(`Eine rechtsmittelfähige Entscheidung über unseren Widerspruch erwarten wir bis spätestens zum ${fristsetzungDatumText}.`);
         writeParagraph(`Sollte unserem Widerspruch nicht oder nicht vollumfänglich abgeholfen werden, behalten wir uns ausdrücklich die Einleitung weiterer rechtlicher Schritte, insbesondere die Klageerhebung vor dem Sozialgericht, vor.`);
     
@@ -3609,7 +3609,7 @@ function generateSanktionWiderspruchPDF(data) {
         }
 
         const fristsetzungDatumText = new Date(Date.now() + 3 * 7 * 24 * 60 * 60 * 1000).toLocaleDateString("de-DE"); 
-        writeParagraph(`Bitte bestätigen Sie mir den Eingang dieses Widerspruchs schriftlich. Da der Widerspruch aufschiebende Wirkung hat, gehe ich davon aus, dass die Leistungsminderung bis zur Entscheidung über diesen Widerspruch nicht vollzogen wird.`);
+                writeParagraph(`Bitte bestätigen Sie mir den Eingang dieses Widerspruchs schriftlich. Da die Kürzung des Existenzminimums weitreichende Folgen für mich hat, bitte ich um eine zügige Bearbeitung und Aussetzung des Vollzugs.`);
         writeParagraph(`Eine rechtsmittelfähige Entscheidung über meinen Widerspruch erwarte ich bis spätestens zum ${fristsetzungDatumText}.`);
         writeParagraph(`Sollte meinem Widerspruch nicht oder nicht vollumfänglich abgeholfen werden, behalte ich mir ausdrücklich die Einleitung weiterer rechtlicher Schritte, insbesondere die Klageerhebung vor dem Sozialgericht, vor.`);
     }
@@ -3632,14 +3632,14 @@ function generateSanktionWiderspruchPDF(data) {
     writeParagraph("\n\n_________________________"); 
     writeParagraph(personName);
 
-    doc.save("widerspruch_sanktionsbescheid_buergergeld.pdf");
+        doc.save("widerspruch_sanktionsbescheid_grundsicherungsgeld.pdf");
 }
 // ===================================================================================
-// ENDE:  Sanktion Bürgergeld
+// ENDE:  Sanktion Grundsicherungsgeld
 // ===================================================================================
 
 // ===================================================================================
-// START:  Leistungsbescheid Bürgergeld
+// START:  Leistungsbescheid Grundsicherungsgeld
 // ===================================================================================
 
 function generateBuergergeldWiderspruchPDF(data) {
@@ -3856,7 +3856,7 @@ function generateBuergergeldWiderspruchPDF(data) {
             if (fehlerEinkommen && begruendungEinkommen && begruendungEinkommen.trim() !== "") writeParagraph(`- Anrechnung von Einkommen:\n  ${begruendungEinkommen}`);
             if (fehlerVermoegen && begruendungVermoegen && begruendungVermoegen.trim() !== "") writeParagraph(`- Anrechnung von Vermögen:\n  ${begruendungVermoegen}`);
         } else if (hauptgrundWiderspruch === "ablehnung" && begruendungAblehnung && begruendungAblehnung.trim() !== "") {
-            writeParagraph(`Unser Antrag auf Bürgergeld wurde ganz oder teilweise abgelehnt. Diese Ablehnung ist nicht gerechtfertigt, da:\n${begruendungAblehnung}`);
+            writeParagraph(`Unser Antrag auf Grundsicherungsgeld wurde ganz oder teilweise abgelehnt. Diese Ablehnung ist nicht gerechtfertigt, da:\n${begruendungAblehnung}`);
         } else if (hauptgrundWiderspruch === "formell" && begruendungFormell && begruendungFormell.trim() !== "") {
             writeParagraph(`Der Bescheid weist folgende formelle Fehler auf, die seine Rechtmäßigkeit in Frage stellen:\n${begruendungFormell}`);
         }
@@ -3898,7 +3898,7 @@ function generateBuergergeldWiderspruchPDF(data) {
             if (fehlerEinkommen && begruendungEinkommen && begruendungEinkommen.trim() !== "") writeParagraph(`- Anrechnung von Einkommen:\n  ${begruendungEinkommen}`);
             if (fehlerVermoegen && begruendungVermoegen && begruendungVermoegen.trim() !== "") writeParagraph(`- Anrechnung von Vermögen:\n  ${begruendungVermoegen}`);
         } else if (hauptgrundWiderspruch === "ablehnung" && begruendungAblehnung && begruendungAblehnung.trim() !== "") {
-            writeParagraph(`Mein Antrag auf Bürgergeld wurde ganz oder teilweise abgelehnt. Diese Ablehnung ist nicht gerechtfertigt, da:\n${begruendungAblehnung}`);
+            writeParagraph(`Mein Antrag auf Grundsicherungsgeld wurde ganz oder teilweise abgelehnt. Diese Ablehnung ist nicht gerechtfertigt, da:\n${begruendungAblehnung}`);
         } else if (hauptgrundWiderspruch === "formell" && begruendungFormell && begruendungFormell.trim() !== "") {
             writeParagraph(`Der Bescheid weist folgende formelle Fehler auf, die seine Rechtmäßigkeit in Frage stellen:\n${begruendungFormell}`);
         }
@@ -3946,7 +3946,7 @@ function generateBuergergeldWiderspruchPDF(data) {
     doc.save("widerspruch_buergergeld.pdf");
 }
 // ===================================================================================
-// ENDE:  Leistungsbescheid Bürgergeld
+// ENDE:  Leistungsbescheid Grundsicherungsgeld
 // ===================================================================================
 
 
@@ -5800,7 +5800,7 @@ function generateHaushaltsplanPDF(data) {
     // Einnahmen
     addSection("Monatliche Einnahmen");
     addRow("Lohn/Gehalt (Netto)", data.einkommenNetto);
-    addRow("Bürgergeld / Sozialleistungen", data.einkommenBuergergeld);
+    addRow("Grundsicherungsgeld / Sozialleistungen", data.einkommenBuergergeld);
     addRow("Rente / Pension", data.einkommenRente);
     addRow("Kindergeld", data.einkommenKindergeld);
     addRow("Unterhalt (erhalten)", data.einkommenUnterhalt);
@@ -7802,7 +7802,7 @@ function generateKitaGebuehrenPDF(data) {
     y += defaultLineHeight;
 
     const checklistItems = [
-        "Einkommensnachweise aller Haushaltsmitglieder (z.B. Lohnabrechnungen der letzten 12 Monate, Bescheide über Bürgergeld, ALG I, Elterngeld, Kinderzuschlag etc.)",
+        "Einkommensnachweise aller Haushaltsmitglieder (z.B. Lohnabrechnungen der letzten 12 Monate, Bescheide über Grundsicherungsgeld, ALG I, Elterngeld, Kinderzuschlag etc.)",
         "Mietvertrag und Nachweis der aktuellen Miethöhe (z.B. Kontoauszug)",
         "Betreuungsvertrag mit der Kindertageseinrichtung",
         "Geburtsurkunde(n) des/der Kind(er)",

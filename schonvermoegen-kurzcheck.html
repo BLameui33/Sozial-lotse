@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8" />
-    <title>Schonvermögen beim Bürgergeld 2026 prüfen & Kurzcheck</title>
+    <title>Schonvermögen beim Grundsicherungsgeld 2026 prüfen & Kurzcheck</title>
     <meta name="description" content="Schneller Kurzcheck zum Schonvermögen 2026: Ersparnisse, Kfz-Wert und Haushaltsgröße eingeben – Ergebnis: im Rahmen, knapp oder darüber.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index,follow">
@@ -37,7 +37,7 @@
 
     <div class="page-container">
 
-  <h1>Checker: Schonvermögen beim Bürgergeld prüfen (SGB II)</h1>
+  <h1>Checker: Schonvermögen beim Grundsicherungsgeld prüfen (SGB II)</h1>
 
 <div class="usp-bar">
   <div class="usp-item">
@@ -68,22 +68,21 @@
 
   <div class="info-box">
     <p>
-      Muss ich erst mein gesamtes Erspartes aufbrauchen, bevor ich staatliche Hilfe bekomme? Muss ich mein Auto verkaufen? Diese Fragen bereiten vielen Menschen schlaflose Nächte, wenn sie einen Antrag auf Bürgergeld stellen müssen. Die gute Nachricht: Der Gesetzgeber schützt einen Teil Ihrer Rücklagen, damit Sie nicht vor dem finanziellen Nichts stehen.
+      Muss ich erst mein gesamtes Erspartes aufbrauchen, bevor ich staatliche Hilfe bekomme? Muss ich mein Auto verkaufen? Diese Fragen bereiten vielen Menschen schlaflose Nächte, wenn sie einen Antrag auf Grundsicherungsgeld stellen müssen. Die gute Nachricht: Der Gesetzgeber schützt einen Teil Ihrer Rücklagen, damit Sie nicht vor dem finanziellen Nichts stehen.
     </p>
     <p>
       <strong>Prüfen Sie Ihr finanzielles Polster:</strong> Das sogenannte <strong>Schonvermögen</strong> ist der Betrag, den Sie behalten dürfen, ohne dass das Jobcenter Ihnen Leistungen verweigert. Mit diesem Tool können Sie anhand Ihrer Ersparnisse, des Wertes Ihres Autos und der Größe Ihres Haushalts in wenigen Schritten überschlagen, ob Ihr Vermögen sicher ist oder ob das Jobcenter voraussichtlich eine Anrechnung vornimmt.
     </p>
   </div>
 
-  <div class="info-box warning" style="border-left: 4px solid #e53935; padding: 15px; margin-top: 20px;">
-    <h2>WICHTIG: Die Karenzzeit & Gesetzliche Freibeträge</h2>
+    <div class="info-box warning" style="border-left: 4px solid #e53935; padding: 15px; margin-top: 20px;">
+    <h2>WICHTIG: Die gesetzlichen Freibeträge</h2>
     <p>
-      Das SGB II unterscheidet streng zwischen dem ersten Jahr des Leistungsbezugs und der Zeit danach:
+      Das SGB II schützt Ihr Barvermögen nach altersgestaffelten Freibeträgen:
     </p>
     <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px;">
-      <li><strong>Die Karenzzeit (Das 1. Jahr):</strong> In den ersten 12 Monaten des Bürgergeld-Bezugs gilt ein extrem hoher Schutz! Der Antragsteller darf bis zu <strong>40.000 Euro</strong> behalten. Für jede weitere Person in der Bedarfsgemeinschaft kommen <strong>15.000 Euro</strong> hinzu.</li>
-      <li><strong>Nach der Karenzzeit:</strong> Ab dem 13. Monat sinkt der Freibetrag drastisch. Dann gilt ein einheitlicher Freibetrag von <strong>15.000 Euro pro Person</strong> in der Bedarfsgemeinschaft.</li>
-      <li><strong>Das Auto:</strong> Pro erwerbsfähiger Person im Haushalt ist ein angemessenes Kraftfahrzeug geschützt. Als angemessen gilt in der Regel ein Zeitwert von bis zu <strong>15.000 Euro</strong>.</li>
+      <li><strong>Barvermögen (Altersstufen):</strong> Jedem Mitglied der Bedarfsgemeinschaft steht ein eigener Freibetrag zu. Dieser beträgt <strong>5.000 Euro</strong> (bis 30 Jahre), <strong>10.000 Euro</strong> (bis 40 Jahre), <strong>12.500 Euro</strong> (bis 50 Jahre) und <strong>20.000 Euro</strong> (über 50 Jahre).</li>
+      <li><strong>Das Auto:</strong> Pro erwerbsfähiger Person im Haushalt ist ein angemessenes Kraftfahrzeug zusätzlich geschützt. Als angemessen gilt in der Regel ein Zeitwert von bis zu <strong>15.000 Euro</strong>.</li>
       <li><strong>Eigenheim:</strong> Ein selbst genutztes Haus oder eine Eigentumswohnung ist geschützt, sofern die Wohnfläche angemessen ist (z. B. bis 140 m² für bis zu vier Personen).</li>
     </ul>
   </div>
@@ -132,10 +131,10 @@
                 <legend>2. Feineinstellungen (optional)</legend>
 
                 <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-                    <label class="pflegegrad-label" for="sv_freibetrag_pro_person">
-                        Grundfreibetrag pro Person (€)
-                        <span class="muted-label">Hier tragen Sie den geschützten Sparbetrag je Person ein.</span>
-                        <input type="number" id="sv_freibetrag_pro_person" min="0" step="100" value="15000" />
+                                       <label class="pflegegrad-label" for="sv_freibetrag_pro_person">
+                        Ihr altersabhängiger Freibetrag (€)
+                        <span class="muted-label">Tragen Sie hier Ihren Wert ein (z. B. 5000, 10000, 12500 oder 20000).</span>
+                        <input type="number" id="sv_freibetrag_pro_person" min="0" step="500" value="5000" />
                     </label>
                     <label class="pflegegrad-label" for="sv_kfz_cap">
                         Kfz-Schutzgrenze (€)
@@ -176,7 +175,7 @@
         </section>
 
         <section aria-label="FAQ Schonvermögen">
-            <h2>FAQ: Schonvermögen beim Bürgergeld</h2>
+            <h2>FAQ: Schonvermögen beim Grundsicherungsgeld</h2>
 
             <h3>Gilt das Auto immer als geschütztes Vermögen?</h3>
             <p>Vereinfacht ja – bis zu einem <em>angemessenen</em> Wert (hier per Schutzgrenze einstellbar). Ein darüber liegender Anteil kann als Vermögen zählen.</p>
@@ -232,11 +231,11 @@
         <h2>Häufige Fragen (FAQ) zum Schonvermögen</h2>
   <details>
     <summary>Darf ich mein Geld vor dem Antrag einfach an Verwandte verschenken?</summary>
-    <p><strong>Nein, auf gar keinen Fall!</strong> Wenn Sie Vermögen kurz vor oder während des Bürgergeld-Bezugs mutwillig verschleudern oder verschenken, um sich "bedürftig" zu machen, gilt dies als sozialwidriges Verhalten. Das Jobcenter kann die Leistungen verweigern oder die Beschenkten rechtlich zwingen, das Geld zurückzuzahlen.</p>
+    <p><strong>Nein, auf gar keinen Fall!</strong> Wenn Sie Vermögen kurz vor oder während des Grundsicherungsgeld-Bezugs mutwillig verschleudern oder verschenken, um sich "bedürftig" zu machen, gilt dies als sozialwidriges Verhalten. Das Jobcenter kann die Leistungen verweigern oder die Beschenkten rechtlich zwingen, das Geld zurückzuzahlen.</p>
   </details>
-  <details>
+    <details>
     <summary>Zählt das Sparbuch meiner Kinder auch zum Vermögen?</summary>
-    <p>Ja. Das Vermögen der Kinder wird bei der Berechnung der Bedarfsgemeinschaft berücksichtigt. <strong>Aber:</strong> Auch Kinder haben einen eigenen Freibetrag von 15.000 Euro (während und nach der Karenzzeit). Nur wenn das Geld auf dem Sparbuch des Kindes diese Summe übersteigt, wird der überschüssige Betrag auf den Bedarf angerechnet.</p>
+    <p>Ja. Das Vermögen der Kinder wird bei der Berechnung der Bedarfsgemeinschaft berücksichtigt. <strong>Aber:</strong> Auch Kinder haben einen eigenen, altersabhängigen Freibetrag (in der Regel 5.000 Euro). Nur wenn das Geld auf dem Sparbuch des Kindes diese Summe übersteigt, wird der überschüssige Betrag auf den Bedarf angerechnet.</p>
   </details>
   <details>
     <summary>Was gehört eigentlich alles zum Vermögen?</summary>
@@ -246,23 +245,23 @@
         <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
       <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
       <p>
-        Du möchtest tiefer einsteigen? Auf unseren Info-Seiten findest du alles rund um das Thema Bürgergeld:  
+        Du möchtest tiefer einsteigen? Auf unseren Info-Seiten findest du alles rund um das Thema Grundsicherungsgeld:  
       </p>
       <p style="margin-bottom:.4rem;">
-        <a href="info-buergergeld-anspruch.html" class="button button-secondary" title="Zur Info Bürgergeld-Anspruch">Zur Info-Seite: Bürgergeld-Anspruch (Details & Checkliste)</a>
-        <a href="info-buergergeld-kdu.html" class="button button-secondary" title="Zur Info Bürgergeld KDU">Zur Info Bürgergeld KDU</a>
-        <a href="info-buergergeld-antrag.html" class="button button-secondary" title="Zur Info Bürgergeld-Antrag">Zur Info: Bürgergeld-Antrag</a>
-        <a href="info-buergergeld-sanktionen.html" class="button button-secondary" title="Zur Info Bürgergeld Sanktionen">Zur Info: Bürgergeld Sanktionen</a>
-        <a href="freibetraege-buergergeld-rechner.html" class="button button-secondary" title="Zum Rechner Bürgergeld-Freibetrag">Zum Rechner: Bürgergeld-Freibetrag</a>
+        <a href="info-buergergeld-anspruch.html" class="button button-secondary" title="Zur Info Grundsicherungsgeld-Anspruch">Zur Info-Seite: Grundsicherungsgeld-Anspruch (Details & Checkliste)</a>
+        <a href="info-buergergeld-kdu.html" class="button button-secondary" title="Zur Info Grundsicherungsgeld KDU">Zur Info Grundsicherungsgeld KDU</a>
+        <a href="info-buergergeld-antrag.html" class="button button-secondary" title="Zur Info Grundsicherungsgeld-Antrag">Zur Info: Grundsicherungsgeld-Antrag</a>
+        <a href="info-buergergeld-sanktionen.html" class="button button-secondary" title="Zur Info Grundsicherungsgeld Sanktionen">Zur Info: Grundsicherungsgeld Sanktionen</a>
+        <a href="freibetraege-buergergeld-rechner.html" class="button button-secondary" title="Zum Rechner Grundsicherungsgeld-Freibetrag">Zum Rechner: Grundsicherungsgeld-Freibetrag</a>
       </p>
     </aside>
 
         <h2>Quellen & weiterführende Links</h2>
 <div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
   <ul>
-    <li><a href="https://www.arbeitsagentur.de/arbeitslos-arbeit-finden/buergergeld" target="_blank" rel="noopener">Bundesagentur für Arbeit – Alle Infos zum Bürgergeld</a></li>
-    <li><a href="https://www.bmas.de/DE/Arbeit/Grundsicherung-Buergergeld/buergergeld.html" target="_blank" rel="noopener">BMAS – Fragen & Antworten zum Bürgergeld (Regelsätze 2025)</a></li>
-    <li><a href="https://www.buerger-geld.org/rechner/" target="_blank" rel="noopener">Bürgergeld-Rechner – Anspruch unverbindlich prüfen</a></li>
+    <li><a href="https://www.arbeitsagentur.de/arbeitslos-arbeit-finden/buergergeld" target="_blank" rel="noopener">Bundesagentur für Arbeit – Alle Infos zum Grundsicherungsgeld</a></li>
+    <li><a href="https://www.bmas.de/DE/Arbeit/Grundsicherung-Buergergeld/buergergeld.html" target="_blank" rel="noopener">BMAS – Fragen & Antworten zum Grundsicherungsgeld (Regelsätze 2025)</a></li>
+    <li><a href="https://www.buerger-geld.org/rechner/" target="_blank" rel="noopener">Grundsicherungsgeld-Rechner – Anspruch unverbindlich prüfen</a></li>
     <li><a href="https://www.verbraucherzentrale.de/wissen/energie/preise-tarife/buergergeld-und-heizkosten-was-wird-uebernommen-77988" target="_blank" rel="noopener">Verbraucherzentrale – Übernahme von Heizkosten</a></li>
     <li><a href="https://hartz4widerspruch.de/ratgeber/finanzen/vermoegen/" target="_blank" rel="noopener">Ratgeber zum Schonvermögen und zur Karenzzeit</a></li>
   </ul>

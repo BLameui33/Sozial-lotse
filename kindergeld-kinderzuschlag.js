@@ -113,7 +113,7 @@ function kizVorcheck({ haushalt, netto, warmmiete, kinderAnz }) {
   if (netto < minIncome) {
     return {
       urteil: "Eher nein",
-      begruendung: `Nettoeinkommen unter der vereinfachten Mindesteinkommensgrenze (${euro(minIncome)}). Evtl. Bürgergeld/Wohngeld prüfen.`,
+      begruendung: `Nettoeinkommen unter der vereinfachten Mindesteinkommensgrenze (${euro(minIncome)}). Evtl. Grundsicherungsgeld/Wohngeld prüfen.`,
       bedarf, range: [bedarf, spannbreiteOben]
     };
   }

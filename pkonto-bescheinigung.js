@@ -31,7 +31,7 @@ function loadJsPDF(callback) {
 // Hinweis: Basis Juli 2026. Gültig bis zum 30. Juni 2027.
 // -------------------------------------------------------------------
 const ZPO_WERTE = {
-  grundfreibetrag: 1587.40,         // Ab 01.07.2026 (Bisher: 1402.28 in 2024 bzw. 1555.00 in 2025)
+  grundfreibetrag: 1590.00,         // Ab 01.07.2026 (Bisher: 1402.28 in 2024 bzw. 1555.00 in 2025)
   zuschlagErstePerson: 597.42,      // Ab 01.07.2026 (Bisher: 527.76)
   zuschlagWeiterePersonen: 332.83,  // Ab 01.07.2026 (Bisher: 294.12)
   maximalEinkommen: 4866.30,        // Ab 01.07.2026: Betrag, über dem voll gepfändet wird

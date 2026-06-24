@@ -27,7 +27,7 @@ function loadJsPDF(callback) {
 
 // Grund-Texte für den Brief (Ich-Form, keine Schrägstriche)
 const gruendeText = {
-  "buergergeld": "Bürgergeld nach dem Zweiten Buch Sozialgesetzbuch",
+  "buergergeld": "Grundsicherungsgeld nach dem Zweiten Buch Sozialgesetzbuch",
   "grundsicherung": "Grundsicherung nach dem Zwölften Buch Sozialgesetzbuch",
   "bafoeg": "BAföG oder Berufsausbildungsbeihilfe",
   "asyl": "Leistungen nach dem Asylbewerberleistungsgesetz",

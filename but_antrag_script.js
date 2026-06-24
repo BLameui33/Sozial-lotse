@@ -265,7 +265,7 @@ function generateButAntragPDF(data) {
         y += spaceAfterParagraph / 2;
         writeParagraph(ergaenzendeArgumenteBut);
 
-        writeParagraph(`Als Bezieher von [z.B. Bürgergeld, Wohngeld] sind wir anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
+        writeParagraph(`Als Bezieher von [z.B. Grundsicherungsgeld, Wohngeld] sind wir anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
     
     } else {
         // --- TEXTBLOCK FÜR SINGULAR ("ICH") ---
@@ -295,7 +295,7 @@ function generateButAntragPDF(data) {
         y += spaceAfterParagraph / 2;
         writeParagraph(ergaenzendeArgumenteBut);
 
-        writeParagraph(`Als Bezieherin/Bezieher von [z.B. Bürgergeld, Wohngeld] bin ich anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
+        writeParagraph(`Als Bezieherin/Bezieher von [z.B. Grundsicherungsgeld, Wohngeld] bin ich anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
     }
 
     // --- Gemeinsamer Schlussteil ---
