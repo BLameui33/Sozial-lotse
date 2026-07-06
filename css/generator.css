@@ -54,7 +54,9 @@ body {
 
 /* --- Hauptcontainer --- */
 .page-container {
-  max-width: 900px;
+  max-width: 1000px;
+  width: 95% !important;
+  margin: 0 auto !important;
   margin: 3rem auto;
   background: var(--white);
   padding: 3rem 2.8rem;
@@ -90,7 +92,7 @@ h2 {
   margin-bottom: 1rem;
   color: var(--accent);
   font-weight: 600;
-  border-left: 4px solid var(--primary);
+ /* border-left: 4px solid var(--primary);*/
   padding-left: 0.8rem;
 }
 
@@ -184,7 +186,7 @@ textarea {
 .sub-details {
   display: none;
   margin-left: 1.3rem;
-  border-left: 3px solid #e5eaf0;
+  /* border-left: 3px solid #e5eaf0; */
   padding-left: 1.2rem;
   margin-top: 0.8rem;
   margin-bottom: 1rem;
@@ -206,17 +208,17 @@ textarea {
 
 .info-box {
   background-color: #eef9ff;
-  border-left: 6px solid var(--primary);
+  /* border-left: 6px solid var(--primary); */
 }
 
 .highlight-box {
 background-color: #eef9ff;
-  border-left: 6px solid var(--primary);
+  /* border-left: 6px solid var(--primary); */
 }
 
 .warning-box {
   background-color: #fff9e6;
-  border-left: 6px solid #f0ad4e;
+  /* border-left: 6px solid #f0ad4e; */
 }
 
 /* --- Button-Gruppe --- */
@@ -562,7 +564,7 @@ details p {
 .highlight-box {
   background: #f4f9ff;
   border: 1px solid #d6e9ff;
-  border-left: 4px solid #4da3ff;
+  /* border-left: 4px solid #4da3ff; */
   border-radius: 10px;
   padding: 20px;
 }
@@ -617,7 +619,7 @@ details p {
   color: #1d5c99;
 }
 .info-box.warning {
-  border-left: 4px solid #4da3ff !important;
+  /* border-left: 4px solid #4da3ff !important; */
   background: #f4f9ff;
   border-radius: 8px;
 }
@@ -778,5 +780,35 @@ details p {
     font-size: 1.35rem !important;
     padding: 0.45rem 1rem 0.45rem 0.8rem;
   }
+}
+
+/* Ersetze die Klassennamen mit denen, die du im HTML für die Boxen nutzt */
+.info-box, 
+.warning-box, 
+.highlight-box {
+  border-left: none !important;
+}
+
+header, .site-header {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 15px !important;  /* Schützt Logos/Texte vor dem Bildschirmrand */
+  padding-right: 15px !important; /* Schützt Logos/Texte vor dem Bildschirmrand */
+  box-sizing: border-box !important;
+}
+
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important; /* Verhindert das seitliche Wischen komplett */
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit !important; /* Zwingt alle Elemente, Ränder richtig zu berechnen */
 }
 
