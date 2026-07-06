@@ -1821,6 +1821,29 @@ html, body {
   box-sizing: inherit !important; /* Zwingt alle Elemente, Ränder richtig zu berechnen */
 }
 
+/* ==========================================
+   DER BUCHSTABEN-STAPEL-FIX (INPUT-REDUZIERUNG)
+   ========================================== */
+
+/* Zwingt Checkboxen und Radio-Buttons, klein und kompakt zu bleiben */
+.pflegegrad-form input[type="checkbox"],
+.pflegegrad-form input[type="radio"] {
+  width: 22px !important;       /* Verhindert, dass die Box 100% breit wird */
+  height: 22px !important;      /* Angenehme Touch-Größe für das Smartphone */
+  min-width: 22px !important;   /* Lässt die Box niemals zusammenschrumpfen */
+  min-height: 22px !important;
+  flex-shrink: 0 !important;    /* Verhindert, dass Flexbox die Box zerquetscht */
+  margin: 0 !important;         /* Setzt alte Abstände zurück */
+  margin-top: 2px !important;   /* Richtet den Punkt sauber zur ersten Textzeile aus */
+}
+
+/* Sorgt dafür, dass der Text den restlichen Platz komplett ausfüllt */
+.pflegegrad-form label span {
+  flex: 1 !important;
+  width: auto !important;
+  display: inline-block !important;
+}
+
 
 
 
