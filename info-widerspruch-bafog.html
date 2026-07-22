@@ -153,7 +153,7 @@
   <h3>Der Aufbau eines guten Widerspruchs</h3>
   <p>Ein formal korrekter Widerspruch sollte folgende Punkte enthalten:</p>
   <ul>
-    <li>Deine vollständigen Daten (Name, Adresse, Förderungsnummer).</li>
+    <li>Deine erforderlichen Daten (Name, Adresse, Förderungsnummer).</li>
     <li>Die genaue Adresse des Amtes für Ausbildungsförderung.</li>
     <li>Einen klaren Betreff mit dem Wort "Widerspruch", dem Datum des Bescheides und dem Aktenzeichen.</li>
     <li>Eine sachliche und nachvollziehbare Begründung, was genau falsch ist.</li>
@@ -170,7 +170,7 @@
   <h2>Was passiert nach dem Widerspruch?</h2>
   <p>Nachdem das Amt deinen Widerspruch erhalten hat, muss es seine ursprüngliche Entscheidung komplett neu überprüfen. Es gibt drei mögliche Ausgänge:</p>
   <ol>
-      <li><strong>Abhilfebescheid:</strong> Das Amt stimmt dir voll zu. Dein ursprünglicher Bescheid wird aufgehoben und durch einen neuen, korrekten ersetzt.</li>
+      <li><strong>Abhilfebescheid:</strong> Das Amt stimmt dir ganz oder teilweise zu. Dein ursprünglicher Bescheid wird aufgehoben oder geändert und durch einen neuen, korrekten ersetzt.</li>
       <li><strong>Teil-Abhilfebescheid:</strong> Das Amt stimmt dir teilweise zu und korrigiert einen Teil der Berechnung.</li>
       <li><strong>Widerspruchsbescheid:</strong> Das Amt bleibt bei seiner Meinung und weist deinen Widerspruch zurück. Gegen diesen Bescheid kannst du dann innerhalb eines Monats Klage beim Verwaltungsgericht einreichen.</li>
   </ol>
@@ -211,13 +211,15 @@
     <ul>
       <li><label><input type="checkbox">Antrag sofort stellen: BAföG gibt es erst ab dem Monat der Antragstellung (Eingangsstempel zählt!). Es wird nicht rückwirkend für Monate davor gezahlt. Stell im Zweifel einen formlosen Antrag per Mail oder Post, um die Frist zu wahren.</label></li>
       <li><label><input type="checkbox">Höchstsatz 2026 kennen: 992 € ist der maximale Betrag für Studierende mit eigener Wohnung (bestehend aus: 475 € Grundbedarf + 380 € Wohnpauschale + 137 € für KV/PV). Wer bei den Eltern wohnt, bekommt maximal ca. 664 €.</label></li>
+
       <li><label><input type="checkbox">Online-Antrag nutzen: Nutze "BAföG Digital". Der Assistent hilft Fehler zu vermeiden, und du kannst Unterlagen direkt hochladen. Das beschleunigt die Bearbeitung (die oft 2-3 Monate dauert).</label></li>
-      <li><label><input type="checkbox">Elternfreibeträge prüfen: 2.540 € vom Netto-Einkommen verheirateter Eltern bleiben anrechnungsfrei (plus 730 € pro Geschwisterkind). Viele denken fälschlicherweise, ihre Eltern verdienen "zu viel". Ein Rechner-Check lohnt sich!</label></li>
+      <li><label><input type="checkbox">Elternfreibeträge prüfen: Ein Teil des Netto-Einkommens verheirateter Eltern bleibt anrechnungsfrei (plus ein weiterer Freibetrag pro Geschwisterkind). Viele denken fälschlicherweise, ihre Eltern verdienen "zu viel". Ein Rechner-Check lohnt sich!</label></li>
       <li><label><input type="checkbox">Aktualisierungsantrag stellen: Verdienen deine Eltern aktuell weniger als im Steuerbescheid von vor zwei Jahren (z.B. durch Rente oder Arbeitslosigkeit)? Stell den "Aktualisierungsantrag" (Formblatt 7), damit das *jetzige* geringere Einkommen zählt.</label></li>
-      <li><label><input type="checkbox">Vermögen beachten: Bis 30. JAHRE (Stand 2026: Altersgrenze) darfst du 15.000 € eigenes Vermögen besitzen, ohne dass es angerechnet wird. Alles darüber mindert das BAföG.</label></li>
+      <li><label><input type="checkbox">Vermögen beachten: Es gilt ein Vermögensfreibetrag; nur Vermögen oberhalb der jeweils geltenden Grenze mindert das BAföG.</label></li>
       <li><label><input type="checkbox">Widerspruch einlegen: Ist der Bescheid falsch oder abgelehnt? Du hast 1 Monat Zeit für einen Widerspruch. Schreib: "Hiermit lege ich Widerspruch gegen den Bescheid vom [Datum] ein. Begründung folgt."</label></li>
       <li><label><input type="checkbox">Weiterförderungsantrag: Stell den Folgeantrag 2-3 Monate vor Ablauf des Bewilligungszeitraums (meist 12 Monate). Sonst entsteht eine Zahlungslücke, in der du ohne Geld dastehst.</label></li>
-      <li><label><input type="checkbox">Leistungsnachweis nicht vergessen: Ab dem 5. Semester musst du beweisen, dass du genug ECTS-Punkte gesammelt hast (Formblatt 5), sonst stoppt die Zahlung.</label></li>
+      <li><label><input type="checkbox">Leistungsnachweis nicht vergessen: Zum Ende des 4. Fachsemesters (Spätestens in den ersten vier Monaten des fünften Fachsemesters) musst du beweisen, dass du genug ECTS-Punkte gesammelt hast (Formblatt 5), sonst kann die Förderung nicht weitergezahlt werden.</label></li>
+
     </ul>
     <div class="kl-checklist-actions">
       <button type="button" class="kl-btn" id="kl-clear">Zurücksetzen</button>
@@ -228,6 +230,7 @@
 
 <section class="kl-fallbeispiele" aria-labelledby="kl-fallbeispiele-head">
   <h2 id="kl-fallbeispiele-head">Fallbeispiele</h2>
+<p class="kl-fall-disclaimer" style="font-size: 0.85em; color: #666; margin-top: -5px; margin-bottom: 15px;"><em>Hinweis: Die folgenden Praxisfälle dienen der Veranschaulichung. Alle Beträge, Zahlen und Fristen sind vereinfachte Modellrechnungen und werden nicht fortlaufend auf tagesaktuelle Rechtsstände geprüft.</em></p>
   <p class="kl-fall-intro">Kurz und anonymisierte Praxisfälle zeigen typische Abläufe, Herausforderungen und Lösungswege. Diese Beispiele dienen der Orientierung — jeder Fall ist vereinfacht dargestellt.</p>
 
   <article class="kl-fall" aria-labelledby="fall-1">
@@ -288,7 +291,7 @@
 </div>
 
 <div class="highlight-box pruefdatum-box" role="note" aria-label="Zuletzt geprüft">
-  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">30.05.2026</span></p>
+  <p><strong>Zuletzt geprüft:</strong> <span id="pruefdatum">22.07.2026</span></p>
 </div>
   </div>
 <div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
