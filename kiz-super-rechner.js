@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ` : ''}
 
                 <div class="button-container" style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-                    <button id="kiz_pdf_btn" class="button">Ergebnis als PDF speichern</button>
+                    
                     <a href="https://www.arbeitsagentur.de/familie-und-kinder/kiz-lotse" target="_blank" class="button button-secondary">Zum offiziellen Antrag</a>
                 </div>
             </div>
