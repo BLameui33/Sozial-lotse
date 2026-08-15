@@ -51,31 +51,71 @@ body {
 /* --- Header --- */
 .site-header {
   background-color: var(--white);
-  padding: 1.2rem 2rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid #e6ebf1;
   text-align: center;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #004e92, #0070f3);
 }
 
 .site-logo {
-  color: var(--accent);
-  font-size: 1.6rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
   font-weight: 700;
+  color: #1a5276;
   text-decoration: none;
-  transition: color 0.25s ease;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #004e92, #0070f3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
+/* Hover-Effekt: heller Farbverlauf + leichtes Anheben */
 .site-logo:hover {
-  color: var(--primary);
+  transform: translateY(-1px);
+  background: linear-gradient(90deg, #0054a6, #339af0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 6px rgba(0, 112, 243, 0.15);
+}
+
+/* Optional: leichtes Unterstatement beim Scrollen (keine JS nötig) */
+@supports (position: sticky) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* Mobile Anpassung */
+@media (max-width: 700px) {
+  .site-header {
+    padding: 0.4rem 0.8rem; 
+  }
+  
+  .site-logo {
+    font-size: 1.15rem; 
+  }
 }
 
 /* --- Hauptcontainer --- */
 .page-container {
-  max-width: 880px;
+  max-width: 1100px;
   margin: 3rem auto;
   background: var(--white);
   padding: 3rem 2.8rem;
@@ -110,12 +150,33 @@ h1 .logo-part {
 
 h2 {
   font-size: 1.8rem;
-  margin-top: 2.5rem;
+  margin-top: 0;
   margin-bottom: 1.2rem;
   color: var(--accent);
-  border-left: 4px solid var(--primary);
-  padding-left: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100px; 
+  height: 3px;  
+  
+  background: linear-gradient(90deg, #004e92 0%, var(--primary) 60%, rgba(0, 112, 243, 0.2) 100%);
+  
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.category-section:hover h2::after,
+h2:hover::after {
+  width: 180px; 
 }
 
 h3 {
@@ -134,7 +195,6 @@ h3 {
   margin-bottom: 2rem;
   padding: 1.4rem 1.7rem;
   background-color: var(--primary-light);
-  border-left: 6px solid var(--primary);
   border-radius: var(--radius);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
@@ -154,50 +214,77 @@ h3 {
 
 /* --- Kategorien & Tools --- */
 .category-section {
-  margin-bottom: 2.8rem;
+  margin-bottom: 2.5rem;
+  background: #fcfdfe;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
+.category-section h2 {
+  margin-top: 0; /* Reset, da es jetzt in einer Card sitzt */
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  padding-left: 0.8rem;
+  font-weight: 700;
+}
+
+/* --- 3. TOOL-LISTE ALS 2-SPALTEN GRID --- */
 .tool-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
+  display: grid;
+  /* Erstellt automatisch 2 Spalten auf Desktop & Tablet, schaltet mobil auf 1 Spalte */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1rem; 
 }
 
 .tool-list li {
   background-color: var(--white);
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  margin-bottom: 0.9rem;
-  padding: 1rem 1.2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 0; /* Margin entfernen, da das Grid den Abstand regelt */
+  padding: 1.1rem 1.2rem;
   transition: var(--transition);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .tool-list li:hover {
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 112, 243, 0.12);
+  transform: translateY(-3px);
   border-color: var(--primary);
 }
 
 .tool-list li a {
   text-decoration: none;
-  color: var(--primary);
-  font-weight: 500;
-  display: block;
-  transition: color 0.25s ease;
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  display: inline-block;
 }
 
 .tool-list li a:hover {
-  color: var(--primary-dark);
+  color: var(--primary);
   text-decoration: underline;
 }
 
 .tool-list li small {
   display: block;
-  font-size: 0.9em;
+  font-size: 0.88rem;
   color: #555;
-  margin-top: 0.3rem;
+  line-height: 1.5;
+  margin-top: auto; /* Drückt die Beschreibung nach unten, falls Links unterschiedlich lang sind */
 }
+
+
 
 /* --- Spendenhinweis --- */
 .spendenhinweis {
@@ -294,13 +381,31 @@ h3 {
 
 /* --- Hervorgehobene Wörter --- */
 .highlight-word {
-  background-color: #eef7ff;
+  background-color: var(--primary-light);
   color: var(--primary-dark);
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-size: 0.9em;
-  font-weight: bold;
-  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* --- RESPONSIV ANPASSUNG FÜR SMARTPHONES --- */
+@media (max-width: 700px) {
+  .page-container {
+    padding: 1.2rem;
+  }
+  
+  .category-section {
+    padding: 1.2rem 1rem;
+  }
+
+  .tool-list {
+    grid-template-columns: 1fr; /* Auf Handys wieder 1-spaltig */
+    gap: 0.8rem;
+  }
 }
 
 /* --- Footer --- */
@@ -357,70 +462,7 @@ footer a:hover {
     padding: 0.9rem 1rem;
   }
 }
-.site-header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e6ebf1;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.03);
-  padding: 1.2rem 1rem;
-  text-align: center;
-  position: relative;
-  z-index: 10;
-}
 
-/* dezente Glanzlinie am oberen Rand */
-.site-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #004e92, #0070f3);
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-/* Schriftzug / Logo */
-.site-logo {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1a5276;
-  text-decoration: none;
-  letter-spacing: -0.02em;
-  background: linear-gradient(90deg, #004e92, #0070f3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.25s ease;
-}
-
-/* Hover-Effekt: heller Farbverlauf + leichtes Anheben */
-.site-logo:hover {
-  transform: translateY(-1px);
-  background: linear-gradient(90deg, #0054a6, #339af0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 6px rgba(0, 112, 243, 0.15);
-}
-
-/* Optional: leichtes Unterstatement beim Scrollen (keine JS nötig) */
-@supports (position: sticky) {
-  .site-header {
-    position: sticky;
-    top: 0;
-    backdrop-filter: blur(6px);
-  }
-}
-
-/* Mobile Anpassung */
-@media (max-width: 700px) {
-  .site-header {
-    padding: 1.2rem 1rem;
-  }
-  .site-logo {
-    font-size: 1.7rem;
-  }
-}
 
 /* --- Beispiel-Dokument-Bereich --- */
 .example-document {
@@ -585,83 +627,102 @@ footer a:hover {
             color: #222;
         }
 
-        .topic-navigator {
-  background: linear-gradient(135deg, #ffffff, #f3f4f6);
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 24px;
+    /* ==========================================================================
+   TOPIC NAVIGATOR – Modernes Schwebendes Bottom-Widget
+   ========================================================================== */
+
+/* Der schwebende Container unten */
+.topic-navigator {
+  position: fixed;
+  bottom: 20px; /* Schwebt 20px über dem unteren Rand */
+  left: 50%;
+  transform: translateX(-50%); /* Perfekt zentriert */
+  z-index: 1000;
 
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 10px;
 
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  width: calc(100% - 32px); /* Passt sich flexibel der Bildschirmbreite an */
+  max-width: 440px; /* Verhindert, dass es auf dem Desktop zu breit wird */
+  padding: 8px 12px 8px 16px;
 
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  /* Edles Frosted-Glass mit starkem Schwebe-Schatten */
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 50px; /* Pillen-Form */
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15),
+              0 4px 12px -2px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
 }
 
+/* Dezent beschriftet */
 .topic-navigator label {
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 15px;
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* Wrapper für Custom Arrow */
+/* Das Select-Feld in Pillen-Optik */
 .topic-navigator select {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
   appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
 
-  padding: 10px 44px 10px 14px;
-  font-size: 15px;
-  font-weight: 500;
+  padding: 8px 34px 8px 12px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a !important;
+  background-color: #ffffff !important;
 
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-
-  background-color: #ffffff;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%236b7280' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/></svg>");
+  border: 1px solid #cbd5e1;
+  border-radius: 30px;
+  
+  background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%230070f3' stroke-width='2.2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 18px;
+  background-position: right 12px center;
+  background-size: 15px;
 
   cursor: pointer;
-  transition: all 0.25s ease;
-  min-width: 220px;
-}
-
-/* Hover Effekt */
-.topic-navigator select:hover {
-  border-color: #9ca3af;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Fokus Effekt */
-.topic-navigator select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  text-overflow: ellipsis;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Option Styling (limitiert durch Browser) */
-.topic-navigator option {
-  font-size: 15px;
-  padding: 8px;
+/* Scroll-Abstand für Ziel-Kategorien (auf den Header oben abgestimmt) */
+.category-section {
+  scroll-margin-top: 70px;
 }
 
-/* Mobile Optimierung */
+/* Platz am Seitenende, damit das Footer-Ende nicht verdeckt wird */
+footer {
+  padding-bottom: 90px !important;
+}
+
 @media (max-width: 600px) {
   .topic-navigator {
-    flex-direction: column;
-    align-items: stretch;
+    bottom: 14px; /* Noch etwas näher am unteren Rand auf Mobilgeräten */
+    width: calc(100% - 24px);
+    padding: 6px 10px 6px 14px;
+  }
+
+  .topic-navigator label {
+    font-size: 0.675rem;
   }
 
   .topic-navigator select {
-    width: 100%;
+    padding: 8px 30px 8px 10px;
+    font-size: 0.825rem;
   }
 }
 
@@ -768,7 +829,7 @@ footer a:hover {
 </div>
 
 
-<p class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 10px;">
+<p class="info-box" style="background-color: #fff8e1;  padding: 10px; margin-top: 10px;">
   <strong>Hinweis:</strong> Dieses Tool ersetzt keine Rechtsberatung. Es dient der allgemeinen Unterstützung bei der Antragstellung. Bei Unsicherheiten wenden Sie sich bitte an eine anerkannte Beratungsstelle oder einen Rechtsanwalt.
 
 <section class="how-it-works-section">
@@ -835,12 +896,13 @@ footer a:hover {
       <option value="#sozialhilfe"> Sozialhilfe & Grundsicherung</option>
       <option value="#wohngeld-kiz">Wohngeld & Kinderzuschlag</option>
       <option value="#but">Bildung & Teilhabe</option>
-      <option value="#bafoeg">Bafög</option> <option value="#asyl">🌍 Asyl & Aufenthalt</option>
+      <option value="#bafoeg">Bafög</option> <option value="#asyl">Asyl & Aufenthalt</option>
       <option value="#schulden-finanzen">Schulden & Finanzen</option>
       <option value="#arbeitsrecht">Arbeitsrecht</option>
       <option value="#verbraucherrecht">Verbraucherrecht</option>
       <option value="#betrug">Betrug</option>
       <option value="#familie-kind">Familie & Kind</option>
+      <option value="#universelle-tools">Allgemeine Tools</option>
     </select>
   </div>
 </div>
@@ -1446,6 +1508,32 @@ footer a:hover {
   </ul>
 </section>
 
+<section id="allgemeine-tools" class="category-section">
+  <h2><span aria-hidden="true"></span>Tools & Dokumenten-Helfer</h2>
+  <ul class="tool-list">
+    <li>
+        <a href="generator-blanko-behoerdenbrief.html"><span class="highlight-word">Blanko-Behördenbrief</span> Generator</a>
+        <small>Formlose Schreiben, Anträge oder Mitteilungen schnell und korrekt aufsetzen – passend für Ämter, Krankenkassen oder Vermieter.</small>
+    </li>
+    <li>
+        <a href="generator-vollmacht.html"><span class="highlight-word">Vollmachtsgenerator</span> für Vertretungen</a>
+        <small>Erstelle Vollmachten zur Vertretung bei Behörden & Ämtern.</small>
+    </li>
+    <li>
+        <a href="generator-quittung.html"><span class="highlight-word">Quittungsgenerator</span> & Abgabenachweis</a>
+        <small>Bestätigungen über abgegebene Unterlagen, Anträge oder Zahlungen einfach erstellen und nachweisen.</small>
+    </li>
+    <li>
+        <a href="daten-schwaerzer.html"><span class="highlight-word">PDF-Datenschwärzer</span> (Anonymisierungs-Tool)</a>
+        <small>Sensible persönliche Daten auf Kontoauszügen oder Nachweisen vor der Weitergabe sicher schwärzen.</small>
+    </li>
+    <li>
+        <a href="pdf-buendler.html"><span class="highlight-word">PDF-Bündler</span> (Dateien zusammenfügen)</a>
+        <small>Mehrere Dokumente, Scans und Nachweise übersichtlich in einer einzigen PDF-Datei zusammenfassen.</small>
+    </li>
+  </ul>
+</section>
+
 
     <div class="privacy-short-info"> 
         <h3>Ihr Datenschutz ist uns wichtig!</h3>
@@ -1485,6 +1573,72 @@ footer a:hover {
   </footer>
 
   <script src="lotse.js"></script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const select = document.querySelector(".topic-navigator select");
+  const sections = document.querySelectorAll(".category-section");
+
+  if (!select || !sections.length) return;
+
+  // 1. Klick-Aktion: Schneidet ein eventuelles '#' automatisch ab
+  select.addEventListener("change", (e) => {
+    const rawValue = e.target.value;
+    const cleanId = rawValue.replace(/^#/, ""); // Entfernt das '#' am Anfang
+    const targetElement = document.getElementById(cleanId);
+    
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+
+  // 2. Scrollspy: Findet die passende Option, egal ob mit oder ohne '#' im value
+  function updateDropdownOnScroll() {
+    const scrollPosition = window.scrollY || window.pageYOffset;
+    let currentSectionId = "";
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 120;
+      const sectionHeight = section.offsetHeight;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        currentSectionId = section.id;
+      }
+    });
+
+    // Sonderfall: Ganz unten auf der Seite
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+      if (sections.length > 0) {
+        currentSectionId = sections[sections.length - 1].id;
+      }
+    }
+
+    // Passende Option suchen (prüft "alg1" UND "#alg1")
+    if (currentSectionId) {
+      const matchingOption = Array.from(select.options).find(
+        (opt) => opt.value === currentSectionId || opt.value === `#${currentSectionId}`
+      );
+
+      if (matchingOption && select.value !== matchingOption.value) {
+        select.value = matchingOption.value;
+      }
+    }
+  }
+
+  let isTick = false;
+  window.addEventListener("scroll", () => {
+    if (!isTick) {
+      window.requestAnimationFrame(() => {
+        updateDropdownOnScroll();
+        isTick = false;
+      });
+      isTick = true;
+    }
+  });
+
+  updateDropdownOnScroll();
+});
+</script>
 </body>
 </html>
 

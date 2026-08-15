@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumenten-Schwärzer | Kontoauszüge fürs Jobcenter sicher anonymisieren</title>
+  
+  <meta name="description" content="Kontoauszüge für das Jobcenter oder Bürgergeld rechtssicher schwärzen. Unumkehrbares PDF erstellen, das Ihre Privatsphäre schützt. 100% lokal im Browser.">
+  <meta name="keywords" content="Kontoauszüge schwärzen, Jobcenter Kontoauszug schwärzen, Bürgergeld Schwärzung, Dokumente anonymisieren, PDF unumkehrbar schwärzen">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/dokumenten-schwaerzer.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <!-- jsPDF für den PDF-Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- PDF.js für das Laden von PDFs (falls PDF statt Bild hochgeladen wird) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  
+  <!-- Das eigentliche Schwärzer-Skript -->
+  <script defer src="dokumenten_schwaerzer_script.js"></script>
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Sicherer Dokumenten-Schwärzer (PDF)",
+    "applicationCategory": "UtilitiesApplication, SecurityApplication",
+    "operatingSystem": "All",
+    "description": "Schwärzen Sie sensible Daten auf Kontoauszügen und Dokumenten unumkehrbar. Erstellt ein flaches, sicheres PDF für Behörden.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+  <style>
+    /* --- Schwärzer-Tool Design --- */
+    .editor-workspace {
+        background-color: #e0e0e0;
+        background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                          linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                          linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                          linear-gradient(-45deg, transparent 75%, #ccc 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        border: 2px dashed #999;
+        border-radius: 6px;
+        padding: 10px;
+        min-height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+        margin-top: 15px;
+        position: relative;
+    }
+    
+    #redactionCanvas {
+        cursor: crosshair;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        max-width: 100%;
+        background-color: #fff;
+    }
+
+    .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .upload-btn-wrapper input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+
+  <!-- OBERER BEREICH: Fokus auf Sozialrecht & Jobcenter -->
+  <h1>Sicherer Dokumenten-Schwärzer: Kontoauszüge fürs Amt vorbereiten</h1>
+
+  <div class="usp-bar">
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Unumkehrbar & Sicher</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> 100% lokal im Browser</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Keine Cloud-Speicherung</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Kostenlos</div>
+  </div>
+
+  <div class="info-box">
+    <p>
+      <strong>Das Problem:</strong> Das Jobcenter oder Sozialamt fordert bei Anträgen oft die Kontoauszüge der letzten 3 bis 6 Monate. Was viele nicht wissen: Sie haben das Recht, bestimmte Buchungen zu schwärzen (z.B. Ausgaben für Gewerkschaften, Parteien oder sensible private Einkäufe). Wenn Sie das Dokument aber einfach in Word mit schwarzen Balken überdecken und als PDF speichern, kann der Sachbearbeiter diese Balken am PC oft einfach wieder entfernen.
+    </p>
+    <p>
+      <strong>Die Lösung:</strong> Mit unserem Dokumenten-Schwärzer laden Sie ein Bild oder PDF Ihres Auszugs hoch, ziehen mit der Maus oder dem Finger schwarze Balken über die privaten Textstellen und unser Tool "backt" das Bild neu zusammen. Das fertige PDF, das Sie hier herunterladen, ist <strong>ein flaches Bild – die Schwärzung kann von niemandem mehr rückgängig gemacht werden!</strong>
+    </p>
+  </div>
+
+  <div class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 15px;">
+    <strong>Wichtige Schwärzungs-Regel beim Jobcenter:</strong> Sie dürfen meist nur den Verwendungszweck oder den Empfänger schwärzen (z.B. "Gewerkschaft ver.di" oder "Apotheke"). Der <strong>Geldbetrag</strong> selbst muss in der Regel sichtbar bleiben, damit das Amt prüfen kann, dass es sich nicht um verschleiertes Einkommen handelt.
+  </div>
+
+  <!-- DAS TOOL -->
+  <fieldset style="margin-top: 30px;">
+    <legend>Ihr Dokument schwärzen (Schritt-für-Schritt)</legend>
+    
+    <div class="toolbar">
+        <div class="upload-btn-wrapper">
+            <button class="button-secondary">1. Bild oder PDF auswählen</button>
+            <input type="file" id="fileUploader" accept="image/png, image/jpeg, application/pdf" />
+        </div>
+        <button id="undoBtn" class="button-secondary" style="background-color: #f1f3f4; color: #333;" disabled>↩ Letzten Balken löschen</button>
+        <button id="clearBtn" class="button-secondary" style="background-color: #ffebee; color: #d32f2f;" disabled>✖ Alles zurücksetzen</button>
+    </div>
+
+    <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">
+        <em>Anleitung: Nach dem Hochladen klicken und ziehen Sie mit der Maus (oder dem Finger) einfach über die Stellen, die Sie unkenntlich machen möchten.</em>
+    </p>
+
+    <!-- Der Arbeitsbereich für das Canvas -->
+    <div class="editor-workspace" id="workspace">
+        <span id="placeholderText" style="color: #666; font-size: 1.1em; text-align: center;">Hier wird Ihr Dokument angezeigt.<br>Bitte laden Sie eine Datei hoch.</span>
+        <canvas id="redactionCanvas" style="display: none;"></canvas>
+    </div>
+
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz-Garantie:</strong> Ihr Dokument verlässt niemals Ihr Gerät! Das Schwärzen und die PDF-Erstellung passieren zu 100% lokal in Ihrem Browser (Offline-fähig).
+    </div>
+
+    <div class="button-group" style="margin-top: 20px;">
+      <button type="button" id="exportPdfBtn" class="button-primary" style="background-color: #2e7d32; color: white; padding: 15px 30px; font-size: 1.1em; width: 100%;" disabled>2. Sicheres PDF herunterladen</button>
+    </div>
+  </fieldset>
+  
+  <hr style="margin-top:50px; border: 1px solid #eee;">
+
+  <!-- UNTERER BEREICH: Rechtlicher Kontext (Sozialrecht) -->
+  <div class="info-box" style="background-color: #f8f9fa; border: none; padding: 25px;">
+    <h2 style="margin-top: 0;">Kontoauszüge und Datenschutz: Was Sie beim Jobcenter wissen müssen</h2>
+    <p>
+      Die Aufforderung zur Vorlage von Kontoauszügen gehört zum Standard beim Beantragen von Bürgergeld (früher Hartz IV) oder Sozialhilfe. Gemäß § 60 SGB I haben Sie eine Mitwirkungspflicht, um Ihre Hilfebedürftigkeit nachzuweisen. Das bedeutet aber nicht, dass Sie sich "nackt" machen müssen.
+    </p>
+    
+    <h3 style="font-size: 1.2em; color: #2e7d32;">Das dürfen Sie laut Bundesbeauftragtem für den Datenschutz schwärzen:</h3>
+    <ul style="line-height: 1.6; margin-bottom: 20px;">
+      <li><strong>Besondere Arten personenbezogener Daten (Art. 9 DSGVO):</strong> Angaben zu rassischer und ethnischer Herkunft, politischen Meinungen, religiösen Überzeugungen oder der Gewerkschaftszugehörigkeit.</li>
+      <li><strong>Beispiele:</strong> Spenden an politische Parteien, Mitgliedsbeiträge für Gewerkschaften, Zahlungen an Religionsgemeinschaften.</li>
+      <li><strong>Gesundheitsdaten:</strong> Auch Arztkosten, Psychotherapie oder der Name einer speziellen Klinik dürfen im Verwendungszweck geschwärzt werden.</li>
+    </ul>
+    
+    <p>
+      <strong>Achtung:</strong> Schwärzen Sie immer nur die Textfelder (Zahlungsempfänger und Verwendungszweck). Das Buchungsdatum und vor allem der <strong>Betrag</strong> müssen erkennbar bleiben. Wenn Einnahmen (Haben-Buchungen) auf dem Auszug auftauchen, dürfen diese generell nicht geschwärzt werden, da das Amt prüfen muss, ob Einkommen vorliegt.
+    </p>
+  </div>
+
+  <h2>Häufige Fragen zum Schwärzen beim Jobcenter (FAQ)</h2>
+  <details>
+    <summary>Darf das Jobcenter ungeschwärzte Kontoauszüge fordern?</summary>
+    <p>Nein, pauschal darf das Jobcenter keine völlig ungeschwärzten Auszüge fordern. Das Bundessozialgericht (BSG) hat klargestellt, dass die Mitwirkungspflicht Grenzen hat. Wenn es um hochsensible Daten geht (z.B. Parteispenden oder Gewerkschaft), dürfen Sie diese unkenntlich machen. Das Amt muss auf dieses Recht zur Schwärzung sogar in seinen Anschreiben hinweisen!</p>
+  </details>
+  <details>
+    <summary>Warum kann ich das nicht einfach mit Word oder einem PDF-Programm machen?</summary>
+    <p>Wenn Sie in Word oder einem Standard-PDF-Programm ein schwarzes Rechteck über einen Text legen und das Dokument speichern, bleibt der Text darunter als unsichtbare Textebene erhalten. Man kann das Rechteck einfach wegschieben oder den Text per "Kopieren" herausziehen. Unser Tool hier rastert ("backt") das Bild – der Text unter dem schwarzen Balken wird physisch vernichtet. Es gibt keine versteckten Ebenen mehr.</p>
+  </details>
+  <details>
+    <summary>Was passiert, wenn ich die Beträge (Ausgaben) auch schwärze?</summary>
+    <p>Das sollten Sie vermeiden. Wenn Sie Beträge schwärzen, kann das Jobcenter argumentieren, dass Sie Ihrer Mitwirkungspflicht nicht nachgekommen sind. Das Amt könnte die Bearbeitung Ihres Antrags stoppen oder Leistungen versagen. Schwärzen Sie immer nur den Empfänger/Zweck, nie die Zahlen.</p>
+  </details>
+
+</div> 
+
+<!-- Autorenblock & Footer (Identisch zu deinem Beispiel) -->
+<div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
+    <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
+    <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        <br><br>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
+    </p>
+    
+    <div style="margin-bottom: 25px;">
+        <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
+            Mehr über unsere Redaktion & Arbeitsweise erfahren
+        </a>
+    </div>
+
+    <div style="margin: 0 auto 20px auto; max-width: 600px; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="margin: 0; font-size: 0.95em; color: #333; line-height: 1.4;">
+             <strong>Sie wissen nicht genau, wo Sie anfangen sollen?</strong><br>
+            Nutzen Sie unseren <a href="index.html" style="color: #0056b3; font-weight: bold; text-decoration: none; border-bottom: 2px solid #0056b3;">Digitalen Lotsen</a>. Er führt Sie in wenigen Klicks zielsicher zum passenden Ratgeber, Rechner oder Generator für Ihr Anliegen.
+        </p>
+    </div>
+    <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@sozialrecht-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+    </p>
+</div>
+<footer>
+  <div class="mini-footer-hint">
+  <p><strong>Das Lotsen-Netzwerk:</strong></p>
+<p>
+  <a href="https://www.kassen-lotse.de" class="mini-footer-link">Kassen-Lotse</a> • 
+  <a href="https://www.sozialrecht-lotse.de" class="mini-footer-link">Sozial-Lotse</a> • 
+  <a href="https://www.mieter-lotse.de" class="mini-footer-link">Mieter-Lotse</a>
+</p>
+  </div>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

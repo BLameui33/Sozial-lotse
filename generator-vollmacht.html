@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Vollmacht-Generator Arbeitsamt oder Behörde (PDF)</title>
+  
+  <meta name="description" content="Kostenloser Vollmachts-Generator. Erstellen Sie eine Vollmacht für Termine beim Jobcenter, der Arbeitsagentur oder einer anderen Behörde als PDF.">
+  <meta name="keywords" content="Vollmacht Jobcenter Vorlage, Vertretung Arbeitsamt, Vollmacht Bürgergeld beantragen, PDF Generator Vollmacht, Terminvertretung Amt">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/generator-vollmacht.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Signature Pad Bibliothek für 2 Unterschriften -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+  <script defer src="vollmacht_generator_script.js"></script>
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Vollmacht-Generator (Sozialrecht / Jobcenter)",
+    "applicationCategory": "BusinessApplication, UtilitiesApplication",
+    "operatingSystem": "All",
+    "description": "Erstellt eine formell korrekte Vollmacht zur Vertretung bei Behörden wie dem Jobcenter oder der Agentur für Arbeit als PDF.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+  
+  <style>
+    /* Spezifische Styles für den Vollmachts-Generator */
+    .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+    .checkbox-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .checkbox-item:hover {
+        background-color: #f1f1f1;
+    }
+    .checkbox-item input[type="checkbox"], 
+    .checkbox-item input[type="radio"] {
+        margin-top: 3px;
+        transform: scale(1.2);
+    }
+    .checkbox-item label {
+        margin: 0;
+        font-weight: normal;
+        cursor: pointer;
+        width: 100%;
+    }
+    .signature-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .signature-box {
+        flex: 1;
+        min-width: 280px;
+    }
+    .sig-canvas-wrapper {
+        border: 1px dashed #aaa; 
+        background-color: #fafafa; 
+        width: 100%; 
+        height: 150px; 
+        position: relative; 
+        border-radius: 4px; 
+        touch-action: none;
+    }
+    .sig-canvas-wrapper canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+
+  <!-- OBERER BEREICH: Fokus Jobcenter / Ämter -->
+  <h1>Der universelle Vollmachts-Generator für Jobcenter & Ämter</h1>
+
+  <div class="usp-bar">
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Rechtskonformes Layout</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> 2 Unterschriftenfelder</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Alle Befugnisse auswählbar</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> 100% Kostenlos</div>
+  </div>
+
+  <a href="#vollmachtForm" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zur kostenlosen Vollmacht springen</a>
+
+  <div class="info-box">
+    <p>
+      <strong>Sie können einen Termin beim Jobcenter oder der Agentur für Arbeit nicht persönlich wahrnehmen?</strong> Oder Sie möchten eine Vertrauensperson bitten, für Sie Anträge zu stellen oder Akteneinsicht zu fordern? Sozialbehörden verlangen hierfür zwingend eine schriftliche Vertretungsvollmacht.
+    </p>
+    <p>
+      Geben Sie unten einfach Ihre Daten und die Ihrer Vertrauensperson ein. Wählen Sie aus, was die Person für Sie tun darf, und unterschreiben Sie direkt am Bildschirm. Unser Generator erstellt Ihnen sofort ein <strong>hochoffizielles PDF</strong>, das von allen deutschen Sozialbehörden anerkannt wird.
+    </p>
+  </div>
+
+  <div class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 15px;">
+    <strong>Wichtiger Hinweis:</strong> Damit die Behörde die Vollmacht akzeptiert, benötigt der Bevollmächtigte beim Vor-Ort-Termin zusätzlich ein gültiges Ausweisdokument (Personalausweis oder Reisepass).
+  </div>
+
+  <!-- DAS FORMULAR -->
+  <form id="vollmachtForm">
+    <fieldset>
+      <legend>1. Ihre Daten (Vollmachtgeber)</legend>
+      <label for="vgName">Ihr Vor- und Nachname:</label>
+      <input type="text" id="vgName" required placeholder="Max Mustermann">
+      
+      <label for="vgAdresse">Straße, Hausnummer, PLZ & Ort:</label>
+      <textarea id="vgAdresse" rows="2" required placeholder="Musterstraße 1&#10;12345 Musterstadt"></textarea>
+
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 200px;">
+              <label for="vgGeburt">Geburtsdatum:</label>
+              <input type="date" id="vgGeburt" required>
+          </div>
+          <div style="flex: 1; min-width: 200px;">
+              <label for="vgAusweis">Ausweisnummer (Optional, aber empfohlen):</label>
+              <input type="text" id="vgAusweis" placeholder="z.B. L01234567">
+          </div>
+      </div>
+      <label for="vgBGNummer">BG-Nummer / Kundennummer (beim Jobcenter/Amt):</label>
+      <input type="text" id="vgBGNummer" placeholder="Ihre Kundennummer (falls zur Hand)">
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Vertrauensperson (Bevollmächtigter)</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">Wer soll Sie gegenüber der Behörde vertreten?</p>
+        <label for="bvName">Vor- und Nachname der Vertrauensperson:</label>
+        <input type="text" id="bvName" required placeholder="Sabine Schmidt">
+        
+        <label for="bvAdresse">Straße, Hausnummer, PLZ & Ort:</label>
+        <textarea id="bvAdresse" rows="2" required placeholder="Beispielweg 5&#10;12345 Musterstadt"></textarea>
+
+        <label for="bvGeburt">Geburtsdatum der Vertrauensperson:</label>
+        <input type="date" id="bvGeburt" required>
+    </fieldset>
+
+    <fieldset>
+        <legend>3. Umfang der Vollmacht</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">Was genau darf die Person in Ihrem Namen tun? (Mehrfachauswahl möglich)</p>
+        
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="authTermin" value="Wahrnehmung von Terminen und persönlichen Vorsprachen">
+                <label for="authTermin"><strong>Termine wahrnehmen:</strong> Vertretung bei persönlichen Vorsprachen im Amt.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="authAntraege" value="Stellung, Änderung und Rücknahme von Anträgen (inkl. Unterschrift)">
+                <label for="authAntraege"><strong>Anträge stellen & unterschreiben:</strong> Z.B. Bürgergeld-Antrag, Weiterbewilligung.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="authAkten" value="Beantragung und Einsichtnahme in die vollständige Leistungsakte">
+                <label for="authAkten"><strong>Akteneinsicht fordern:</strong> Einsicht in die Leistungs- und Vermittlungsakte.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="authPost" value="Entgegennahme von amtlicher Post, Bescheiden und Schriftstücken">
+                <label for="authPost"><strong>Post & Bescheide empfangen:</strong> Darf offizielle Schreiben für Sie entgegennehmen.</label>
+            </div>
+            <div class="checkbox-item" style="flex-direction: column;">
+                <label for="authSonstigesText" style="margin-bottom: 5px;"><strong>Sonstiges / Eigener Text (Optional):</strong></label>
+                <input type="text" id="authSonstigesText" placeholder="z.B. Nur gültig für die Abgabe von Dokumenten am Empfang..." style="width: 100%;">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>4. Gültigkeit</legend>
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="radio" id="gueltigWiderruf" name="gueltigkeit" value="Bis auf Widerruf" checked>
+                <label for="gueltigWiderruf"><strong>Dauerhaft:</strong> Gilt ab sofort und bis ich die Vollmacht schriftlich widerrufe.</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="radio" id="gueltigEinmalig" name="gueltigkeit" value="Einmalig">
+                <label for="gueltigEinmalig"><strong>Einmalig für ein Datum:</strong> Gilt nur am folgenden Tag:</label>
+                <input type="date" id="gueltigDatum" style="margin-top: 5px;">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Ort, Datum & Unterschriften</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0; margin-bottom: 15px;">
+            Geben Sie Ort und Datum an und unterschreiben Sie direkt am Bildschirm. So können Sie das fertige PDF direkt digital versenden, ohne es vorher auszudrucken!
+        </p>
+        
+        <!-- NEU: Ort und Datum -->
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+            <div style="flex: 1; min-width: 200px;">
+                <label for="signOrt">Ort der Unterschrift:</label>
+                <input type="text" id="signOrt" placeholder="z.B. Berlin">
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <label for="signDatum">Datum der Unterschrift (leer lassen = heute):</label>
+                <input type="date" id="signDatum">
+            </div>
+        </div>
+        
+        <!-- Unterschriften (wie bisher) -->
+        <div class="signature-container">
+            <div class="signature-box">
+                <label>Unterschrift: <strong>Vollmachtgeber</strong> (Sie)</label>
+                <div class="sig-canvas-wrapper">
+                    <canvas id="canvasGeber"></canvas>
+                </div>
+                <button type="button" class="button-secondary clear-sig" data-target="canvasGeber" style="margin-top: 10px; font-size: 0.8em; padding: 5px 10px;">Löschen</button>
+            </div>
+            
+            <div class="signature-box">
+                <label>Unterschrift: <strong>Bevollmächtigter</strong> (Optional)</label>
+                <div class="sig-canvas-wrapper">
+                    <canvas id="canvasNehmer"></canvas>
+                </div>
+                <button type="button" class="button-secondary clear-sig" data-target="canvasNehmer" style="margin-top: 10px; font-size: 0.8em; padding: 5px 10px;">Löschen</button>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>6. PDF-Design wählen</legend>
+        <select id="pdfDesign" required style="padding: 10px; font-size: 1em; width: 100%;">
+            <option value="classic" selected>1. Standard Behörden-Vollmacht (Klar, strukturiert, amtlich)</option>
+            <option value="modern">2. Modernes Layout (Hervorgehobene Ausweisdaten, gut lesbar)</option>
+        </select>
+    </fieldset>
+
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre sensiblen Daten bleiben bei Ihnen. Das PDF wird offline in Ihrem Browser erzeugt.
+    </div>
+
+    <div class="button-group">
+      <button type="submit" id="createVollmachtBtn" class="button-primary" style="background-color: #d35400; color: white; padding: 15px 30px; font-size: 1.1em; width: 100%;">PDF Vollmacht jetzt erstellen</button>
+    </div>
+  </form>
+  
+  <hr style="margin-top:50px; border: 1px solid #eee;">
+
+  <!-- UNTERER BEREICH: Sozial-Lotse -->
+<div class="info-box" style="background-color: #f8f9fa; border: none; padding: 25px;">
+  <h2 style="margin-top: 0;">Vertretung beim Jobcenter: So klappt es reibungslos</h2>
+  <p>
+    Krankheit, berufliche Verpflichtungen oder sprachliche Barrieren: Es gibt viele Gründe, warum man nicht persönlich beim Jobcenter oder der Agentur für Arbeit erscheinen kann. Nach § 13 SGB X (Zehntes Buch Sozialgesetzbuch) hat jeder das Recht, sich durch einen Bevollmächtigten vertreten zu lassen.
+  </p>
+  
+  <h3 style="font-size: 1.2em; color: #2e7d32;">Darauf achten Sachbearbeiter bei einer Vollmacht:</h3>
+  <ul style="line-height: 1.6; margin-bottom: 20px;">
+    <li><strong>Eindeutige Identifikation:</strong> Name, Anschrift und idealerweise Geburtsdatum beider Parteien müssen zwingend auf dem Dokument stehen.</li>
+    <li><strong>Genauer Umfang:</strong> Pauschale Sätze wie "Darf alles machen" werden oft abgelehnt. Nutzen Sie unsere Checkboxen, um Befugnisse (z.B. Akteneinsicht, Antragsstellung) konkret zu benennen.</li>
+    <li><strong>Zwei Unterschriften:</strong> Zwar ist rechtlich nur die Unterschrift des Vollmachtgebers Pflicht, Behörden fordern jedoch in der Praxis oft auch die Unterschrift des Bevollmächtigten zum Abgleich. Unser PDF-Layout bietet dafür standardmäßig beide Felder.</li>
+  </ul>
+</div>
+
+<h2>Häufige Fragen zur Vollmacht beim Jobcenter (Sozial-Lotse)</h2>
+<details>
+  <summary>Muss das Jobcenter meine Vertrauensperson akzeptieren?</summary>
+  <p>Grundsätzlich ja, das Recht auf einen Bevollmächtigten ist in § 13 SGB X verankert. Das Jobcenter kann einen Bevollmächtigten nur in sehr strengen Ausnahmefällen ablehnen (z.B. wenn die Person geschäftsunfähig ist oder sachwidrig handelt). Ein schriftlicher Ablehnungsbescheid ist dann zwingend erforderlich.</p>
+</details>
+<details>
+  <summary>Kann mein Bevollmächtigter für mich den Erstantrag auf Bürgergeld unterschreiben?</summary>
+  <p>Ja, wenn Sie in der Vollmacht den Punkt "Stellung, Änderung und Rücknahme von Anträgen" ausgewählt haben, darf der Bevollmächtigte den Antrag stellvertretend für Sie ausfüllen und unterschreiben. Die Behörde schickt die Unterlagen dann oft direkt an die Adresse des Bevollmächtigten.</p>
+</details>
+<details>
+  <summary>Was muss die Person zum Amtstermin mitbringen?</summary>
+  <p>Die Person benötigt zwingend die ausgedruckte und von Ihnen unterschriebene Vollmacht (im Original). Zudem muss sie sich mit einem eigenen Personalausweis oder Reisepass gegenüber dem Sachbearbeiter ausweisen können.</p>
+</details>
+
+</div> 
+
+<div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
+    <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
+    <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        <br><br>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
+    </p>
+    <div style="margin-bottom: 25px;">
+        <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
+            Mehr über unsere Redaktion & Arbeitsweise erfahren
+        </a>
+    </div>
+    <div style="margin: 0 auto 20px auto; max-width: 600px; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="margin: 0; font-size: 0.95em; color: #333; line-height: 1.4;">
+             <strong>Sie wissen nicht genau, wo Sie anfangen sollen?</strong><br>
+            Nutzen Sie unseren <a href="index.html" style="color: #0056b3; font-weight: bold; text-decoration: none; border-bottom: 2px solid #0056b3;">Digitalen Lotsen</a>. Er führt Sie in wenigen Klicks zielsicher zum passenden Ratgeber, Rechner oder Generator für Ihr Anliegen.
+        </p>
+    </div>
+    <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@sozialrecht-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+    </p>
+</div>
+
+<footer>
+  <div class="mini-footer-hint">
+  <p><strong>Das Lotsen-Netzwerk:</strong></p>
+<p>
+  <a href="https://www.kassen-lotse.de" class="mini-footer-link">Kassen-Lotse</a> • 
+  <a href="https://www.sozialrecht-lotse.de" class="mini-footer-link">Sozial-Lotse</a> • 
+  <a href="https://www.mieter-lotse.de" class="mini-footer-link">Mieter-Lotse</a>
+</p>
+  </div>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>

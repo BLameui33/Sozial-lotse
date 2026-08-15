@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Briefkopf & PDF-Generator (DIN 5008) | Für Behörden & private Briefe</title>
+  
+  <meta name="description" content="Kostenloser Briefkopf-Generator. Erstellen Sie formell korrekte Briefe an Behörden oder für private Anlässe als DIN 5008 PDF.">
+  <meta name="keywords" content="Briefkopf Vorlage Jobcenter, Widerspruch DIN 5008, Brief an Behörde formatieren, PDF Generator Geschäftsbrief, Anschreiben Fensterumschlag, Brief Muster">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="canonical" href="https://sozialrecht-lotse.de/generator-blanko-briefkopf.html">
+  <link rel="icon" href="/logo-lotse-fav.png">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Signature Pad Bibliothek -->
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+  <script defer src="blanko_behoerdenbrief_script.js"></script>
+  <link rel="stylesheet" href="/css/generator.css">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Blanko PDF-Generator (DIN 5008) für Behörden & Privat",
+    "applicationCategory": "BusinessApplication, UtilitiesApplication",
+    "operatingSystem": "All",
+    "description": "Formatiert eigene Texte automatisch in einen formell korrekten DIN 5008 Briefkopf für Fensterumschläge (Behörden, Firmen, Privat).",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "EUR"
+    }
+  }
+  </script>
+  <style>/* --- Umschlag-Vorschau Design --- */
+.envelope-preview-wrapper {
+    background-color: #f1f3f4; /* Leichtes Papier-Grau */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    max-width: 100%;
+    height: 220px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.05);
+    margin-top: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Die angedeutete Klappe des Umschlags */
+.envelope-preview-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+}
+
+/* Das transparente Sichtfenster */
+.envelope-window {
+    background-color: #ffffff;
+    border: 1px solid #b0b0b0;
+    width: 280px; /* Ca. die Proportionen des echten Fensters */
+    height: 125px;
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+    border-radius: 4px;
+    box-shadow: inset 1px 2px 4px rgba(0,0,0,0.15); /* Tiefe für das Fenster */
+    padding: 12px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Die Absender-Rücksendezeile (klein) */
+.env-preview-sender {
+    font-size: 0.65em;
+    color: #555;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Schneidet zu langen Text mit ... ab */
+}
+
+/* Die Empfängeradresse */
+.env-preview-receiver {
+    font-size: 0.9em;
+    color: #000;
+    white-space: pre-wrap; /* Wichtig: Erhält die Zeilenumbrüche */
+    line-height: 1.4;
+}</style>
+</head>
+<body>
+
+<header class="site-header">
+    <a href="index.html" class="site-logo">Sozial-Lotse</a>
+</header>
+
+<div class="page-container">
+
+  <!-- OBERER BEREICH: Fokus auf die Domain-Nische (Behörden / Sozialrecht) -->
+  <h1>Der offizielle Brief-Generator (DIN 5008) für Behörden & Ämter</h1>
+
+  <div class="usp-bar">
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> DIN 5008 (Fensterumschlag)</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> 4 Premium Designs</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> Für jeden Empfänger</div>
+    <div class="usp-item"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg> 100% Kostenlos</div>
+  </div>
+
+    <a href="#blankoBriefForm" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen Brief-Generator springen</a>
+
+
+  <div class="info-box">
+  <p>
+    <strong>Sie haben Ihr Schreiben oder Widerspruch an das Jobcenter, die Agentur für Arbeit oder einer anderen Behörde im Sozialrecht bereits formuliert?</strong> Egal, ob Sie den Text selbst geschrieben oder einen Helfer wie ChatGPT genutzt haben – Ämter sind streng, was Formvorschriften angeht. Ein fehlendes Aktenzeichen oder ein unübersichtliches Layout verzögern die Bearbeitung massiv.
+  </p>
+  <p>
+    Fügen Sie Ihren fertigen Text unten ein, wählen Sie ein Design, und wir generieren Ihnen sofort ein <strong>versandfertiges, amtliches PDF</strong>, das exakt in einen Fensterbriefumschlag passt. <em>Tipp: Sie können dieses Layout natürlich für jede x-beliebige deutsche Behörde verwenden!</em>
+  </p>
+</div>
+
+  <div class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 15px;">
+    <strong>Wichtiger Hinweis :</strong> Dieses Tool hilft Ihnen bei der formellen Erstellung von Briefen. Es ersetzt keine individuelle Rechtsberatung und fügt keine textlichen Inhalte hinzu. Prüfen Sie bitte selbst, ob Ihr Text inhaltlich korrekt ist und den rechtlichen Anforderungen entspricht.
+  </div>
+
+  <div class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 15px;">
+    <strong>Technischer Hinweis:</strong> Um das fertige Anforderungsschreiben als PDF herunterzuladen, nutzen Sie bitte einen Standard-Browser wie <strong>Chrome, Firefox oder Safari</strong>. In-App-Browser blockieren den Download-Vorgang häufig.
+  </div>
+
+  <!-- DAS FORMULAR (Die Labels sind leicht geöffnet für Firmen/Privat) -->
+  <form id="blankoBriefForm">
+    <fieldset>
+      <legend>1. Ihre Kontaktdaten (Absender)</legend>
+      <label for="absenderName">Vor- und Nachname:</label>
+      <input type="text" id="absenderName" required placeholder="Max Mustermann">
+      
+      <label for="absenderAdresse">Straße, Hausnummer, PLZ & Ort:</label>
+      <textarea id="absenderAdresse" rows="2" required placeholder="Musterstraße 1&#10;12345 Musterstadt"></textarea>
+      
+      <label for="absenderZusatz">Zusatz (z.B. Telefon, E-Mail) - optional:</label>
+      <input type="text" id="absenderZusatz" placeholder="Tel: 0123 456789">
+    </fieldset>
+
+    <fieldset>
+        <legend>2. Empfänger (Behörde, Firma oder Privat)</legend>
+        <label for="empfaengerName">Name des Empfängers (z.B. Jobcenter, Arbeitsagentur etc.):</label>
+        <input type="text" id="empfaengerName" required placeholder="Jobcenter Musterstadt / Autohaus Meier">
+        
+        <label for="empfaengerAdresse">Anschrift des Empfängers:</label>
+        <textarea id="empfaengerAdresse" rows="2" required placeholder="Behördenallee 10&#10;12345 Musterstadt"></textarea>
+    </fieldset>
+
+    <!-- Live-Vorschau Fensterumschlag -->
+    <div style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin-top: 15px; margin-bottom: 15px; border-radius: 0 4px 4px 0;">
+        <h4 style="margin-top: 0; margin-bottom: 10px; color: #0d47a1;">👀 Live-Vorschau: Sichtfenster (DIN lang)</h4>
+        <p style="font-size: 0.9em; margin-bottom: 15px; color: #333;">
+            So wird die Adresse nach dem Falten im Sichtfenster des Briefumschlags aussehen:
+        </p>
+        
+        <div class="envelope-preview-wrapper">
+            <div class="envelope-window">
+                <!-- Hier wird der Absender per JS reingeladen -->
+                <div id="previewSender" class="env-preview-sender">Max Mustermann • Musterstraße 1 • 12345 Musterstadt</div>
+                <!-- Hier wird der Empfänger per JS reingeladen -->
+                <div id="previewReceiver" class="env-preview-receiver">Jobcenter Musterstadt<br>Behördenallee 10<br>12345 Musterstadt</div>
+            </div>
+        </div>
+    </div>
+
+    <fieldset>
+        <legend>3. Aktenzeichen & Briefdaten</legend>
+        <label for="briefDatum">Datum (leer lassen für heutiges Datum):</label>
+        <input type="date" id="briefDatum">
+        
+        <label for="briefAktenzeichen">Ihr Aktenzeichen / Kunden-Nr. (falls vorhanden):</label>
+        <input type="text" id="briefAktenzeichen" placeholder="z.B. BG-Nummer: 12345BG678 oder Rechnungs-Nr.">
+        
+        <label for="briefBetreff">Betreff (wird fett gedruckt):</label>
+        <input type="text" id="briefBetreff" required placeholder="z.B. Widerspruch gegen Bescheid vom... / Mängelanzeige...">
+    </fieldset>
+    
+    <fieldset>
+        <legend>4. Ihr Brieftext</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">
+            Kopieren Sie Ihren fertigen Text in dieses Feld. Absätze werden exakt so übernommen. (Vergessen Sie die Anrede und Grußformel nicht).
+        </p>
+        <textarea id="briefText" rows="12" required placeholder="Sehr geehrte Damen und Herren,&#10;&#10;hiermit teile ich Ihnen mit...&#10;&#10;Mit freundlichen Grüßen"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Anlagen (Optional)</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">
+            Haben Sie Dokumente, die Sie dem Brief beifügen (z.B. "Kopie Mietvertrag", "Krankschreibung")? Tragen Sie hier <strong>eine Anlage pro Zeile</strong> ein.
+        </p>
+        <textarea id="briefAnlagen" rows="3" placeholder="z.B.&#10;Kopie des Bescheides vom 01.08.&#10;Arbeitsvertrag (in Kopie)"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>5. Digitale Unterschrift (Optional)</legend>
+        <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">
+            Unterschreiben Sie direkt hier mit der Maus oder dem Finger auf dem Handy. Das spart das spätere Ausdrucken! <em>(Lassen Sie das Feld leer, wenn Sie per Hand unterschreiben möchten).</em>
+        </p>
+        
+        <!-- Das Zeichenbrett (Canvas) -->
+        <div style="border: 1px dashed #aaa; background-color: #fafafa; width: 100%; max-width: 400px; height: 150px; position: relative; border-radius: 4px; touch-action: none;">
+            <canvas id="signatureCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+        </div>
+        
+        <button type="button" id="clearSignatureBtn" class="button-secondary" style="margin-top: 10px; font-size: 0.85em; padding: 6px 12px;">Unterschrift löschen / neu beginnen</button>
+    </fieldset>
+
+    <fieldset>
+        <legend>6. PDF-Design wählen</legend>
+        <select id="pdfDesign" required style="padding: 10px; font-size: 1em; width: 100%;">
+            <option value="din5008_classic" selected>1. Der Klassiker (Strenge DIN 5008, perfekt für Fensterumschläge)</option>
+            <option value="modern_clean">2. Modern & Clean (Zentrierter Briefkopf, sehr aufgeräumt)</option>
+            <option value="behoerden_pro">3. Behörden-Pro (Mit offiziellem Infoblock rechts für Aktenzeichen)</option>
+            <option value="elegant_legal">4. Elegant & Juristisch (Mit stilvoller Seitenlinie & feiner Schrift)</option>
+        </select>
+    </fieldset>
+
+    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>Datenschutz:</strong> Ihre Daten bleiben bei Ihnen. Das PDF wird sicher in Ihrem Browser generiert (kein Server-Upload).
+    </div>
+
+    <div class="button-group">
+      <button type="submit" id="createPdfBtn" class="button-primary" style="background-color: #d35400; color: white; padding: 15px 30px; font-size: 1.1em; width: 100%;">PDF Brief jetzt erstellen</button>
+    </div>
+  </form>
+  
+  <hr style="margin-top:50px; border: 1px solid #eee;">
+
+  <!-- UNTERER BEREICH: Sozial-Lotse -->
+<div class="info-box" style="background-color: #f8f9fa; border: none; padding: 25px;">
+  <h2 style="margin-top: 0;">Ein Layout für alle Ämter: So überzeugen Sie jede Behörde</h2>
+  <p>
+    Unser Generator ist speziell auf die formellen Anforderungen von Sozialbehörden zugeschnitten. Das amtliche Design lässt sich jedoch <strong>nahtlos auf jede andere staatliche Einrichtung übertragen</strong>. Wer bürokratisch korrekt kommuniziert, erlebt seltener Rückfragen oder Ablehnungen aus formalen Gründen.
+  </p>
+  
+  <h3 style="font-size: 1.2em; color: #2e7d32;">Weitere Behörden, für die sich das Tool perfekt eignet:</h3>
+  <ul style="line-height: 1.6; margin-bottom: 20px;">
+    <li><strong>Familienkasse & BAföG-Amt:</strong> Kindergeldanträge nachreichen, Schulbescheinigungen übersenden oder Widerspruch gegen BAföG-Bescheide einlegen.</li>
+    <li><strong>Beitragsservice (GEZ):</strong> Anträge auf Befreiung von der Rundfunkbeitragspflicht (z.B. wegen Bürgergeld-Bezug) formgerecht einsenden.</li>
+    <li><strong>Rentenversicherung:</strong> Kontenklärung beantragen, Reha-Maßnahmen fordern oder Nachweise für die Rentenberechnung einreichen.</li>
+    <li><strong>Finanzamt & Wohngeldstelle:</strong> Fristverlängerungen für die Steuererklärung beantragen oder fehlende Gehaltsnachweise für das Wohngeld nachreichen.</li>
+  </ul>
+
+  <h3 style="font-size: 1.2em; color: #2e7d32;">Warum die DIN 5008 in der Bürokratie der Schlüssel ist</h3>
+  <p>
+    Die DIN 5008 regelt die äußere Form von Geschäftsbriefen. Deutsche Behörden lieben Normen. Ein Brief, der diesen Standards entspricht (wie unser "Design 3: Behörden-Pro"), hat den Block für das Aktenzeichen (BG-Nummer / Kundennummer) exakt dort, wo der Sachbearbeiter danach sucht.
+  </p>
+  <p>
+    <strong>Der größte Vorteil für Sie:</strong> Ihr Dokument sieht hoch professionell aus. Zudem passt die Anschrift der Behörde beim Falten exakt in das Sichtfenster eines Standardumschlags. Sie sparen sich das fehleranfällige händische Beschriften und Ihr Brief wird in der Poststelle der Behörde sofort richtig eingescannt.
+  </p>
+</div>
+
+<h2>Häufige Fragen zur Behörden-Vorlage (Sozial-Lotse)</h2>
+<details>
+  <summary>Kann ich KI-Texte (z.B. ChatGPT) für Behördenbriefe nutzen?</summary>
+  <p>Ja, das ist gängige Praxis. KI-Tools formulieren Anträge oder Widersprüche oft sehr treffend. Das Problem: Sie liefern nur "nackten" Text. Fügen Sie diesen Text einfach in unseren Generator ein. Wir wandeln ihn in ein amtlich anerkanntes Dokumenten-Layout (PDF) um.</p>
+</details>
+<details>
+  <summary>Ist der Datenschutz bei meinen Sozialdaten gewährleistet?</summary>
+  <p>Absolut. Im Sozialrecht geht es oft um Existenzängste und hochsensible Daten (Bedarfsgemeinschaften, Einkommen). Unser PDF-Generator arbeitet lokal (clientseitig) in Ihrem Browser. Keine einzige Zeile Ihres Textes oder Ihrer BG-Nummer wird auf unsere Webserver hochgeladen.</p>
+</details>
+<details>
+  <summary>Wie falte ich den Brief richtig für das Amt?</summary>
+  <p>Nutzen Sie den Zickzack-Falz (Wickelfalz). Falten Sie das Blatt bei circa 10,5 cm von der Oberkante nach hinten. Das untere Drittel schlagen Sie danach nach oben um. Die Adresse des Jobcenters oder der Familienkasse liegt nun perfekt sichtbar hinter dem Fenster des Briefumschlags.</p>
+</details>
+
+</div> 
+
+
+
+<div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
+    
+    <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
+    <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        <br><br>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
+    </p>
+    
+    <div style="margin-bottom: 25px;">
+        <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
+            Mehr über unsere Redaktion & Arbeitsweise erfahren
+        </a>
+    </div>
+
+    <div style="margin: 0 auto 20px auto; max-width: 600px; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="margin: 0; font-size: 0.95em; color: #333; line-height: 1.4;">
+             <strong>Sie wissen nicht genau, wo Sie anfangen sollen?</strong><br>
+            Nutzen Sie unseren <a href="index.html" style="color: #0056b3; font-weight: bold; text-decoration: none; border-bottom: 2px solid #0056b3;">Digitalen Lotsen</a>. Er führt Sie in wenigen Klicks zielsicher zum passenden Ratgeber, Rechner oder Generator für Ihr Anliegen.
+        </p>
+    </div>
+    <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@kassen-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+    </p>
+    
+</div>
+<footer>
+  <div class="mini-footer-hint">
+  <p><strong>Das Lotsen-Netzwerk:</strong></p>
+<p>
+  <a href="https://www.kassen-lotse.de" class="mini-footer-link">Kassen-Lotse</a> • 
+  <a href="https://www.sozialrecht-lotse.de" class="mini-footer-link">Sozial-Lotse</a> • 
+  <a href="https://www.mieter-lotse.de" class="mini-footer-link">Mieter-Lotse</a>
+</p>
+  </div>
+  <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Redaktion & Expertise</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a></p>
+</footer>
+
+</body>
+</html>
