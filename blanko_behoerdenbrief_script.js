@@ -1,10 +1,10 @@
+let signaturePad;
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('blankoBriefForm');
     const saveBtn = document.getElementById('saveBtnBlanko');
     const loadBtn = document.getElementById('loadBtnBlanko');
     const storageKey = 'blankoBriefFormData';
-    let signaturePad;
-
 
     // Felder für Speichern/Laden
     const formElementIds = [ 
@@ -50,48 +50,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==========================================
-    // --- NEU: Live-Vorschau Fensterumschlag ---
-    // ==========================================
-    
-    // Die HTML-Elemente der Vorschau
+    // --- Live-Vorschau Fensterumschlag ---
     const previewSender = document.getElementById('previewSender');
     const previewReceiver = document.getElementById('previewReceiver');
-
-    // Die Input-Felder des Formulars
     const inputAbsName = document.getElementById('absenderName');
     const inputAbsAdr = document.getElementById('absenderAdresse');
     const inputEmpfName = document.getElementById('empfaengerName');
     const inputEmpfAdr = document.getElementById('empfaengerAdresse');
 
-    // Funktion zum Aktualisieren der Vorschau
     function updateEnvelopePreview() {
         if (!previewSender || !previewReceiver) return;
 
-        // 1. Absender (Rücksendezeile) bauen
         const absName = inputAbsName.value.trim() || "Max Mustermann";
         const absAdr = inputAbsAdr.value.trim() || "Musterstraße 1\n12345 Musterstadt";
-        // Zeilenumbrüche durch Punkte ersetzen
         const inlineAbsender = `${absName} • ${absAdr.replace(/\n/g, " • ")}`;
         previewSender.textContent = inlineAbsender;
 
-        // 2. Empfängeradresse bauen
         const empfName = inputEmpfName.value.trim() || "Behörde / Firma";
         const empfAdr = inputEmpfAdr.value.trim() || "Behördenallee 10\n12345 Musterstadt";
-        // textContent zusammen mit "white-space: pre-wrap" im CSS rendert Zeilenumbrüche korrekt und sicher
         previewReceiver.textContent = `${empfName}\n${empfAdr}`;
     }
 
-    // Event-Listener an die Eingabefelder hängen (reagiert bei jedem Tastendruck)
     if (inputAbsName) inputAbsName.addEventListener('input', updateEnvelopePreview);
     if (inputAbsAdr) inputAbsAdr.addEventListener('input', updateEnvelopePreview);
     if (inputEmpfName) inputEmpfName.addEventListener('input', updateEnvelopePreview);
     if (inputEmpfAdr) inputEmpfAdr.addEventListener('input', updateEnvelopePreview);
 
-    // Initial einmal aufrufen, um eventuell vom Browser vorausgefüllte Daten anzuzeigen
     updateEnvelopePreview();
-});
 
+    // --- Signature Pad initialisieren (innerhalb von DOMContentLoaded) ---
+    const canvas = document.getElementById('signatureCanvas');
+    const clearButton = document.getElementById('clearSignatureBtn');
+
+    if (canvas) {
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        // Zuweisung an die globale Variable
+        signaturePad = new SignaturePad(canvas, {
+            penColor: "rgb(0, 51, 153)", 
+            backgroundColor: "rgba(0,0,0,0)"
+        });
+
+        if (clearButton) {
+            clearButton.addEventListener('click', function () {
+                signaturePad.clear();
+            });
+        }
+    }
+});
 function generateBlankoPDF() {
     const { jsPDF } = window.jspdf;
     // A4 Format in Millimetern

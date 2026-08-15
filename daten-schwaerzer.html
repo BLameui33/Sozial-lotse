@@ -38,6 +38,11 @@
   }
   </script>
   <style>
+    /* Globale Box-Sizing Korrektur */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
     /* --- Schwärzer-Tool Design --- */
     .editor-workspace {
         background-color: #e0e0e0;
@@ -49,34 +54,55 @@
         background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         border: 2px dashed #999;
         border-radius: 6px;
-        padding: 10px;
-        min-height: 400px;
+        padding: 8px;
+        min-height: 300px;
         display: flex;
         justify-content: center;
         align-items: center;
         overflow: auto;
         margin-top: 15px;
         position: relative;
+        touch-action: pan-x pan-y; /* Erlaubt Verschieben des Arbeitsbereichs, wenn das Bild groß ist */
     }
     
     #redactionCanvas {
         cursor: crosshair;
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         max-width: 100%;
+        height: auto;
         background-color: #fff;
+        touch-action: none; /* WICHTIG: Verhindert Bildschirmscrollen beim Zeichnen auf Touchscreens */
     }
 
-    .toolbar {
-        display: flex;
+    /* Responsive Werkzeugleiste */
+    .toolbar-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
         gap: 10px;
         margin-bottom: 15px;
-        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .toolbar-grid button, 
+    .toolbar-grid .upload-btn-wrapper {
+        min-height: 48px; /* Optimale Touch-Größe für Finger */
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .upload-btn-wrapper {
         position: relative;
         overflow: hidden;
-        display: inline-block;
+    }
+
+    .upload-btn-wrapper .button-secondary {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 10px;
+        font-weight: bold;
     }
 
     .upload-btn-wrapper input[type=file] {
@@ -86,6 +112,39 @@
         top: 0;
         opacity: 0;
         cursor: pointer;
+        height: 100%;
+        width: 100%;
+    }
+
+    .action-btn {
+        padding: 8px 12px;
+        font-size: 0.9em;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+
+    /* --- MOBILE OPTIMIERUNG (Smartphones) --- */
+    @media (max-width: 600px) {
+        .toolbar-grid {
+            grid-template-columns: 1fr 1fr; /* Upload-Button oben, Aktionen darunter */
+        }
+
+        .upload-btn-wrapper {
+            grid-column: span 2; /* Upload über volle Breite auf Mobilgeräten */
+        }
+
+        .editor-workspace {
+            padding: 4px;
+            min-height: 250px;
+        }
+
+        .instruction-text {
+            background-color: #e8f5e9;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #2e7d32;
+        }
     }
   </style>
 </head>
@@ -121,34 +180,37 @@
   </div>
 
   <!-- DAS TOOL -->
-  <fieldset style="margin-top: 30px;">
-    <legend>Ihr Dokument schwärzen (Schritt-für-Schritt)</legend>
+  <fieldset style="margin-top: 30px; border: 1px solid #ccc; border-radius: 6px; padding: 15px;">
+    <legend style="font-weight: bold; padding: 0 5px;">Ihr Dokument schwärzen (Schritt-für-Schritt)</legend>
     
-    <div class="toolbar">
+    <!-- Optimiertes Grid-System für Buttons -->
+    <div class="toolbar-grid">
         <div class="upload-btn-wrapper">
-            <button class="button-secondary">1. Bild oder PDF auswählen</button>
+            <button class="button-secondary" style="background-color: #1976d2; color: white; border: none;">📁 1. Bild oder PDF auswählen</button>
             <input type="file" id="fileUploader" accept="image/png, image/jpeg, application/pdf" />
         </div>
-        <button id="undoBtn" class="button-secondary" style="background-color: #f1f3f4; color: #333;" disabled>↩ Letzten Balken löschen</button>
-        <button id="clearBtn" class="button-secondary" style="background-color: #ffebee; color: #d32f2f;" disabled>✖ Alles zurücksetzen</button>
+        <button id="undoBtn" class="action-btn" style="background-color: #f1f3f4; color: #333;" disabled>↩ Rückgängig</button>
+        <button id="clearBtn" class="action-btn" style="background-color: #ffebee; color: #d32f2f;" disabled>✖ Alles löschen</button>
     </div>
 
-    <p class="instruction-text" style="font-size:0.9em; color:#555; margin-top:0;">
-        <em>Anleitung: Nach dem Hochladen klicken und ziehen Sie mit der Maus (oder dem Finger) einfach über die Stellen, die Sie unkenntlich machen möchten.</em>
+    <p class="instruction-text" style="font-size:0.9em; color:#333; margin-top:10px; margin-bottom:10px;">
+        💡 <strong>Bedienung:</strong> Ziehen Sie mit dem Finger oder der Maus ein schwarzes Rechteck über die vertraulichen Stellen.
     </p>
 
     <!-- Der Arbeitsbereich für das Canvas -->
     <div class="editor-workspace" id="workspace">
-        <span id="placeholderText" style="color: #666; font-size: 1.1em; text-align: center;">Hier wird Ihr Dokument angezeigt.<br>Bitte laden Sie eine Datei hoch.</span>
+        <span id="placeholderText" style="color: #666; font-size: 1em; text-align: center; padding: 20px;">
+            Hier wird Ihr Dokument angezeigt.<br><strong>Bitte laden Sie zuerst eine Datei hoch.</strong>
+        </span>
         <canvas id="redactionCanvas" style="display: none;"></canvas>
     </div>
 
-    <div style="font-size: 0.8em; color: #555; margin-top: 20px; text-align: center;">
-        <span style="color: green;">🔒</span> <strong>Datenschutz-Garantie:</strong> Ihr Dokument verlässt niemals Ihr Gerät! Das Schwärzen und die PDF-Erstellung passieren zu 100% lokal in Ihrem Browser (Offline-fähig).
+    <div style="font-size: 0.8em; color: #555; margin-top: 15px; text-align: center;">
+        <span style="color: green;">🔒</span> <strong>100% Datenschutz:</strong> Verarbeitung erfolgt lokal in Ihrem Browser (keine Cloud-Speicherung).
     </div>
 
-    <div class="button-group" style="margin-top: 20px;">
-      <button type="button" id="exportPdfBtn" class="button-primary" style="background-color: #2e7d32; color: white; padding: 15px 30px; font-size: 1.1em; width: 100%;" disabled>2. Sicheres PDF herunterladen</button>
+    <div class="button-group" style="margin-top: 15px;">
+      <button type="button" id="exportPdfBtn" class="button-primary" style="background-color: #2e7d32; color: white; padding: 15px 20px; font-size: 1.1em; width: 100%; border: none; border-radius: 4px; font-weight: bold;" disabled>2. Sicheres PDF herunterladen</button>
     </div>
   </fieldset>
   

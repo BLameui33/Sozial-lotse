@@ -36,14 +36,23 @@
   </script>
   
   <style>
-    /* Spezifische Styles für den Vollmachts-Generator */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    form input, form textarea, form select, form fieldset {
+        max-width: 100%;
+    }
+
     .checkbox-group {
         display: flex;
         flex-direction: column;
         gap: 10px;
         margin-top: 10px;
         margin-bottom: 15px;
+        width: 100%;
     }
+
     .checkbox-item {
         display: flex;
         align-items: flex-start;
@@ -53,30 +62,48 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: pointer;
+        width: 100%;
+        flex-wrap: wrap; 
     }
+
     .checkbox-item:hover {
         background-color: #f1f1f1;
     }
+
     .checkbox-item input[type="checkbox"], 
     .checkbox-item input[type="radio"] {
         margin-top: 3px;
         transform: scale(1.2);
+        flex-shrink: 0; 
     }
+
     .checkbox-item label {
         margin: 0;
         font-weight: normal;
         cursor: pointer;
-        width: 100%;
+        flex: 1 1 200px; 
+        word-break: break-word;
     }
+
+    .checkbox-item input[type="date"],
+    .checkbox-item input[type="text"] {
+        width: 100%;
+        margin-top: 5px;
+    }
+
     .signature-container {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
+        width: 100%;
     }
+
     .signature-box {
         flex: 1;
         min-width: 280px;
+        max-width: 100%;
     }
+
     .sig-canvas-wrapper {
         border: 1px dashed #aaa; 
         background-color: #fafafa; 
@@ -86,10 +113,27 @@
         border-radius: 4px; 
         touch-action: none;
     }
+
     .sig-canvas-wrapper canvas {
         width: 100%;
         height: 100%;
         display: block;
+    }
+
+    /* Mobile Feinanpassungen */
+    @media (max-width: 600px) {
+        .checkbox-item {
+            padding: 8px;
+        }
+        
+        .checkbox-item label {
+            flex: 1 1 100%; 
+            font-size: 0.95em;
+        }
+
+        .signature-box {
+            min-width: 100%;
+        }
     }
   </style>
 </head>

@@ -36,21 +36,29 @@
   </script>
   
   <style>
+    /* Box-Sizing für alle Elemente im Vorschaubereich erzwingen */
+    .receipt-preview-wrapper, 
+    .receipt-preview-wrapper * {
+        box-sizing: border-box;
+    }
+
     /* --- Quittungs-Vorschau Design (Der klassische gelbe Block) --- */
     .receipt-preview-wrapper {
         background-color: #fff9c4; /* Klassisches Quittungs-Gelb */
         border: 1px solid #c8b900;
         border-radius: 4px;
         padding: 20px;
+        width: 100%;
         max-width: 100%;
         position: relative;
         box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
         margin-top: 15px;
         margin-bottom: 20px;
-        font-family: 'Courier New', Courier, monospace; /* Typischer Schreibmaschinen-Look */
+        font-family: 'Courier New', Courier, monospace;
         color: #333;
         background-image: repeating-linear-gradient(transparent, transparent 29px, #e0d47a 30px);
         background-position: 0 1.2em;
+        overflow: hidden; /* Verhindert das Herausragen von Inhalten */
     }
 
     .receipt-header {
@@ -61,6 +69,8 @@
         padding-bottom: 10px;
         margin-bottom: 20px;
         background-color: #fff9c4;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .receipt-title {
@@ -81,6 +91,8 @@
         line-height: 1.6;
         display: flex;
         align-items: baseline;
+        flex-wrap: wrap; /* Ermöglicht Umbrüche bei kleinen Displays */
+        word-break: break-word;
     }
 
     .receipt-label {
@@ -92,12 +104,13 @@
     }
 
     .receipt-value {
-        flex-grow: 1;
+        flex: 1 1 150px; /* Flexibel anpassen und ab 150px umbrechen */
         font-style: italic;
         color: #000;
-        border-bottom: 1px dashed #777; /* Handschrift-Linie */
+        border-bottom: 1px dashed #777;
         padding-left: 5px;
         min-height: 1.5em;
+        word-break: break-all; /* Bricht lange Unterstriche ab */
     }
 
     .amount-box {
@@ -106,6 +119,42 @@
         font-size: 1.4em;
         font-weight: bold;
         background: #fff;
+        white-space: nowrap;
+    }
+
+    /* --- MOBILE OPTIMIERUNG (Smartphones) --- */
+    @media (max-width: 600px) {
+        .receipt-preview-wrapper {
+            padding: 12px;
+        }
+
+        .receipt-title {
+            font-size: 1.3em;
+            letter-spacing: 1px;
+        }
+
+        .amount-box {
+            font-size: 1.1em;
+            padding: 4px 8px;
+        }
+
+        .receipt-row {
+            font-size: 0.95em;
+            flex-direction: column; /* Stapelt Labels und Werte untereinander */
+            align-items: stretch;
+            margin-bottom: 12px;
+        }
+
+        .receipt-label {
+            margin-right: 0;
+            margin-left: 0 !important; /* Hebt inline margin-left von Unterschrift auf */
+            margin-bottom: 2px;
+        }
+
+        .receipt-value {
+            width: 100%;
+            margin-bottom: 8px;
+        }
     }
   </style>
 </head>
