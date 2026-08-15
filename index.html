@@ -631,32 +631,45 @@ footer a:hover {
    TOPIC NAVIGATOR – Modernes Schwebendes Bottom-Widget
    ========================================================================== */
 
-/* Der schwebende Container unten */
+/* Haupt-Container (Schwebendes Bottom-Widget) */
 .topic-navigator {
   position: fixed;
-  bottom: 20px; /* Schwebt 20px über dem unteren Rand */
+  bottom: 20px;
   left: 50%;
-  transform: translateX(-50%); /* Perfekt zentriert */
   z-index: 1000;
 
   display: flex;
   align-items: center;
   gap: 10px;
 
-  width: calc(100% - 32px); /* Passt sich flexibel der Bildschirmbreite an */
-  max-width: 440px; /* Verhindert, dass es auf dem Desktop zu breit wird */
+  width: calc(100% - 32px);
+  max-width: 440px;
   padding: 8px 12px 8px 16px;
 
-  /* Edles Frosted-Glass mit starkem Schwebe-Schatten */
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 50px; /* Pillen-Form */
+  border-radius: 50px;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15),
               0 4px 12px -2px rgba(0, 0, 0, 0.08);
 
   box-sizing: border-box;
+
+  /* --- STANDARDMÄSSIG UNSICHTBAR & LEICHT NACH UNTEN VERSETZT --- */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
+}
+
+/* --- WIRD AKTIV, WENN BEI DEN KATEGORIEN (Gleitet sanft hoch) --- */
+.topic-navigator.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
 }
 
 /* Dezent beschriftet */
@@ -1638,6 +1651,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateDropdownOnScroll();
 });
+
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.topic-navigator');
+    const sections = document.querySelectorAll('.category-section');
+    
+    if (!nav || sections.length === 0) return;
+
+    const firstSection = sections[0];
+    const lastSection = sections[sections.length - 1];
+
+    const firstRect = firstSection.getBoundingClientRect();
+    const lastRect = lastSection.getBoundingClientRect();
+
+    // Rechnet aus, ob der Nutzer im Bereich der Kategorien ist
+    const inCategoryArea = (firstRect.top < window.innerHeight - 100) && (lastRect.bottom > 100);
+
+    if (inCategoryArea) {
+      nav.classList.add('is-visible');
+    } else {
+      nav.classList.remove('is-visible');
+    }
+  });
 </script>
 </body>
 </html>
