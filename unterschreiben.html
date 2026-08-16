@@ -137,8 +137,7 @@
         max-width: 100%;
         height: auto; 
         background-color: #fff;
-        touch-action: none;
-    }
+        touch-action: pinch-zoom;    }
 
     .pagination-controls {
         display: flex;
@@ -183,7 +182,11 @@
     <p style="margin: 0;">
       <strong>So funktioniert's:</strong> Laden Sie Ihr erstelltes PDF (oder ein Foto) hoch. Unterschreiben Sie einfach mit der Maus oder auf dem Handy mit dem Finger. Das Tool erzeugt ein normgerechtes, sicheres PDF für die Krankenkasse.
     </p>
+    <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #1565c0;">
+      <strong>Tipp für Smartphones:</strong> Mit 1 Finger können Sie zeichnen. Nutzen Sie 2 Finger gleichzeitig, um hereinzuzoomen oder das Blatt zu verschieben.
+    </p>
   </div>
+  
 
   <!-- NEUE MODERNE TOOLBAR -->
   <div class="modern-toolbar">
@@ -233,7 +236,7 @@
   </div>
 
   <div style="margin-top: 20px;">
-    <button type="button" id="exportPdfBtn" style="background-color: #2e7d32; color: white; padding: 18px 20px; font-size: 1.2em; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(46,125,50,0.3);" disabled>
+    <button type="button" id="exportPdfBtn" style="background-color: #0056b3; color: white; padding: 18px 20px; font-size: 1.2em; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(46,125,50,0.3);" disabled>
         2. Fertiges PDF herunterladen
     </button>
   </div>
@@ -479,12 +482,19 @@
     }
 
     function startPosition(e) {
-        e.preventDefault();
+        if (e.touches && e.touches.length > 1) {
+            isDrawing = false;
+            return; 
+        }
+                if (e.cancelable) {
+            e.preventDefault();
+        }
+        
         isDrawing = true;
         const coords = getCoordinates(e);
         lastX = coords.x;
         lastY = coords.y;
-        draw(e);
+        draw(e); // Startpunkt zeichnen
     }
 
     function endPosition() {
@@ -493,18 +503,30 @@
     }
 
     function draw(e) {
+        if (e.touches && e.touches.length > 1) {
+            isDrawing = false;
+            ctx.beginPath(); // Alten Pfad kappen, damit keine ungewollte Linie gezogen wird
+            return;
+        }
+
         if (!isDrawing) return;
-        e.preventDefault();
+        
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+        
         const coords = getCoordinates(e);
         const relativeScale = canvas.width / 800; 
         ctx.lineWidth = parseFloat(penWidthSelect.value) * relativeScale;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         ctx.strokeStyle = penColorSelect.value;
+        
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(coords.x, coords.y);
         ctx.stroke();
+        
         lastX = coords.x;
         lastY = coords.y;
     }
