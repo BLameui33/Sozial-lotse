@@ -146,6 +146,17 @@
             border-left: 3px solid #2e7d32;
         }
     }
+
+     .pagination-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        display: none;
+    }
+    .pagination-controls button { padding: 6px 12px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; background: #fff; font-weight: bold;}
+    .pagination-controls button:hover { background: #f0f0f0; }
   </style>
 </head>
 <body>
@@ -197,13 +208,20 @@
         💡 <strong>Bedienung:</strong> Ziehen Sie mit dem Finger oder der Maus ein schwarzes Rechteck über die vertraulichen Stellen.
     </p>
 
-    <!-- Der Arbeitsbereich für das Canvas -->
-    <div class="editor-workspace" id="workspace">
-        <span id="placeholderText" style="color: #666; font-size: 1em; text-align: center; padding: 20px;">
-            Hier wird Ihr Dokument angezeigt.<br><strong>Bitte laden Sie zuerst eine Datei hoch.</strong>
-        </span>
-        <canvas id="redactionCanvas" style="display: none;"></canvas>
-    </div>
+    <!-- Paginierung für PDFs mit mehreren Seiten -->
+  <div class="pagination-controls" id="paginationControls">
+      <button id="prevPageBtn">◀ Zurück</button>
+      <span>Seite <span id="pageNum">1</span> von <span id="pageCount">1</span></span>
+      <button id="nextPageBtn">Weiter ▶</button>
+  </div>
+
+  <!-- Der Arbeitsbereich für das Canvas -->
+  <div class="editor-workspace" id="workspace">
+      <span id="placeholderText" style="color: #666; font-size: 1em; text-align: center; padding: 20px; align-self: center;">
+          Das Dokument wird hier angezeigt.<br><strong>Bitte laden Sie zuerst eine Datei hoch.</strong>
+      </span>
+      <canvas id="redactionCanvas" style="display: none;"></canvas>
+  </div>
 
     <div style="font-size: 0.8em; color: #555; margin-top: 15px; text-align: center;">
         <span style="color: green;">🔒</span> <strong>100% Datenschutz:</strong> Verarbeitung erfolgt lokal in Ihrem Browser (keine Cloud-Speicherung).

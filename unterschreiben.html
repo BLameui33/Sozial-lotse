@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumente & Anträge online unterschreiben | Sozial-Lotse</title>
+  
+  <meta name="description" content="PDF-Dokumente und Anträge direkt im Browser unterschreiben. 100% lokal, sicher und ohne Drucker.">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sozial-Lotse Redaktion">
+  <link rel="icon" href="/logo-lotse-fav.png">
+    <link rel="stylesheet" href="/css/generator.css">
+
+  
+  <!-- jsPDF für den PDF-Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- PDF.js für das Laden von PDFs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  
+  <style>
+    
+    /* Globale Box-Sizing Korrektur */
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f6f8;
+    }
+    .page-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    .site-header {
+        background: #fff;
+        padding: 15px 20px;
+        border-bottom: 2px solid #2e7d32;
+    }
+    .site-logo {
+        font-size: 1.5em;
+        font-weight: bold;
+        text-decoration: none;
+        color: #2e7d32;
+    }
+    
+    .usp-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+        font-size: 0.95em;
+        font-weight: bold;
+    }
+    .usp-item { display: flex; align-items: center; gap: 5px; }
+
+    .info-box {
+        background-color: #e8f5e9;
+        padding: 15px;
+        border-left: 4px solid #2e7d32;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    /* --- MODERNE WERKZEUGLEISTE (TOOLBAR) --- */
+    .modern-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 15px;
+        align-items: center;
+    }
+
+    .tool-item { flex: 1 1 auto; }
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+    }
+    
+    .btn-upload { background: #1976d2; color: white; }
+    .btn-upload:hover { background: #1565c0; }
+    
+    .btn-clear { background: #fff; border: 1px solid #d32f2f; color: #d32f2f; }
+    .btn-clear:disabled { border-color: #ccc; color: #aaa; cursor: not-allowed; background: #f5f5f5; }
+    .btn-clear:not(:disabled):hover { background: #ffebee; }
+
+    .upload-btn-wrapper { position: relative; overflow: hidden; }
+    .upload-btn-wrapper input[type=file] {
+        position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; height: 100%; width: 100%;
+    }
+
+    /* Dropdowns (Farbe & Dicke) */
+    .tool-settings {
+        display: flex;
+        gap: 10px;
+        flex: 1 1 250px;
+    }
+    .select-wrapper {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 0 10px;
+    }
+    .select-wrapper .icon { font-size: 1.2em; margin-right: 5px; }
+    .select-wrapper select {
+        width: 100%;
+        padding: 12px 5px;
+        border: none;
+        background: transparent;
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: #333;
+        outline: none;
+        cursor: pointer;
+        appearance: none; 
+    }
+    .select-wrapper::after {
+        content: '▼';
+        font-size: 0.7em;
+        color: #666;
+        position: absolute;
+        right: 12px;
+        pointer-events: none;
+    }
+
+    /* --- Arbeitsbereich & Canvas --- */
+    .editor-workspace {
+        background-color: #e0e0e0;
+        background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                          linear-gradient(-45deg, #ccc 25%, transparent 25%), 
+                          linear-gradient(45deg, transparent 75%, #ccc 75%), 
+                          linear-gradient(-45deg, transparent 75%, #ccc 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        border-radius: 6px;
+        padding: 15px;
+        min-height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; 
+        overflow: auto;
+        border: 1px solid #ccc;
+    }
+    
+    #signatureCanvas {
+        cursor: crosshair;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        max-width: 100%;
+        height: auto; 
+        background-color: #fff;
+        touch-action: none;
+    }
+
+    .pagination-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        display: none;
+    }
+    .pagination-controls button { padding: 6px 12px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; background: #fff; font-weight: bold;}
+    .pagination-controls button:hover { background: #f0f0f0; }
+
+    /* --- MOBILE OPTIMIERUNG --- */
+    @media (max-width: 600px) {
+        .tool-item { flex: 1 1 100%; }
+        .tool-settings { flex-direction: row; }
+        .editor-workspace { padding: 5px; min-height: 300px; }
+        .btn { padding: 15px; font-size: 1.1em; } 
+    }
+  
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <a href="index.html" class="site-logo">Sozial-Lotse</a>
+    </div>
+</header>
+
+<div class="page-container">
+
+  <h1>Dokumente online unterschreiben</h1>
+
+  <div class="usp-bar">
+    <div class="usp-item"><span style="color: #2e7d32; font-size: 1.2em;">✓</span> Ohne Drucker & Scanner</div>
+    <div class="usp-item"><span style="color: #2e7d32; font-size: 1.2em;">✓</span> 100% lokal & gestochen scharf</div>
+    <div class="usp-item"><span style="color: #2e7d32; font-size: 1.2em;">✓</span> Maßgerechtes A4-PDF Format</div>
+  </div>
+
+  <div class="info-box">
+    <p style="margin: 0;">
+      <strong>So funktioniert's:</strong> Laden Sie Ihr erstelltes PDF (oder ein Foto) hoch. Unterschreiben Sie einfach mit der Maus oder auf dem Handy mit dem Finger. Das Tool erzeugt ein normgerechtes, sicheres PDF für die Krankenkasse.
+    </p>
+  </div>
+
+  <!-- NEUE MODERNE TOOLBAR -->
+  <div class="modern-toolbar">
+      <div class="upload-btn-wrapper tool-item">
+          <button class="btn btn-upload">📁 1. PDF hochladen</button>
+          <input type="file" id="fileUploader" accept="image/png, image/jpeg, application/pdf" />
+      </div>
+      
+      <div class="tool-settings tool-item">
+          <div class="select-wrapper">
+              <span class="icon"></span>
+              <select id="penColor" title="Stiftfarbe">
+                  <option value="#000080">Blau (Kuli)</option>
+                  <option value="#000000">Schwarz</option>
+              </select>
+          </div>
+          <div class="select-wrapper">
+              <span class="icon">📏</span>
+              <select id="penWidth" title="Stiftdicke">
+                  <option value="1">Fein</option>
+                  <option value="2.5" selected>Normal</option>
+                  <option value="5">Dick</option>
+              </select>
+          </div>
+      </div>
+
+      <button id="clearBtn" class="btn btn-clear tool-item" disabled>Unterschrift löschen</button>
+  </div>
+
+  <!-- Paginierung für PDFs mit mehreren Seiten -->
+  <div class="pagination-controls" id="paginationControls">
+      <button id="prevPageBtn">◀ Zurück</button>
+      <span>Seite <span id="pageNum">1</span> von <span id="pageCount">1</span></span>
+      <button id="nextPageBtn">Weiter ▶</button>
+  </div>
+
+  <!-- Der Arbeitsbereich für das Canvas -->
+  <div class="editor-workspace" id="workspace">
+      <span id="placeholderText" style="color: #666; font-size: 1em; text-align: center; padding: 20px; align-self: center;">
+          Das Dokument wird hier angezeigt.<br><strong>Bitte laden Sie zuerst eine Datei hoch.</strong>
+      </span>
+      <canvas id="signatureCanvas" style="display: none;"></canvas>
+  </div>
+
+  <div style="font-size: 0.85em; color: #555; margin-top: 15px; text-align: center;">
+      <span style="color: green;"></span> <strong>Datenschutz-Garantie:</strong> Ihr Dokument verlässt niemals Ihr Gerät. Die Verarbeitung passiert komplett lokal.
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button type="button" id="exportPdfBtn" style="background-color: #2e7d32; color: white; padding: 18px 20px; font-size: 1.2em; width: 100%; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(46,125,50,0.3);" disabled>
+        2. Fertiges PDF herunterladen
+    </button>
+  </div>
+  
+</div> 
+
+<div style="background-color: #f8f9fa; border-top: 2px solid #e0e0e0; padding: 25px 15px; margin-top: 40px; text-align: center; font-family: sans-serif;">
+    
+    <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
+    <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        <br><br>
+        <em>Wichtiger Hinweis: Unser Tool generiert Standarddokumente zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
+    </p>
+    
+    <div style="margin-bottom: 25px;">
+        <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
+            Mehr über unsere Redaktion & Arbeitsweise erfahren
+        </a>
+    </div>
+
+    <div style="margin: 0 auto 20px auto; max-width: 600px; background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <p style="margin: 0; font-size: 0.95em; color: #333; line-height: 1.4;">
+             <strong>Sie wissen nicht genau, wo Sie anfangen sollen?</strong><br>
+            Nutzen Sie unseren <a href="index.html" style="color: #0056b3; font-weight: bold; text-decoration: none; border-bottom: 2px solid #0056b3;">Digitalen Lotsen</a>. Er führt Sie in wenigen Klicks zielsicher zum passenden Ratgeber, Rechner oder Generator für Ihr Anliegen.
+        </p>
+    </div>
+    <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@kassen-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+    </p>
+    
+</div>
+<footer>
+  <div class="mini-footer-hint">
+  <p><strong>Das Lotsen-Netzwerk:</strong></p>
+<p>
+  <a href="https://www.kassen-lotse.de" class="mini-footer-link">Kassen-Lotse</a> • 
+  <a href="https://www.sozialrecht-lotse.de" class="mini-footer-link">Sozial-Lotse</a> • 
+  <a href="https://www.mieter-lotse.de" class="mini-footer-link">Mieter-Lotse</a>
+</p>
+  
+  </div>
+    <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns & Redaktionsrichtlinien</a> | <a href="index.html">Zurück zur Startseite</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a></p>
+</footer>
+
+<!-- INTERNE LOGIK -->
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    const fileUploader = document.getElementById('fileUploader');
+    const canvas = document.getElementById('signatureCanvas');
+    const ctx = canvas.getContext('2d');
+    const placeholderText = document.getElementById('placeholderText');
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    
+    const penColorSelect = document.getElementById('penColor');
+    const penWidthSelect = document.getElementById('penWidth');
+
+    const paginationControls = document.getElementById('paginationControls');
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const pageNumDisplay = document.getElementById('pageNum');
+    const pageCountDisplay = document.getElementById('pageCount');
+
+    let isDrawing = false;
+    let pdfDoc = null;
+    let pageNum = 1;
+    let pageIsRendering = false;
+    let pageNumPending = null;
+    
+    const currentScale = 2.5; 
+    
+    let lastX = 0, lastY = 0;
+    let baseImage = new Image();
+    let isImageMode = false;
+
+    // GEDÄCHTNIS FÜR MEHRSEITIGE PDFS
+    let pageSnapshots = {}; 
+
+    // 1. DATEI HOCHLADEN
+    fileUploader.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        placeholderText.style.display = 'none';
+        canvas.style.display = 'block';
+        exportPdfBtn.disabled = false;
+        clearBtn.disabled = false;
+        
+        pageSnapshots = {}; // Cache leeren bei neuer Datei
+
+        const fileReader = new FileReader();
+
+        if (file.type === 'application/pdf') {
+            isImageMode = false;
+            fileReader.onload = function(evt) {
+                const typedarray = new Uint8Array(evt.target.result);
+                pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+                    pdfDoc = pdf;
+                    pageCountDisplay.textContent = pdfDoc.numPages;
+                    paginationControls.style.display = pdfDoc.numPages > 1 ? 'flex' : 'none';
+                    pageNum = 1;
+                    renderPage(pageNum);
+                });
+            };
+            fileReader.readAsArrayBuffer(file);
+        } else if (file.type.startsWith('image/')) {
+            isImageMode = true;
+            paginationControls.style.display = 'none';
+            fileReader.onload = function(evt) {
+                baseImage.src = evt.target.result;
+                baseImage.onload = function() { renderImage(); };
+            };
+            fileReader.readAsDataURL(file);
+        }
+    });
+
+    // RENDERN EINER SEITE
+    function renderPage(num) {
+        pageIsRendering = true;
+        
+        // Wenn wir diese Seite schon unterschrieben im Cache haben, lade das Bild aus dem Cache
+        if (pageSnapshots[num]) {
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                pageIsRendering = false;
+                if (pageNumPending !== null) {
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            };
+            img.src = pageSnapshots[num];
+            pageNumDisplay.textContent = num;
+        } else {
+            // Ansonsten lade die frische Seite aus der Original-PDF
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale: currentScale });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const renderContext = { canvasContext: ctx, viewport: viewport };
+                page.render(renderContext).promise.then(() => {
+                    pageIsRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+            pageNumDisplay.textContent = num;
+        }
+    }
+
+    function renderImage() {
+        let maxWidth = 2000; 
+        let scale = Math.min(maxWidth / baseImage.width, 1);
+        canvas.width = baseImage.width * scale;
+        canvas.height = baseImage.height * scale;
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+    }
+
+    function queueRenderPage(num) {
+        if (pageIsRendering) pageNumPending = num;
+        else renderPage(num);
+    }
+
+    // BLÄTTERN
+    prevPageBtn.addEventListener('click', () => {
+        if (pageNum <= 1) return;
+        // Speichere die aktuellen Änderungen der Seite ab, bevor geblättert wird
+        pageSnapshots[pageNum] = canvas.toDataURL("image/jpeg", 1.0);
+        pageNum--; queueRenderPage(pageNum);
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+        if (pageNum >= pdfDoc.numPages) return;
+        // Speichere die aktuellen Änderungen der Seite ab, bevor geblättert wird
+        pageSnapshots[pageNum] = canvas.toDataURL("image/jpeg", 1.0);
+        pageNum++; queueRenderPage(pageNum);
+    });
+
+    // LÖSCHEN DER SEITE
+    clearBtn.addEventListener('click', () => {
+        if (isImageMode) {
+            renderImage();
+        } else if (pdfDoc) {
+            delete pageSnapshots[pageNum]; // Lösche aus Cache
+            renderPage(pageNum);           // Lade Original-Seite neu
+        }
+    });
+
+    // 2. ZEICHNEN
+    function getCoordinates(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        let clientX = e.clientX;
+        let clientY = e.clientY;
+        if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        }
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    function startPosition(e) {
+        e.preventDefault();
+        isDrawing = true;
+        const coords = getCoordinates(e);
+        lastX = coords.x;
+        lastY = coords.y;
+        draw(e);
+    }
+
+    function endPosition() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const coords = getCoordinates(e);
+        const relativeScale = canvas.width / 800; 
+        ctx.lineWidth = parseFloat(penWidthSelect.value) * relativeScale;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = penColorSelect.value;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(coords.x, coords.y);
+        ctx.stroke();
+        lastX = coords.x;
+        lastY = coords.y;
+    }
+
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', endPosition);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseout', endPosition);
+    canvas.addEventListener('touchstart', startPosition, {passive: false});
+    canvas.addEventListener('touchend', endPosition);
+    canvas.addEventListener('touchmove', draw, {passive: false});
+
+
+    // 3. EXPORTIEREN (ALLE SEITEN)
+    
+    // Hilfsfunktion zum Laden von Bildern aus dem Cache
+    function loadImage(src) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.src = src;
+        });
+    }
+
+    function addImageToPdf(pdf, imgData, cWidth, cHeight) {
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const canvasRatio = cWidth / cHeight;
+        const pdfRatio = pdfWidth / pdfHeight;
+        
+        let finalWidth = pdfWidth;
+        let finalHeight = pdfHeight;
+        
+        if (canvasRatio > pdfRatio) {
+            finalHeight = pdfWidth / canvasRatio;
+        } else {
+            finalWidth = pdfHeight * canvasRatio;
+        }
+        
+        const xOffset = (pdfWidth - finalWidth) / 2;
+        const yOffset = (pdfHeight - finalHeight) / 2;
+
+        pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
+    }
+
+    exportPdfBtn.addEventListener('click', async () => {
+        const { jsPDF } = window.jspdf;
+        
+        // Button verändern, um Laden anzuzeigen (wichtig bei großen PDFs!)
+        const originalText = exportPdfBtn.innerHTML;
+        exportPdfBtn.innerHTML = "⏳ PDF wird generiert... Bitte warten.";
+        exportPdfBtn.disabled = true;
+
+        try {
+            let pdf = null;
+
+            if (isImageMode) {
+                // Nur ein Bild hochgeladen
+                const isLandscape = canvas.width > canvas.height;
+                pdf = new jsPDF({ orientation: isLandscape ? "l" : "p", unit: "mm", format: "a4" });
+                addImageToPdf(pdf, canvas.toDataURL("image/jpeg", 1.0), canvas.width, canvas.height);
+            } else {
+                // PDF hochgeladen
+                // Aktuelle (gerade sichtbare) Seite ins Gedächtnis abspeichern
+                pageSnapshots[pageNum] = canvas.toDataURL("image/jpeg", 1.0);
+
+                // Gehe ALLE Seiten durch
+                for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    let imgData;
+                    let cWidth, cHeight;
+
+                    if (pageSnapshots[i]) {
+                        // Der Nutzer hat diese Seite angesehen / unterschrieben (aus Cache holen)
+                        const img = await loadImage(pageSnapshots[i]);
+                        imgData = pageSnapshots[i];
+                        cWidth = img.width;
+                        cHeight = img.height;
+                    } else {
+                        // Der Nutzer war gar nicht auf dieser Seite -> Leere Seite aus PDF rendern
+                        const page = await pdfDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: currentScale });
+                        
+                        const tempCanvas = document.createElement('canvas');
+                        tempCanvas.width = viewport.width;
+                        tempCanvas.height = viewport.height;
+                        const tempCtx = tempCanvas.getContext('2d');
+                        
+                        await page.render({ canvasContext: tempCtx, viewport: viewport }).promise;
+                        
+                        imgData = tempCanvas.toDataURL("image/jpeg", 1.0);
+                        cWidth = tempCanvas.width;
+                        cHeight = tempCanvas.height;
+                    }
+
+                    const isLandscape = cWidth > cHeight;
+                    
+                    if (i === 1) {
+                        pdf = new jsPDF({ orientation: isLandscape ? "l" : "p", unit: "mm", format: "a4" });
+                    } else {
+                        pdf.addPage("a4", isLandscape ? "l" : "p");
+                    }
+
+                    addImageToPdf(pdf, imgData, cWidth, cHeight);
+                }
+            }
+            
+            pdf.save('Unterschriebenes_Dokument.pdf');
+
+        } catch (error) {
+            console.error(error);
+            alert("Es gab einen Fehler bei der Erstellung des PDFs.");
+        } finally {
+            // Button zurücksetzen
+            exportPdfBtn.innerHTML = originalText;
+            exportPdfBtn.disabled = false;
+        }
+    });
+
+</script>
+</body>
+</html>
