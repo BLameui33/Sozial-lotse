@@ -1,4 +1,4 @@
-// kita-betreuungskosten-check.js – verbessert mit Validierung & Jahresdurchschnitt
+// kita-betreuungskosten-check.js – Texte für Laien verständlich aufbereitet
 
 function n(el) {
   if (!el) return 0;
@@ -12,32 +12,37 @@ function euro(v) {
 }
 function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
+// Fehlermeldungen in verständlicher Sprache
 function errorBox(msgs){
   const items = msgs.map(m=>`<li>${m}</li>`).join("");
   return `
-    <div class="pflegegrad-result-card">
-      <h2>Bitte Eingaben prüfen</h2>
+    <div class="pflegegrad-result-card" style="border-left: 4px solid #e53935;">
+      <h2>Bitte prüfen Sie Ihre Eingaben</h2>
+      <p class="hinweis">Der Rechner kann erst starten, wenn die folgenden Punkte geklärt sind:</p>
       <ul>${items}</ul>
     </div>
   `;
 }
 
-// --- UI: Kinderliste dynamisch rendern ---
+// --- UI: Kinderliste dynamisch rendern (mit verständlichen Labels) ---
 function renderKinderListe(container, anzahl) {
   const k = Math.max(0, Math.floor(anzahl || 0));
   if (k === 0) {
-    container.innerHTML = `<p class="hinweis">Keine Kinder eingetragen.</p>`;
+    container.innerHTML = `<p class="hinweis">Noch keine Kinder eingetragen. Bitte geben Sie oben die Anzahl der betreuten Kinder an.</p>`;
     return;
   }
   let html = `
+    <p class="hinweis" style="margin-bottom:10px;">
+      <strong>So geht's:</strong> Für jedes Kind tragen Sie ein, in welche Einrichtung es geht (Krippe, Kindergarten oder Hort), wie viele Stunden pro Woche es dort betreut wird und für wie viele Monate im Jahr Sie die Betreuung bezahlen.
+    </p>
     <table class="pflegegrad-tabelle">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Altersgruppe</th>
-          <th>Stunden/Woche</th>
-          <th>Monate/Jahr (beitragspflichtig)</th>
-          <th>Essenspauschale aktiv?</th>
+          <th>Kind</th>
+          <th>Einrichtung / Alter</th>
+          <th>Stunden pro Woche</th>
+          <th>Monate im Jahr</th>
+          <th>Essen dabei?</th>
         </tr>
       </thead>
       <tbody>
@@ -45,22 +50,24 @@ function renderKinderListe(container, anzahl) {
   for (let i = 0; i < k; i++) {
     html += `
       <tr>
-        <td>Kind ${i + 1}</td>
+        <td><strong>Kind ${i + 1}</strong></td>
         <td>
-          <select class="kt_kind_alter" data-index="${i}">
-            <option value="u3">U3</option>
-            <option value="ue3" selected>Ü3</option>
-            <option value="hort">Hort</option>
+          <select class="kt_kind_alter" data-index="${i}" aria-label="Einrichtung Kind ${i+1}">
+            <option value="u3">Krippe (0–3 Jahre)</option>
+            <option value="ue3" selected>Kindergarten (3–6 Jahre)</option>
+            <option value="hort">Hort (Schulkind)</option>
           </select>
         </td>
         <td>
-          <input type="number" class="kt_kind_std" data-index="${i}" min="0" max="60" step="1" value="35" />
+          <input type="number" class="kt_kind_std" data-index="${i}" min="0" max="60" step="1" value="35" aria-label="Stunden pro Woche Kind ${i+1}" />
+          <div class="hint-small">Typisch: 25 (Halbtag), 35 (3/4-Tag), 45 (Ganztag)</div>
         </td>
         <td>
-          <input type="number" class="kt_kind_monate" data-index="${i}" min="1" max="12" step="1" value="12" />
+          <input type="number" class="kt_kind_monate" data-index="${i}" min="1" max="12" step="1" value="12" aria-label="Betreuungsmonate Kind ${i+1}" />
+          <div class="hint-small">12 = ganzjährig</div>
         </td>
         <td style="text-align:center;">
-          <input type="checkbox" class="kt_kind_essen" data-index="${i}" checked />
+          <input type="checkbox" class="kt_kind_essen" data-index="${i}" checked aria-label="Mittagessen Kind ${i+1}" />
         </td>
       </tr>
     `;
@@ -80,33 +87,29 @@ function leseKinder(container) {
   });
 }
 
-// --- Kernlogik ---
+// --- Kernlogik (unverändert) ---
 function monatlicheGebuehrKind(kind, rates, incomeMult, capPerKind, free) {
   const stdMonat = Math.max(0, kind.stdWoche) * 4.33;
 
-  // Satz je Stunde
   let satz = 0;
   if (kind.alter === "u3") satz = rates.u3;
   else if (kind.alter === "ue3") satz = rates.ue3;
   else satz = rates.hort;
 
-  // Beitragsfreiheit
   if ((kind.alter === "u3" && free.u3) || (kind.alter === "ue3" && free.ue3)) {
     satz = 0;
   }
 
   let betrag = satz * stdMonat * incomeMult;
 
-  // Deckel pro Kind
   if (capPerKind > 0) betrag = Math.min(betrag, capPerKind);
 
-  return betrag; // pro Monat im beitragspflichtigen Zeitraum (ohne Essen)
+  return betrag;
 }
 
 function anwendeGeschwisterrabatt(monatsBetraege, rabatt2, rabatt3plus) {
   if (monatsBetraege.length === 0) return { netto: [], rabattSum: 0 };
 
-  // Teuerstes Kind ohne Rabatt; nächstes mit Rabatt2; weitere mit Rabatt3+
   const sorted = monatsBetraege.map((v, i) => ({ i, v })).sort((a, b) => b.v - a.v);
 
   let rabattSum = 0;
@@ -126,17 +129,44 @@ function anwendeGeschwisterrabatt(monatsBetraege, rabatt2, rabatt3plus) {
   return { netto, rabattSum };
 }
 
+// --- Ergebnisausgabe (verständlich für Laien) ---
 function baueErgebnis(region, einkommen, kinder, params, result) {
+  function alterLabel(code) {
+    if (code === "u3") return "Krippe (0–3 J.)";
+    if (code === "ue3") return "Kindergarten (3–6 J.)";
+    return "Hort (Schulkind)";
+  }
+
+  // Rabatt-Status pro Kind ermitteln
+  const bruttoMitIndex = result.bruttoProKind.map((v, i) => ({ i, v }))
+    .sort((a, b) => b.v - a.v);
+  
+  const rabattInfo = Array(kinder.length).fill(null);
+  bruttoMitIndex.forEach((entry, rank) => {
+    if (rank === 0) {
+      rabattInfo[entry.i] = { prozent: 0, text: "kein Rabatt (teuerstes Kind)", color: "#555" };
+    } else if (rank === 1) {
+      rabattInfo[entry.i] = { prozent: params.rabatt2, text: `−${params.rabatt2} % Geschwister-Rabatt`, color: "#2e7d32" };
+    } else {
+      rabattInfo[entry.i] = { prozent: params.rabatt3, text: `−${params.rabatt3} % Geschwister-Rabatt`, color: "#2e7d32" };
+    }
+  });
+
   const rows = kinder.map((k, idx) => {
-    const labelAlter = k.alter === "u3" ? "U3" : (k.alter === "ue3" ? "Ü3" : "Hort");
+    const rabatt = rabattInfo[idx];
     return `
       <tr>
-        <td>Kind ${idx + 1}</td>
-        <td>${labelAlter}</td>
-        <td>${k.stdWoche} Std/Woche</td>
-        <td>${k.monate} Mon.</td>
+        <td><strong>Kind ${idx + 1}</strong></td>
+        <td>${alterLabel(k.alter)}</td>
+        <td>${k.stdWoche} Std/Wo</td>
+        <td>${k.monate} Monate</td>
         <td>${euro(result.bruttoProKind[idx])}</td>
-        <td>${euro(result.nettoProKind[idx])}</td>
+        <td>
+          <strong>${euro(result.nettoProKind[idx])}</strong>
+          <div class="hint-small" style="color:${rabatt.color}; margin-top:2px;">
+            ${rabatt.text}
+          </div>
+        </td>
         <td>${k.essen ? euro(params.essen) : "—"}</td>
         <td><strong>${euro(result.gesamtProKind[idx])}</strong></td>
         <td>${euro(result.jahresDurchschnittProKind[idx])}</td>
@@ -147,67 +177,125 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
   const anteil = einkommen > 0 ? (result.summeGesamt / einkommen) * 100 : null;
   const anteilAvg = einkommen > 0 ? (result.jahresDurchschnittGesamt / einkommen) * 100 : null;
 
+  let befreiungText = "keine Altersgruppe beitragsfrei";
+  if (params.free.u3 && params.free.ue3) befreiungText = "Krippe und Kindergarten beitragsfrei";
+  else if (params.free.u3) befreiungText = "Krippe beitragsfrei";
+  else if (params.free.ue3) befreiungText = "Kindergarten beitragsfrei";
+
+  // Info-Box nur anzeigen, wenn mindestens 2 Kinder vorhanden sind
+  let rabattInfoBox = '';
+  if (kinder.length > 1) {
+    rabattInfoBox = `
+      <div class="info-box" style="background:#e3f2fd; border-left:4px solid #2196f3; margin-top:12px; padding:12px;">
+        <strong>Wie funktioniert der Geschwister-Rabatt?</strong><br>
+        <span class="hinweis">
+          In den meisten Kommunen wird das <strong>teuerste Kind voll bezahlt</strong>. 
+          Geschwister-Rabatte werden nur auf die günstigeren Kinder angewendet. 
+          Der Rabatt greift also erst beim zweiten und dritten Kind – nicht beim teuersten.
+          <br><br>
+          <strong>Hinweis:</strong> Manche Kommunen sortieren die Kinder stattdessen nach Alter 
+          (ältestes Kind = voll, jüngste Kinder = Rabatt). Das ist regional unterschiedlich – 
+          prüfen Sie hierzu Ihre lokale Satzung.
+        </span>
+      </div>
+    `;
+  }
+
   return `
-    <h2>Ergebnis: geschätzte Betreuungskosten</h2>
+    <h2>Ihre geschätzten Kita-Kosten</h2>
 
     <div class="pflegegrad-result-card">
-      <p>
-        <strong>Region:</strong> ${region ? region : "—"}<br>
-        <strong>Haushaltsnetto:</strong> ${euro(einkommen)}<br>
-        <strong>Einkommensmultiplikator:</strong> ${params.incomeMult.toFixed(2)}
+      <p style="font-size:0.95em; line-height:1.6;">
+        <strong>Wohnort:</strong> ${region ? region : "nicht angegeben"}<br>
+        <strong>Haushaltsnetto pro Monat:</strong> ${euro(einkommen)}<br>
+        <strong>Ihr Beitragssatz:</strong> ${params.incomeMult.toFixed(2)}-fach 
+        ${params.incomeMult === 1 ? "(Durchschnitt)" : (params.incomeMult < 1 ? "(unterdurchschnittlich)" : "(überdurchschnittlich)")}
       </p>
 
-      <h3>Details pro Kind</h3>
+      <h3>Kosten im Detail pro Kind</h3>
+      <div style="overflow-x:auto;">
       <table class="pflegegrad-tabelle">
         <thead>
           <tr>
             <th>Kind</th>
-            <th>Altersgruppe</th>
-            <th>Umfang</th>
-            <th>Monate/Jahr</th>
-            <th>Gebühr/Monat (brutto)</th>
-            <th>nach Geschwisterrabatt</th>
-            <th>Essenspauschale</th>
-            <th><strong>Summe/Monat (wenn Beitrag fällig)</strong></th>
-            <th>Jahresdurchschnitt / Monat (auf 12 Mon.)</th>
+            <th>Einrichtung</th>
+            <th>Stunden</th>
+            <th>Monate</th>
+            <th>Beitrag vor Rabatt</th>
+            <th>Nach Rabatt</th>
+            <th>Essensgeld</th>
+            <th><strong>Gesamt / Monat</strong></th>
+            <th>Auf 12 Monate umgelegt</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
+      </div>
 
-      <h3>Summen</h3>
+      ${rabattInfoBox}
+
+      <p class="hinweis" style="font-size:0.85em; margin-top:10px;">
+        <em>„Auf 12 Monate umgelegt" bedeutet: Wenn Ihr Kind z. B. nur 10 Monate im Jahr Betreuung bekommt 
+        (z. B. wegen Schließzeiten), dann rechnen wir die Kosten aufs ganze Jahr um – das ist realistischer für Ihr Haushaltsbudget.</em>
+      </p>
+
+      <h3>Zusammenfassung</h3>
       <table class="pflegegrad-tabelle">
         <thead>
-          <tr><th>Größe</th><th>Betrag</th></tr>
+          <tr><th>Was?</th><th>Betrag</th></tr>
         </thead>
         <tbody>
-          <tr><td>Geschwisterrabatt gesamt</td><td>− ${euro(result.rabattSum)}</td></tr>
-          <tr><td>Essenspauschalen gesamt (monatlich, wenn aktiv)</td><td>${euro(result.essenSum)}</td></tr>
-          <tr><td><strong>Monatliche Gesamtkosten (wenn Beitrag fällig)</strong></td><td><strong>${euro(result.summeGesamt)}</strong></td></tr>
-          <tr><td>Anteil am Haushaltsnetto</td><td>${anteil !== null ? anteil.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
-          <tr><td><strong>Jahresdurchschnitt / Monat (auf 12 Mon.)</strong></td><td><strong>${euro(result.jahresDurchschnittGesamt)}</strong></td></tr>
-          <tr><td>Anteil am Haushaltsnetto (Durchschnitt)</td><td>${anteilAvg !== null ? anteilAvg.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
+          <tr><td>Ihr Geschwister-Rabatt (insgesamt)</td><td style="color:#2e7d32;"><strong>− ${euro(result.rabattSum)}</strong></td></tr>
+          <tr><td>Essensgeld gesamt (monatlich)</td><td>${euro(result.essenSum)}</td></tr>
+          <tr><td><strong>Gesamtkosten pro Monat</strong></td><td><strong style="color:#1565c0;">${euro(result.summeGesamt)}</strong></td></tr>
+          <tr><td>Davon Anteil am Nettoeinkommen</td><td>${anteil !== null ? anteil.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
+          <tr style="background:#e8f5e9;"><td><strong>Ø Kosten pro Monat (aufs Jahr gerechnet)</strong></td><td><strong style="color:#2e7d32;">${euro(result.jahresDurchschnittGesamt)}</strong></td></tr>
+          <tr><td>Ø Anteil am Nettoeinkommen</td><td>${anteilAvg !== null ? anteilAvg.toFixed(1).replace(".", ",") + " %" : "—"}</td></tr>
         </tbody>
       </table>
 
-      <p class="hinweis">
-        Parameter (anpassbar): U3 ${euro(params.rates.u3)}/Std, Ü3 ${euro(params.rates.ue3)}/Std,
-        Hort ${euro(params.rates.hort)}/Std, Einkommensmultiplikator ${params.incomeMult.toFixed(2)},
-        Rabatte (2. Kind ${params.rabatt2}% / ab 3. Kind ${params.rabatt3}%),
-        Beitragsfreiheit: ${params.free.u3 ? "U3 " : ""}${params.free.ue3 ? "Ü3 " : ""}${(!params.free.u3 && !params.free.ue3) ? "keine" : ""}.
-        Deckel pro Kind: ${params.capPerKind > 0 ? euro(params.capPerKind) : "—"}.
-      </p>
-      <p class="hinweis">
-        <strong>Hinweis:</strong> Viele Kommunen haben zusätzliche Regeln (z. B. feste Zeitkorridore 25/35/45 Std.,
-        Staffelgrenzen, Befreiung ab bestimmtem Alter oder Beitragsfreiheit nur für Betreuung – nicht für Essen).
-        Bitte prüfe die lokale Satzung und Bescheide.
-      </p>
+      <div class="info-box" style="background:#f5f5f5; margin-top:15px;">
+        <h3 style="margin-top:0;">Verwendete Berechnungsgrundlagen</h3>
+        <p class="hinweis" style="margin-bottom:5px;">
+          <strong>Stundensätze:</strong> Krippe ${euro(params.rates.u3)}, 
+          Kindergarten ${euro(params.rates.ue3)}, 
+          Hort ${euro(params.rates.hort)}
+        </p>
+        <p class="hinweis" style="margin-bottom:5px;">
+          <strong>Geschwister-Rabatte:</strong> 
+          2. Kind ${params.rabatt2}% günstiger, 
+          ab dem 3. Kind ${params.rabatt3}% günstiger
+          ${params.rabatt3 === 100 ? " (= beitragsfrei)" : ""}
+        </p>
+        <p class="hinweis" style="margin-bottom:5px;">
+          <strong>Beitragsfreiheit:</strong> ${befreiungText}
+        </p>
+        <p class="hinweis" style="margin-bottom:0;">
+          <strong>Höchstgrenze pro Kind:</strong> ${params.capPerKind > 0 ? euro(params.capPerKind) + " pro Monat" : "keine Begrenzung"}
+        </p>
+      </div>
+
+      <div class="info-box warning" style="border-left: 4px solid #ff9800; margin-top:15px;">
+        <h3 style="margin-top:0;">Wichtig: Dies ist nur eine Schätzung</h3>
+        <p class="hinweis">
+          Jede Kommune und jeder Kita-Träger hat eigene Regeln. Zum Beispiel:
+        </p>
+        <ul class="hinweis" style="padding-left:20px; margin-top:5px;">
+          <li>Feste Betreuungszeit-Pakete (z. B. nur 25 / 35 / 45 Stunden zur Auswahl)</li>
+          <li>Beitragsfreiheit ab einem bestimmten Alter (z. B. 3 Jahre in vielen Bundesländern)</li>
+          <li>Ferien- oder Schließzeiten, die den Beitrag nicht mindern</li>
+          <li>Geschwister-Regelungen, die anders sortiert sind (z. B. nach Alter statt nach Kosten)</li>
+        </ul>
+        <p class="hinweis" style="margin-top:8px; margin-bottom:0;">
+          <strong>Verbindlich ist ausschließlich der schriftliche Gebührenbescheid Ihrer Kommune oder Ihres Trägers.</strong> 
+          Diese Berechnung dient nur Ihrer persönlichen Budgetplanung.
+        </p>
+      </div>
     </div>
   `;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Elemente
   const regionInput = document.getElementById("kt_region");
   const nettoInput = document.getElementById("kt_netto");
 
@@ -232,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const reset = document.getElementById("kt_reset");
   const out = document.getElementById("kt_ergebnis");
 
-  // Initial: Liste rendern
   renderKinderListe(kinderWrap, n(anzInput));
 
   anzInput.addEventListener("input", () => {
@@ -245,11 +332,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const errors = [];
       const region = (regionInput && regionInput.value) || "";
       const einkommen = n(nettoInput);
-      if (einkommen < 0) errors.push("Haushaltsnettoeinkommen darf nicht negativ sein.");
+      if (einkommen < 0) errors.push("Ihr Haushaltsnetto kann nicht negativ sein. Bitte prüfen Sie die Eingabe.");
 
       const kinder = leseKinder(kinderWrap);
       if ((n(anzInput) || 0) !== kinder.length) {
-        errors.push("Bitte Anzahl und Liste der Kinder synchronisieren.");
+        errors.push("Die Anzahl der Kinder passt nicht zur Liste. Bitte geben Sie oben die korrekte Anzahl ein.");
       }
 
       const params = {
@@ -269,13 +356,23 @@ document.addEventListener("DOMContentLoaded", () => {
         essen: Math.max(0, n(essenInput))
       };
 
-      // Plausis
-      if (params.rates.u3 === 0 && !params.free.u3) errors.push("U3-Satz ist 0 und keine Beitragsfreiheit gesetzt – ist das beabsichtigt?");
-      if (params.rates.ue3 === 0 && !params.free.ue3) errors.push("Ü3-Satz ist 0 und keine Beitragsfreiheit gesetzt – ist das beabsichtigt?");
-      if (params.incomeMult <= 0) errors.push("Einkommensmultiplikator muss > 0 sein.");
+      // Verständliche Plausibilitäts-Prüfungen
+      if (params.rates.u3 === 0 && !params.free.u3) {
+        errors.push("Für die Krippe haben Sie 0,00 € pro Stunde eingetragen, aber es ist keine Beitragsfreiheit aktiviert. Ist das richtig? Falls ja, können Sie diese Meldung ignorieren.");
+      }
+      if (params.rates.ue3 === 0 && !params.free.ue3) {
+        errors.push("Für den Kindergarten haben Sie 0,00 € pro Stunde eingetragen, aber es ist keine Beitragsfreiheit aktiviert. Ist das richtig?");
+      }
+      if (params.incomeMult <= 0) {
+        errors.push("Ihr Beitragssatz muss größer als 0 sein.");
+      }
       kinder.forEach((k, i) => {
-        if (k.stdWoche < 0) errors.push(`Kind ${i+1}: Stunden/Woche darf nicht negativ sein.`);
-        if (k.monate < 1 || k.monate > 12) errors.push(`Kind ${i+1}: Monate/Jahr bitte zwischen 1 und 12.`);
+        if (k.stdWoche < 0) {
+          errors.push(`Bei Kind ${i+1}: Die Stunden pro Woche können nicht negativ sein.`);
+        }
+        if (k.monate < 1 || k.monate > 12) {
+          errors.push(`Bei Kind ${i+1}: Bitte geben Sie zwischen 1 und 12 Betreuungsmonaten im Jahr an.`);
+        }
       });
 
       if (errors.length) {
@@ -284,7 +381,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // 1) Brutto-Gebühren pro Kind (Monatsbasis – wenn Beitrag fällig)
       const bruttoProKind = kinder.map(k =>
         monatlicheGebuehrKind(
           k,
@@ -295,23 +391,18 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       );
 
-      // 2) Geschwisterrabatt
       const { netto: nettoProKind, rabattSum } = anwendeGeschwisterrabatt(
         bruttoProKind,
         params.rabatt2,
         params.rabatt3
       );
 
-      // 3) Essenspauschale addieren (optional pro Kind)
       const essenProKind = kinder.map(k => (k.essen ? params.essen : 0));
 
-      // 4) Monatskosten je Kind (wenn Beitrag fällig)
       const gesamtProKind = kinder.map((_, i) => nettoProKind[i] + essenProKind[i]);
 
-      // 5) Jahresdurchschnitt bilden (auf 12 Monate): (Monatskosten * beitrags-Monate)/12
       const jahresDurchschnittProKind = kinder.map((k, i) => (gesamtProKind[i] * k.monate) / 12);
 
-      // Summen
       const essenSum = essenProKind.reduce((a, b) => a + b, 0);
       const summeGesamt = gesamtProKind.reduce((a, b) => a + b, 0);
       const jahresDurchschnittGesamt = jahresDurchschnittProKind.reduce((a, b) => a + b, 0);
