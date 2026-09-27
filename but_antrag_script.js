@@ -148,11 +148,12 @@ function generateButAntragPDF(data) {
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
     const margin = 20;
-    const defaultLineHeight = 7;
-    const spaceAfterParagraph = 3; 
+    const defaultLineHeight = 6.5;
+    const spaceAfterParagraph = 3.5; 
     const subHeadingFontSize = 11;
     const textFontSize = 10;     
     const betreffFontSize = 12;
+    const fontStyleFamily = "helvetica"; // Modernes, edles Schriftbild
 
     let y = margin;
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -163,7 +164,7 @@ function generateButAntragPDF(data) {
         const textToWrite = text === undefined || text === null ? "" : String(text);
         if (y + currentLineHeight > usableHeight - (margin/2)) { doc.addPage(); y = margin; }
         doc.setFontSize(fontSize);
-        doc.setFont("times", fontStyle); 
+        doc.setFont(fontStyleFamily, fontStyle); 
         doc.text(textToWrite, margin, y);
         y += currentLineHeight;
     }
@@ -173,7 +174,7 @@ function generateButAntragPDF(data) {
         const fontStyle = options.fontStyle || "normal";
         const extraSpacing = options.extraSpacingAfter === undefined ? spaceAfterParagraph : options.extraSpacingAfter;
         doc.setFontSize(paragraphFontSize);
-        doc.setFont("times", fontStyle);
+        doc.setFont(fontStyleFamily, fontStyle);
         
         const lines = doc.splitTextToSize(textToWrite, pageWidth - (2 * margin));
         for (let i = 0; i < lines.length; i++) {
@@ -199,31 +200,66 @@ function generateButAntragPDF(data) {
         anlagen, anlageSonstigesBut
     } = data;
 
-    doc.setFont("times", "normal");
+    doc.setFont(fontStyleFamily, "normal");
 
-    // Absender
-    writeLine(personName);
-    writeLine(personAdresse);
-    writeLine(`${personPlz} ${personOrt}`);
-    writeLine(`BG-Nummer / Aktenzeichen: ${bgNummer}`);
-    if (y + defaultLineHeight <= usableHeight) y += defaultLineHeight; else {doc.addPage(); y = margin;}
+    // ====================================================================
+    // START: Edler Briefkopf (DIN 5008 inspiriert)
+    // ====================================================================
 
-    // Empfänger
-    writeLine(behoerdeName);
-    behoerdeAdresse.split("\n").forEach(line => writeLine(line.trim()));
-    if (y + defaultLineHeight * 2 <= usableHeight) y += defaultLineHeight * 2; else {doc.addPage(); y = margin;}
+    // 1. Kleine Absenderzeile über dem Empfängerfenster
+    doc.setFontSize(7.5);
+    doc.setTextColor(110, 110, 110); // Diskretes, elegantes Grau
+    const absenderZeile = `${personName || ''} • ${personAdresse || ''} • ${personPlz || ''} ${personOrt || ''}`;
+    doc.text(absenderZeile, margin, y);
+    y += 2.5;
 
-    // Datum
+    // Feine Trennlinie unter der Absenderzeile
+    doc.setDrawColor(210, 210, 210);
+    doc.setLineWidth(0.25);
+    doc.line(margin, y, margin + 85, y);
+    y += 6;
+
+    doc.setTextColor(0, 0, 0); // Zurück zu Schwarz für Haupttext
+
+    // Y-Position für Empfänger merken
+    const empfaengerStartY = y;
+
+    // 2. Empfänger-Adresse (links)
+    writeLine(behoerdeName, 5, "bold", 10);
+    if (behoerdeAdresse) {
+        behoerdeAdresse.split("\n").forEach(line => {
+            if (line.trim()) writeLine(line.trim(), 5, "normal", 10);
+        });
+    }
+    const empfaengerEndY = y;
+
+    // 3. Info-Block rechts (Datum & BG-Nummer / Aktenzeichen)
+    let infoY = empfaengerStartY;
+    const rightAlignX = pageWidth - margin;
     const datumHeute = new Date().toLocaleDateString("de-DE");
-    doc.setFontSize(textFontSize);
-    const datumsBreite = doc.getStringUnitWidth(datumHeute) * textFontSize / doc.internal.scaleFactor;
-    if (y + defaultLineHeight > usableHeight) { doc.addPage(); y = margin; }
-    doc.text(datumHeute, pageWidth - margin - datumsBreite, y);
-    y += defaultLineHeight * 2; 
+
+    doc.setFontSize(9.5);
+    doc.setFont(fontStyleFamily, "normal");
+    doc.setTextColor(80, 80, 80);
+
+    doc.text(`Datum: ${datumHeute}`, rightAlignX, infoY, { align: "right" });
+    infoY += 5;
+    if (bgNummer && bgNummer.trim() !== "") {
+        doc.text(`BG-Nr. / Az.: ${bgNummer}`, rightAlignX, infoY, { align: "right" });
+        infoY += 5;
+    }
+
+    doc.setTextColor(0, 0, 0);
+
+    // Y auf den tiefsten Punkt nach dem Briefkopf setzen
+    y = Math.max(empfaengerEndY, infoY) + 12;
+
+    // ====================================================================
+    // ENDE: Briefkopf
+    // ====================================================================
 
     // Betreff
     let betreffText = `Antrag auf Leistungen für Bildung und Teilhabe (BuT)`;
-    betreffText += `\nAntragsteller: ${personName}, BG-Nummer: ${bgNummer}`;
     if (kindNameGeburtsdatum && kindNameGeburtsdatum.trim() !== "") {
         betreffText += `\nfür das Kind / die Kinder: ${kindNameGeburtsdatum}`;
     }
@@ -265,7 +301,7 @@ function generateButAntragPDF(data) {
         y += spaceAfterParagraph / 2;
         writeParagraph(ergaenzendeArgumenteBut);
 
-        writeParagraph(`Als Bezieher von [z.B. Grundsicherungsgeld, Wohngeld] sind wir anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
+        writeParagraph(`Die Voraussetzungen für die Anspruchsberechtigung liegen vor. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
     
     } else {
         // --- TEXTBLOCK FÜR SINGULAR ("ICH") ---
@@ -295,7 +331,7 @@ function generateButAntragPDF(data) {
         y += spaceAfterParagraph / 2;
         writeParagraph(ergaenzendeArgumenteBut);
 
-        writeParagraph(`Als Bezieherin/Bezieher von [z.B. Grundsicherungsgeld, Wohngeld] bin ich anspruchsberechtigt. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
+        writeParagraph(`Die Voraussetzungen für die Anspruchsberechtigung liegen vor. Die entsprechenden Nachweise liegen Ihnen bereits vor oder sind diesem Schreiben beigefügt.`);
     }
 
     // --- Gemeinsamer Schlussteil ---
