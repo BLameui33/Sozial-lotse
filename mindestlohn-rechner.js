@@ -60,7 +60,7 @@ function buildResult(res) {
     // Schlimmster Fall: Effektiver Lohn unter Mindestlohn
     alarmBox = `
       <div style="background: #ffebee; border: 1px solid #e53935; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
-        <h3 style="margin-top: 0; color: #c62828; font-size: 1.15rem;">🚨 Lohnraub erkannt! Mindestlohn unterschritten</h3>
+        <h3 style="margin-top: 0; color: #c62828; font-size: 1.15rem;">Lohnraub erkannt! Mindestlohn unterschritten</h3>
         <p style="margin-bottom: 10px; font-size: 0.95rem; color: #333;">
           Achtung: Durch Ihre unbezahlte Mehrarbeit (z.B. Rüstzeiten, Überstunden) rutscht Ihr effektiver Stundenlohn auf <strong>${euro(res.lohnReal)}</strong>. Das ist illegal! Der gesetzliche Mindestlohn liegt bei zwingend <strong>${euro(MINDESTLOHN_AKTUELL)}</strong> pro Stunde.
         </p>
@@ -73,7 +73,7 @@ function buildResult(res) {
     // Fall 2: Mehrarbeit, aber noch über Mindestlohn
     alarmBox = `
       <div style="background: #fff3e0; border: 1px solid #ff9800; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
-        <h3 style="margin-top: 0; color: #e65100; font-size: 1.15rem;">⚠️ Unbezahlte Arbeit entlarvt</h3>
+        <h3 style="margin-top: 0; color: #e65100; font-size: 1.15rem;">Unbezahlte Arbeit entlarvt</h3>
         <p style="margin-bottom: 0; font-size: 0.95rem; color: #333;">
           Ihr Stundenlohn bleibt zwar mit ${euro(res.lohnReal)} knapp über dem gesetzlichen Mindestlohn (${euro(MINDESTLOHN_AKTUELL)}), aber Sie verschenken durch unbezahlte Mehrarbeit jeden Monat bares Geld an Ihren Arbeitgeber!
         </p>
@@ -83,7 +83,7 @@ function buildResult(res) {
     // Fall 3: Alles korrekt
     alarmBox = `
       <div style="background: #e8f5e9; border: 1px solid #4caf50; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
-        <h3 style="margin-top: 0; color: #2e7d32; font-size: 1.15rem;">✅ Alles im grünen Bereich</h3>
+        <h3 style="margin-top: 0; color: #2e7d32; font-size: 1.15rem;">Alles im grünen Bereich</h3>
         <p style="margin-bottom: 0; font-size: 0.95rem; color: #333;">
           Ihre bezahlte Zeit entspricht Ihrer gearbeiteten Zeit. Ihr Stundenlohn liegt bei ${euro(res.lohnVertrag)} und erfüllt die gesetzlichen Vorgaben.
         </p>

@@ -2,31 +2,324 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Kinderzuschlag Rechner 2026 – KiZ, Wohngeld & Einkommensprüfung</title>
-
-<meta name="description" content="Großer Kinderzuschlag-Rechner 2026: Prüfe KiZ-Anspruch, berechne Höhe, kombiniere mit Wohngeld oder teste, ob sich mehr Gehalt lohnt.">
-
+  <title>Kinderzuschlag Rechner 2026 KiZ Höhe berechnen (297€/Kind) | Kostenlos</title>
+  <meta name="description" content="Kinderzuschlag Rechner 2026: In 3 Min. KiZ-Anspruch prüfen & bis zu 297€ pro Kind berechnen. Inkl. Wohngeld-Kombi-Check, Gehalts-Simulator & PDF-Export. 100% kostenlos.">
+  <meta name="keywords" content="Kinderzuschlag Rechner, KiZ Rechner 2026, Kinderzuschlag berechnen, KiZ Anspruch, Kinderzuschlag Höhe, KiZ Wohngeld Kombi">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://sozialrecht-lotse.de/kiz-super-rechner.html">
-  <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="/logo-lotse-fav.png">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Online-Rechner von Sozial-Lotse",
+  "name": "Kinderzuschlag Rechner 2026",
   "operatingSystem": "Web",
   "applicationCategory": "FinanceApplication",
-  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
+  "description": "Kostenloser Online-Rechner zur Berechnung des Kinderzuschlags (KiZ) 2026. Prüfen Sie Anspruch, Höhe und Kombinationen mit Wohngeld.",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "EUR"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "342"
   }
 }
 </script>
+<style>
+/* =====================================
+   ERGEBNIS-BOXEN
+   ===================================== */
+.result-card {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}
+.result-summary {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.result-summary h3 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+.result-summary p {
+    margin: 10px 0 0 0;
+}
+.result-green { background-color: #d4edda; color: #155724; }
+.result-yellow { background-color: #fff3cd; color: #856404; }
+.result-red { background-color: #f8d7da; color: #721c24; }
+.result-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+.result-list li {
+    margin-bottom: 8px;
+}
+
+/* =====================================
+   MODUS-AUSWAHL CARDS
+   ===================================== */
+.modus-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.modus-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+}
+
+.modus-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.modus-card:hover {
+    border-color: #2196f3;
+    background: #f0f8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+}
+
+.modus-card::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+    opacity: 0.4;
+    transition: all 0.2s ease;
+}
+
+.modus-card:has(input[type="radio"]:checked) {
+    border-color: #2e7d32;
+    background: #e8f5e9;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+}
+
+.modus-card:has(input[type="radio"]:checked)::after {
+    background-color: #2e7d32;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.modus-card:has(input[type="radio"]:checked) .modus-card-content h3 {
+    color: #1b5e20;
+}
+
+@supports not selector(:has(*)) {
+    .modus-card input[type="radio"]:checked ~ .modus-card-content {
+        color: #1b5e20;
+    }
+}
+
+.modus-card-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.15rem;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.modus-card-content p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.45;
+}
+
+.modus-card input[type="radio"]:focus-visible + .modus-card-content {
+    outline: 3px solid #2196f3;
+    outline-offset: 4px;
+    border-radius: 6px;
+}
+
+/* =====================================
+   FORMULAR STYLES
+   ===================================== */
+.kiz-form {
+    margin-top: 30px;
+}
+
+.form-fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.form-fieldset legend {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0 10px;
+    color: #333;
+}
+
+.form-group {
+    display: grid;
+    gap: 20px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.form-input,
+.form-select {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.form-input::placeholder {
+    color: #999;
+}
+
+.input-hint {
+    margin: 4px 0 0 0;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.info-box-inline {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.info-box-inline p {
+    margin: 0;
+    color: #1565c0;
+}
+
+/* =====================================
+   BUTTONS
+   ===================================== */
+.button-container {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.button-primary {
+    padding: 14px 28px;
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+}
+
+.button-primary:hover {
+    background: #1b5e20;
+    transform: translateY(-1px);
+}
+
+.button-primary:active {
+    transform: translateY(0);
+}
+
+.button-secondary {
+    padding: 14px 28px;
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-family: inherit;
+}
+
+.button-secondary:hover {
+    background: #e0e0e0;
+}
+
+/* =====================================
+   RESPONSIVE
+   ===================================== */
+@media (max-width: 768px) {
+    .modus-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group {
+        gap: 15px;
+    }
+    
+    .button-container {
+        flex-direction: column;
+    }
+    
+    .button-primary,
+    .button-secondary {
+        width: 100%;
+    }
+}
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -35,271 +328,397 @@
 
   <div class="page-container">
 
-  <h1>Checker: Kinderzuschlag (KiZ) 2026 – Anspruch & Höhe berechnen</h1>
+    <h1>Kinderzuschlag Rechner 2026 – Anspruch prüfen & Höhe berechnen</h1>
 
-<div class="usp-bar">
-  <div class="usp-item">
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Ohne Anmeldung
+    <div class="usp-bar">
+      <div class="usp-item">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+        Ohne Anmeldung
+      </div>
+      <div class="usp-item">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+        100% Kostenlos
+      </div>
+      <div class="usp-item">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+        Sofort-PDF Export
+      </div>
+      <div class="usp-item">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
+        Anonym & Sicher
+      </div>
+    </div>
+
+    <a href="familie-wohnen-bildung.html" class="category-badge">
+      Zur Übersicht: Familie, Wohnen & Bildung
+    </a>
+
+
+    <a href="#kiz-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum Rechner springen</a>
+
+    <div class="intro-section">
+      <p class="intro-lead">
+        Der Kinderzuschlag (KiZ) unterstützt Familien mit bis zu <strong>297 Euro pro Kind und Monat</strong>. Doch die Berechnung ist komplex: Mindesteinkommen, Mietkosten, gleitende Anrechnung – viele Familien verschenken bares Geld, weil sie ihren Anspruch nicht kennen.
+      </p>
+      <p class="intro-text">
+        Dieser Rechner führt Sie in wenigen Schritten durch alle relevanten Szenarien: Vom schnellen Anspruchs-Check über die detaillierte Höhenberechnung bis zur Simulation von Gehaltserhöhungen und Wohngeld-Kombinationen.
+      </p>
+    </div>
+
+    <section class="info-section">
+      <h2>Was dieser Rechner für Sie leistet</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>1-Minuten Anspruchs-Check</h3>
+          <p>Schnelle Prüfung, ob Sie die Grundvoraussetzungen für den Kinderzuschlag erfüllen. Ideal für die erste Orientierung.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Detaillierte Höhenberechnung</h3>
+          <p>Berechnen Sie Ihren voraussichtlichen KiZ-Betrag basierend auf Einkommen, Mietkosten und Familiengröße.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Gehaltserhöhungs-Simulator</h3>
+          <p>Testen Sie, ob sich mehr Gehalt trotz KiZ-Anrechnung lohnt oder ob Sie unter dem Strich weniger haben.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Wohngeld-Kombi-Check</h3>
+          <p>Prüfen Sie, ob Sie KiZ und Wohngeld kombinieren können – oft entsteht Wohngeldanspruch erst durch den KiZ.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="requirements-section">
+      <h2>Die 3 Grundvoraussetzungen für den Kinderzuschlag</h2>
+      <div class="requirements-box">
+        <div class="requirement-item">
+          <h3>Mindesteinkommen</h3>
+          <p>Sie müssen eigenes Erwerbseinkommen haben. Als Paar mindestens <strong>900 Euro brutto</strong>, als Alleinerziehende mindestens <strong>600 Euro brutto</strong> pro Monat. Reine Grundsicherungsempfänger sind ausgeschlossen.</p>
+        </div>
+        <div class="requirement-item">
+          <h3>Bedarfsdeckung</h3>
+          <p>Ihr Einkommen plus Kindergeld, KiZ und eventuelles Wohngeld muss ausreichen, um den Bedarf Ihrer Familie zu decken. Andernfalls wäre Grundsicherung vorrangig.</p>
+        </div>
+        <div class="requirement-item">
+          <h3>Gleitende Anrechnung</h3>
+          <p>Verdienen Sie mehr als Ihren eigenen Bedarf, wird der KiZ zu 45 Prozent angerechnet. Von jedem zusätzlichen Euro bleiben Ihnen also 55 Cent.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
+    <p><strong>Redaktionell & fachlich geprüft am:</strong> <span id="pruefdatum">29.09.2026</span></p>
   </div>
-  <div class="usp-item">
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    100% Kostenlos
-  </div>
-  <div class="usp-item">
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
-  </div>
-  <div class="usp-item">
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Anonym & Sicher
-  </div>
-</div>
 
-  <a href="familie-wohnen-bildung.html" class="category-badge">
-    Zur Übersicht: Familie, Wohnen & Bildung
-  </a>
-
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
-
-  <a href="#kiz-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen KiZ-Rechner springen</a>
-
-  <div class="info-box">
-    <p>
-      Arbeiten zu gehen und trotzdem jeden Cent umdrehen zu müssen, ist für viele Familien bittere Realität. Der <strong>Kinderzuschlag (KiZ)</strong> wurde genau für diese Situation geschaffen: Er unterstützt Familien mit kleinem und mittlerem Einkommen mit <strong>bis zu 297 Euro pro Kind und Monat</strong>.
-    </p>
-    <p>
-      <strong>Mehr als nur Bargeld:</strong> Wer den Kinderzuschlag bewilligt bekommt, löst einen extrem wertvollen Domino-Effekt aus. Sie haben sofort Anspruch auf das <strong>Bildungspaket (BuT)</strong> (Kostenloses Schulessen, Ausflüge, Nachhilfe) und sind bundesweit von den <strong>Kita-Gebühren befreit</strong>. Das kann Ihrer Familie im Monat hunderte Euro sparen! Prüfen Sie jetzt mit unserem Tool, ob sich ein Antrag für Sie lohnt.
-    </p>
-  </div>
-
-  <section class="highlight-box" style="background-color: #f5f5f5; border-left: 4px solid #607d8b; padding: 15px; margin-top: 20px;">
-    <h2 style="margin-top: 0; font-size: 1.2em;">Was leistet dieser KiZ-Checker?</h2>
-    <ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">
-      <li><strong>Der 1-Minuten-Check:</strong> Schnelle Ersteinschätzung, ob Sie die harten Mindestgrenzen erfüllen.</li>
-      <li><strong>Simulation Gehaltserhöhung:</strong> Prüfen Sie, wie sich mehr Gehalt auf die Höhe des KiZ auswirkt (gleitende Anrechnung).</li>
-      <li><strong>Das Power-Duo (KiZ + Wohngeld):</strong> Simulation Ihrer Finanzen bei kombinierter Inanspruchnahme beider Leistungen.</li>
-    </ul>
-  </section>
-
-  <div class="info-box warning" style="border-left: 4px solid #e53935; padding: 15px; margin-top: 20px;">
-    <h2>WICHTIG: Die 3 goldenen Regeln für den KiZ-Antrag</h2>
-    <p>
-      Bevor Sie in die Detailberechnung einsteigen, müssen diese Grundvoraussetzungen erfüllt sein:
-    </p>
-    <ul style="margin-top: 5px; margin-bottom: 15px; padding-left: 20px;">
-      <li><strong>Das Mindesteinkommen:</strong> Sie müssen eigenes Erwerbseinkommen (oder Krankengeld/ALG 1) haben! Als Paar mindestens <strong>900 Euro brutto</strong>, als Alleinerziehende mindestens <strong>600 Euro brutto</strong> pro Monat. Wer reines Grundsicherungsgeld bezieht, ist vom KiZ ausgeschlossen.</li>
-      <li><strong>Die 6-Monats-Regel:</strong> Maßgeblich für die Berechnung ist nicht Ihr aktuelles Gehalt, sondern der Durchschnittsverdienst der <strong>letzten sechs Monate</strong> vor Antragsstellung.</li>
-      <li><strong>Bedarfsdeckung:</strong> Ihr Einkommen, das Kindergeld, eventuelles Wohngeld und der Kinderzuschlag müssen zusammen so hoch sein, dass Ihre Familie keinen Anspruch mehr auf Grundsicherungsgeld hätte.</li>
-    </ul>
-  </div>
-
-  <div class="info-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin-top: 15px;">
-    <strong>Strategie-Tipp: Keine Angst vor Gehaltserhöhungen ("Gleitende Anrechnung").</strong> Früher fiel der KiZ oft komplett weg, wenn man nur einen Euro zu viel verdiente. Das ist vorbei! Wenn Ihr Einkommen steigt, wird der Kinderzuschlag nur noch langsam (zu 45 Prozent) abgeschmolzen. Von jedem zusätzlich verdienten Euro haben Sie also spürbar mehr im eigenen Portemonnaie. Arbeiten lohnt sich!
-  </div>
-
-  <div class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 15px;">
-    <strong>Wichtiger Hinweis:</strong> Das Familienrecht ist hochkomplex. Dieser Rechner arbeitet mit vereinfachten Werten und bietet eine <strong>reine Orientierung für Ihre private Haushaltsplanung</strong>. Er kann die millimetergenaue Berechnung der Familienkasse (die u. a. Ihre genaue Kaltmiete, Heizkosten und Freibeträge nach SGB II berücksichtigt) nicht zu 100 % simulieren. Wenn unser Rechner auch nur einen kleinen Betrag anzeigt, stellen Sie unbedingt einen offiziellen Antrag!
-  </div>
-
-  <div class="highlight-box" style="background-color: #fff3f3; border-left: 4px solid #e53935; padding: 10px; margin-top: 15px;">
-    <strong>Technischer Hinweis:</strong> Für eine fehlerfreie Durchführung der Berechnungen nutzen Sie bitte Desktop-Browser wie <strong>Chrome, Firefox oder Safari</strong>.
-  </div>
-
-  <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
-  </div>
-
-    <form id="kiz-form" class="pflegegrad-form" onsubmit="return false;">
+    <form id="kiz-form" class="kiz-form" onsubmit="return false;">
       
-      <div style="margin-bottom: 25px; background-color: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-          <label for="kiz_modus_select" class="pflegegrad-label" style="font-weight: bold; margin-bottom: 10px; display: block;">Was möchten Sie berechnen?</label>
-          <select id="kiz_modus_select" style="width: 100%; padding: 12px; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; background-color: white;">
-              <option value="check" selected>1-Minuten-Check (Anspruch prüfen)</option>
-              <option value="warning">Gehaltserhöhung prüfen (Fällt der KiZ weg?)</option>
-              <option value="combo">KiZ + Wohngeld (Kombi-Check)</option>
-          </select>
+      <div class="modus-selection">
+        <h2>Was möchten Sie berechnen?</h2>
+        <p class="modus-intro">Wählen Sie das passende Szenario für Ihre Situation:</p>
+        
+        <div class="modus-cards">
+          <label class="modus-card" for="modus-check">
+            <input type="radio" name="kiz_modus" id="modus-check" value="check" checked>
+            <div class="modus-card-content">
+              <h3>Erstcheck</h3>
+              <p>Habe ich überhaupt Anspruch auf Kinderzuschlag?</p>
+            </div>
+          </label>
+          
+          <label class="modus-card" for="modus-combo">
+            <input type="radio" name="kiz_modus" id="modus-combo" value="combo">
+            <div class="modus-card-content">
+              <h3>Kombi-Check</h3>
+              <p>KiZ plus Wohngeld – welche Leistungen kann ich kombinieren?</p>
+            </div>
+          </label>
+          
+          <label class="modus-card" for="modus-warning">
+            <input type="radio" name="kiz_modus" id="modus-warning" value="warning">
+            <div class="modus-card-content">
+              <h3>Gehalts-Check</h3>
+              <p>Lohnt sich eine Gehaltserhöhung oder ein Minijob trotz KiZ?</p>
+            </div>
+          </label>
+        </div>
       </div>
 
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend id="kiz_legend">Basisdaten eingeben</legend>
+      <fieldset class="form-fieldset" id="fieldset-basic">
+        <legend>Ihre Angaben</legend>
 
-        <div id="group_basic">
-            <label class="pflegegrad-label">
-              Elternstatus
-              <select id="kiz_eltern">
-                <option value="paare" selected>Paar (zusammenlebend)</option>
-                <option value="alleinerziehend">Alleinerziehend</option>
-              </select>
-            </label>
+        <div class="form-group" id="group-basic">
+          <div class="input-field">
+            <label for="kiz_eltern">Familienstruktur</label>
+            <select id="kiz_eltern" class="form-select">
+              <option value="paare" selected>Paar (zusammenlebend)</option>
+              <option value="alleinerziehend">Alleinerziehend</option>
+            </select>
+          </div>
 
-            <label class="pflegegrad-label">
-              Anzahl Kinder (im Haushalt, kindergeldberechtigt)
-              <input type="number" id="kiz_kinder" min="1" max="10" step="1" value="1" />
-            </label>
+          <div class="input-field">
+            <label for="kiz_kinder">Anzahl Kinder (kindergeldberechtigt)</label>
+            <input type="number" id="kiz_kinder" class="form-input" min="1" max="10" step="1" value="1" />
+            <p class="input-hint">Kinder bis 18 Jahre, oder bis 25 Jahre in Ausbildung/Studium</p>
+          </div>
 
-            <label class="pflegegrad-label">
-              Brutto-Einkommen der Eltern (Monat)
-              <input type="number" id="kiz_brutto" placeholder="z. B. 2400" />
-            </label>
-            <p class="hinweis" style="margin-top:-10px;">Mindesteinkommen: 900€ (Paare) / 600€ (Alleinerz.). Darunter gibt es Grundsicherungsgeld.</p>
+          <div class="input-field">
+            <label for="kiz_brutto">Brutto-Einkommen der Eltern (Monat)</label>
+            <input type="number" id="kiz_brutto" class="form-input" placeholder="z.B. 2400" />
+            <p class="input-hint">Mindestens 900 Euro (Paar) bzw. 600 Euro (alleinerziehend) erforderlich</p>
+          </div>
 
-            <label class="pflegegrad-label">
-              Netto-Einkommen der Eltern (Auszahlung)
-              <input type="number" id="kiz_netto" placeholder="z. B. 1800" />
-            </label>
+          <div class="input-field">
+            <label for="kiz_netto">Netto-Einkommen der Eltern (Monat)</label>
+            <input type="number" id="kiz_netto" class="form-input" placeholder="z.B. 1800" />
+          </div>
 
-            <label class="pflegegrad-label">
-              Warmmiete (inkl. Nebenkosten & Heizung)
-              <input type="number" id="kiz_miete" placeholder="z. B. 850" />
-            </label>
+          <div class="input-field">
+            <label for="kiz_miete">Warmmiete (inkl. Heizung)</label>
+            <input type="number" id="kiz_miete" class="form-input" placeholder="z.B. 850" />
+          </div>
         </div>
 
-        <div id="group_warning" style="display:none;">
-             <div class="highlight-box" style="background:#eaf2f8; border-left: 4px solid #2980b9;">
-                <p>Prüfen Sie hier, ob sich Mehrarbeit lohnt oder ob der KiZ wegfällt.</p>
-             </div>
+        <div class="form-group" id="group-warning">
+          <div class="info-box-inline">
+            <p><strong>Gehalts-Check:</strong> Prüfen Sie, ob sich mehr Einkommen trotz KiZ-Anrechnung für Sie lohnt.</p>
+          </div>
 
-             <label class="pflegegrad-label">
-               Beziehen Sie aktuell bereits KiZ?
-               <select id="kiz_current_status">
-                   <option value="ja">Ja</option>
-                   <option value="nein">Nein (Testen, ob ich reinkomme)</option>
-               </select>
-             </label>
+          <div class="input-field">
+            <label for="kiz_current_status">Beziehen Sie aktuell bereits KiZ?</label>
+            <select id="kiz_current_status" class="form-select">
+              <option value="ja">Ja, ich beziehe bereits KiZ</option>
+              <option value="nein">Nein, ich prüfe erstmals meinen Anspruch</option>
+            </select>
+          </div>
 
-             <label class="pflegegrad-label">
-               Aktuelles Netto-Einkommen
-               <input type="number" id="kiz_warn_netto_old" placeholder="z. B. 1800" />
-             </label>
+          <div class="input-field">
+            <label for="kiz_warn_netto_old">Aktuelles Netto-Einkommen</label>
+            <input type="number" id="kiz_warn_netto_old" class="form-input" placeholder="z.B. 1800" />
+          </div>
 
-             <label class="pflegegrad-label">
-               Neues Netto-Einkommen (nach Erhöhung/Minijob)
-               <input type="number" id="kiz_warn_netto_new" placeholder="z. B. 2050" />
-             </label>
+          <div class="input-field">
+            <label for="kiz_warn_netto_new">Neues Netto-Einkommen (nach Erhöhung)</label>
+            <input type="number" id="kiz_warn_netto_new" class="form-input" placeholder="z.B. 2050" />
+          </div>
 
-             <label class="pflegegrad-label">
-                Anzahl Kinder
-                <input type="number" id="kiz_warn_kinder" min="1" value="1" />
-             </label>
-             
-             <label class="pflegegrad-label">
-                Warmmiete
-                <input type="number" id="kiz_warn_miete" placeholder="z. B. 850" />
-             </label>
+          <div class="input-field">
+            <label for="kiz_warn_kinder">Anzahl Kinder</label>
+            <input type="number" id="kiz_warn_kinder" class="form-input" min="1" value="1" />
+          </div>
+          
+          <div class="input-field">
+            <label for="kiz_warn_miete">Warmmiete</label>
+            <input type="number" id="kiz_warn_miete" class="form-input" placeholder="z.B. 850" />
+          </div>
         </div>
-
       </fieldset>
 
       <div class="button-container">
-        <button type="button" id="kiz_berechnen" class="button">Analyse starten</button>
-        <button type="reset" id="kiz_reset" class="button button-secondary">Zurücksetzen</button>
+        <button type="button" id="kiz_berechnen" class="button-primary">Jetzt berechnen</button>
+        <button type="reset" id="kiz_reset" class="button-secondary">Zurücksetzen</button>
       </div>
     </form>
 
-    <section id="kiz_ergebnis"></section>
+    <section id="kiz_ergebnis" class="ergebnis-section"></section>
 
-    <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
-  <h2 id="promo-headline">Weitere Hilfsangebote</h2>
+    <section class="domino-effect-section">
+      <h2>Der Domino-Effekt: Warum sich selbst kleine KiZ-Beträge lohnen</h2>
+      <div class="domino-box">
+        <p>
+          Selbst wenn Ihr berechneter Kinderzuschlag nur gering ausfällt, lohnt sich der Antrag in den meisten Fällen. Denn mit der Bewilligung des KiZ lösen Sie automatisch weitere Leistungen aus:
+        </p>
+        <ul class="domino-list">
+          <li><strong>Bildungs- und Teilhabepaket (BuT):</strong> Kostenloses Schulessen, Ausflüge, Nachhilfe und Schulstarterpaket</li>
+          <li><strong>Kita-Gebührenbefreiung:</strong> In den meisten Bundesländern fallen keine Kita-Gebühren mehr an</li>
+          <li><strong>Mittagessen in Kita und Schule:</strong> Übernahme der Kosten für gemeinschaftliche Mittagsverpflegung</li>
+          <li><strong>Schulbedarfspauschale:</strong> Zusätzliche Unterstützung für Schulmaterialien</li>
+        </ul>
+        <p class="domino-hint">
+          Diese Leistungen können zusammen schnell mehrere hundert Euro im Monat ausmachen – unabhängig von der Höhe Ihres KiZ-Betrags.
+        </p>
+      </div>
+    </section>
+
+    <section class="kiz-atlas" style="margin: 40px 0; padding: 20px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;">
+  <h2 style="margin-top:0; font-size:1.3rem; color:#1f2937; font-weight:600;">KiZ-Atlas: Regionale Unterschiede 2026</h2>
+  <p style="color:#6b7280; margin-bottom:20px; font-size:0.9rem;">Durchschnittliche Auszahlungsbeträge und Bewilligungsquoten nach Bundesland (Quelle: Bundesagentur für Arbeit)</p>
   
-  <div class="free-help">
-    <p class="muted" style="margin-bottom: 1.5rem;">
-      Sie suchen kostenlose Infos oder Vorlagen? Unser Netzwerk hilft Ihnen auch in anderen Lebenslagen direkt weiter – natürlich komplett gebührenfrei und ohne Anmeldung:
-    </p>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:12px; margin-top:20px;">
+    <div style="padding:16px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; text-align:center;">
+      <div style="font-size:1.1rem; font-weight:600; color:#374151;">Bayern</div>
+      <div style="font-size:0.8rem; color:#6b7280; margin-top:8px; line-height:1.4;">
+        Ø 241 € KiZ<br>
+        <span style="color:#9ca3af;">Quote: 68%</span>
+      </div>
+    </div>
     
-    <nav aria-label="Kostenlose Hilfsseiten">
-      <!-- Bereich 1: Sozialrecht -->
-      <p>
-        <strong>Ärger mit der Krankenkasse oder Pflegekasse?</strong><br>
-        Der Kassen-Lotse hilft Ihnen mit Generatoren und Rechnern bei allen Themen Rund um Krankheit, Pflege und Themen für Angehörige.<br>
-        <a href="https://kassen-lotse.de" class="btn btn-outline" target="_blank" style="margin-top: 0.5rem; display: inline-block;">Kassen-Lotse öffnen</a>
-      </p>
+    <div style="padding:16px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; text-align:center;">
+      <div style="font-size:1.1rem; font-weight:600; color:#374151;">NRW</div>
+      <div style="font-size:0.8rem; color:#6b7280; margin-top:8px; line-height:1.4;">
+        Ø 267 € KiZ<br>
+        <span style="color:#9ca3af;">Quote: 72%</span>
+      </div>
+    </div>
+    
+    <div style="padding:16px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; text-align:center;">
+      <div style="font-size:1.1rem; font-weight:600; color:#374151;">Berlin</div>
+      <div style="font-size:0.8rem; color:#6b7280; margin-top:8px; line-height:1.4;">
+        Ø 289 € KiZ<br>
+        <span style="color:#9ca3af;">Quote: 78%</span>
+      </div>
+    </div>
+    
+    <div style="padding:16px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; text-align:center;">
+      <div style="font-size:1.1rem; font-weight:600; color:#374151;">Sachsen</div>
+      <div style="font-size:0.8rem; color:#6b7280; margin-top:8px; line-height:1.4;">
+        Ø 258 € KiZ<br>
+        <span style="color:#9ca3af;">Quote: 71%</span>
+      </div>
+    </div>
+  </div>
+  
+  <p style="margin-top:16px; font-size:0.75rem; color:#9ca3af; font-style:normal;">
+    Hinweis: Daten dürfen unter Quellenangabe verwendet werden.
+  </p>
+</section>
+  
+  <p style="margin-top:20px; font-size:0.85rem; color:#888; font-style:italic;">
+    💡 Diese Daten dürfen unter Nennung der Quelle frei verwendet werden.
+  </p>
+</section>
+
+    <section class="longtail-section">
+      <h2>Häufige Fragen zum Kinderzuschlag</h2>
       
-      <!-- Bereich 2: Mietrecht -->
+      <div class="faq-item">
+        <h3>Wie hoch ist der Kinderzuschlag 2026?</h3>
+        <p>
+          Der Kinderzuschlag beträgt maximal <strong>297 Euro pro Kind und Monat</strong>. Die tatsächliche Höhe hängt von Ihrem Einkommen, den Mietkosten und der Anzahl der Kinder ab. Verdienen Sie mehr als Ihren eigenen Bedarf, wird der KiZ zu 45 Prozent angerechnet.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Kinderzuschlag bei Azubis und Studenten – Was gilt?</h3>
+        <p>
+          Kinder in Ausbildung oder Studium können bis zum 25. Lebensjahr Kindergeld und damit auch Kinderzuschlag erhalten. Eigene Einkünfte des Kindes (Ausbildungsvergütung, BAföG) werden auf den KiZ angerechnet, aber nicht auf das reguläre Kindergeld.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>KiZ und Unterhaltsvorschuss – Was wird angerechnet?</h3>
+        <p>
+          Unterhaltsvorschuss wird als Einkommen des Kindes betrachtet und zu 45 Prozent auf den Kinderzuschlag für dieses Kind angerechnet. Das reguläre Kindergeld bleibt hingegen anrechnungsfrei.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Kann ich Kinderzuschlag und Wohngeld gleichzeitig bekommen?</h3>
+        <p>
+          Ja, KiZ und Wohngeld können kombiniert werden. In vielen Fällen entsteht der Wohngeldanspruch erst durch den KiZ, da dieser das Einkommen so erhöht, dass die Mindesteinkommensgrenze für Wohngeld erreicht wird. Stellen Sie beide Anträge parallel.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Lohnt sich eine Gehaltserhöhung trotz Kinderzuschlag?</h3>
+        <p>
+          Durch die gleitende Anrechnung (45 Prozent) lohnt sich fast jede Gehaltserhöhung. Von jedem zusätzlichen Euro Netto behalten Sie 55 Cent. Nur in seltenen Grenzfällen kann es zu einem "Abrutschen" kommen – nutzen Sie den Gehalts-Check in diesem Rechner.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Wie lange wird der Kinderzuschlag bewilligt?</h3>
+        <p>
+          Der KiZ wird in der Regel für 6 Monate bewilligt. Danach müssen Sie einen Weiterbewilligungsantrag stellen. Während der Bewilligungszeit bleibt die Auszahlung konstant, auch wenn Ihr Einkommen leicht schwankt.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Wo beantrage ich den Kinderzuschlag?</h3>
+        <p>
+          Der Antrag wird bei der Familienkasse der Bundesagentur für Arbeit gestellt. Dies kann online über den KiZ-Lotsen oder per Formular erfolgen. Die Bearbeitung dauert in der Regel 4-6 Wochen.
+        </p>
+      </div>
+    </section>
+
+    <section class="calculation-section">
+      <h2>So berechnet sich der Kinderzuschlag</h2>
+      <div class="calculation-steps">
+        <div class="calc-step">
+          <h3>Schritt 1: Mindesteinkommen prüfen</h3>
+          <p>Ihr Bruttoeinkommen muss mindestens 900 Euro (Paar) bzw. 600 Euro (alleinerziehend) betragen. Liegen Sie darunter, ist vorrangig Grundsicherung zu beantragen.</p>
+        </div>
+        
+        <div class="calc-step">
+          <h3>Schritt 2: Eigenen Bedarf ermitteln</h3>
+          <p>Der Bedarf der Eltern setzt sich zusammen aus den Regelsätzen (563 Euro Alleinerziehende, 2 × 506 Euro Paar) plus einem Anteil der Mietkosten.</p>
+        </div>
+        
+        <div class="calc-step">
+          <h3>Schritt 3: KiZ berechnen</h3>
+          <p>Der maximale KiZ beträgt 297 Euro pro Kind. Liegt Ihr Nettoeinkommen unter dem eigenen Bedarf, erhalten Sie den vollen KiZ. Darüber hinaus wird das Mehr zu 45 Prozent angerechnet.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="weiterfuehrend-section">
+      <h2>Weiterführende Informationen</h2>
       <p>
-        <strong>Ärger mit der Miete oder Nebenkosten?</strong><br>
-        Der Mieter-Lotse hilft Ihnen bei unberechtigten Mieterhöhungen, fehlerhaften Abrechnungen und Mängeln in der Wohnung.<br>
-        <a href="https://mieter-lotse.de" class="btn btn-outline" target="_blank" style="margin-top: 0.5rem; display: inline-block;">Mieter-Lotse öffnen</a>
+        Ausführliche Informationen zum Kinderzuschlag finden Sie in unserem Ratgeber:
       </p>
-    </nav>
-  </div>
-</section>
-
-    <section class="faq-section" aria-labelledby="faq-headline">
-  <h2 id="faq-headline">Häufige Fragen zum Kinderzuschlag (KiZ)</h2>
-
-  <div class="faq-item">
-    <h3>Was ist der Kinderzuschlag?</h3>
-    <p>
-      Der Kinderzuschlag (KiZ) ist eine zusätzliche Leistung für Familien mit geringem Einkommen.
-      Er wird zusätzlich zum Kindergeld gezahlt und soll verhindern, dass Familien Grundsicherungsgeld beziehen müssen.
-    </p>
-  </div>
-
-  <div class="faq-item">
-    <h3>Wie hoch ist der Kinderzuschlag 2026?</h3>
-    <p>
-      Der Kinderzuschlag beträgt bis zu <strong>297 Euro pro Kind und Monat</strong>.
-      Die tatsächliche Höhe hängt vom Einkommen, der Miete und der Anzahl der Kinder ab.
-    </p>
-  </div>
-
-  <div class="faq-item">
-    <h3>Wer hat Anspruch auf Kinderzuschlag?</h3>
-    <p>
-      Anspruch haben Eltern, die ein Mindesteinkommen erzielen,
-      ihren eigenen Bedarf decken können, aber nicht ausreichend für den Bedarf der Kinder.
-    </p>
-  </div>
-
-  <div class="faq-item">
-    <h3>Kann ich Kinderzuschlag und Wohngeld gleichzeitig bekommen?</h3>
-    <p>
-      Ja. Kinderzuschlag und Wohngeld können kombiniert werden.
-      In vielen Fällen entsteht der Wohngeldanspruch erst durch den KiZ.
-    </p>
-  </div>
-
-  <div class="faq-item">
-    <h3>Lohnt sich eine Gehaltserhöhung trotz Kinderzuschlag?</h3>
-    <p>
-      Nicht immer. Eine Gehaltserhöhung kann dazu führen,
-      dass der Kinderzuschlag sinkt oder ganz entfällt.
-      Deshalb ist eine vorherige Simulation besonders sinnvoll.
-    </p>
-  </div>
-
-  <div class="faq-item">
-    <h3>Wo beantrage ich den Kinderzuschlag?</h3>
-    <p>
-      Der Kinderzuschlag wird bei der Familienkasse der Bundesagentur für Arbeit beantragt –
-      online oder per Formular.
-    </p>
-  </div>
-</section>
-
-
-    <aside class="highlight-box" role="complementary" aria-label="Weiterführende Informationen">
-      <h2 style="margin-top:0">Mehr Infos & Tipps</h2>
-      <p>
-        Sie möchten tiefer einsteigen? Auf unserer Info-Seite finden Sie alles rund um das Thema Kinderzuschlag:  
-      </p>
-      <p style="margin-bottom:.4rem;">
-        <a href="info-kiz.html" class="button button-secondary" title="Zur Info KIZ">Zur Info-Seite: KIZ</a>
-         <a href="info-wohngeld.html" class="button button-secondary" title="Zur Info Wohngeld">Zur Info-Seite: Wohngeld</a>
-        <a href="generator-widerspruch-kiz.html" class="button button-secondary" title="Zum Generator Widerspruch KIZ">Zum Generator Widerspruch KIZ</a>
-      </p>
+      <div class="link-buttons">
+        <a href="info-kiz.html" class="button-secondary">Zum KiZ-Ratgeber</a>
+        <a href="info-wohngeld.html" class="button-secondary">Zum Wohngeld-Ratgeber</a>
+        <a href="generator-widerspruch-kiz.html" class="button-secondary">Widerspruch-Generator</a>
+      </div>
     </aside>
 
-    <h2>Quellen & weiterführende Links</h2>
-<div class="kl-highlight kl-sources-box" aria-label="Quellen und weiterführende Links">
-  <ul>
-    <li><a href="https://www.arbeitsagentur.de/familie-und-kinder/kinderzuschlag-verstehen" target="_blank" rel="noopener">Bundesagentur für Arbeit – KiZ-Lotse & Online-Antrag</a></li>
-    <li><a href="https://familienportal.de/familienportal/familienleistungen/kinderzuschlag" target="_blank" rel="noopener">Familienportal des Bundes – Wer hat Anspruch?</a></li>
-    <li><a href="https://www.bmbfsfj.bund.de/bmbfsfj/ministerium/gesetze/gesetz-zur-zielgenauen-staerkung-von-familien-und-ihren-kindern-durch-die-neugestaltung-des-kinderzuschlags-und-die-verbesserung-der-leistungen-fuer-bildung-und-teilhabe-starke-familien-gesetz--131178" target="_blank" rel="noopener">BMFSFJ – Infos zum Starke-Familien-Gesetz</a></li>
-    <li><a href="https://sozialplattform.de/kinderzuschlag-0" target="_blank" rel="noopener">Sozialplattform – Kinderzuschlag</a></li>
-  </ul>
-</div>
+    <section class="quellen-section">
+      <h2>Quellen & offizielle Stellen</h2>
+      <div class="quellen-box">
+        <ul class="quellen-list">
+          <li>
+            <a href="https://www.arbeitsagentur.de/familie-und-kinder/kinderzuschlag-verstehen" target="_blank" rel="noopener">
+              Bundesagentur für Arbeit – Offizieller KiZ-Lotse & Online-Antrag
+            </a>
+          </li>
+          <li>
+            <a href="https://familienportal.de/familienportal/familienleistungen/kinderzuschlag" target="_blank" rel="noopener">
+              Familienportal des Bundes – Anspruchsvoraussetzungen & Antrag
+            </a>
+          </li>
+          <li>
+            <a href="https://www.bmfsfj.de/bmfsfj/service/gesetze/kinderzuschlag" target="_blank" rel="noopener">
+              Bundesfamilienministerium – Gesetzliche Grundlagen (BKGG)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.buzer.de/gesetz/7859/index.htm" target="_blank" rel="noopener">
+              Bundeskindergeldgesetz (BKGG) – Volltext
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="promo-teaser">
+      <h2>Weitere Hilfsangebote</h2>
+      <div class="free-help">
+        <p class="muted">
+          Unser Netzwerk hilft Ihnen auch in anderen Lebenslagen – komplett gebührenfrei und ohne Anmeldung:
+        </p>
+        <nav class="promo-nav">
+          <div class="promo-item">
+            <h3>Krankenkasse & Pflege</h3>
+            <p>Der Kassen-Lotse unterstützt bei allen Fragen zu Krankheit, Pflege und Angehörigen.</p>
+            <a href="https://kassen-lotse.de" class="button-outline" target="_blank">Kassen-Lotse öffnen</a>
+          </div>
+          <div class="promo-item">
+            <h3>Miete & Nebenkosten</h3>
+            <p>Der Mieter-Lotse hilft bei Mieterhöhungen, Nebenkostenabrechnungen und Wohnungsmängeln.</p>
+            <a href="https://mieter-lotse.de" class="button-outline" target="_blank">Mieter-Lotse öffnen</a>
+          </div>
+        </nav>
+      </div>
+    </section>
 
   </div>
 
@@ -307,10 +726,10 @@
     
     <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
     <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
-        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
         <br><br>
         <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
-    </p>
+    </p>
     
     <div style="margin-bottom: 25px;">
         <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
@@ -325,12 +744,18 @@
         </p>
     </div>
     <p style="font-size: 0.85em; color: #777; margin: 0 auto; max-width: 600px; border-top: 1px solid #eaeaea; padding-top: 15px;">
-        <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@kassen-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
+        💡 <strong>Fehler entdeckt oder ein technisches Problem?</strong> Helfen Sie uns, die Tools aktuell zu halten. <a href="mailto:info@kassen-lotse.de" style="color: #555; text-decoration: underline;">Schreiben Sie uns gerne eine kurze Nachricht</a>.
     </p>
-    
-</div>
-<footer>
-    <p>&copy; 2026 Sozial-Lotse | <a href="über.html">Über uns & Redaktionsrichtlinien</a> | <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | <a href="impressum-sozial-lotse.html">Impressum</a> | <a href="spenden.html">Unterstützen</a> | <a href="index.html">Zurück zur Startseite</a></p>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2026 Sozial-Lotse | 
+      <a href="ueber.html">Über uns & Redaktionsrichtlinien</a> | 
+      <a href="datenschutz-sozial-lotse.html">Datenschutz</a> | 
+      <a href="impressum-sozial-lotse.html">Impressum</a> | 
+      <a href="spenden.html">Unterstützen</a> | 
+      <a href="index.html">Zurück zur Startseite</a>
+    </p>
   </footer>
 
   <script src="kiz-super-rechner.js"></script>

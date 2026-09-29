@@ -6,7 +6,7 @@
     <meta name="description" content="Schneller Rechner zum Schonvermögen 2026: Ersparnisse, Kfz-Wert und Haushaltsgröße eingeben – Ergebnis: im Rahmen, knapp oder darüber.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index,follow">
-    <link rel="canonical" href="https://www.sozialrecht-lotse.de/schonvermoegen-kurzcheck.html">
+    <link rel="canonical" href="https://sozialrecht-lotse.de/schonvermoegen-kurzcheck.html">
     <link rel="icon" href="/logo-lotse-fav.png">
     <link rel="stylesheet" href="/css/style.css">
 
@@ -62,7 +62,6 @@
     Zur Übersicht: Existenzsicherung
   </a>
 
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
 
   <a href="#sv-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen Schonvermögens-Rechner springen</a>
 
@@ -88,7 +87,7 @@
   </div>
 
   <div class="info-box" style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin-top: 15px;">
-    <strong>Strategie-Tipp: Altersvorsorge ist extra geschützt!</strong> Ersparnisse, die ausdrücklich und nachweislich der Altersvorsorge dienen, zählen oft <em>nicht</em> zum normalen Freibetrag von 15.000 Euro. Dazu gehören staatlich geförderte Produkte (Riester-Rente), aber auch andere Anlageformen, wenn vertraglich ein "Verwertungsausschluss" bis zum Rentenalter vereinbart wurde. Zudem gibt es einen Freibetrag für Altersvorsorge bei Selbstständigen.
+    <strong>Tipp: Altersvorsorge ist extra geschützt!</strong> Ersparnisse, die ausdrücklich und nachweislich der Altersvorsorge dienen, zählen oft <em>nicht</em> zum normalen Freibetrag. Dazu gehören staatlich geförderte Produkte (Riester-Rente), aber auch andere Anlageformen, wenn vertraglich ein "Verwertungsausschluss" bis zum Rentenalter vereinbart wurde. Zudem gibt es einen Freibetrag für Altersvorsorge bei Selbstständigen.
   </div>
 
   <div class="info-box" style="background-color: #fff8e1; border-left: 4px solid #ff9800; padding: 10px; margin-top: 15px;">
@@ -100,7 +99,7 @@
   </div>
 
   <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
+    <p><strong>Redaktionell & fachlichgeprüft am:</strong> <span id="pruefdatum">29.09.2026</span></p>
   </div>
 
         <form id="sv-form" class="pflegegrad-form" aria-describedby="sv_ergebnis" novalidate>
@@ -128,23 +127,34 @@
             </fieldset>
 
             <fieldset class="pflegegrad-fieldset">
-                <legend>2. Feineinstellungen (optional)</legend>
+                <legend>2. Alter der Haushaltsmitglieder</legend>
 
-                <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-                                       <label class="pflegegrad-label" for="sv_freibetrag_pro_person">
-                        Ihr altersabhängiger Freibetrag (€)
-                        <span class="muted-label">Tragen Sie hier Ihren Wert ein (z. B. 5000, 10000, 12500 oder 20000).</span>
-                        <input type="number" id="sv_freibetrag_pro_person" min="0" step="500" value="5000" />
+                <div id="sv_alter_container" style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+                    <label class="pflegegrad-label" for="sv_alter_1">
+                        Alter Person 1
+                        <select id="sv_alter_1">
+                            <option value="5000">Bis 30 Jahre (5.000 € Freibetrag)</option>
+                            <option value="10000">31-40 Jahre (10.000 € Freibetrag)</option>
+                            <option value="12500">41-50 Jahre (12.500 € Freibetrag)</option>
+                            <option value="20000" selected>Über 50 Jahre (20.000 € Freibetrag)</option>
+                        </select>
                     </label>
-                    <label class="pflegegrad-label" for="sv_kfz_cap">
-                        Kfz-Schutzgrenze (€)
-                        <span class="muted-label">Wert, bis zu dem das Auto geschützt ist (z. B. 15.000 €).</span>
-                        <input type="number" id="sv_kfz_cap" min="0" step="100" value="15000" />
+                </div>
+
+                <p class="hinweis">
+                    Jede Person im Haushalt hat einen eigenen Freibetrag, der vom Alter abhängt. Der Rechner summiert automatisch alle Freibeträge.
+                </p>
+
+                <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); margin-top: 1rem;">
+                    <label class="pflegegrad-label" for="sv_kfz_grenze">
+                        Schutzgrenze für das Auto (€)
+                        <span class="muted-label">Wert, bis zu dem das Auto geschützt ist (Standard: 15.000 €).</span>
+                        <input type="number" id="sv_kfz_grenze" min="0" step="100" value="15000" />
                     </label>
-                    <label class="pflegegrad-label" for="sv_knapp_band">
-                        "Knapp"-Warnzone (± %)
-                        <span class="muted-label">Prozentband, das als "knapp" (z. B. 5%) gewertet wird.</span>
-                        <input type="number" id="sv_knapp_band" min="0" max="20" step="1" value="5" />
+                    <label class="pflegegrad-label" for="sv_knapp_bereich">
+                        Warnbereich für "knapp" (± %)
+                        <span class="muted-label">Prozentbereich, der als "knapp" gewertet wird (z. B. 5%).</span>
+                        <input type="number" id="sv_knapp_bereich" min="0" max="20" step="1" value="5" />
                     </label>
                 </div>
 
@@ -165,7 +175,7 @@
         <section style="margin-top:1.25rem" aria-label="Wie wird geprüft?">
             <h2>So prüft der Rechner (vereinfacht)</h2>
             <ol>
-                <li><strong>Freibetrag gesamt:</strong> Haushaltsgröße multipliziert mit dem Grundfreibetrag pro Person.</li>
+                <li><strong>Freibetrag gesamt:</strong> Summe aller Freibeträge der Haushaltsmitglieder (abhängig vom Alter).</li>
                 <li><strong>Kfz-Bewertung:</strong> Kfz-Wert bis zur Schutzgrenze wird ignoriert, nur der Überschuss zählt.</li>
                 <li><strong>Vergleich:</strong> Ersparnisse + Kfz-Überschuss wird mit dem gesamten Freibetrag verglichen. ⇒ Ergebnis <em>im Rahmen / knapp / darüber</em>.</li>
             </ol>
@@ -183,8 +193,8 @@
             <h3>Welche Vermögensarten sind außerdem geschützt?</h3>
             <p>Unter anderem bestimmte Altersvorsorgeformen, notwendiger Hausrat und oft selbstgenutztes Wohneigentum (unter Bedingungen). Diese Details bildet der Rechner nicht vollständig ab.</p>
 
-            <h3>Wie genau ist das Ergebnis „knapp“?</h3>
-            <p>„Knapp“ bedeutet, dass dein Vermögen innerhalb der gewählten ±-Prozent-Zone um den Freibetrag liegt. In solchen Fällen empfiehlt sich eine Beratung/Nachweissichtung.</p>
+            <h3>Wie genau ist das Ergebnis „knapp"?</h3>
+            <p>„Knapp" bedeutet, dass dein Vermögen innerhalb des gewählten Prozentbereichs um den Freibetrag liegt. In solchen Fällen empfiehlt sich eine Beratung/Nachweissichtung.</p>
         </section>
 
         <div class="warning-box">
@@ -265,10 +275,10 @@
     
     <h3 style="font-size: 1.1em; color: #333; margin-top: 0; margin-bottom: 8px;">Wer hat diese Inhalte erstellt?</h3>
     <p style="font-size: 0.9em; color: #555; max-width: 700px; margin: 0 auto 12px auto; line-height: 1.5;">
-        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
+        Unsere Ratgeber und Generatoren basieren auf der strikten Auswertung aktueller Gesetzestexte. Sie werden von <strong>Jan (Projektleitung) & Team</strong> entwickelt und durch unser Netzwerk aus Fachberatern regelmäßig auf fachliche Korrektheit geprüft. 
         <br><br>
         <em>Wichtiger Hinweis: Unser Tool generiert Standardvorlagen zur Selbsthilfe und ersetzt keine anwaltliche Einzelfallprüfung.</em>
-    </p>
+    </p>
     
     <div style="margin-bottom: 25px;">
         <a href="über.html" style="display: inline-block; font-size: 0.9em; color: #0056b3; text-decoration: underline; font-weight: bold;">
@@ -299,7 +309,7 @@
             {
                 "@type":"Question",
                 "name":"Gilt das Auto immer als geschütztes Vermögen?",
-                "acceptedAnswer":{"@type":"Answer","text":"Vereinfacht bis zu einem einstellbaren Cap/Angemessenheitswert. Der darüber liegende Anteil kann als Vermögen zählen."}
+                "acceptedAnswer":{"@type":"Answer","text":"Vereinfacht bis zu einem angemessenen Wert (hier einstellbar). Der darüber liegende Anteil kann als Vermögen zählen."}
             },
             {
                 "@type":"Question",
@@ -308,8 +318,8 @@
             },
             {
                 "@type":"Question",
-                "name":"Was bedeutet das Ergebnis „knapp“?",
-                "acceptedAnswer":{"@type":"Answer","text":"Dein Vermögen liegt innerhalb der eingestellten ±-Prozent-Zone um den Freibetrag. Hier ist eine individuelle Prüfung sinnvoll."}
+                "name":"Was bedeutet das Ergebnis „knapp"?",
+                "acceptedAnswer":{"@type":"Answer","text":"Dein Vermögen liegt innerhalb des eingestellten Prozentbereichs um den Freibetrag. Hier ist eine individuelle Prüfung sinnvoll."}
             }
         ]
     }
