@@ -69,6 +69,75 @@
 }
 </script>
 
+<style>
+  /* --- Optische Anpassungen für bessere Lesbarkeit & Abgrenzung --- */
+
+  /* Hauptfragen: Klarer Text und Abstand zum Eingabefeld */
+  .pflegegrad-label {
+    display: block;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 15px;
+  }
+  .pflegegrad-label input,
+  .pflegegrad-label select {
+    display: block;
+    margin-top: 8px; /* Trennt den Fragetext visuell vom Eingabefeld */
+    font-weight: normal;
+  }
+
+  /* Kleine Hinweistexte (unter den Feldern) */
+  .hinweis,
+  p.hinweis {
+    font-size: 0.85em; /* Dezent kleiner als der Haupttext */
+    color: #6c757d; /* Gedämpftes Grau zur optischen Abgrenzung */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* Große Hinweis-Box (z.B. Bundesland-Hinweis) */
+  .hinweis-box {
+    font-size: 0.88em;
+    color: #495057;
+    background-color: #f8f9fa; /* Sehr dezenter, heller Hintergrund */
+    border-left: 3px solid #ced4da; /* Dezente linke Border als Eye-Catcher */
+    padding: 12px 16px;
+    margin: 15px 0 20px 0;
+    border-radius: 4px;
+    line-height: 1.6;
+  }
+  .hinweis-box strong {
+    color: #343a40;
+  }
+
+  /* Checkbox-Optionen (wirken nun ruhiger und gehören erkennbar zusammen) */
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 0.95em; /* Etwas kleiner als die Hauptfragen */
+    color: #495057;
+    font-weight: normal;
+  }
+  .checkbox-label input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+
+  /* Unterüberschrift für die Abzüge */
+  .sub-heading {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #343a40;
+    font-size: 0.95em;
+  }
+</style>
+
 </head>
 <body>
   <header class="site-header">
@@ -145,120 +214,121 @@
 
     <form id="wbs-form" class="pflegegrad-form" aria-describedby="wbs_ergebnis" novalidate>
       
-      <!-- 1. Haushaltsgröße & Ort -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Haushalt & Bundesland</legend>
+  <!-- 1. Haushaltsgröße & Ort -->
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1. Haushalt & Bundesland</legend>
 
-        <label class="pflegegrad-label" for="wbs_bundesland">
-          In welchem Bundesland möchten Sie den WBS beantragen?
-          <select id="wbs_bundesland" required>
-            <option value="" disabled selected>Bitte wählen...</option>
-            <option value="BW">Baden-Württemberg</option>
-            <option value="BY">Bayern</option>
-            <option value="BE">Berlin</option>
-            <option value="BB">Brandenburg</option>
-            <option value="HB">Bremen</option>
-            <option value="HH">Hamburg</option>
-            <option value="HE">Hessen</option>
-            <option value="MV">Mecklenburg-Vorpommern</option>
-            <option value="NI">Niedersachsen</option>
-            <option value="NW">Nordrhein-Westfalen</option>
-            <option value="RP">Rheinland-Pfalz</option>
-            <option value="SL">Saarland</option>
-            <option value="SN">Sachsen</option>
-            <option value="ST">Sachsen-Anhalt</option>
-            <option value="SH">Schleswig-Holstein</option>
-            <option value="TH">Thüringen</option>
-          </select>
-        </label>
-        <div class="hinweis-box">
-    <strong>Hinweis:</strong> Dieser Rechner nutzt die Einkommensgrenzen für den allgemeinen Wohnberechtigungsschein (Grundstufe / 1. Förderweg). Bitte beachten Sie, dass einige Bundesländer (z. B. Berlin, Bayern) zusätzliche WBS-Klassen mit höheren Einkommensgrenzen für spezielle Wohnungen anbieten.
+    <label class="pflegegrad-label" for="wbs_bundesland">
+      In welchem Bundesland möchten Sie den WBS beantragen?
+      <select id="wbs_bundesland" required>
+        <option value="" disabled selected>Bitte wählen...</option>
+        <option value="BW">Baden-Württemberg</option>
+        <option value="BY">Bayern</option>
+        <option value="BE">Berlin</option>
+        <option value="BB">Brandenburg</option>
+        <option value="HB">Bremen</option>
+        <option value="HH">Hamburg</option>
+        <option value="HE">Hessen</option>
+        <option value="MV">Mecklenburg-Vorpommern</option>
+        <option value="NI">Niedersachsen</option>
+        <option value="NW">Nordrhein-Westfalen</option>
+        <option value="RP">Rheinland-Pfalz</option>
+        <option value="SL">Saarland</option>
+        <option value="SN">Sachsen</option>
+        <option value="ST">Sachsen-Anhalt</option>
+        <option value="SH">Schleswig-Holstein</option>
+        <option value="TH">Thüringen</option>
+      </select>
+    </label>
+    
+    <div class="hinweis-box">
+      <strong>Hinweis:</strong> Dieser Rechner nutzt die Einkommensgrenzen für den allgemeinen Wohnberechtigungsschein (Grundstufe / 1. Förderweg). Bitte beachten Sie, dass einige Bundesländer (z. B. Berlin, Bayern) zusätzliche WBS-Klassen mit höheren Einkommensgrenzen für spezielle Wohnungen anbieten.
+    </div>
+
+    <label class="pflegegrad-label" for="wbs_erwachsene">
+      Anzahl der Erwachsenen im Haushalt
+      <input type="number" id="wbs_erwachsene" min="1" max="10" step="1" value="1" required />
+    </label>
+
+    <label class="pflegegrad-label" for="wbs_kinder">
+      Anzahl der Kinder im Haushalt (kindergeldberechtigt)
+      <input type="number" id="wbs_kinder" min="0" max="10" step="1" value="0" />
+    </label>
+    
+    <div class="hinweis">Zählen Sie alle Personen mit, die gemeinsam in die Sozialwohnung einziehen werden.</div>
+  </fieldset>
+
+  <!-- 2. Einkommen -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2. Jährliches Bruttoeinkommen</legend>
+
+    <label class="pflegegrad-label" for="wbs_brutto_jahr">
+      Gesamtes Jahresbruttoeinkommen aller Personen (in Euro)
+      <input type="number" id="wbs_brutto_jahr" min="0" step="500" placeholder="z. B. 35000" required />
+    </label>
+
+    <p class="hinweis">
+      Geben Sie das gesamte Bruttoeinkommen der letzten 12 Monate an (inkl. Weihnachtsgeld, Urlaubsgeld). Kindergeld oder Wohngeld zählen <strong>nicht</strong> zum Einkommen!
+    </p>
+
+    <label class="pflegegrad-label" for="wbs_arbeitnehmer">
+      Wie viele Personen im Haushalt sind Arbeitnehmer?
+      <input type="number" id="wbs_arbeitnehmer" min="0" max="10" step="1" value="1" />
+    </label>
+
+    <p class="hinweis">Für jeden Arbeitnehmer werden automatisch 1.230 € Werbungskosten abgezogen (falls Sie keine höheren Werbungskosten eingeben).</p>
+
+    <p class="sub-heading">Zahlen Sie von diesem Einkommen...</p>
+    
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_abzug_steuer" checked>
+      Lohn- oder Einkommensteuer? (-10%)
+    </label>
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_abzug_kv" checked>
+      Beiträge zur Krankenversicherung? (-10%)
+    </label>
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_abzug_rv" checked>
+      Beiträge zur Rentenversicherung? (-10%)
+    </label>
+  </fieldset>
+
+  <!-- 3. Besondere Freibeträge -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>3. Freibeträge & Besonderheiten (Optional)</legend>
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_alleinerziehend">
+      Sind Sie alleinerziehend und gehen einer Erwerbstätigkeit/Ausbildung nach?
+    </label>
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_verheiratet">
+      Sind Sie verheiratet oder in einer eingetragenen Lebenspartnerschaft? (4.000 € Freibetrag)
+    </label>
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="wbs_schwerbehindert">
+      Leben schwerbehinderte Menschen (GdB ab 50) im Haushalt?
+    </label>
+
+    <label class="pflegegrad-label" for="wbs_werbungskosten">
+      Jährliche Werbungskosten (falls höher als 1.230 € Pauschale)
+      <input type="number" id="wbs_werbungskosten" min="0" step="10" placeholder="z.B. 1500" />
+    </label>
+    
+    <p class="hinweis">
+      <strong>Arbeitnehmer:</strong> Falls Ihre tatsächlichen Kosten höher als die Pauschale (1.230 €) sind.<br>
+      <strong>Selbstständige / Rentner:</strong> Tragen Sie hier nur besondere Abzüge ein. (Selbstständige geben oben als Bruttoeinkommen bitte ihren steuerlichen <em>Gewinn</em> an).
+    </p>
+  </fieldset>
+
+  <div class="button-container">
+    <button type="button" id="wbs_berechnen" class="button">WBS-Anspruch prüfen</button>
+    <button type="reset" id="wbs_reset" class="button button-secondary">Eingaben zurücksetzen</button>
   </div>
-
-        <label class="pflegegrad-label" for="wbs_erwachsene">
-          Anzahl der Erwachsenen im Haushalt
-          <input type="number" id="wbs_erwachsene" min="1" max="10" step="1" value="1" required />
-        </label>
-
-        <label class="pflegegrad-label" for="wbs_kinder">
-          Anzahl der Kinder im Haushalt (kindergeldberechtigt)
-          <input type="number" id="wbs_kinder" min="0" max="10" step="1" value="0" />
-        </label>
-        
-        <div class="hinweis">Zählen Sie alle Personen mit, die gemeinsam in die Sozialwohnung einziehen werden.</div>
-      </fieldset>
-
-      <!-- 2. Einkommen -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Jährliches Bruttoeinkommen</legend>
-
-        <label class="pflegegrad-label" for="wbs_brutto_jahr">
-          Gesamtes Jahresbruttoeinkommen aller Personen (in Euro)
-          <input type="number" id="wbs_brutto_jahr" min="0" step="500" placeholder="z. B. 35000" required />
-        </label>
-
-        <p class="hinweis">
-          Geben Sie das gesamte Bruttoeinkommen der letzten 12 Monate an (inkl. Weihnachtsgeld, Urlaubsgeld). Kindergeld oder Wohngeld zählen <strong>nicht</strong> zum Einkommen!
-        </p>
-
-        <label class="pflegegrad-label" for="wbs_arbeitnehmer">
-         Wie viele Personen im Haushalt sind Arbeitnehmer?
-       <input type="number" id="wbs_arbeitnehmer" min="0" max="10" step="1" value="1" />
-      </label>
-
-<p class="hinweis">Für jeden Arbeitnehmer werden automatisch 1.230 € Werbungskosten abgezogen (falls Sie keine höheren Werbungskosten eingeben).</p>
-
-        <p style="margin-top: 15px; margin-bottom: 5px; font-weight: bold;">Zahlen Sie von diesem Einkommen...</p>
-        
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-          <input type="checkbox" id="wbs_abzug_steuer" checked style="width: 20px; height: 20px;">
-          Lohn- oder Einkommensteuer? (-10%)
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-          <input type="checkbox" id="wbs_abzug_kv" checked style="width: 20px; height: 20px;">
-          Beiträge zur Krankenversicherung? (-10%)
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer;">
-          <input type="checkbox" id="wbs_abzug_rv" checked style="width: 20px; height: 20px;">
-          Beiträge zur Rentenversicherung? (-10%)
-        </label>
-      </fieldset>
-
-      <!-- 3. Besondere Freibeträge -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Freibeträge & Besonderheiten (Optional)</legend>
-
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-          <input type="checkbox" id="wbs_alleinerziehend" style="width: 20px; height: 20px;">
-          Sind Sie alleinerziehend und gehen einer Erwerbstätigkeit/Ausbildung nach?
-        </label>
-
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-          <input type="checkbox" id="wbs_verheiratet" style="width: 20px; height: 20px;">
-         Sind Sie verheiratet oder in einer eingetragenen Lebenspartnerschaft? (4.000 € Freibetrag)
-      </label>
-
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer;">
-          <input type="checkbox" id="wbs_schwerbehindert" style="width: 20px; height: 20px;">
-          Leben schwerbehinderte Menschen (GdB ab 50) im Haushalt?
-        </label>
-
-        <label class="pflegegrad-label" for="wbs_werbungskosten">
-          Jährliche Werbungskosten (falls höher als 1.230 € Pauschale)
-          <input type="number" id="wbs_werbungskosten" min="0" step="10" placeholder="z.B. 1500" />
-        </label>
-        
-        <p class="hinweis">
-  <strong>Arbeitnehmer:</strong> Falls Ihre tatsächlichen Kosten höher als die Pauschale (1.230 €) sind.<br>
-  <strong>Selbstständige / Rentner:</strong> Tragen Sie hier nur besondere Abzüge ein. (Selbstständige geben oben als Bruttoeinkommen bitte ihren steuerlichen <em>Gewinn</em> an).
-</p>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="wbs_berechnen" class="button">WBS-Anspruch prüfen</button>
-        <button type="reset" id="wbs_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
+</form>
 
     <section id="wbs_ergebnis" aria-live="polite"></section>
 

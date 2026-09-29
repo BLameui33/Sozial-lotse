@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Logik: Anspruch Ja oder Nein
         if (massgeblichesEinkommen <= einkommensGrenze) {
             ergebnisHTML += `
-                <div style="background-color: #e8f5e9; border-left: 5px solid #4caf50; padding: 15px; margin-bottom: 15px;">
+                <div style="background-color: #e8f5e9; padding: 15px; margin-bottom: 15px;">
                     <h3 style="color: #2e7d32; margin-top: 0; display: flex; align-items: center; gap: 8px;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#2e7d32"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                         Gute Chancen auf einen WBS!
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         } else {
             ergebnisHTML += `
-                <div style="background-color: #ffebee; border-left: 5px solid #f44336; padding: 15px; margin-bottom: 15px;">
+                <div style="background-color: #ffebee;  padding: 15px; margin-bottom: 15px;">
                     <h3 style="color: #c62828; margin-top: 0; display: flex; align-items: center; gap: 8px;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="#c62828"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
                         Einkommensgrenze überschritten
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Ein Anspruch auf den regulären Wohnberechtigungsschein besteht voraussichtlich <strong>nicht</strong>.
                     </p>
                 </div>
-                <div style="background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; font-size: 0.9em; margin-bottom: 15px;">
+                <div style="background-color: #fff3e0; padding: 15px; font-size: 0.9em; margin-bottom: 15px;">
                     <strong>Tipp:</strong> Viele Länder vergeben Scheine für höhere Einkommen: Berlin (WBS 160/180/220),
                     NRW (Einkommensgruppe B), Brandenburg (WBSplus +40 %/+60 %), Niedersachsen (EK-Gruppe B),
                     Sachsen (zweite Einkommensgrenze, z. B. 23.640 € für 1 Person).
