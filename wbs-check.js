@@ -8,59 +8,74 @@ document.addEventListener("DOMContentLoaded", () => {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     };
 
-   
+    // ============================================================
+    // WBS-Einkommensgrenzen – Stand 2026
+    // Quellen: Landeswohnraumfördergesetze, Landesverordnungen,
+    // Erlasse der Wohnungsbauministerien (zuletzt geprüft: 09/2026)
+    //
+    // Zusätzliche optionale Felder pro Land:
+    //  bruttoBasis : true  -> Grenze gilt fürs Brutto-Haushaltseinkommen
+    //                         (nur Baden-Württemberg), keine 30-%-Pauschale
+    //  modell: "nrw"        -> NRW-Sonderlogik: ab 3. Person je extraPerson,
+    //                         kein zusätzlicher Kinderzuschlag;
+    //                         Alleinerziehend: extraChild (860) je Kind,
+    //                         ab 2. Kind wie weitere Person
+    //  freibetragSB         -> abweichender Schwerbehinderten-Freibetrag (NI: 4000)
+    //  freibetragAZ         -> abweichender Alleinerziehenden-Freibetrag je Kind (NI: 1000)
+    //  label                -> wird im Ergebnis angezeigt
+    // ============================================================
     const wbsGrenzen = {
-    // Baden-Württemberg (Hohe Grenzen durch Landesförderung)
-    "BW": { base1: 52700, base2: 52700, extraPerson: 9000, extraChild: 0 }, 
-    
-    // Bayern (Einkommensstufe I)
-    "BY": { base1: 22600, base2: 34500, extraPerson: 8500, extraChild: 2500 }, 
-    
-    // Berlin (WBS 100 - die Grundgrenze)
-    "BE": { base1: 16800, base2: 25200, extraPerson: 5740, extraChild: 700 }, 
-    
-    // Brandenburg 
-    "BB": { base1: 18500, base2: 26000, extraPerson: 5800, extraChild: 2000 },
-    
-    // Bremen (Orientierung an Bundesgesetz / Basiswerten)
-    "HB": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 600 },
-    
-    // Hamburg 
-    "HH": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 1000 },
-    
-    // Hessen 
-    "HE": { base1: 16351, base2: 24807, extraPerson: 5639, extraChild: 650 },
-    
-    // Mecklenburg-Vorpommern
-    "MV": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500 },
-    
-    // Niedersachsen
-    "NI": { base1: 17000, base2: 23000, extraPerson: 3000, extraChild: 3000 },
-    
-    // Nordrhein-Westfalen (Angepasste Basiswerte)
-    "NW": { base1: 20420, base2: 24600, extraPerson: 6530, extraChild: 740 },
-    
-    // Rheinland-Pfalz
-    "RP": { base1: 16100, base2: 23000, extraPerson: 5431, extraChild: 1068 },
-    
-    // Saarland
-    "SL": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500 },
-    
-    // Sachsen (Ab 1. Januar 2026 wurden die Grenzen deutlich angehoben)
-    "SN": { base1: 20520, base2: 30780, extraPerson: 7011, extraChild: 855 },
-    
-    // Sachsen-Anhalt
-    "ST": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500 },
-    
-    // Schleswig-Holstein
-    "SH": { base1: 14400, base2: 21600, extraPerson: 5000, extraChild: 600 },
-    
-    // Thüringen
-    "TH": { base1: 14400, base2: 21600, extraPerson: 5000, extraChild: 1000 },
+        // Baden-Württemberg – Erlass MLW v. 01.12.2025; Grenzen gelten fürs BRUTTOeinkommen!
+        "BW": { base1: 60350, base2: 60350, extraPerson: 9000, extraChild: 500, bruttoBasis: true, label: "Baden-Württemberg (Brutto-Basis, Erlass 01.12.2025)" },
 
-    // Fallback für alle anderen Bundesländer (orientiert am Bundes-WoFG §9)
-    "DEFAULT": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500 }
-};
+        // Bayern – Einkommensstufe I (Art. 11 BayWoFG)
+        "BY": { base1: 22600, base2: 34500, extraPerson: 8500, extraChild: 2500, label: "Bayern (Einkommensstufe I)" },
+
+        // Berlin – WBS 140 (§ 9 WoFG + 40 %); WBS 100 = Bundeswerte
+        "BE": { base1: 16800, base2: 25200, extraPerson: 5740, extraChild: 700, label: "Berlin (WBS 140)" },
+
+        // Brandenburg – seit 01.01.2024 (§ 22 BbgWoFG)
+        "BB": { base1: 18500, base2: 26000, extraPerson: 5800, extraChild: 2000, label: "Brandenburg (seit 01.01.2024)" },
+
+        // Bremen – Bundesgrenzen + 600 € je Kind
+        "HB": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 600, label: "Bremen" },
+
+        // Hamburg – Bundesgrenzen + 1.000 € je Kind
+        "HH": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 1000, label: "Hamburg" },
+
+        // Hessen – Aktualisiert 2026
+        "HE": { base1: 20146, base2: 30565, extraPerson: 6948, extraChild: 924, label: "Hessen" },
+
+        // Mecklenburg-Vorpommern – Aktualisiert 2026 (Kinder zählen als Haushaltsmitglieder, kein separater Kinderzuschlag)
+        "MV": { base1: 25800, base2: 38700, extraPerson: 8800, extraChild: 0, label: "Mecklenburg-Vorpommern" },
+
+        // Niedersachsen – seit 01.03.2025 (§ 3 NWoFG); Kinder zählen doppelt (Person + Kind)
+        "NI": { base1: 21250, base2: 28750, extraPerson: 3750, extraChild: 3750, freibetragSB: 4000, freibetragAZ: 1000, label: "Niedersachsen (seit 01.03.2025)" },
+
+        // Nordrhein-Westfalen – seit 01.01.2025; Sonderlogik (siehe modell)
+        "NW": { base1: 23540, base2: 28350, extraPerson: 7390, extraChild: 860, modell: "nrw", label: "Nordrhein-Westfalen" },
+
+        // Rheinland-Pfalz – Aktualisiert 2026
+        "RP": { base1: 20000, base2: 28700, extraPerson: 6700, extraChild: 1400, label: "Rheinland-Pfalz" },
+
+        // Saarland – Bundesgrenzen
+        "SL": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500, label: "Saarland" },
+
+        // Sachsen – SächsEinkGrenzVO v. 02.12.2025, ab 01.01.2026 (+22,1 %)
+        "SN": { base1: 20520, base2: 30780, extraPerson: 7011, extraChild: 855, label: "Sachsen (seit 01.01.2026)" },
+
+        // Sachsen-Anhalt – Bundesgrenzen
+        "ST": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500, label: "Sachsen-Anhalt" },
+
+        // Schleswig-Holstein – Aktualisiert 2026
+        "SH": { base1: 14400, base2: 21600, extraPerson: 5000, extraChild: 600, label: "Schleswig-Holstein" },
+
+        // Thüringen
+        "TH": { base1: 14400, base2: 21600, extraPerson: 5000, extraChild: 1000, label: "Thüringen" },
+
+        // Fallback = Bundes-WoFG § 9
+        "DEFAULT": { base1: 12000, base2: 18000, extraPerson: 4100, extraChild: 500, label: "Bundesgrenze (§ 9 WoFG)" }
+    };
 
     const berechneWBS = () => {
         // 1. Werte auslesen & Validierung
@@ -87,50 +102,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Freibeträge & Werbungskosten
         const istAlleinerziehend = document.getElementById("wbs_alleinerziehend").checked;
+        const istVerheiratet = document.getElementById("wbs_verheiratet").checked;
+        const arbeitnehmer = parseInt(document.getElementById("wbs_arbeitnehmer").value) || 0;
         const istSchwerbehindert = document.getElementById("wbs_schwerbehindert").checked;
         let werbungskostenEingabe = parseFloat(document.getElementById("wbs_werbungskosten").value) || 0;
 
+        const landData = wbsGrenzen[bundesland] || wbsGrenzen["DEFAULT"];
+        const gesamtPersonen = erwachsene + kinder;
+
         // 2. Berechnung des maßgeblichen Einkommens (§ 14 WoFG)
-        
-        // A) Werbungskosten abziehen (mindestens Arbeitnehmerpauschbetrag von 1.230 €)
-        const werbungskosten = Math.max(1230, werbungskostenEingabe);
-        let bereinigtesBrutto = Math.max(0, bruttoJahr - werbungskosten);
+        //
+        // A) Werbungskosten abziehen (mindestens Arbeitnehmerpauschbetrag 1.230 €)
+        //    Ausnahme BW: dort wird das Brutto-Haushaltseinkommen herangezogen.
+            const pauschaleWerbungskosten = arbeitnehmer * 1230;
+            const werbungskosten = landData.bruttoBasis ? 0 : Math.max(pauschaleWerbungskosten, werbungskostenEingabe);
+            let bereinigtesBrutto = Math.max(0, bruttoJahr - werbungskosten);
 
-        // B) Pauschale Abzüge (jeweils 10%)
+        // B) Pauschale Abzüge (jeweils 10 %, max. 30 %) – entfällt in BW (Brutto-Basis)
         let abzugProzent = 0;
-        if (abzugSteuer) abzugProzent += 0.10;
-        if (abzugKV) abzugProzent += 0.10;
-        if (abzugRV) abzugProzent += 0.10;
-
+        if (!landData.bruttoBasis) {
+            if (abzugSteuer) abzugProzent += 0.10;
+            if (abzugKV) abzugProzent += 0.10;
+            if (abzugRV) abzugProzent += 0.10;
+        }
         const pauschalerAbzugWert = bereinigtesBrutto * abzugProzent;
         let einkommenNachAbzuegen = bereinigtesBrutto - pauschalerAbzugWert;
 
-        // C) Besondere Freibeträge abziehen (Typische Pauschalen zur Veranschaulichung)
+        // C) Besondere Freibeträge (§ 24 WoFG, landesrechtliche Abweichungen möglich)
+        //    Schwerbehinderung: 2.100 € standardmäßig; bei GdB 100 (o. GdB ≥ 80 mit
+        //    häuslicher Pflegebedürftigkeit) sind 4.500 € abzugsfähig.
+        //    NI: 4.000 € bei GdB ab 50/Pflegegrad 2. Alleinerziehend: je Kind
+        //    (unter 12 J.) bei Erwerbstätigkeit; NI 1.000 €, sonst 600 €.
+        const freibetragSB = landData.freibetragSB ?? 2100;
+        const freibetragAZ = landData.freibetragAZ ?? 600;
+
         let freibetraegeSumme = 0;
-        if (istSchwerbehindert) freibetraegeSumme += 4500; // Freibetrag Schwerbehinderung (bspw. ab GdB 50 / Pflegegrad)
-        if (istAlleinerziehend && kinder > 0) freibetraegeSumme += 600; // Alleinerziehendenfreibetrag (Basiswert)
+        let hinweisFreibetraege = "";
+        if (istSchwerbehindert) {
+            freibetraegeSumme += freibetragSB;
+            if (!landData.freibetragSB) {
+                hinweisFreibetraege += "Bei GdB 100 bzw. GdB ab 80 mit Pflegebedürftigkeit sind ggf. 4.500 € statt 2.100 € abzugsfähig. ";
+            }
+        }
+        if (istAlleinerziehend && kinder > 0) {
+            freibetraegeSumme += freibetragAZ * kinder;
+            hinweisFreibetraege += "Alleinerziehenden-Freibetrag gilt je Kind unter 12 Jahren bei Erwerbstätigkeit.";
+        }
+        if (istVerheiratet) {
+    freibetraegeSumme += 4000;
+    hinweisFreibetraege += "Ehepaar-Freibetrag: 4.000 € für verheiratete Paare oder eingetragene Lebenspartnerschaften. ";
+}
 
         const massgeblichesEinkommen = Math.max(0, einkommenNachAbzuegen - freibetraegeSumme);
 
         // 3. WBS-Grenze für den Haushalt ermitteln
-        const landData = wbsGrenzen[bundesland] || wbsGrenzen["DEFAULT"];
-        const gesamtPersonen = erwachsene + kinder;
-        
+        //    Standardmodell (u. a. BB, SN, NI, BY, BE, Bundesgrenze):
+        //    Kinder zählen als Haushaltsperson UND erhalten den Kind-Zuschlag.
+        //    NRW-Sondermodell: ab 3. Person (inkl. Kind) nur extraPerson, kein
+        //    zusätzlicher Kind-Zuschlag; Alleinerziehende: extraChild (860) je Kind.
         let einkommensGrenze = 0;
-        if (gesamtPersonen === 1) {
-            einkommensGrenze = landData.base1;
-        } else if (gesamtPersonen === 2) {
-            einkommensGrenze = landData.base2 + (kinder * landData.extraChild); 
+
+        if (landData.modell === "nrw") {
+            if (gesamtPersonen === 1) {
+                einkommensGrenze = landData.base1;
+            } else if (erwachsene === 1) {
+                // Alleinerziehend: 2-Personen-Basis + 860 € je Kind,
+                // ab dem 2. Kind je weitere Person (Näherung)
+                einkommensGrenze = landData.base2 + landData.extraChild + (kinder - 1) * landData.extraPerson;
+            } else {
+                einkommensGrenze = landData.base2 + (gesamtPersonen - 2) * landData.extraPerson;
+            }
         } else {
-            // Ab 3 Personen: Basis 2-Personen + Aufschlag für jede weitere Person
-            const weitereErwachsene = erwachsene > 2 ? erwachsene - 2 : 0;
-            // Wenn 1 Erwachsener + 2 Kinder = 3 Personen. Basis für 2 Pers + 1 weiteres Kind.
-            const weiterePersonenInsgesamt = gesamtPersonen - 2;
-            
-            // Vereinfachte Formel für den Rechner (2er-Basis + X weitere Personen)
-            einkommensGrenze = landData.base2 + (weiterePersonenInsgesamt * landData.extraPerson);
-            // Kinder-Zusatzfreibeträge je nach Bundesland addieren
-            einkommensGrenze += (kinder * landData.extraChild);
+            if (gesamtPersonen === 1) {
+                einkommensGrenze = landData.base1;
+            } else if (gesamtPersonen === 2) {
+                // z. B. 1 Erw. + 1 Kind: Zweipersonenhaushalt + Kind-Zuschlag
+                einkommensGrenze = landData.base2 + (kinder * landData.extraChild);
+            } else {
+                einkommensGrenze = landData.base2
+                    + ((gesamtPersonen - 2) * landData.extraPerson)
+                    + (kinder * landData.extraChild);
+            }
         }
 
         const differenz = einkommensGrenze - massgeblichesEinkommen;
@@ -138,44 +190,61 @@ document.addEventListener("DOMContentLoaded", () => {
         // 4. Ergebnis-HTML generieren
         let ergebnisHTML = `<div style="margin-top: 30px; padding: 20px; border-radius: 8px; border: 1px solid #ddd; background-color: #fcfcfc;">`;
         ergebnisHTML += `<h2 style="margin-top: 0;">Ihre WBS-Auswertung</h2>`;
+        ergebnisHTML += `<p style="font-size: 0.85em; color: #777; margin-top: -5px;">Grenzwerte: ${landData.label || "Bundesgrenze"} · Stand 2026 · unverbindliche Schätzung</p>`;
 
-        // Berechnungsweg Tabelle
-        ergebnisHTML += `
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: left; font-size: 0.95em;">
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 6px 0;">Bruttoeinkommen gesamt</td>
-                    <td style="padding: 6px 0; text-align: right;">${formatCurrency(bruttoJahr)}</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 6px 0; color: #d32f2f;">- Werbungskosten (Pauschale o. Eingabe)</td>
-                    <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(werbungskosten)}</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 6px 0; color: #d32f2f;">- Pauschale Abzüge (${(abzugProzent * 100).toFixed(0)}%)</td>
-                    <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(pauschalerAbzugWert)}</td>
-                </tr>
-                <tr style="border-bottom: 2px solid #ccc;">
-                    <td style="padding: 6px 0; color: #d32f2f;">- Zusätzliche Freibeträge</td>
-                    <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(freibetraegeSumme)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px 0; font-weight: bold; font-size: 1.1em;">Maßgebliches Einkommen</td>
-                    <td style="padding: 10px 0; text-align: right; font-weight: bold; font-size: 1.1em;">${formatCurrency(massgeblichesEinkommen)}</td>
-                </tr>
-            </table>
-        `;
+        // Berechnungsweg Tabelle (zeilenweise, damit BW-Bruttomodell sauber dargestellt wird)
+        let zeilen = `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 6px 0;">${landData.bruttoBasis ? "Brutto-Haushaltseinkommen (BW-Bruttomodell)" : "Bruttoeinkommen gesamt"}</td>
+                <td style="padding: 6px 0; text-align: right;">${formatCurrency(bruttoJahr)}</td>
+            </tr>`;
+        if (!landData.bruttoBasis) {
+            zeilen += `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 6px 0; color: #d32f2f;">- Werbungskosten (je 1.230 € pro Arbeitnehmer o. Eingabe)</td>
+                <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(werbungskosten)}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 6px 0; color: #d32f2f;">- Pauschale Abzüge (${(abzugProzent * 100).toFixed(0)}%)</td>
+                <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(pauschalerAbzugWert)}</td>
+            </tr>`;
+        }
+        zeilen += `
+            <tr style="border-bottom: 2px solid #ccc;">
+                <td style="padding: 6px 0; color: #d32f2f;">- Zusätzliche Freibeträge</td>
+                <td style="padding: 6px 0; text-align: right; color: #d32f2f;">- ${formatCurrency(freibetraegeSumme)}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px 0; font-weight: bold; font-size: 1.1em;">Maßgebliches Einkommen</td>
+                <td style="padding: 10px 0; text-align: right; font-weight: bold; font-size: 1.1em;">${formatCurrency(massgeblichesEinkommen)}</td>
+            </tr>`;
+
+        ergebnisHTML += `<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: left; font-size: 0.95em;">${zeilen}</table>`;
+
+        if (landData.bruttoBasis) {
+            ergebnisHTML += `
+                <div style="background-color: #fff8e1; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.85em;">
+                    <strong>Hinweis Baden-Württemberg:</strong> Dort wird das <em>Brutto</em>-Haushaltseinkommen
+                    herangezogen – Werbungskosten- und Sozialversicherungspauschalen werden nicht abgezogen.
+                </div>`;
+        }
+        if (hinweisFreibetraege) {
+            ergebnisHTML += `
+                <div style="background-color: #fff8e1; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.85em;">
+                    <strong>Hinweis Freibeträge:</strong> ${hinweisFreibetraege}
+                </div>`;
+        }
 
         // Gegenüberstellung mit Grenze
         ergebnisHTML += `
             <div style="background-color: #e3f2fd; padding: 12px; border-radius: 4px; margin-bottom: 20px; text-align: center;">
-                <p style="margin: 0; font-size: 0.9em; color: #555;">Maximal erlaubtes Einkommen für Ihren Haushalt in diesem Bundesland:</p>
+                <p style="margin: 0; font-size: 0.9em; color: #555;">Maximal erlaubtes Einkommen für Ihren Haushalt (${gesamtPersonen} Person${gesamtPersonen > 1 ? "en" : ""}):</p>
                 <strong style="font-size: 1.2em; color: #1976d2;">${formatCurrency(einkommensGrenze)}</strong>
             </div>
         `;
 
         // Logik: Anspruch Ja oder Nein
         if (massgeblichesEinkommen <= einkommensGrenze) {
-            // ANSPRUCH VORHANDEN
             ergebnisHTML += `
                 <div style="background-color: #e8f5e9; border-left: 5px solid #4caf50; padding: 15px; margin-bottom: 15px;">
                     <h3 style="color: #2e7d32; margin-top: 0; display: flex; align-items: center; gap: 8px;">
@@ -183,14 +252,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         Gute Chancen auf einen WBS!
                     </h3>
                     <p style="margin-bottom: 0;">
-                        Ihr maßgebliches Einkommen liegt <strong>unter</strong> der gesetzlichen Einkommensgrenze. 
-                        Sie haben voraussichtlich Anspruch auf einen Wohnberechtigungsschein. 
+                        Ihr maßgebliches Einkommen liegt <strong>unter</strong> der Einkommensgrenze.
+                        Sie haben voraussichtlich Anspruch auf einen Wohnberechtigungsschein.
                         Reichen Sie den Antrag zeitnah bei Ihrem zuständigen Wohnungsamt ein.
                     </p>
                 </div>
             `;
         } else {
-            // KEIN ANSPRUCH
             ergebnisHTML += `
                 <div style="background-color: #ffebee; border-left: 5px solid #f44336; padding: 15px; margin-bottom: 15px;">
                     <h3 style="color: #c62828; margin-top: 0; display: flex; align-items: center; gap: 8px;">
@@ -198,23 +266,31 @@ document.addEventListener("DOMContentLoaded", () => {
                         Einkommensgrenze überschritten
                     </h3>
                     <p>
-                        Ihr maßgebliches Einkommen überschreitet die Grenze um <strong>${formatCurrency(Math.abs(differenz))}</strong>. 
-                        Ein Anspruch auf den regulären (Typ A) Wohnberechtigungsschein besteht voraussichtlich <strong>nicht</strong>.
+                        Ihr maßgebliches Einkommen überschreitet die Grenze um <strong>${formatCurrency(Math.abs(differenz))}</strong>.
+                        Ein Anspruch auf den regulären Wohnberechtigungsschein besteht voraussichtlich <strong>nicht</strong>.
                     </p>
                 </div>
-                <div style="background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; font-size: 0.9em;">
-                    <strong>Tipp:</strong> Einige Kommunen vergeben Sonder-WBS (oft "Typ B" genannt) für mittlere Einkommen, 
-                    die die reguläre Grenze um bis zu 40% überschreiten. Fragen Sie trotzdem bei Ihrem Wohnungsamt nach!
+                <div style="background-color: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; font-size: 0.9em; margin-bottom: 15px;">
+                    <strong>Tipp:</strong> Viele Länder vergeben Scheine für höhere Einkommen: Berlin (WBS 160/180/220),
+                    NRW (Einkommensgruppe B), Brandenburg (WBSplus +40 %/+60 %), Niedersachsen (EK-Gruppe B),
+                    Sachsen (zweite Einkommensgrenze, z. B. 23.640 € für 1 Person).
+                    Fragen Sie trotzdem bei Ihrem Wohnungsamt nach!
                 </div>
             `;
         }
 
+        // Allgemeine Hinweise (Vermögensgrenze, Gültigkeit)
+        ergebnisHTML += `
+            <div style="font-size: 0.8em; color: #888; line-height: 1.5;">
+                <strong>Bitte beachten:</strong> Zusätzlich zur Einkommensgrenze gilt eine Vermögensgrenze
+                (60.000 € für die erste Person + 30.000 € je weitere Person). Der WBS ist in der Regel
+                1 Jahr gültig. Dieser Rechner ersetzt keine verbindliche Prüfung durch das Wohnungsamt.
+            </div>
+        `;
+
         ergebnisHTML += `</div>`;
 
-        // Ergebnis ins DOM einfügen
         ergebnisContainer.innerHTML = ergebnisHTML;
-
-        // Zum Ergebnis scrollen
         ergebnisContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
@@ -226,7 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnReset) {
         btnReset.addEventListener("click", () => {
             ergebnisContainer.innerHTML = "";
-            // Formular wird automatisch zurückgesetzt durch type="reset"
         });
     }
 });

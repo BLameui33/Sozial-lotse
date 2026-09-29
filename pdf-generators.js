@@ -2443,7 +2443,7 @@ function generateMehrbedarfWiderspruchPDF(data) {
     } else {
         // --- TEXTBLOCK FÜR SINGULAR ("ICH") ---
         writeParagraph(`hiermit lege ich fristgerecht und mit allem Nachdruck Widerspruch gegen Ihren oben genannten Bescheid vom ${bescheidDatumFormatiert} ein. Mit diesem Bescheid haben Sie meinen Antrag auf Gewährung von Mehrbedarfen nach § 21 SGB II ${antragDatumFormatiert ? 'vom ' + antragDatumFormatiert + ' ' : ''}ganz oder teilweise abgelehnt.`);
-        writeParagraph(`Diese Entscheidung ist nach meiner Auffassung rechtswidrig, da mir der/die beantragte(n) Mehrbedarf(e) gesetzlich zusteht/zustehen und die Voraussetzungen dafür nachweislich erfüllt sind.`);
+        writeParagraph(`Diese Entscheidung ist nach meiner Auffassung rechtswidrig, da mir der beantragte Mehrbedarf gesetzlich zusteht und die Voraussetzungen dafür nachweislich erfüllt sind.`);
         
         writeLine(`Begründung meines Widerspruchs:`, defaultLineHeight, "bold", subHeadingFontSize);
         y += spaceAfterParagraph / 2;
