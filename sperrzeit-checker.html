@@ -26,7 +26,196 @@
   }
 }
 </script>
+<style>
+  /* Prozessleiste */
+.ks-process-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  gap: 0;
+}
 
+.ks-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+.ks-step.active {
+  opacity: 1;
+}
+
+.ks-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid transparent;
+}
+
+.ks-step.active .ks-step-number {
+  background: #2980b9;
+  color: white;
+  border-color: #2980b9;
+}
+
+.ks-step-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+  max-width: 120px;
+}
+
+.ks-step-line {
+  flex: 1;
+  height: 2px;
+  background: #e0e0e0;
+  max-width: 80px;
+  margin: 0 10px;
+}
+
+/* Hilfetexte */
+.ks-intro {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px 0;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.ks-help {
+  font-size: 12px;
+  color: #888;
+  margin: 6px 0 16px 0;
+  line-height: 1.4;
+  padding-left: 2px;
+  border-left: 2px solid #e0e0e0;
+  padding-left: 10px;
+}
+
+/* Ergebnis aufwerten */
+#ks_ergebnis h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#ks_result_card {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+#ks_result_card h3 {
+  font-size: 16px;
+  margin: 24px 0 12px 0;
+  color: #444;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+.ks-status-badge {
+  padding: 16px 20px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.ks-status-badge .ks-status-icon {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.ks-status-badge .ks-status-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.ks-status-badge .ks-status-detail {
+  font-size: 14px;
+}
+
+.ks-reasons-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ks-reasons-list li {
+  padding: 10px 0 10px 24px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.5;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ks-reasons-list li:last-child {
+  border-bottom: none;
+}
+
+.ks-reasons-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #2980b9;
+  font-weight: bold;
+}
+
+.ks-warning-box {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 14px 16px;
+  margin: 16px 0;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #856404;
+}
+
+.ks-tips-box {
+  background: #f8f9fa;
+  border-left: 4px solid #2980b9;
+  padding: 16px 20px;
+  border-radius: 4px;
+}
+
+.ks-tips-box ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ks-tips-box li {
+  margin-bottom: 8px;
+}
+
+.ks-disclaimer {
+  font-size: 12px;
+  color: #999;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  line-height: 1.5;
+}
+</style>
 
 </head>
 <body>
@@ -49,7 +238,7 @@
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
+    Sofort-Check
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
@@ -104,60 +293,81 @@
 
 
     <form id="ks-form" class="pflegegrad-form" onsubmit="return false;">
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1) Wie endet das Arbeitsverhältnis?</legend>
+  
+  <div class="ks-process-bar">
+    <div class="ks-step active">
+      <span class="ks-step-number">1</span>
+      <span class="ks-step-label">Beendigungsart</span>
+    </div>
+    <div class="ks-step-line"></div>
+    <div class="ks-step">
+      <span class="ks-step-number">2</span>
+      <span class="ks-step-label">Fristen & Meldung</span>
+    </div>
+    <div class="ks-step-line"></div>
+    <div class="ks-step">
+      <span class="ks-step-number">3</span>
+      <span class="ks-step-label">Ergebnis</span>
+    </div>
+  </div>
 
-        <label class="pflegegrad-label">
-          Art der Beendigung
-          <select id="ks_art">
-            <option value="ag_betrieb" selected>Kündigung durch Arbeitgeber (Betriebsbedingt/Personenbedingt)</option>
-            <option value="ag_verhalten">Kündigung durch Arbeitgeber (Verhaltensbedingt/Fristlos)</option>
-            <option value="eigen">Eigenkündigung durch dich</option>
-            <option value="aufhebung">Aufhebungsvertrag unterschrieben</option>
-          </select>
-        </label>
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1) Wie endet das Arbeitsverhältnis?</legend>
+    <p class="ks-intro">Die Art der Beendigung entscheidet darüber, ob eine Sperrzeit droht.</p>
 
-        <div id="div_wichtiger_grund" style="display:none;">
-          <label class="pflegegrad-label">
-            Hast du einen "wichtigen Grund"?
-            <select id="ks_grund">
-              <option value="nein">Nein / Unsicher</option>
-              <option value="ja">Ja (z.B. ärztlicher Rat, Umzug zu Ehepartner, Mobbing belegbar)</option>
-            </select>
-          </label>
-          <p class="hinweis">Ein wichtiger Grund kann eine Sperrzeit verhindern, muss aber nachgewiesen werden.</p>
-        </div>
-      </fieldset>
+    <label class="pflegegrad-label">
+      Art der Beendigung
+      <select id="ks_art">
+        <option value="ag_betrieb" selected>Kündigung durch Arbeitgeber (Betriebsbedingt/Personenbedingt)</option>
+        <option value="ag_verhalten">Kündigung durch Arbeitgeber (Verhaltensbedingt/Fristlos)</option>
+        <option value="eigen">Eigenkündigung durch dich</option>
+        <option value="aufhebung">Aufhebungsvertrag unterschrieben</option>
+      </select>
+    </label>
+    <p class="ks-help">Wähle die Variante, die auf deine Situation zutrifft. Bei Unsicherheit wähle die erste Option.</p>
 
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2) Fristen & Meldung</legend>
-        
-        <label class="pflegegrad-label">
-          Hast du dich rechtzeitig "arbeitsuchend" gemeldet?
-          <select id="ks_meldung">
-            <option value="ja" selected>Ja (3 Monate vor Ende oder binnen 3 Tagen bei kurzfristiger Kündigung)</option>
-            <option value="nein">Nein, ich war zu spät</option>
-          </select>
-        </label>
+    <div id="div_wichtiger_grund" style="display:none;">
+      <label class="pflegegrad-label">
+        Hast du einen "wichtigen Grund"?
+        <select id="ks_grund">
+          <option value="nein">Nein / Unsicher</option>
+          <option value="ja">Ja (z.B. ärztlicher Rat, Umzug zu Ehepartner, Mobbing belegbar)</option>
+        </select>
+      </label>
+      <p class="ks-help">Ein wichtiger Grund kann eine Sperrzeit verhindern. Du musst diesen aber gegenüber der Agentur für Arbeit nachweisen können.</p>
+    </div>
+  </fieldset>
 
-        <label class="pflegegrad-label">
-          Wurde die ordentliche Kündigungsfrist eingehalten?
-          <select id="ks_frist">
-            <option value="ja" selected>Ja, das Arbeitsverhältnis endet regulär</option>
-            <option value="nein">Nein, es endet früher (z.B. durch Aufhebungsvertrag/Abfindung)</option>
-          </select>
-        </label>
-         <p class="hinweis">Wenn das Arbeitsverhältnis früher endet als die Frist erlaubt und eine Abfindung fließt, ruht der Anspruch oft.</p>
-      </fieldset>
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2) Fristen & Meldung</legend>
+    <p class="ks-intro">Formale Pflichten können zusätzlich zu Sperrzeiten führen.</p>
+    
+    <label class="pflegegrad-label">
+      Hast du dich rechtzeitig "arbeitsuchend" gemeldet?
+      <select id="ks_meldung">
+        <option value="ja" selected>Ja (3 Monate vor Ende oder binnen 3 Tagen bei kurzfristiger Kündigung)</option>
+        <option value="nein">Nein, ich war zu spät</option>
+      </select>
+    </label>
+    <p class="ks-help">Die Arbeitsuchendmeldung muss spätestens 3 Monate vor Ende des Arbeitsverhältnisses erfolgen. Bei kurzfristiger Kündigung innerhalb von 3 Tagen nach Kenntnis.</p>
 
-      <div class="button-container">
-        <button type="button" id="ks_berechnen" class="button">Risiko prüfen</button>
-        <button type="reset" id="ks_reset" class="button button-secondary">Zurücksetzen</button>
-      </div>
-    </form>
+    <label class="pflegegrad-label">
+      Wurde die ordentliche Kündigungsfrist eingehalten?
+      <select id="ks_frist">
+        <option value="ja" selected>Ja, das Arbeitsverhältnis endet regulär</option>
+        <option value="nein">Nein, es endet früher (z.B. durch Aufhebungsvertrag/Abfindung)</option>
+      </select>
+    </label>
+    <p class="ks-help">Wenn das Arbeitsverhältnis früher endet als die Frist erlaubt und eine Abfindung fließt, ruht der Anspruch oft bis zum regulären Ende der Kündigungsfrist.</p>
+  </fieldset>
 
-    <section id="ks_ergebnis"></section>
+  <div class="button-container">
+    <button type="button" id="ks_berechnen" class="button">Risiko prüfen</button>
+    <button type="reset" id="ks_reset" class="button button-secondary">Zurücksetzen</button>
+  </div>
+</form>
+
+<section id="ks_ergebnis"></section>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
   <h2 id="promo-headline">Weitere Hilfsangebote</h2>
