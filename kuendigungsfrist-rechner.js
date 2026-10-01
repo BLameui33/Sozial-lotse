@@ -14,33 +14,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const reset = document.getElementById("kf_reset");
     const out = document.getElementById("kf_ergebnis");
 
+    if (!btn || !out) return;
+
     // Toggle für manuelles Textfeld
-    inputs.vertrag.addEventListener("change", () => {
-        if(inputs.vertrag.value === "custom") {
-            inputs.customDiv.style.display = "block";
-        } else {
-            inputs.customDiv.style.display = "none";
-        }
-    });
+    if (inputs.vertrag && inputs.customDiv) {
+        inputs.vertrag.addEventListener("change", () => {
+            if (inputs.vertrag.value === "custom") {
+                inputs.customDiv.style.display = "block";
+            } else {
+                inputs.customDiv.style.display = "none";
+            }
+        });
+    }
 
     // --- LOGIK ---
     btn.addEventListener("click", () => {
         out.innerHTML = "";
 
-        const years = parseFloat(inputs.jahre.value.replace(',', '.'));
-        const isProbe = inputs.probezeit.checked;
-        const contractType = inputs.vertrag.value;
-        const customVal = inputs.customText.value;
+        const rawYears = inputs.jahre ? inputs.jahre.value : "";
+        const years = parseFloat(rawYears.replace(',', '.'));
+        const isProbe = inputs.probezeit ? inputs.probezeit.checked : false;
+        const contractType = inputs.vertrag ? inputs.vertrag.value : "bgb";
+        const customVal = inputs.customText ? inputs.customText.value : "";
 
         // Validierung
         if (isNaN(years) && !isProbe) {
-             out.innerHTML = `
+            out.innerHTML = `
                 <div class="kf-result-card">
                     <div class="kf-warning-box">
                         <p><strong>Hinweis:</strong> Bitte gib die Dauer der Beschäftigung in Jahren an, um eine Berechnung durchzuführen.</p>
                     </div>
                 </div>`;
-             return;
+            out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            return;
         }
 
         let fristAN = "";
@@ -57,15 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. Fall: Manuelle Eingabe im Vertrag
         else if (contractType === "custom" && customVal.trim() !== "") {
             fristAN = customVal;
-            fristAG = customVal; // Annahme: gilt meist beidseitig
+            fristAG = customVal;
             note = "Es gilt vorrangig die im Arbeitsvertrag vereinbarte Frist. Achtung: Die Frist für den Arbeitnehmer darf nicht länger sein als für den Arbeitgeber (§ 622 Abs. 6 BGB).";
         }
         // 3. Fall: Gesetzliche Regelung (§ 622 BGB)
         else {
-            // Arbeitnehmer (Kündigt selbst)
             fristAN = "4 Wochen zum 15. oder zum Monatsende";
 
-            // Arbeitgeber (Kündigt den Mitarbeiter) - Staffelung nach Jahren
             if (years < 2) {
                 fristAG = "4 Wochen zum 15. oder zum Monatsende";
             } else if (years < 5) {
@@ -87,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             note = "Die verlängerten Fristen bei langer Betriebszugehörigkeit gelten laut Gesetz (§ 622 Abs. 2 BGB) nur, wenn der Arbeitgeber kündigt. Für dich als Arbeitnehmer bleibt es bei 4 Wochen, außer dein Vertrag besagt: 'Die verlängerten Kündigungsfristen gelten für beide Parteien'. Dies ist in der Praxis sehr häufig der Fall.";
         }
 
-        // HTML Output (Schick, ohne Emojis, mit blauen Akzenten)
+        // HTML Output
         const resultHtml = `
             <div class="kf-result-card">
                 <h2 class="kf-result-title">Dein Ergebnis</h2>
@@ -116,19 +120,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="kf-warning-box">
-                   <p><strong>Wichtig:</strong> Prüfe unbedingt deinen Arbeitsvertrag oder Tarifvertrag! Diese gehen der gesetzlichen Regelung vor, sofern sie für dich günstiger sind oder (in Tarifverträgen) auch kürzere Fristen erlauben.</p>
+                    <p><strong>Wichtig:</strong> Prüfe unbedingt deinen Arbeitsvertrag oder Tarifvertrag! Diese gehen der gesetzlichen Regelung vor, sofern sie für dich günstiger sind oder (in Tarifverträgen) auch kürzere Fristen erlauben.</p>
                 </div>
             </div>
         `;
 
         out.innerHTML = resultHtml;
-        out.scrollIntoView({ behavior: "smooth", block: "start" });
+        out.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
 
     // Reset Logik
     if (reset) {
         reset.addEventListener("click", () => {
-            inputs.customDiv.style.display = "none";
+            if (inputs.customDiv) inputs.customDiv.style.display = "none";
             setTimeout(() => { out.innerHTML = ""; }, 50);
         });
     }

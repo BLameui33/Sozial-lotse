@@ -96,6 +96,10 @@ h2 {
   padding-left: 0.8rem;
 }
 
+strong {
+  color: black;
+}
+
 /* --- Fieldsets --- */
 fieldset {
   border: 1px solid #e4e8ec;
