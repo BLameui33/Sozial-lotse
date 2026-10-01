@@ -5,11 +5,14 @@
 window.toggleTaeuschung = function() {
     const box = document.getElementById("boxTaeuschung");
     const check = document.getElementById("checkAnfechtung");
-    box.style.display = check.checked ? "block" : "none";
+    if(box && check) {
+        box.style.display = check.checked ? "block" : "none";
+    }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("widerrufForm");
+    if (!form) return;
     
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -23,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             await generateRevocationPDF();
         } catch (err) {
             console.error(err);
-            alert("Fehler: Bitte nutzen Sie einen modernen Browser (Chrome/Firefox/Safari).");
+            alert("Fehler beim Erstellen des PDFs. Bitte Konsolenausgabe prüfen.");
         } finally {
             btn.innerText = originalText;
             btn.disabled = false;
@@ -39,53 +42,82 @@ async function generateRevocationPDF() {
         format: "a4"
     });
 
+    // --- HELFER FÜR SICHERES AUSLESEN (Mit Debug-Warnung) ---
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        if (!el) { console.warn(`⚠️ [PDF-Fehler] Feld mit ID "${id}" wurde im HTML nicht gefunden!`); return ""; }
+        return el.value?.trim() || "";
+    };
+    const getChk = (id) => {
+        const el = document.getElementById(id);
+        if (!el) { console.warn(`⚠️ [PDF-Fehler] Checkbox mit ID "${id}" wurde im HTML nicht gefunden!`); return false; }
+        return el.checked || false;
+    };
+
     // --- DATEN ---
-    const absName = document.getElementById("absenderName").value;
-    const absAdresse = document.getElementById("absenderAdresse").value;
-    const absPlzOrt = document.getElementById("absenderPlzOrt").value;
+    const absName = getVal("absenderName");
+    const absAdresse = getVal("absenderAdresse");
+    const absPlzOrt = getVal("absPlzOrt");
     
-    const empfName = document.getElementById("empfaengerName").value;
-    const empfAdresse = document.getElementById("empfaengerAdresse").value;
+    const empfName = getVal("empfaengerName");
+    const empfAdresse = getVal("empfaengerAdresse");
     
-    const vertragsArt = document.getElementById("vertragsArt").value;
-    const datumVertrag = document.getElementById("datumVertrag").value;
-    const kundenNr = document.getElementById("kundennummer").value;
+    const vertragsArt = getVal("vertragsArt");
+    const datumVertrag = getVal("datumVertrag");
+    const kundenNr = getVal("kundennummer");
     
-    const withAnfechtung = document.getElementById("checkAnfechtung").checked;
-    const grundTaeuschung = document.getElementById("grundTaeuschung").value;
-    const jokerBelehrung = document.getElementById("checkBelehrung").checked;
+    const withAnfechtung = getChk("checkAnfechtung");
+    const grundTaeuschung = getVal("grundTaeuschung");
+    const jokerBelehrung = getChk("checkBelehrung");
     
-    const withSEPA = document.getElementById("checkSEPA").checked;
-    const withDaten = document.getElementById("checkDaten").checked;
-    const withWerbung = document.getElementById("checkWerbung").checked;
+    const withSEPA = getChk("checkSEPA");
+    const withDaten = getChk("checkDaten");
+    const withWerbung = getChk("checkWerbung");
 
     // Datum heute
     const today = new Date().toLocaleDateString("de-DE", {
         year: "numeric", month: "2-digit", day: "2-digit"
     });
-    const vertragDatumFmt = new Date(datumVertrag).toLocaleDateString("de-DE");
+    const vertragDatumFmt = datumVertrag ? new Date(datumVertrag).toLocaleDateString("de-DE") : "unbekannt";
 
-    // --- LAYOUT ---
+    // --- LAYOUT KONSTANTEN ---
     const leftMargin = 25;
-    let yPos = 25;
+    const rightMargin = 185; 
+    const pageHeight = doc.internal.pageSize.getHeight(); // 297mm (A4 Höhe)
+    let yPos = 20;
 
-    // Absender
+    // --- BRIEFKOPF ---
+    
+    // 1. Absenderzeile
+    doc.setFontSize(8);
+    doc.setTextColor(100, 100, 100);
+    const absenderZeile = `${absName} · ${absAdresse} · ${absPlzOrt}`;
+    doc.text(absenderZeile, leftMargin, yPos);
+    
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.2);
+    doc.line(leftMargin, yPos + 2, leftMargin + 85, yPos + 2);
+    
+    // 2. Datum (etwas kompakter)
+    yPos = 32;
     doc.setFontSize(10);
-    doc.text(`${absName}, ${absAdresse}, ${absPlzOrt}`, leftMargin, yPos);
-    yPos += 25;
+    doc.setTextColor(0, 0, 0);
+    const ort = absPlzOrt.split(' ')[1] || "Ort";
+    doc.text(`${ort}, den ${today}`, rightMargin, yPos, { align: "right" });
 
-    // Empfänger
+    // 3. Empfänger (Kompakter: 38mm statt 50mm)
+    yPos = 38;
     doc.setFontSize(11);
-    doc.text(empfName, leftMargin, yPos); yPos += 5;
+    doc.setFont("helvetica", "normal");
+    doc.text(empfName, leftMargin, yPos); 
+    yPos += 5;
     const splitEmpf = doc.splitTextToSize(empfAdresse, 80);
     doc.text(splitEmpf, leftMargin, yPos);
     
-    // Datum rechts
-    yPos += 30;
-    doc.text(`${absPlzOrt.split(' ')[1] || "Ort"}, den ${today}`, 140, yPos);
+    yPos += (splitEmpf ? splitEmpf.length * 5 : 0) + 15;
 
-    // Betreff
-    yPos += 15;
+    // --- BETREFF ---
+    doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
     let betreff = `Widerruf meines Vertrags`;
     if (withAnfechtung) betreff += ` und vorsorgliche Anfechtung`;
@@ -95,12 +127,9 @@ async function generateRevocationPDF() {
     yPos += 10;
     doc.setFont("helvetica", "normal");
 
-    // Textkörper bauen
-    let text = `Sehr geehrte Damen und Herren,
+    // --- TEXTKÖRPER ---
+    let text = `Sehr geehrte Damen und Herren,\n\nhiermit widerrufe ich den von mir abgeschlossenen Vertrag (${vertragsArt}) vom ${vertragDatumFmt} sowie alle damit zusammenhängenden Vereinbarungen fristgerecht nach § 355 BGB.`;
 
-hiermit widerrufe ich den von mir abgeschlossenen Vertrag (${vertragsArt}) vom ${vertragDatumFmt} sowie alle damit zusammenhängenden Vereinbarungen fristgerecht nach § 355 BGB.`;
-
-    // Zusatz Anfechtung (Die "Waffe")
     if (withAnfechtung) {
         text += `\n\nHilfsweise erkläre ich die Anfechtung des Vertrags wegen arglistiger Täuschung (§ 123 BGB) sowie wegen Irrtums (§ 119 BGB).`;
         if (grundTaeuschung) {
@@ -110,37 +139,54 @@ hiermit widerrufe ich den von mir abgeschlossenen Vertrag (${vertragsArt}) vom $
         }
     }
 
-    // Zusatz Joker (Belehrung)
     if (jokerBelehrung) {
         text += `\n\nDa mir bei Vertragsschluss keine ordnungsgemäße Widerrufsbelehrung in Textform ausgehändigt wurde, hat die Widerrufsfrist noch nicht zu laufen begonnen.`;
     }
 
-    // Zusatz SEPA
     if (withSEPA) {
         text += `\n\nEine eventuell erteilte Einzugsermächtigung (SEPA-Lastschriftmandat) widerrufe ich hiermit mit sofortiger Wirkung. Ich untersage Ihnen ausdrücklich weitere Abbuchungen von meinem Konto.`;
     }
 
-    // Zusatz Daten & Werbung
     let privacyText = "";
     if (withWerbung) privacyText += "Ferner widerspreche ich der Nutzung meiner Daten zu Werbezwecken. ";
     if (withDaten) privacyText += "Ich fordere Sie auf, meine personenbezogenen Daten unverzüglich zu löschen und mir dies zu bestätigen.";
     
     if (privacyText) text += `\n\n${privacyText}`;
 
-    // Abschluss
-    text += `\n\nBitte senden Sie mir eine schriftliche Bestätigung des Widerrufs sowie des Vertragsendes in den nächsten Tagen zu.
+    text += `\n\nBitte senden Sie mir eine schriftliche Bestätigung des Widerrufs sowie des Vertragsendes in den nächsten Tagen zu.\n\nMit freundlichen Grüßen`;
 
-Mit freundlichen Grüßen
-
-(Unterschrift)
-
-${absName}`;
-
-    // PDF schreiben
-    doc.setFontSize(11);
+    // --- PDF TEXT SCHREIBEN (MIT AUTOMATISCHEM SEITENUMBRUCH) ---
+    doc.setFontSize(10); 
     const splitText = doc.splitTextToSize(text, 160);
-    doc.text(splitText, leftMargin, yPos);
+    const lineHeight = 4.5;
+    
+    for (let i = 0; i < splitText.length; i++) {
+        // Wenn wir den unteren Rand (25mm Abstand) erreichen -> Neue Seite
+        if (yPos > pageHeight - 25) {
+            doc.addPage();
+            yPos = 20; // Text beginnt wieder oben
+        }
+        doc.text(splitText[i], leftMargin, yPos);
+        yPos += lineHeight;
+    }
+    
+    // yPos für Unterschriftenfeld
+    yPos += 20; 
+
+    // --- OPTIMIERTES UNTERSCHRIFTENFELD (MIT SEITENUMBRUCH-CHECK) ---
+    // Falls der Text so lang war, dass die Unterschrift nicht mehr auf Seite 1 passt
+    if (yPos > pageHeight - 30) {
+        doc.addPage();
+        yPos = 20;
+    }
+
+    doc.setLineWidth(0.3);
+    doc.setDrawColor(0, 0, 0);
+    doc.line(leftMargin, yPos, leftMargin + 70, yPos); 
+    yPos += 5;
+    doc.text(absName, leftMargin, yPos); // <--- Der Name unter der Linie
 
     // Datei speichern
-    doc.save(`Widerruf_${empfName.replace(/[^a-z0-9]/gi, '_').substring(0,10)}.pdf`);
+    const safeFilename = empfName ? empfName.replace(/[^a-z0-9äöüß]/gi, '_').substring(0,15) : 'Vertrag';
+    doc.save(`Widerruf_${safeFilename}.pdf`);
 }

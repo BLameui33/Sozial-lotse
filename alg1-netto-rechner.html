@@ -13,6 +13,119 @@
   <link rel="stylesheet" href="/css/style.css">
  <link rel="icon" href="/logo-lotse-fav.png">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ALG 1 Netto-Rechner",
+  "alternateName": "Arbeitslosengeld-Rechner",
+  "url": "https://sozialrecht-lotse.de/alg1-netto-rechner.html",
+  "description": "Kostenloser Rechner für das Arbeitslosengeld I: Aus Brutto, Steuerklasse und Kindern wird das monatliche und tägliche ALG 1 geschätzt, inklusive Vergleich zum bisherigen Netto.",
+  "applicationCategory": "FinanceApplication",
+  "applicationSubCategory": "Sozialleistungsrechner",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "de-DE",
+  "isAccessibleForFree": true,
+  "softwareVersion": "2026",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "featureList": [
+    "Berechnung des monatlichen und täglichen Arbeitslosengeldes I",
+    "Berücksichtigung von Steuerklasse und Kindern (60 % bzw. 67 %)",
+    "Beitragsbemessungsgrenze",
+    "Vergleich mit dem bisherigen Nettogehalt",
+    "Ergebnis als PDF speichern"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sozial-Lotse",
+    "url": "https://sozialrecht-lotse.de/"
+  }
+}
+</script>
+
+  <style>/* ===== ALG-1-Netto-Rechner: Erklärtexte im Formular ===== */
+#alg-netto-form .an-feld { margin-bottom: 28px; }
+
+#alg-netto-form .an-hilfe {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #f4f7fc;
+  border-radius: 8px;
+  color: #51607a;
+  font-size: .875rem;
+  line-height: 1.6;
+}
+#alg-netto-form .an-hilfe p { margin: 0; }
+#alg-netto-form .an-hilfe strong { color: #1b2a4a; font-weight: 600; }
+#alg-netto-form .an-hilfe-intro { margin: 0 0 32px; background: #eaf0fc; color: #34425e; }
+
+
+.an-fehler {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: #fdf3f2;
+  color: #a1281f;
+  border-radius: 8px;
+  font-size: .9rem;
+}
+.an-fehler[hidden] { display: none; }
+
+/* ===== Ergebnis ===== */
+.an-result {
+  --an-blue: #1d4ed8;
+  --an-blue-soft: #eaf0fc;
+  --an-ink: #1b2a4a;
+  --an-muted: #6b778c;
+  --an-line: #e9eef6;
+  max-width: 720px;
+  margin: 40px 0 0;
+  padding: 48px 44px;
+  background: #fff;
+  border: 1px solid var(--an-line);
+  border-radius: 14px;
+  color: var(--an-ink);
+  font-variant-numeric: tabular-nums;
+}
+.an-result h2, .an-result h3 { font-weight: 600; margin: 0; color: var(--an-ink); }
+
+.an-hero { padding-bottom: 36px; }
+.an-hero-label { margin: 0 0 10px; color: var(--an-muted); font-size: .95rem; }
+.an-hero-value { margin: 0; font-size: 3.1rem; line-height: 1.1; font-weight: 600; color: var(--an-blue); letter-spacing: -.01em; }
+.an-hero-sub { margin: 12px 0 0; color: var(--an-muted); font-size: .95rem; }
+
+.an-section { margin-top: 44px; }
+.an-section h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.an-section > p.an-lead { margin: 0 0 12px; color: var(--an-muted); font-size: .9rem; line-height: 1.55; }
+
+.an-table { width: 100%; border-collapse: collapse; margin: 0; }
+.an-table td { padding: 14px 0; border: 0; border-bottom: 1px solid var(--an-line); font-size: .95rem; background: transparent; }
+.an-table td:last-child { text-align: right; white-space: nowrap; }
+.an-table tr.an-minus td:last-child { color: var(--an-muted); }
+.an-table tr.an-sum td { font-weight: 600; }
+.an-table tr.an-total td { font-weight: 600; color: var(--an-blue); border-bottom: 0; padding-top: 18px; }
+
+.an-bar { height: 8px; margin: 22px 0 10px; background: var(--an-blue-soft); border-radius: 999px; overflow: hidden; }
+.an-bar span { display: block; height: 100%; background: var(--an-blue); border-radius: 999px; }
+.an-bar-caption { margin: 0; color: var(--an-muted); font-size: .875rem; }
+
+.an-notes { margin-top: 44px; padding: 20px 22px; background: #f4f7fc; border-radius: 10px; }
+.an-notes p { margin: 0 0 10px; font-size: .875rem; line-height: 1.6; color: #44526d; }
+.an-notes p:last-child { margin-bottom: 0; }
+
+.an-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.an-meta { margin: 28px 0 0; color: var(--an-muted); font-size: .8rem; line-height: 1.5; }
+
+@media (max-width: 600px) {
+  .an-result { padding: 28px 20px; margin-top: 28px; }
+  .an-hero-value { font-size: 2.4rem; }
+  .an-section, .an-notes { margin-top: 32px; }
+}</style>
 </head>
 <body>
   <header class="site-header">
@@ -83,46 +196,84 @@
     <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
-    <form id="alg-netto-form" class="pflegegrad-form" onsubmit="return false;">
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>Berechnungsgrundlagen</legend>
-
-        <label class="pflegegrad-label">
-          Dein monatliches Brutto-Arbeitsentgelt (€)
-          <input type="number" id="an_brutto" min="0" step="10" placeholder="z. B. 3500.00" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px; margin-bottom:15px;">
-          Durchschnitt der letzten 12 Monate vor der Arbeitslosigkeit.
-        </p>
-
-        <label class="pflegegrad-label">
-          Deine Lohnsteuerklasse
-          <select id="an_stk">
-            <option value="sk1">Klasse 1 (Ledig / Getrennt)</option>
-            <option value="sk4" selected>Klasse 4 (Verheiratet, beide verdienen ähnlich)</option>
-            <option value="sk3">Klasse 3 (Verheiratet, Besserverdiener)</option>
-            <option value="sk5">Klasse 5 (Verheiratet, Geringverdiener)</option>
-            <option value="sk6">Klasse 6 (Nebenjob / Zweitkarte)</option>
-          </select>
-        </label>
-
-        <label class="pflegegrad-label">
-          Hast du Kinder? (Kindergeldanspruch)
-          <select id="an_kinder">
-            <option value="nein" selected>Nein (Auszahlung: 60% vom Leistungsentgelt)</option>
-            <option value="ja">Ja (Auszahlung: 67% vom Leistungsentgelt)</option>
-          </select>
-        </label>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="an_berechnen" class="button">ALG I berechnen</button>
-        <button type="reset" id="an_reset" class="button button-secondary">Zurücksetzen</button>
+    <form id="alg-netto-form" class="pflegegrad-form" novalidate>
+ 
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>Berechnungsgrundlagen</legend>
+ 
+    <div class="an-hilfe an-hilfe-intro">
+      <p><strong>So wird das Arbeitslosengeld I berechnet:</strong> Von deinem Brutto werden eine
+      pauschale Sozialabgabe von 21&nbsp;%, die Lohnsteuer und gegebenenfalls der Solidaritätszuschlag
+      abgezogen. Vom Rest (dem sogenannten Leistungsentgelt) bekommst du 60&nbsp;% oder, wenn du
+      Kinder hast, 67&nbsp;%. Kranken-, Pflege- und Rentenversicherung bezahlt in dieser Zeit
+      die Agentur für Arbeit.</p>
+    </div>
+ 
+    <div class="an-feld">
+      <label class="pflegegrad-label" for="an_brutto">
+        Dein durchschnittliches Brutto pro Monat (€)
+        <input type="number" id="an_brutto" inputmode="decimal" min="0" step="10" placeholder="z. B. 3500" />
+      </label>
+      <div class="an-hilfe">
+        <p>Gemeint ist der Durchschnitt der letzten 12 Monate vor deiner Arbeitslosmeldung.
+        Weihnachts- und Urlaubsgeld zählen mit: Zähle sie zum Jahresbrutto und teile alles durch 12.
+        Berücksichtigt wird maximal die Beitragsbemessungsgrenze (2026: 8.450&nbsp;€ pro Monat).</p>
       </div>
-    </form>
-
-    <section id="an_ergebnis"></section>
+    </div>
+ 
+    <div class="an-feld">
+      <label class="pflegegrad-label" for="an_stk">
+        Deine Lohnsteuerklasse
+        <select id="an_stk">
+          <option value="sk1">Klasse 1 (ledig, geschieden, getrennt lebend)</option>
+          <option value="sk4" selected>Klasse 4 (verheiratet, beide verdienen ähnlich)</option>
+          <option value="sk3">Klasse 3 (verheiratet, höheres Einkommen)</option>
+          <option value="sk5">Klasse 5 (verheiratet, geringeres Einkommen)</option>
+          <option value="sk6">Klasse 6 (zweites Arbeitsverhältnis)</option>
+        </select>
+      </label>
+      <div class="an-hilfe">
+        <p>Die Steuerklasse steht auf deiner letzten Gehaltsabrechnung. Sie bestimmt, wie viel Lohnsteuer
+        in die Berechnung einfließt. Maßgeblich ist grundsätzlich die Klasse zu Beginn deiner
+        Arbeitslosigkeit. Ein Wechsel kurz davor wird nur unter bestimmten Voraussetzungen anerkannt.</p>
+      </div>
+    </div>
+ 
+    <div class="an-feld">
+      <label class="pflegegrad-label" for="an_kinder">
+        Hast du Kinder?
+        <select id="an_kinder">
+          <option value="nein" selected>Nein (60&nbsp;% vom Leistungsentgelt)</option>
+          <option value="ja">Ja (67&nbsp;% vom Leistungsentgelt)</option>
+        </select>
+      </label>
+      <div class="an-hilfe">
+        <p>Wähle „Ja“, wenn für mindestens ein Kind ein Anspruch auf Kindergeld oder Kinderfreibetrag besteht.
+        Das gilt auch für Stief- und Pflegekinder. Die Anzahl der Kinder ändert die Höhe nicht.</p>
+      </div>
+    </div>
+ 
+    <div class="an-feld">
+      <label class="pflegegrad-label" for="an_netto">
+        Dein bisheriges Netto pro Monat (€), optional
+        <input type="number" id="an_netto" inputmode="decimal" min="0" step="10" placeholder="z. B. 2450" />
+      </label>
+      <div class="an-hilfe">
+        <p>Nur für den Vergleich im Ergebnis. Wenn du das Feld leer lässt, schätzen wir dein
+        bisheriges Netto aus den übrigen Angaben.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <div id="an_fehler" class="an-fehler" role="alert" hidden></div>
+ 
+  <div class="button-container">
+    <button type="button" id="an_berechnen" class="button">ALG I berechnen</button>
+    <button type="reset" id="an_reset" class="button button-secondary">Zurücksetzen</button>
+  </div>
+</form>
+ 
+<section id="an_ergebnis" aria-live="polite"></section>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
   <h2 id="promo-headline">Weitere Hilfsangebote</h2>

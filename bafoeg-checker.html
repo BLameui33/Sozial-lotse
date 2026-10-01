@@ -23,6 +23,70 @@
   }
 }
 </script>
+<style>/* BAföG spezifische Ergänzungen zum bestehenden Design */
+.bafoeg-error-card {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 24px;
+  color: #991b1b;
+}
+
+.bafoeg-error-card h3 {
+  margin-top: 0;
+  color: #b91c1c;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.bafoeg-highlight {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 24px;
+  color: #1e3a8a;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.bafoeg-breakdown {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.bafoeg-breakdown li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.bafoeg-breakdown li:last-child {
+  border-bottom: none;
+}
+
+.bafoeg-breakdown .label {
+  font-weight: 500;
+}
+
+.bafoeg-breakdown .value {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.bafoeg-breakdown .deduction {
+  color: #dc2626; /* Dezentes Rot für Abzüge */
+}
+
+.bafoeg-breakdown .positive {
+  color: #16a34a; /* Dezentes Grün für positive Hinweise */
+}
+</style>
 </head>
 <body>
   <header class="site-header">

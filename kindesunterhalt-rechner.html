@@ -28,6 +28,224 @@
   }
 }
 </script>
+<style>
+
+:root {
+  --ku-primary: #2563eb;
+  --ku-primary-dark: #1e40af;
+  --ku-bg-light: #f8fafc;
+  --ku-card-bg: #ffffff;
+  --ku-border: #e2e8f0;
+  --ku-text-main: #1e293b;
+  --ku-text-muted: #64748b;
+  --ku-radius: 12px;
+
+  --ku-status-pos-bg: #eff6ff;
+  --ku-status-pos-text: #1d4ed8;
+  --ku-status-warn-bg: #fffbeb;
+  --ku-status-warn-text: #b45309;
+  --ku-status-err-bg: #fef2f2;
+  --ku-status-err-text: #b91c1c;
+}
+
+.ku-card {
+  max-width: 680px;
+  margin: 2rem auto 0 auto;
+  background: var(--ku-card-bg);
+  border: 1px solid var(--ku-border);
+  border-radius: var(--ku-radius);
+  padding: 2.25rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ku-text-main);
+  box-sizing: border-box;
+}
+
+.ku-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: var(--ku-text-main);
+  letter-spacing: -0.01em;
+}
+
+.ku-section-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  color: var(--ku-text-main);
+}
+
+/* Status Banner */
+.ku-status-banner {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.75rem;
+}
+
+.ku-status-pos {
+  background-color: var(--ku-status-pos-bg);
+  color: var(--ku-status-pos-text);
+}
+
+.ku-status-warn {
+  background-color: var(--ku-status-warn-bg);
+  color: var(--ku-status-warn-text);
+}
+
+.ku-status-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.ku-status-text {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Listen */
+.ku-list {
+  margin: 0.75rem 0 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.ku-status-list {
+  color: var(--ku-status-warn-text);
+}
+
+.ku-error-card {
+  background-color: var(--ku-status-err-bg);
+  border-color: #fecaca;
+}
+
+.ku-text-danger {
+  color: var(--ku-status-err-text);
+}
+
+/* Kinder Karten */
+.ku-child-card {
+  background-color: var(--ku-bg-light);
+  border: 1px solid var(--ku-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.ku-child-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: var(--ku-text-main);
+}
+
+.ku-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ku-table td {
+  padding: 0.4rem 0;
+  color: var(--ku-text-muted);
+}
+
+.ku-table td:last-child {
+  text-align: right;
+  color: var(--ku-text-main);
+  font-weight: 500;
+}
+
+.ku-table-highlight td {
+  border-top: 1px dashed var(--ku-border);
+  padding-top: 0.6rem;
+  font-weight: 600;
+  color: var(--ku-text-main);
+}
+
+/* Badges */
+.ku-badge-box {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ku-badge-pos {
+  background-color: #ffffff;
+  border: 1px solid var(--ku-border);
+}
+
+.ku-badge-warn {
+  background-color: #fef3c7;
+  border: 1px solid #fde68a;
+}
+
+.ku-badge-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ku-text-main);
+}
+
+.ku-badge-amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ku-primary);
+}
+
+.ku-badge-warn .ku-badge-amount {
+  color: #b45309;
+}
+
+/* Gesamtsumme & Hinweis */
+.ku-summary-box {
+  background-color: var(--ku-status-pos-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.ku-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(37, 99, 235, 0.15);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ku-primary-dark);
+}
+
+.ku-summary-total {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ku-primary-dark);
+}
+
+.ku-disclaimer {
+  font-size: 0.8rem;
+  color: var(--ku-text-muted);
+  margin: 0.75rem 0 0 0;
+  line-height: 1.4;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+  .ku-card {
+    padding: 1.5rem;
+  }
+
+  .ku-summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}</style>
 </head>
 <body>
   <header class="site-header">

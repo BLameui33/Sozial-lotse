@@ -34,7 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Validierung
         if (isNaN(years) && !isProbe) {
-             out.innerHTML = `<div class="warning-box" style="background:#fff3cd; color:#856404;">Bitte gib die Dauer der Beschäftigung in Jahren an.</div>`;
+             out.innerHTML = `
+                <div class="kf-result-card">
+                    <div class="kf-warning-box">
+                        <p><strong>Hinweis:</strong> Bitte gib die Dauer der Beschäftigung in Jahren an, um eine Berechnung durchzuführen.</p>
+                    </div>
+                </div>`;
              return;
         }
 
@@ -58,9 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // 3. Fall: Gesetzliche Regelung (§ 622 BGB)
         else {
             // Arbeitnehmer (Kündigt selbst)
-            // Grundsatz: 4 Wochen zum 15. oder Monatsende.
-            // Ausnahme: Vertrag sagt "Es gelten die gesetzlichen Fristen für den AG auch für den AN".
-            // Wir zeigen hier den reinen gesetzlichen Standard an.
             fristAN = "4 Wochen zum 15. oder zum Monatsende";
 
             // Arbeitgeber (Kündigt den Mitarbeiter) - Staffelung nach Jahren
@@ -82,16 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 fristAG = "7 Monate zum Ende eines Kalendermonats";
             }
 
-            note = "Die verlängerten Fristen bei langer Betriebszugehörigkeit gelten laut Gesetz (§ 622 Abs. 2 BGB) nur, wenn der Arbeitgeber kündigt. Für dich als Arbeitnehmer bleibt es bei 4 Wochen, außer dein Vertrag besagt: 'Die verlängerten Kündigungsfristen gelten für beide Parteien'. Das ist sehr häufig der Fall!";
+            note = "Die verlängerten Fristen bei langer Betriebszugehörigkeit gelten laut Gesetz (§ 622 Abs. 2 BGB) nur, wenn der Arbeitgeber kündigt. Für dich als Arbeitnehmer bleibt es bei 4 Wochen, außer dein Vertrag besagt: 'Die verlängerten Kündigungsfristen gelten für beide Parteien'. Dies ist in der Praxis sehr häufig der Fall.";
         }
 
-        // HTML Output
+        // HTML Output (Schick, ohne Emojis, mit blauen Akzenten)
         const resultHtml = `
-            <h2>Dein Ergebnis</h2>
-            <div id="kf_result_card" class="pflegegrad-result-card">
+            <div class="kf-result-card">
+                <h2 class="kf-result-title">Dein Ergebnis</h2>
                 
-                <h3>Gesetzliche / Voraussichtliche Fristen</h3>
-                <table class="pflegegrad-tabelle">
+                <table class="kf-result-table">
                     <thead>
                         <tr>
                             <th>Situation</th>
@@ -100,76 +101,31 @@ document.addEventListener("DOMContentLoaded", () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Du kündigst (Arbeitnehmer)</strong></td>
-                            <td style="color:#2c3e50; font-weight:bold;">${fristAN}</td>
+                            <td class="kf-text-slate">Du kündigst (Arbeitnehmer)</td>
+                            <td class="kf-text-blue">${fristAN}</td>
                         </tr>
-                        <tr style="background-color:#f8f9fa;">
-                            <td><strong>Chef kündigt (Arbeitgeber)</strong></td>
-                            <td style="color:#c0392b; font-weight:bold;">${fristAG}</td>
+                        <tr>
+                            <td class="kf-text-slate">Arbeitgeber kündigt</td>
+                            <td class="kf-text-blue">${fristAG}</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="highlight-box" style="margin-top:20px; border-left: 4px solid #2980b9; background-color:#eaf2f8;">
+                <div class="kf-info-box">
                     <p><strong>Hinweis:</strong> ${note}</p>
                 </div>
 
-                <div class="warning-box">
+                <div class="kf-warning-box">
                    <p><strong>Wichtig:</strong> Prüfe unbedingt deinen Arbeitsvertrag oder Tarifvertrag! Diese gehen der gesetzlichen Regelung vor, sofern sie für dich günstiger sind oder (in Tarifverträgen) auch kürzere Fristen erlauben.</p>
-                </div>
-
-                <div class="button-container" style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-                    <button id="kf_pdf_btn" class="button">📄 Ergebnis als PDF</button>
                 </div>
             </div>
         `;
 
         out.innerHTML = resultHtml;
-        out.scrollIntoView({ behavior: "smooth" });
-
-        // --- PDF EXPORT (STABILE KLON-METHODE) ---
-        setTimeout(() => {
-            const pdfBtn = document.getElementById("kf_pdf_btn");
-            const elementToPrint = document.getElementById("kf_result_card");
-
-            if(pdfBtn && elementToPrint) {
-                pdfBtn.addEventListener("click", () => {
-                    const originalText = pdfBtn.innerText;
-                    pdfBtn.innerText = "⏳ Wird erstellt...";
-                    
-                    // Klonen & Isolieren
-                    const clonedElement = elementToPrint.cloneNode(true);
-                    const btnContainer = clonedElement.querySelector('.button-container');
-                    if(btnContainer) btnContainer.style.display = 'none';
-
-                    clonedElement.style.position = 'fixed';
-                    clonedElement.style.top = '0';
-                    clonedElement.style.left = '-9999px';
-                    clonedElement.style.width = '800px'; 
-                    clonedElement.style.backgroundColor = '#ffffff';
-                    document.body.appendChild(clonedElement);
-
-                    const opt = {
-                        margin:       [0.5, 0.5],
-                        filename:     'kuendigungsfrist-berechnung.pdf',
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false },
-                        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-                    };
-
-                    html2pdf().from(clonedElement).set(opt).save().then(() => {
-                        document.body.removeChild(clonedElement);
-                        pdfBtn.innerText = originalText;
-                    }).catch(err => {
-                        console.error(err);
-                        document.body.removeChild(clonedElement);
-                        pdfBtn.innerText = "Fehler!";
-                    });
-                });
-            }
-        }, 500);
+        out.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
+    // Reset Logik
     if (reset) {
         reset.addEventListener("click", () => {
             inputs.customDiv.style.display = "none";

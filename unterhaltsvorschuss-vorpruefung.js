@@ -1,151 +1,164 @@
-// unterhaltsvorschuss-vorpruefung.js – vereinfachte, klarere Version
+// Unterhaltsvorschuss-Vorprüfung (Geprüfte & optimierte Logik)
 
-function n(el) {
+function parseNumber(el) {
   if (!el) return 0;
   const raw = (el.value || "").toString().replace(",", ".");
   const v = Number(raw);
   return Number.isFinite(v) ? v : 0;
 }
-function euro(v) {
+
+function formatEuro(v) {
   const x = Number.isFinite(v) ? v : 0;
-  return x.toFixed(2).replace(".", ",") + " €";
+  return x.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
 }
 
-// Kleine Fehlerbox
-function errorBox(msgs){
-  if (!msgs.length) return "";
-  return `
-    <div class="pflegegrad-result-card">
-      <h2>Bitte Eingaben prüfen</h2>
-      <ul>${msgs.map(m=>`<li>${m}</li>`).join("")}</ul>
-    </div>
-  `;
+// Prüfungslogik für den Anspruch
+// Aktuelle ungefähre UVG-Höchstsätze (Mindestunterhalt minus Kindergeld)
+function getUvgMaxBetrag(alter) {
+  if (alter < 6) return 227;  // Altersstufe 1 (0–5 Jahre)
+  if (alter < 12) return 299; // Altersstufe 2 (6–11 Jahre)
+  if (alter < 18) return 394; // Altersstufe 3 (12–17 Jahre)
+  return 0;
 }
 
-// Kernlogik: grobe Einordnung
 function beurteileUVG({ alter, alleinerziehend, zahlverhalten, betrag, netto, buergergeld }) {
-  // 1) Alters- und Haushaltsgrundlagen
+  // 1. Grundvoraussetzungen
   if (alter >= 18) {
     return {
-      urteil: "Eher nicht",
-      begruendung: "Kind ist 18 Jahre oder älter. UVG richtet sich an Kinder unter 18 (vereinfacht).",
+      urteil: "Kein Anspruch",
+      begruendung: "Unterhaltsvorschuss gibt es nur für Kinder unter 18 Jahren.",
       badge: "neg"
     };
   }
+
   if (alleinerziehend !== "ja") {
     return {
-      urteil: "Eher nicht",
-      begruendung: "Kein alleinerziehender Haushalt. UVG richtet sich grundsätzlich an Alleinerziehende.",
+      urteil: "Kein Anspruch",
+      begruendung: "Unterhaltsvorschuss ist eine Leistung für Alleinerziehende. Wohnen beide Eltern zusammen, besteht kein Anspruch.",
       badge: "neg"
     };
   }
 
-  // 2) Zahlverhalten grob bewerten
-  const zahltNichts = zahlverhalten === "nein" || betrag <= 0;
-  const zahltUnregWenig = zahlverhalten === "unreg" && betrag >= 0 && betrag < 150; // grob zu wenig
-  const zahltRegelAusreichend = zahlverhalten === "regel" && betrag >= 300; // grobe Untergrenze "ausreichend"
+  const maxUvg = getUvgMaxBetrag(alter);
 
-  // 3) Sonderhürde 12–17 (vereinfacht)
-  const ist1217 = alter >= 12 && alter <= 17;
-  const nettoMindestens600 = netto >= 600;
-  const beziehtSGBII = buergergeld === "ja";
-
-  // 4) Entscheidungsmatrix (vereinfachte Heuristik)
-  if (zahltRegelAusreichend) {
+  // 2. Anrechnung von Zahlungen (Betrag >= UVG-Höchstsatz)
+  if (betrag >= maxUvg) {
     return {
-      urteil: "Eher nicht",
-      begruendung: "Der andere Elternteil zahlt regelmäßig und in ausreichender Höhe (vereinfacht).",
+      urteil: "Voraussichtlich kein Zahlungsanspruch",
+      begruendung: `Du gibst an, dass im Schnitt ${betrag} € gezahlt werden. Der maximale Unterhaltsvorschuss für ein Kind in diesem Alter beträgt ca. ${maxUvg} €. Da die eingehenden Zahlungen diesen Betrag decken bzw. übersteigen, zahlt das Jugendamt keinen Vorschuss aus. (Sollten die Zahlungen künftig komplett ausfallen, kann ein neuer Antrag gestellt werden).`,
       badge: "neg"
     };
   }
 
-  if (zahltNichts || zahltUnregWenig) {
-    if (ist1217) {
-      if (beziehtSGBII && !nettoMindestens600) {
-        return {
-          urteil: "Unklar",
-          begruendung: "Bei 12–17 Jahren wird u. a. geprüft, ob kein SGB-II-Bezug besteht oder mind. ca. 600 € eigenes Einkommen vorhanden ist. Bitte Beratung/Jugendamt kontaktieren.",
-          badge: "warn"
-        };
-      }
+  // Restanspruch berechnen (Betrag < maxUvg)
+  const restAnspruch = maxUvg - betrag;
+
+  // 3. Sonderregeln für Jugendliche (12–17 Jahre) bei Grundsicherungsgeld
+  if (alter >= 12 && alter <= 17) {
+    const hatGenugEinkommen = netto >= 600;
+    const beziehtBuergergeld = buergergeld === "ja";
+
+    if (beziehtBuergergeld && !hatGenugEinkommen) {
       return {
-        urteil: "Wahrscheinlich",
-        begruendung: "Andere/r Elternteil zahlt nicht/zu wenig und die Zusatzvoraussetzungen (12–17) scheinen erfüllt (vereinfacht).",
-        badge: "pos"
+        urteil: "Prüfung im Einzelfall nötig",
+        begruendung: `Für Jugendliche ab 12 Jahren im Grundsicherungsgeld-Bezug gilt eine Sonderhürde: Das Jugendamt prüft, ob durch den verbleibenden Vorschuss (ca. ${restAnspruch} €) die Hilfebedürftigkeit des Haushalts aufgehoben werden kann.`,
+        badge: "warn"
       };
     }
+  }
 
-    // unter 12
+  // 4. Anspruch liegt vor (Teil- oder Vollanspruch)
+  if (betrag > 0) {
     return {
-      urteil: "Wahrscheinlich",
-      begruendung: "Andere/r Elternteil zahlt nicht bzw. deutlich zu wenig. Bei Kindern unter 12 ist UVG oft möglich (vereinfacht).",
+      urteil: "Teilanspruch wahrscheinlich",
+      begruendung: `Die eingehende Zahlung (${betrag} €) wird angerechnet. Es verbleibt voraussichtlich ein Differenz-Betrag von ca. ${restAnspruch} € pro Monat als Unterhaltsvorschuss.`,
       badge: "pos"
     };
   }
 
-  // Rest: z. B. unklare/knappe Fälle
   return {
-    urteil: "Unklar",
-    begruendung: "Zahlungen vorhanden, aber Höhe/Regelmäßigkeit unklar. Bitte mit Nachweisen beim Jugendamt klären.",
-    badge: "warn"
+    urteil: "Gute Chancen (Vollanspruch)",
+    begruendung: `Da kein Unterhalt gezahlt wird, besteht voraussichtlich Anspruch auf den vollen Unterhaltsvorschuss von ca. ${maxUvg} € pro Monat.`,
+    badge: "pos"
   };
 }
 
-function badgeHtml(kind){
+function getBadgeHtml(kind) {
   const map = {
-    pos: {label: "wahrscheinlich", cls: "badge-success"},
-    neg: {label: "eher nicht", cls: "badge-danger"},
-    warn:{label: "unklar", cls: "badge-warning"}
+    pos: { label: "Wahrscheinlich", cls: "badge-pos" },
+    neg: { label: "Unwahrscheinlich", cls: "badge-neg" },
+    warn: { label: "Einzelfallprüfung", cls: "badge-warn" }
   };
   const b = map[kind] || map.warn;
-  return `<span class="${b.cls}" style="padding:.2rem .5rem; border-radius:.5rem;">${b.label}</span>`;
+  return `<span class="uvg-badge ${b.cls}">${b.label}</span>`;
 }
 
 function buildOutput(result, eingaben, errors) {
-  if (errors.length) return errorBox(errors);
+  if (errors.length) {
+    return `
+      <div class="uvg-card">
+        <h3 class="uvg-card-title">Bitte Eingaben korrigieren</h3>
+        <ul class="uvg-steps-list">
+          ${errors.map(m => `<li>${m}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  }
 
   const { urteil, begruendung, badge } = result;
 
   return `
-    <h2>Vorprüfung: Unterhaltsvorschuss</h2>
+    <div class="uvg-card">
+      <div class="uvg-status-header">
+        ${getBadgeHtml(badge)}
+        <span style="font-weight: 600; font-size: 1.05rem;">${urteil}</span>
+      </div>
 
-    <div class="pflegegrad-result-card">
-      <p style="font-size:1.05rem;">
-        <strong>Ergebnis:</strong> ${badgeHtml(badge)} (${urteil})
-      </p>
+      <div class="uvg-explanation">
+        ${begruendung}
+      </div>
 
-      <h3>Deine Angaben (Kurzüberblick)</h3>
-      <table class="pflegegrad-tabelle">
-        <thead><tr><th>Angabe</th><th>Wert</th></tr></thead>
+      <h4 class="uvg-steps-title">Zusammenfassung deiner Angaben</h4>
+      <table class="uvg-summary-table">
         <tbody>
-          <tr><td>Alter des Kindes</td><td>${eingaben.alter} Jahre</td></tr>
-          <tr><td>Alleinerziehender Haushalt</td><td>${eingaben.alleinerziehend === "ja" ? "Ja" : "Nein"}</td></tr>
-          <tr><td>Zahlverhalten anderer Elternteil</td><td>${
-            eingaben.zahlverhalten === "nein" ? "Zahlt nicht" :
-            eingaben.zahlverhalten === "unreg" ? "Unregelmäßig / zu wenig" :
-            "Regelmäßig (ausreichend)"
-          }</td></tr>
-          <tr><td>Monatliche Zahlung (falls vorhanden)</td><td>${euro(eingaben.betrag)}</td></tr>
-          <tr><td>Eigenes Netto</td><td>${euro(eingaben.netto)}</td></tr>
-          <tr><td>Grundsicherungsgeld (SGB II)</td><td>${eingaben.buergergeld === "ja" ? "Ja" : "Nein"}</td></tr>
+          <tr>
+            <td>Alter des Kindes</td>
+            <td>${eingaben.alter} Jahre</td>
+          </tr>
+          <tr>
+            <td>Alleinerziehend</td>
+            <td>${eingaben.alleinerziehend === "ja" ? "Ja" : "Nein"}</td>
+          </tr>
+          <tr>
+            <td>Zahlungseingang Unterhalt</td>
+            <td>${
+              eingaben.zahlverhalten === "nein" ? "Kein Unterhalt" :
+              eingaben.zahlverhalten === "unreg" ? "Unregelmäßig / gering" :
+              "Regelmäßig"
+            } (${formatEuro(eingaben.betrag)})</td>
+          </tr>
+          <tr>
+            <td>Eigenes Nettoeinkommen</td>
+            <td>${formatEuro(eingaben.netto)}</td>
+          </tr>
+          <tr>
+            <td>Grundsicherungsgeld-Bezug (SGB II)</td>
+            <td>${eingaben.buergergeld === "ja" ? "Ja" : "Nein"}</td>
+          </tr>
         </tbody>
       </table>
 
-      <h3>Einordnung</h3>
-      <p>${begruendung}</p>
-
-      <h3>Was kannst du tun?</h3>
-      <ul>
-        <li><strong>Unterlagen sammeln:</strong> z. B. Zahlungsnachweise, Schriftverkehr, Bescheide.</li>
-        <li><strong>Jugendamt kontaktieren:</strong> dort wird der Einzelfall verbindlich geprüft.</li>
-        <li><strong>Bei 12–17 Jahren:</strong> Einkommensnachweis (ca. ≥ 600 €) bzw. SGB-II-Status bereithalten.</li>
+      <h4 class="uvg-steps-title">Empfohlene nächste Schritte</h4>
+      <ul class="uvg-steps-list">
+        <li><strong>Unterlagen vorbereiten:</strong> Gehaltsnachweise, Geburtsurkunde und Nachweise über fehlende oder geringe Unterhaltszahlungen sammeln.</li>
+        <li><strong>Jugendamt kontaktieren:</strong> Vereinbare einen Termin bei der Unterhaltsvorschussstelle deines zuständigen Jugendamtes.</li>
+        <li><strong>Antrag stellen:</strong> Den Antrag kannst du direkt vor Ort oder in vielen Regionen bereits online einreichen.</li>
       </ul>
-    </div>
 
-    <p class="hinweis">
-      Diese Einschätzung ist <strong>unverbindlich</strong>. Das Jugendamt prüft u. a. Mindestunterhalt,
-      Mitwirkungspflichten (Angaben zum anderen Elternteil), Vaterschaft, Aufenthalt sowie die Anrechnung anderer Leistungen.
-    </p>
+      <p class="uvg-disclaimer">
+        Hinweis: Dies ist eine unverbindliche Orientierungshilfe. Die rechtsverbindliche Prüfung obliegt ausschließlich der Unterhaltsvorschussstelle.
+      </p>
+    </div>
   `;
 }
 
@@ -166,32 +179,34 @@ document.addEventListener("DOMContentLoaded", () => {
   btn.addEventListener("click", () => {
     const errors = [];
 
-    const alter = Math.max(0, Math.floor(n(alterInput)));
-    if (!Number.isFinite(alter) || alterInput.value === "") errors.push("Bitte Alter des Kindes angeben.");
-    if (alter < 0 || alter > 25) errors.push("Alter bitte zwischen 0 und 25 Jahren angeben.");
+    if (alterInput.value.trim() === "") {
+      errors.push("Bitte gib das Alter des Kindes an.");
+    }
+
+    const alter = Math.floor(parseNumber(alterInput));
+    if (alter < 0 || alter > 25) {
+      errors.push("Das Alter muss zwischen 0 und 25 Jahren liegen.");
+    }
 
     const eingaben = {
       alter,
       alleinerziehend: (alleinerziehendSel && alleinerziehendSel.value) || "ja",
       zahlverhalten: (zahlSel && zahlSel.value) || "nein",
-      betrag: Math.max(0, n(betragInput)),
-      netto: Math.max(0, n(nettoInput)),
+      betrag: Math.max(0, parseNumber(betragInput)),
+      netto: Math.max(0, parseNumber(nettoInput)),
       buergergeld: (bgSel && bgSel.value) || "nein"
     };
 
-    // Sofortige „Kein-Alleinerziehend“-Kennzeichnung
-    if (eingaben.alleinerziehend !== "ja") {
-      // keine weiteren Fehler nötig; Ergebnis wird „eher nicht“
-    }
-
     const result = beurteileUVG(eingaben);
     out.innerHTML = buildOutput(result, eingaben, errors);
-    out.scrollIntoView({ behavior: "smooth" });
+    out.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 
   if (reset) {
     reset.addEventListener("click", () => {
-      setTimeout(() => { out.innerHTML = ""; }, 0);
+      setTimeout(() => { 
+        out.innerHTML = ""; 
+      }, 0);
     });
   }
 });

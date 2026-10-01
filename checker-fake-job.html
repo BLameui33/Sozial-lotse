@@ -41,6 +41,335 @@
       }
     }
   </script>
+  <style>/* === Job-Checker Grundlayout === */
+.job_check_form {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.job_check_header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding: 0 20px;
+}
+
+.job_check_header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+}
+
+.job_check_header p {
+    font-size: 1.05rem;
+    color: #5a6572;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.55;
+}
+
+.job_check_steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Frageblock */
+.job_check_question {
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    padding: 32px;
+    transition: border-color 0.2s ease;
+}
+
+.job_check_question:hover {
+    border-color: #d0d7de;
+}
+
+.question_header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.question_number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.question_text h3 {
+    margin: 0 0 4px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.question_text p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #6b7280;
+}
+
+/* Antwortkarten */
+.choice_group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.choice_card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px solid #e8ecf0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: #fafbfc;
+}
+
+.choice_card:hover {
+    background: #fff;
+    border-color: #c7d2dc;
+}
+
+.choice_card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.choice_indicator {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border: 2px solid #c7d2dc;
+    border-radius: 50%;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.choice_card input[type="radio"]:checked ~ .choice_indicator {
+    border-color: #2563eb;
+    background: #2563eb;
+}
+
+.choice_card input[type="radio"]:checked ~ .choice_indicator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.choice_card input[type="radio"]:checked ~ .choice_label {
+    color: #111827;
+}
+
+.choice_card input[type="radio"]:checked ~ * {
+    border-color: #2563eb;
+}
+
+.choice_card:has(input[type="radio"]:checked) {
+    border-color: #2563eb;
+    background: #f8fbff;
+}
+
+.choice_label {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: #374151;
+}
+
+.choice_label strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #111827;
+}
+
+/* Buttons */
+.job_check_actions {
+    margin-top: 48px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+}
+
+.btn_primary {
+    background: #2563eb;
+    color: #fff;
+}
+
+.btn_primary:hover {
+    background: #1d4ed8;
+}
+
+.btn_secondary {
+    background: transparent;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.btn_secondary:hover {
+    background: #f3f4f6;
+}
+
+/* === Ergebnis-Bereich === */
+.result_card {
+    max-width: 760px;
+    margin: 48px auto 0;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8ecf0;
+    overflow: hidden;
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.result_header {
+    padding: 40px 32px;
+    text-align: center;
+    border-bottom: 1px solid #e8ecf0;
+}
+
+.result_header svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+}
+
+.result_header h2 {
+    margin: 0 0 8px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.result_subtitle {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #6b7280;
+}
+
+/* Risiko-Stile */
+.result_card.risk_red    { border-top: 3px solid #dc2626; }
+.result_card.risk_yellow { border-top: 3px solid #d97706; }
+.result_card.risk_green  { border-top: 3px solid #16a34a; }
+
+.result_card.risk_red    .result_header h2 { color: #991b1b; }
+.result_card.risk_red    .result-header svg { color: #dc2626; }
+.result_card.risk-yellow .result-header h2 { color: #92400e; }
+.result-card.risk_yellow .result-header svg { color: #d97706; }
+.result-card.risk_green  .result-header h2 { color: #166534; }
+.result-card.risk_green  .result-header svg { color: #16a34a; }
+
+.result_body {
+    padding: 32px;
+}
+
+.result_body h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 14px;
+}
+
+.result_body ul {
+    margin: 0 0 28px;
+    padding-left: 20px;
+}
+
+.result_body ul li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: #374151;
+}
+
+.advice_block {
+    padding-top: 24px;
+    border-top: 1px solid #e8ecf0;
+}
+
+.advice_block p {
+    line-height: 1.65;
+    margin: 0 0 12px;
+    color: #374151;
+}
+
+.advice_block ul {
+    margin: 8px 0 16px;
+    padding-left: 20px;
+}
+
+.result_disclaimer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed #e5e7eb;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Validierungs-Warnung */
+.warning-box {
+    max-width: 760px;
+    margin: 24px auto 0;
+    padding: 20px 24px;
+    background: #fff8e6;
+    border: 1px solid #facc15;
+    border-radius: 8px;
+    color: #713f12;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+/* Responsiv */
+@media (max-width: 640px) {
+    .job_check_question { padding: 24px 20px; }
+    .result_body { padding: 24px 20px; }
+    .result_header { padding: 32px 20px; }
+    .choice_card { padding: 14px 16px; }
+}</style>
 </head>
 <body>
 
@@ -77,7 +406,6 @@
     Zur Übersicht: Verbraucherrecht & Betrug
   </a>
 
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
 
   <a href="#job-check-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen Job-Checker springen</a>
 
@@ -115,69 +443,194 @@
   </div>
 
   <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
+    <p><strong>Redaktionell & fachlichgeprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
 
-  <form id="job-check-form" class="pflegegrad-form" onsubmit="return false;">
-    
-    <fieldset class="pflegegrad-fieldset active-step">
-      <legend>Details zum Jobangebot</legend>
-      
-      <!-- Frage 1: Die Aufgabe -->
-      <label class="pflegegrad-label">1. Was ist Ihre Hauptaufgabe?</label>
-      <div class="radio-group" style="margin-bottom:15px;">
-        <label><input type="radio" name="task" value="normal"> Büroarbeit, Texte schreiben, Programmieren, Design etc.</label>
-        <label><input type="radio" name="task" value="money"> Zahlungen empfangen und weiterleiten (per Überweisung, Bitcoin, Western Union)</label>
-        <label><input type="radio" name="task" value="packages"> Pakete annehmen, umpacken und ins Ausland versenden („Warenagent“)</label>
-        <label><input type="radio" name="task" value="testing"> Bankkonten eröffnen, um die „Eröffnung zu testen“ („App-Tester“)</label>
-      </div>
+  <form id="job_check_form" class="job_check_form" onsubmit="return false;">
+    <header class="job_check_header">
+        <h2>Job-Angebot prüfen</h2>
+        <p>Beantworten Sie die folgenden Fragen, um typische Warnsignale für Betrug oder Geldwäsche-Maschen zu erkennen.</p>
+    </header>
 
+    <ol class="job_check_steps">
+        <!-- Frage 1 -->
+        <li class="job_check_question">
+            <div class="question_header">
+                <span class="question_number">01</span>
+                <div class="question_text">
+                    <h3>Was ist Ihre Hauptaufgabe?</h3>
+                    <p>Typische Tätigkeiten im Rahmen des Jobangebots</p>
+                </div>
+            </div>
+            <div class="choice_group">
+                <label class="choice_card">
+                    <input type="radio" name="task" value="normal">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Normale Tätigkeit</strong>
+                        Büroarbeit, Texte schreiben, Programmieren, Design, Beratung etc.
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="task" value="money">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Zahlungen weiterleiten</strong>
+                        Geld empfangen und per Überweisung, Bitcoin oder Western Union an Dritte weiterleiten
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="task" value="packages">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Pakete weiterleiten</strong>
+                        Pakete annehmen, umpacken und ins Ausland versenden („Warenagent")
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="task" value="testing">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Bankkonten/Apps testen</strong>
+                        Konten auf den eigenen Namen eröffnen, um die „Eröffnung zu testen"
+                    </span>
+                </label>
+            </div>
+        </li>
 
-      <!-- Frage 2: Das Konto -->
-      <label class="pflegegrad-label">2. Über welches Konto laufen die Gelder?</label>
-      <div class="radio-group" style="margin-bottom:15px;">
-        <label><input type="radio" name="account" value="company"> Über das Firmenkonto des Arbeitgebers (ich habe keinen Zugriff)</label>
-        <label><input type="radio" name="account" value="private"> Über mein privates Girokonto / PayPal</label>
-        <label><input type="radio" name="account" value="new"> Ich soll extra ein neues Konto auf meinen Namen eröffnen</label>
-      </div>
+        <!-- Frage 2 -->
+        <li class="job_check_question">
+            <div class="question_header">
+                <span class="question_number">02</span>
+                <div class="question_text">
+                    <h3>Über welches Konto laufen die Gelder?</h3>
+                    <p>Art und Zuordnung des Zahlungskontos</p>
+                </div>
+            </div>
+            <div class="choice_group">
+                <label class="choice_card">
+                    <input type="radio" name="account" value="company">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Firmenkonto des Arbeitgebers</strong>
+                        Zahlungen laufen ausschließlich über das Konto des Unternehmens
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="account" value="private">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Mein privates Konto</strong>
+                        Gelder sollen über mein Girokonto oder PayPal laufen
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="account" value="new">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Neues Konto eröffnen</strong>
+                        Ich soll ein zusätzliches Konto auf meinen Namen eröffnen
+                    </span>
+                </label>
+            </div>
+        </li>
 
+        <!-- Frage 3 -->
+        <li class="job_check_question">
+            <div class="question_header">
+                <span class="question_number">03</span>
+                <div class="question_text">
+                    <h3>Wie verlief das Vorstellungsgespräch?</h3>
+                    <p>Art des Kontakts vor der Einstellung</p>
+                </div>
+            </div>
+            <div class="choice_group">
+                <label class="choice_card">
+                    <input type="radio" name="interview" value="live">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Persönlich oder Video-Call</strong>
+                        Vor-Ort-Gespräch oder Videokonferenz mit echtem Gesprächspartner
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="interview" value="chat">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Nur Chat oder E-Mail</strong>
+                        Ausschließlich WhatsApp, Telegram, E-Mail – kein persönlicher Kontakt
+                    </span>
+                </label>
+            </div>
+        </li>
 
-      <!-- Frage 3: Der Bewerbungsprozess -->
-      <label class="pflegegrad-label">3. Wie lief das Vorstellungsgespräch?</label>
-      <div class="radio-group" style="margin-bottom:15px;">
-        <label><input type="radio" name="interview" value="live"> Persönlich vor Ort oder per Video-Call (mit Gesicht)</label>
-        <label><input type="radio" name="interview" value="chat"> Nur per E-Mail, WhatsApp, Telegram oder Chat (kein persönlicher Kontakt)</label>
-      </div>
+        <!-- Frage 4 -->
+        <li class="job_check_question">
+            <div class="question_header">
+                <span class="question_number">04</span>
+                <div class="question_text">
+                    <h3>Mussten Sie sich per Video-Ident identifizieren?</h3>
+                    <p>Art der Identitätsprüfung</p>
+                </div>
+            </div>
+            <div class="choice_group">
+                <label class="choice_card">
+                    <input type="radio" name="ident" value="no">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Nein / Ausweiskopie</strong>
+                        Keine Video-Identifikation oder lediglich eine Kopie für die Personalakte
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="ident" value="yes_account">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Ja, für „Kontoeröffnung" oder „Produkttest"</strong>
+                        Video-Ident wurde als Test oder für eine externe Kontoeröffnung durchgeführt
+                    </span>
+                </label>
+            </div>
+        </li>
 
+        <!-- Frage 5 -->
+        <li class="job_check_question">
+            <div class="question_header">
+                <span class="question_number">05</span>
+                <div class="question_text">
+                    <h3>Wie sieht die Bezahlung aus?</h3>
+                    <p>Höhe und Struktur der Vergütung</p>
+                </div>
+            </div>
+            <div class="choice_group">
+                <label class="choice_card">
+                    <input type="radio" name="pay" value="normal">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Marktüblich</strong>
+                        Üblicher Stundenlohn oder Gehalt für die jeweilige Tätigkeit
+                    </span>
+                </label>
+                <label class="choice_card">
+                    <input type="radio" name="pay" value="high">
+                    <span class="choice_indicator"></span>
+                    <span class="choice_label">
+                        <strong>Ungewöhnlich hoch</strong>
+                        Sehr hohe Vergütung für einfache Arbeit oder Provision pro Transaktion
+                    </span>
+                </label>
+            </div>
+        </li>
+    </ol>
 
-      <!-- Frage 4: Identifizierung -->
-      <label class="pflegegrad-label">4. Mussten Sie sich per Video-Ident identifizieren?</label>
-      <div class="radio-group" style="margin-bottom:15px;">
-        <label><input type="radio" name="ident" value="no"> Nein / Nur Kopie des Ausweises für Personalakte</label>
-        <label><input type="radio" name="ident" value="yes_account"> Ja, aber mir wurde gesagt, das sei für eine „Kontoeröffnung“ oder einen „Produkttest“</label>
-      </div>
+    <footer class="job_check_actions">
+        <button type="button" id="btn_check_job" class="btn btn_primary">Angebot prüfen</button>
+        <button type="reset" id="btn_reset_job" class="btn btn_secondary">Neu starten</button>
+    </footer>
+</form>
 
-
-      <!-- Frage 5: Bezahlung -->
-      <label class="pflegegrad-label">5. Wie sieht die Bezahlung aus?</label>
-      <div class="radio-group" style="margin-bottom:15px;">
-        <label><input type="radio" name="pay" value="normal"> Marktüblicher Stundenlohn / Gehalt</label>
-        <label><input type="radio" name="pay" value="high"> Sehr hoch für einfache Arbeit (z.B. 2000€ für 5 Std./Woche) oder Provision pro Überweisung</label>
-      </div>
-
-
-    </fieldset>
-
-
-    <div class="button-container">
-      <button type="button" id="btn_check_job" class="button">Angebot prüfen</button>
-      <button type="reset" id="btn_reset_job" class="button button-secondary">Neu starten</button>
-    </div>
-  </form>
-
-
-  <section id="job_result_area"></section>
+<section id="job_result_area" aria-live="polite"></section>
 
 
   <aside class="highlight-box" role="complementary" style="margin-top:40px;">

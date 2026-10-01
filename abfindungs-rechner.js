@@ -1,55 +1,65 @@
 // abfindungs-rechner.js – Berechnung (0,5-Formel) & Sperrzeit-Warnung
+// Design: Edel, viel Weißraum, blaue Akzente, keine Emojis, runde Formulierungen
 
-// Hilfsfunktionen
-function n(el){ if(!el) return 0; const raw=(el.value||"").toString().replace(",","."); const v=Number(raw); return Number.isFinite(v)?v:0; }
-function euro(v){ const x=Number.isFinite(v)?v:0; return x.toFixed(2).replace(".",",")+" €"; }
+// -------------------------------------------------------------------
+// HILFSFUNKTIONEN
+// -------------------------------------------------------------------
+function n(el) { 
+  if (!el) return 0; 
+  const raw = (el.value || "").toString().replace(",", ".").trim(); 
+  const v = Number(raw); 
+  return Number.isFinite(v) ? v : 0; 
+}
 
-function errorBox(msgs){
+function euro(v) { 
+  const x = Number.isFinite(v) ? v : 0; 
+  return x.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; 
+}
+
+function errorBox(msgs) {
   if (!msgs.length) return "";
   return `
-    <div class="pflegegrad-result-card" style="border-left: 4px solid #e53935; padding: 15px; background: #fff3f3; margin-top: 20px;">
-      <h3 style="margin-top: 0; color: #d32f2f;">Bitte Angaben prüfen:</h3>
-      <ul style="margin-bottom: 0;">${msgs.map(m=>`<li>${m}</li>`).join("")}</ul>
+    <div style="background: #fef2f2; border-left: 4px solid #b91c1c; padding: 24px; border-radius: 8px; margin-top: 24px;">
+      <h3 style="margin-top: 0; margin-bottom: 12px; color: #991b1b; font-size: 1.1rem; font-weight: 600;">Bitte Angaben prüfen:</h3>
+      <ul style="margin: 0; padding-left: 20px; color: #7f1d1d; line-height: 1.6;">
+        ${msgs.map(m => `<li style="margin-bottom: 6px;">${m}</li>`).join("")}
+      </ul>
     </div>
   `;
 }
 
 // -------------------------------------------------------------------
-// LOGIK: Sperrzeit-Risiko bewerten
+// LOGIK: Sperrzeit-Risiko bewerten (Texte fachlich geglättet und präzisiert)
 // -------------------------------------------------------------------
 function ermittleRisiko(art) {
   switch(art) {
     case "aufhebungsvertrag":
       return {
-        titel: "Sperrzeit-Risiko: HOCH (12 Wochen)",
-        color: "#c62828", // Dunkelrot
-        bg: "#ffebee",
-        icon: "⚠️",
-        text: "Beim Aufhebungsvertrag lösen Sie Ihr Arbeitsverhältnis aktiv mit auf. Die Agentur für Arbeit verhängt hier fast immer eine <strong>12-wöchige Sperrzeit</strong> beim ALG 1. Rechnen Sie genau nach: Ihre Abfindung muss den Verlust von 3 Monatsgehältern ALG 1 plus eventuelle Beiträge zur freiwilligen Krankenversicherung zwingend ausgleichen!"
+        titel: "Hinweis zur Sperrzeit: Erhöhtes Risiko",
+        color: "#991b1c", // Edles Dunkelrot
+        bg: "#fef2f2",    // Sehr helles Rot
+        text: "Bei einem Aufhebungsvertrag lösen Sie das Arbeitsverhältnis im gegenseitigen Einvernehmen auf. Die Agentur für Arbeit verhängt in diesen Fällen jedoch häufig eine <strong>12-wöchige Sperrzeit</strong> beim Arbeitslosengeld. Prüfen Sie sorgfältig, ob die angebotene Abfindung den finanziellen Verlust durch die Sperrzeit und mögliche Beiträge zur Krankenversicherung vollständig ausgleicht."
       };
     case "eigenkuendigung":
       return {
-        titel: "Sperrzeit-Risiko: SEHR HOCH",
-        color: "#b71c1c", 
-        bg: "#ffcdd2",
-        icon: "⛔",
-        text: "Wenn Sie selbst kündigen (ohne wichtigen, z.B. ärztlichen Grund), bekommen Sie 12 Wochen lang kein Arbeitslosengeld. Wichtig: Bei einer Eigenkündigung haben Sie <strong>keinen gesetzlichen Anspruch</strong> auf eine Abfindung. Die berechnete Summe ist hier rein theoretisch."
+        titel: "Hinweis zur Sperrzeit: Sehr hohes Risiko",
+        color: "#991b1c", 
+        bg: "#fef2f2",
+        text: "Wenn Sie das Arbeitsverhältnis selbst kündigen (ohne einen von der Agentur anerkannten wichtigen Grund), tritt in der Regel eine <strong>12-wöchige Sperrzeit</strong> ein. Bitte beachten Sie: Bei einer Eigenkündigung besteht kein gesetzlicher Anspruch auf eine Abfindung. Eine berechnete Summe dient hier lediglich einer theoretischen Orientierung."
       };
     case "betriebsbedingt":
       return {
-        titel: "Sperrzeit-Risiko: GERING",
-        color: "#2e7d32", // Grün
-        bg: "#e8f5e9",
-        icon: "✅",
-        text: "Kündigt der Arbeitgeber aus betriebsbedingten Gründen und wird die ordentliche Kündigungsfrist eingehalten, droht Ihnen in der Regel <strong>keine Sperrzeit</strong>. Wenn der Arbeitgeber im Kündigungsschreiben auf § 1a KSchG verweist, haben Sie nach Verstreichen der 3-wöchigen Klagefrist oft einen direkten Anspruch auf die Regelabfindung."
+        titel: "Hinweis zur Sperrzeit: Geringes Risiko",
+        color: "#1e40af", // Edles Dunkelblau
+        bg: "#eff6ff",    // Sehr helles Blau
+        text: "Erfolgt die Kündigung aus betriebsbedingten Gründen unter Einhaltung der ordentlichen Frist, droht in der Regel <strong>keine Sperrzeit</strong>. Weist der Arbeitgeber im Kündigungsschreiben auf § 1a KSchG hin, haben Sie nach Ablauf der 3-wöchigen Klagefrist oft einen direkten gesetzlichen Anspruch auf die Regelabfindung."
       };
     case "personenbedingt":
       return {
-        titel: "Sperrzeit-Risiko: MITTEL bis HOCH",
-        color: "#ed6c02", // Orange
-        bg: "#fff3e0",
-        icon: "⚠️",
-        text: "Hier muss unterschieden werden: Ist die Kündigung <em>verhaltensbedingt</em> (z.B. nach vorheriger Abmahnung), droht eine Sperrzeit. Ist sie <em>krankheitsbedingt</em>, meistens nicht. Eine Abfindung ist hier starkes Verhandlungsgeschick, da Arbeitgeber oft versuchen, ohne Abfindung zu kündigen."
+        titel: "Hinweis zur Sperrzeit: Abhängig von den Umständen",
+        color: "#92400e", // Edles Amber/Ocker
+        bg: "#fffbeb",    // Sehr helles Amber
+        text: "Bei personenbedingten Kündigungen (z. B. langandauernde Krankheit) verhängt die Agentur für Arbeit meist keine Sperrzeit, sofern Sie zumutbare Maßnahmen zur Erhaltung des Arbeitsplatzes mitgetragen haben. Eine Abfindung ist hier oft das Ergebnis eines gerichtlichen Vergleichs, um langwierige Verfahren zu vermeiden, und erfordert gutes Verhandlungsgeschick."
       };
     default:
       return null;
@@ -60,7 +70,7 @@ function ermittleRisiko(art) {
 // LOGIK: Berechnung der Abfindung
 // -------------------------------------------------------------------
 function berechneAbfindung(brutto, jahre, art) {
-  // Faustformel: 0,5 Bruttomonatsgehälter pro Beschäftigungsjahr
+  // Faustformel: 0,5 Bruttomonatsgehälter pro Beschäftigungsjahr (§ 1a KSchG Orientierung)
   const faktorRegel = 0.5;
   const regelAbfindung = brutto * faktorRegel * jahre;
   
@@ -74,42 +84,54 @@ function berechneAbfindung(brutto, jahre, art) {
 }
 
 // -------------------------------------------------------------------
-// HTML-GENERIERUNG FÜR DAS ERGEBNIS
+// HTML-GENERIERUNG FÜR DAS ERGEBNIS (Elegantes Design, viel Weißraum)
 // -------------------------------------------------------------------
 function buildResult(res) {
   const risikoBox = res.risiko ? `
-    <div style="background: ${res.risiko.bg}; border: 1px solid ${res.risiko.color}; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
-      <h3 style="margin-top: 0; color: ${res.risiko.color}; font-size: 1.1rem;">
-        ${res.risiko.icon} ${res.risiko.titel}
+    <div style="background: ${res.risiko.bg}; border: 1px solid ${res.risiko.color}20; border-left: 4px solid ${res.risiko.color}; padding: 24px; border-radius: 8px; margin-bottom: 32px;">
+      <h3 style="margin-top: 0; margin-bottom: 12px; color: ${res.risiko.color}; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.01em;">
+        ${res.risiko.titel}
       </h3>
-      <p style="margin-bottom: 0; font-size: 0.95rem; line-height: 1.5; color: #333;">
+      <p style="margin: 0; font-size: 0.95rem; line-height: 1.7; color: #334155;">
         ${res.risiko.text}
       </p>
     </div>
   ` : '';
 
   return `
-    <div style="border: 2px solid #2196f3; border-radius: 8px; padding: 20px; margin-top: 30px; background: #fafafa;">
-      <h2 style="margin-top: 0; color: #0d47a1;">Ihre Berechnung</h2>
+    <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 40px; margin-top: 32px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01);">
+      <h2 style="margin-top: 0; margin-bottom: 32px; color: #0f172a; font-size: 1.5rem; font-weight: 600; text-align: center; letter-spacing: -0.02em;">
+        Ihre persönliche Berechnung
+      </h2>
       
       ${risikoBox}
 
-      <div style="background: white; padding: 20px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center;">
-        <p style="margin: 0; font-size: 1rem; color: #666;">Übliche Regelabfindung (Faktor 0,5):</p>
-        <p style="font-size: 2.2rem; color: #0d47a1; font-weight: bold; margin: 10px 0;">
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 32px; border-radius: 10px; text-align: center; margin-bottom: 32px;">
+        <p style="margin: 0 0 8px 0; font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;">
+          Übliche Regelabfindung (Faktor 0,5)
+        </p>
+        <p style="font-size: 2.5rem; color: #1e3a8a; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">
           ${euro(res.regelAbfindung)}
         </p>
-        <div style="font-size: 0.9rem; color: #555; background: #f5f5f5; padding: 10px; border-radius: 4px; display: inline-block;">
+        <div style="display: inline-block; font-size: 0.9rem; color: #475569; background: #ffffff; padding: 12px 20px; border-radius: 6px; border: 1px solid #cbd5e1; line-height: 1.5;">
           Mögliche Verhandlungsspanne (Faktor 0,25 bis 1,0):<br>
-          <strong>${euro(res.spanMin)} – ${euro(res.spanMax)}</strong>
+          <strong style="color: #0f172a; font-size: 1.05rem;">${euro(res.spanMin)} – ${euro(res.spanMax)}</strong>
         </div>
       </div>
 
-      <h3 style="font-size: 1.1rem; color: #333;">Was Sie jetzt wissen müssen:</h3>
-      <ul style="font-size: 0.95rem; line-height: 1.6; color: #444; margin-bottom: 0;">
-        <li><strong>Brutto ist nicht Netto:</strong> Abfindungen müssen voll versteuert werden! Sozialabgaben (Kranken-, Pflege-, Rentenversicherung) fallen auf die Abfindung hingegen in der Regel <em>nicht</em> an.</li>
-        <li><strong>Fünftelregelung:</strong> Das Finanzamt berechnet die Steuerlast meist nach der günstigeren "Fünftelregelung", um die extreme Steuerprogression in diesem Jahr etwas abzufedern.</li>
-        <li><strong>Klagefrist beachten:</strong> Wenn Sie eine Kündigung erhalten haben, bleiben Ihnen nur exakt <strong>3 Wochen</strong> Zeit, um Kündigungsschutzklage einzureichen. Verpassen Sie diese Frist, ist die Kündigung wirksam und die Verhandlungsbasis für eine Abfindung oft zerstört.</li>
+      <h3 style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
+        Wichtige Hinweise für Ihr weiteres Vorgehen
+      </h3>
+      <ul style="font-size: 0.95rem; line-height: 1.7; color: #475569; margin: 0; padding-left: 20px;">
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #1e3a8a;">Brutto ist nicht Netto:</strong> Abfindungen sind voll einkommensteuerpflichtig. Sozialversicherungsbeiträge (Kranken-, Pflege-, Rentenversicherung) fallen auf die Abfindungssumme in der Regel jedoch nicht an.
+        </li>
+        <li style="margin-bottom: 12px;">
+          <strong style="color: #1e3a8a;">Fünftelregelung nutzen:</strong> Das Finanzamt berechnet die Steuerlast meist nach der günstigeren „Fünftelregelung“, um die progressive Steuerwirkung in dem Jahr des Zuflusses abzumildern.
+        </li>
+        <li>
+          <strong style="color: #1e3a8a;">Klagefrist unbedingt beachten:</strong> Nach Erhalt einer Kündigung bleiben Ihnen exakt <strong>3 Wochen</strong> Zeit, um Kündigungsschutzklage beim Arbeitsgericht einzureichen. Wird diese Frist versäumt, wird die Kündigung wirksam und die Verhandlungsbasis für eine Abfindung entfällt meist.
+        </li>
       </ul>
     </div>
   `;
@@ -131,13 +153,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btn.addEventListener("click", () => {
     const errors = [];
-    if (!bruttoInp.value || n(bruttoInp) <= 0) errors.push("Bitte geben Sie Ihr Bruttogehalt ein.");
+    if (!bruttoInp.value || n(bruttoInp) <= 0) errors.push("Bitte geben Sie Ihr monatliches Bruttogehalt ein.");
     if (!jahreInp.value || n(jahreInp) < 0) errors.push("Bitte geben Sie die Jahre der Betriebszugehörigkeit an.");
-    if (!artInp.value) errors.push("Bitte wählen Sie aus, wie das Arbeitsverhältnis enden soll.");
+    if (!artInp.value) errors.push("Bitte wählen Sie die Art der Beendigung des Arbeitsverhältnisses aus.");
 
-    if (errors.length){
+    if (errors.length) {
       out.innerHTML = errorBox(errors);
-      out.scrollIntoView({ behavior: "smooth" });
+      out.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
@@ -148,12 +170,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const res = berechneAbfindung(brutto, jahre, art);
 
     out.innerHTML = buildResult(res);
-    out.scrollIntoView({ behavior: "smooth" });
+    out.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   if (reset) {
     reset.addEventListener("click", () => {
-      setTimeout(() => { out.innerHTML = ""; }, 0);
+      // Sanftes Ausblenden oder direktes Leeren
+      out.innerHTML = "";
+      if(bruttoInp) bruttoInp.value = "";
+      if(jahreInp) jahreInp.value = "";
+      if(artInp) artInp.value = "";
     });
   }
 });

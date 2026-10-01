@@ -10,21 +10,133 @@
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
 
-  <script type="application/ld+json">
+ <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Online-Rechner von Sozial-Lotse",
-  "operatingSystem": "Web",
+  "name": "Grundsicherungsgeld-Vorcheck (Bürgergeld-Rechner)",
+  "url": "https://sozialrecht-lotse.de/buergergeld-vorcheck.html",
+  "description": "Kostenloser Vorcheck: Habe ich Anspruch auf Grundsicherungsgeld (früher Bürgergeld)? Mit Bedarf, Einkommen, Freibeträgen und Schonvermögen nach Alter.",
   "applicationCategory": "FinanceApplication",
-  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-  }
+  "operatingSystem": "Web",
+  "inLanguage": "de-DE",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
 }
 </script>
+<style>/* ===== Mehrbedarf-Rechner: Formular ===== */
+#bg-form .bg-feld { margin-bottom: 28px; }
+#bg-form .bg-feld[hidden] { display: none; }
+#bg-form .bg-frage { margin: 0 0 10px; font-weight: 600; }
+
+#bg-form .bg-grid {
+  display: grid;
+  gap: 12px 16px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+#bg-form .bg-hilfe {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #f4f7fc;
+  border-radius: 8px;
+  color: #51607a;
+  font-size: .875rem;
+  line-height: 1.6;
+}
+#bg-form .bg-hilfe p { margin: 0; }
+#bg-form .bg-hilfe strong { color: #1b2a4a; font-weight: 600; }
+#bg-form .bg-hilfe-intro { margin: 0 0 32px; background: #eaf0fc; color: #34425e; }
+
+#bg-form .bg-details { margin-top: 8px; padding: 14px 16px; background: #f4f7fc; border-radius: 8px; }
+#bg-form .bg-details summary { cursor: pointer; color: #1d4ed8; font-size: .9rem; font-weight: 600; }
+#bg-form .bg-details[open] summary { margin-bottom: 10px; }
+#bg-form .bg-details-text { margin: 0 0 16px; color: #51607a; font-size: .875rem; line-height: 1.6; }
+
+.bg-fehler {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: #fdf3f2;
+  color: #a1281f;
+  border-radius: 8px;
+  font-size: .9rem;
+}
+.bg-fehler[hidden] { display: none; }
+
+/* ===== Ergebnis ===== */
+.bg-result {
+  --bg-blue: #1d4ed8;
+  --bg-blue-soft: #eaf0fc;
+  --bg-ink: #1b2a4a;
+  --bg-muted: #6b778c;
+  --bg-line: #e9eef6;
+  max-width: 720px;
+  margin: 40px 0 0;
+  padding: 48px 44px;
+  background: #fff;
+  border: 1px solid var(--bg-line);
+  border-radius: 14px;
+  color: var(--bg-ink);
+  font-variant-numeric: tabular-nums;
+}
+.bg-result h2, .bg-result h3 { margin: 0; font-weight: 600; color: var(--bg-ink); }
+
+.bg-hero-label { margin: 0 0 10px; color: var(--bg-muted); font-size: .95rem; font-weight: 400; }
+.bg-hero-value { margin: 0; font-size: 3.1rem; line-height: 1.1; font-weight: 600; color: var(--bg-blue); letter-spacing: -.01em; }
+.bg-hero-sub { margin: 12px 0 0; color: var(--bg-muted); font-size: .95rem; }
+.bg-empty { padding: 22px 24px; background: #f3f4f7; border-radius: 10px; }
+.bg-empty p { margin: 8px 0 0; color: #44526d; font-size: .92rem; line-height: 1.55; }
+
+.bg-section { margin-top: 44px; }
+.bg-section h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.bg-lead { margin: 0 0 12px; color: var(--bg-muted); font-size: .9rem; line-height: 1.55; }
+
+.bg-table { width: 100%; border-collapse: collapse; margin: 0; }
+.bg-table td { padding: 14px 0; border: 0; border-bottom: 1px solid var(--bg-line); background: transparent; font-size: .95rem; vertical-align: top; }
+.bg-table td:last-child { text-align: right; white-space: nowrap; padding-left: 16px; }
+.bg-table .bg-detail { display: block; margin-top: 3px; color: var(--bg-muted); font-size: .8rem; line-height: 1.4; }
+.bg-table tr.bg-sum td { font-weight: 600; }
+.bg-table tr.bg-total td { font-weight: 600; color: var(--bg-blue); border-bottom: 0; padding-top: 18px; }
+
+.bg-notes { margin-top: 44px; padding: 20px 22px; background: #f4f7fc; border-radius: 10px; }
+.bg-notes p { margin: 0 0 10px; font-size: .875rem; line-height: 1.6; color: #44526d; }
+.bg-notes p:last-child { margin-bottom: 0; }
+
+.bg-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.bg-meta { margin: 28px 0 0; color: var(--bg-muted); font-size: .8rem; line-height: 1.5; }
+
+@media (max-width: 600px) {
+  .bg-result { padding: 28px 20px; margin-top: 28px; }
+  .bg-hero-value { font-size: 2.4rem; }
+  .bg-section, .bg-notes { margin-top: 32px; }
+}
+
+#bg-form .bg-hilfe a { color: #1d4ed8; text-decoration: underline; }
+
+.bg-bar { height: 8px; margin: 20px 0 10px; background: var(--bg-blue-soft); border-radius: 999px; overflow: hidden; }
+.bg-bar span { display: block; height: 100%; background: var(--bg-blue); border-radius: 999px; }
+.bg-bar-caption { margin: 0; color: var(--bg-muted); font-size: .875rem; }
+.bg-hero-label, .bg-section h3 { font-weight: 600; }
+.bg-hero-label { font-weight: 400; }
+
+/* Statusblock mit Einordnung */
+.bg-status { padding: 24px 26px; border-radius: 10px; background: #f3f4f7; }
+.bg-status h2 { font-size: 1.3rem; line-height: 1.35; }
+.bg-status p { margin: 10px 0 0; color: #44526d; font-size: .95rem; line-height: 1.55; }
+.bg-status-ja { background: var(--bg-blue-soft); }
+.bg-hero { margin-top: 40px; }
+
+.bg-steps { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: bgs; }
+.bg-steps li { position: relative; padding: 0 0 16px 40px; font-size: .95rem; line-height: 1.55; counter-increment: bgs; }
+.bg-steps li::before {
+  content: counter(bgs); position: absolute; left: 0; top: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--bg-blue-soft); color: var(--bg-blue);
+  font-size: .8rem; font-weight: 600; text-align: center; line-height: 26px;
+}
+.bg-steps li:last-child { padding-bottom: 0; }
+.bg-actions a.button { text-decoration: none; }
+#bg-form [hidden] { display: none !important; }</style>
 </head>
 <body>
   <header class="site-header">
@@ -52,7 +164,7 @@
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
+    Schnell & Einfach
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
@@ -106,123 +218,216 @@
   </div>
 
     <form id="bg-form" class="pflegegrad-form" aria-describedby="bg_ergebnis" novalidate>
-      <!-- 1) Haushalt -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Haushalt</legend>
-
-        <label class="pflegegrad-label" for="bg_haushalt">
-          Haushaltsform
-          <select id="bg_haushalt">
-            <option value="single">Alleinstehend / Alleinerziehend</option>
-            <option value="paar" selected>Partnerhaushalt (zwei Erwachsene)</option>
-          </select>
-        </label>
-
-        <div class="pflegegrad-label">
-          Anzahl weiterer erwachsener Personen (18–24 im Haushalt, nicht Partner)
-          <input type="number" id="bg_erw_weitere" min="0" max="6" step="1" value="0" />
-        </div>
-
-        <h3>Kinder (nach Altersgruppen, Anzahl je Gruppe)</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
-          <label class="pflegegrad-label">0–5 Jahre
-            <input type="number" id="bg_k_0_5" min="0" max="10" step="1" value="0" />
-          </label>
-          <label class="pflegegrad-label">6–13 Jahre
-            <input type="number" id="bg_k_6_13" min="0" max="10" step="1" value="0" />
-          </label>
-          <label class="pflegegrad-label">14–17 Jahre
-            <input type="number" id="bg_k_14_17" min="0" max="10" step="1" value="0" />
-          </label>
-        </div>
-
-        <div class="pflegegrad-label">
-          Alleinerziehenden-Mehrbedarf (% auf Regelsätze der Kinder, grob)
-          <input type="number" id="bg_mehr_ae" min="0" max="60" step="1" value="0" />
-        </div>
-        <p class="hinweis">
-          Nur setzen, wenn <strong>alleinerziehend</strong>. In der Praxis staffelt sich der Mehrbedarf; hier eine simple %-Angabe.
-        </p>
-      </fieldset>
-
-      <!-- 2) Regelsätze & Unterkunft -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Regelsätze &amp; Unterkunft</legend>
-
-        <h3>Monatliche Regelsätze (€/Person) – frei anpassbar</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">Erwachsener alleinstehend
-            <input type="number" id="bg_rs_single" min="0" step="1" value="563" />
-          </label>
-          <label class="pflegegrad-label">Erwachsener Partnerhaushalt
-            <input type="number" id="bg_rs_partner" min="0" step="1" value="506" />
-          </label>
-          <label class="pflegegrad-label">Weitere Erwachsene (18–24)
-            <input type="number" id="bg_rs_erw_weitere" min="0" step="1" value="471" />
-          </label>
-          <label class="pflegegrad-label">Kind 0–5
-            <input type="number" id="bg_rs_0_5" min="0" step="1" value="357" />
-          </label>
-          <label class="pflegegrad-label">Kind 6–13
-            <input type="number" id="bg_rs_6_13" min="0" step="1" value="390" />
-          </label>
-          <label class="pflegegrad-label">Kind 14–17
-            <input type="number" id="bg_rs_14_17" min="0" step="1" value="471" />
-          </label>
-        </div>
-
-        <h3>Unterkunft &amp; Heizung</h3>
-        <label class="pflegegrad-label" for="bg_warmmiete">
-          Warmmiete (inkl. Heizung), € / Monat
-          <input type="number" id="bg_warmmiete" min="0" step="10" placeholder="z. B. 950" />
-        </label>
-
-        <label class="pflegegrad-label" for="bg_miete_cap">
-          Angemessenheitsgrenze Warmmiete (Deckel), € / Monat
-          <input type="number" id="bg_miete_cap" min="0" step="10" value="1000" />
-        </label>
-        <p class="hinweis">
-          Der Bedarf berücksichtigt die Warmmiete nur bis zur <strong>Angemessenheitsgrenze</strong> (regional unterschiedlich).
-        </p>
-      </fieldset>
-
-      <!-- 3) Einkommen & Freibeträge -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Einkommen &amp; Freibeträge (vereinfacht)</legend>
-
-        <label class="pflegegrad-label" for="bg_einkommen">
-          Haushalts-Nettoeinkommen (anrechenbare Einkünfte zusammen, grob)
-          <input type="number" id="bg_einkommen" min="0" step="50" placeholder="z. B. 1.800" />
-        </label>
-
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label">Pauschaler Erwerbstätigen-Freibetrag (€)
-            <input type="number" id="bg_freibetrag_fix" min="0" step="10" value="100" />
-          </label>
-          <label class="pflegegrad-label">Zusätzlicher prozentualer Freibetrag auf Rest-Einkommen (%)
-            <input type="number" id="bg_freibetrag_pct" min="0" max="50" step="1" value="20" />
-          </label>
-        </div>
-
-        <label class="pflegegrad-label" for="bg_abzuege_sonstig">
-          Weitere Absetzbeträge (Versicherungspauschalen etc.), € / Monat
-          <input type="number" id="bg_abzuege_sonstig" min="0" step="10" value="0" />
-        </label>
-
-        <p class="hinweis">
-          Vereinfachte Anrechnung: <strong>anrechenbares Einkommen</strong> =
-          Einkommen − fixer Freibetrag − (Prozentsatz × (Einkommen − fixer Freibetrag, min 0))
-          − sonstige Abzüge. Negative Werte werden als 0 behandelt.
-        </p>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="bg_berechnen" class="button">Rechner starten</button>
-        <button type="reset" id="bg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+ 
+  <!-- 1) Haushalt -->
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1. Dein Haushalt</legend>
+ 
+    <div class="bg-hilfe bg-hilfe-intro">
+      <p><strong>Was prüft der Vorcheck?</strong> Das Jobcenter vergleicht drei Dinge: Was braucht dein Haushalt
+      im Monat (Bedarf)? Was kommt an Einkommen herein? Und wie viel Erspartes ist vorhanden? Ist das Einkommen
+      kleiner als der Bedarf und das Ersparte nicht zu hoch, besteht in der Regel ein Anspruch.
+      Beantworte die Fragen so genau wie möglich. Das Ergebnis ist eine erste Orientierung.</p>
+    </div>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_haushalt">
+        Wie lebst du?
+        <select id="bg_haushalt">
+          <option value="single">Alleinstehend</option>
+          <option value="ae">Alleinerziehend (mit Kind oder Kindern)</option>
+          <option value="paar" selected>Als Paar (mit oder ohne Kinder)</option>
+        </select>
+      </label>
+      <div class="bg-hilfe">
+        <p>Als Paar zählen Ehe- und Lebenspartner sowie Partner, die zusammen wirtschaften. Alle Personen, die
+        zusammen den Bedarf bilden, nennt man Bedarfsgemeinschaft.</p>
       </div>
-    </form>
-
-    <section id="bg_ergebnis" aria-live="polite"></section>
+    </div>
+ 
+    <div class="bg-feld">
+      <div class="bg-grid">
+        <label class="pflegegrad-label" for="bg_alter">Dein Alter
+          <input type="number" id="bg_alter" inputmode="numeric" min="15" max="67" step="1" placeholder="z. B. 38" />
+        </label>
+        <label class="pflegegrad-label" for="bg_alter_partner" id="bg_alter_partner_wrap">Alter deines Partners
+          <input type="number" id="bg_alter_partner" inputmode="numeric" min="15" max="100" step="1" placeholder="z. B. 41" />
+        </label>
+      </div>
+      <div class="bg-hilfe">
+        <p>Das Alter bestimmt, wie viel Erspartes du behalten darfst. Je älter, desto mehr. Bei Paaren zählt
+        das Alter beider Partner.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld">
+      <p class="bg-frage">Wie viele Kinder leben im Haushalt?</p>
+      <div class="bg-grid">
+        <label class="pflegegrad-label" for="bg_k_0_5">0 bis 5 Jahre
+          <input type="number" id="bg_k_0_5" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="bg_k_6_13">6 bis 13 Jahre
+          <input type="number" id="bg_k_6_13" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="bg_k_14_15">14 bis 15 Jahre
+          <input type="number" id="bg_k_14_15" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="bg_k_16_17">16 bis 17 Jahre
+          <input type="number" id="bg_k_16_17" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+      </div>
+      <div class="bg-hilfe">
+        <p>Trage die Kinder nach Alter ein. Der Regelsatz hängt vom Alter ab. Nur Kinder, die in deinem Haushalt
+        leben, zählen.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld" id="bg_ae_wrap" hidden>
+      <label class="pflegegrad-label" for="bg_ae_u7">
+        Wie viele deiner Kinder sind jünger als 7 Jahre?
+        <input type="number" id="bg_ae_u7" inputmode="numeric" min="0" max="10" step="1" value="0" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Mit einem Kind unter 7 Jahren bekommst du als Alleinerziehende einen höheren Zuschlag. Wir haben den
+        Wert aus den Altersangaben oben übernommen. Ändere ihn, wenn ein Kind bereits 6 Jahre alt ist.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_erw_weitere">
+        Volljährige Kinder (18 bis 24 Jahre) im Haushalt
+        <input type="number" id="bg_erw_weitere" inputmode="numeric" min="0" max="6" step="1" value="0" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Erwachsene Kinder unter 25, die noch bei dir wohnen, haben einen eigenen, etwas niedrigeren Regelsatz.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <!-- 2) Wohnen -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2. Wohnen und Mehrbedarfe</legend>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_warmmiete">
+        Warmmiete (€ pro Monat)
+        <input type="number" id="bg_warmmiete" inputmode="decimal" min="0" step="10" placeholder="z. B. 950" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Die Warmmiete ist die Miete inklusive Nebenkosten und Heizung. Das Jobcenter übernimmt sie, soweit sie
+        angemessen ist.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_miete_cap">
+        Angemessenheitsgrenze deiner Stadt (€ pro Monat), optional
+        <input type="number" id="bg_miete_cap" inputmode="decimal" min="0" step="10" value="" placeholder="z. B. 900" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Wie hoch die Grenze für deine Haushaltsgröße ist, legt deine Stadt oder dein Landkreis fest. Du findest sie
+        auf deren Internetseite oder erfährst sie beim Jobcenter. Lässt du das Feld leer, rechnen wir mit deiner
+        vollen Warmmiete.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_mehrbedarf">
+        Weitere Mehrbedarfe (€ pro Monat), optional
+        <input type="number" id="bg_mehrbedarf" inputmode="decimal" min="0" step="5" value="" placeholder="z. B. 96" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Zum Beispiel für Schwangerschaft, Warmwasser mit Strom oder Spezialernährung. Den Betrag kannst du mit
+        unserem <a href="mehrbedarfe-orientierung.html">Mehrbedarf-Rechner</a> ermitteln. Den Alleinerziehenden-Zuschlag
+        rechnen wir automatisch dazu.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <!-- 3) Einkommen -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>3. Einkommen</legend>
+ 
+    <div class="bg-feld">
+      <div class="bg-grid">
+        <label class="pflegegrad-label" for="bg_brutto">Brutto aus Arbeit (€ pro Monat)
+          <input type="number" id="bg_brutto" inputmode="decimal" min="0" step="10" value="" placeholder="z. B. 1200" />
+        </label>
+        <label class="pflegegrad-label" for="bg_netto">Netto aus Arbeit (€ pro Monat)
+          <input type="number" id="bg_netto" inputmode="decimal" min="0" step="10" value="" placeholder="z. B. 1000" />
+        </label>
+      </div>
+      <div class="bg-hilfe">
+        <p>Zähle das Einkommen aus Arbeit aller Personen im Haushalt zusammen. Wer nicht arbeitet, lässt beide Felder
+        leer. Bei einem Minijob sind Brutto und Netto gleich. Vom Lohn bleibt ein Freibetrag anrechnungsfrei. Er
+        richtet sich nach dem Brutto.</p>
+      </div>
+    </div>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_weitere">
+        Weiteres Einkommen (€ pro Monat), optional
+        <input type="number" id="bg_weitere" inputmode="decimal" min="0" step="10" value="" placeholder="z. B. 255" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Zum Beispiel Kindergeld, Unterhalt, Arbeitslosengeld, Krankengeld oder Rente. Dieses Einkommen hat keinen
+        Freibetrag und wird voll angerechnet.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <!-- 4) Vermögen -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>4. Erspartes</legend>
+ 
+    <div class="bg-feld">
+      <label class="pflegegrad-label" for="bg_vermoegen">
+        Dein Vermögen insgesamt (€)
+        <input type="number" id="bg_vermoegen" inputmode="decimal" min="0" step="100" value="" placeholder="z. B. 3500" />
+      </label>
+      <div class="bg-hilfe">
+        <p>Zähle Sparguthaben, Bargeld, Wertpapiere und Ähnliches aller Personen im Haushalt zusammen. Nicht
+        mitzählen musst du geschützte Dinge: ein angemessenes Auto, selbst genutztes Wohneigentum, Hausrat und
+        bestimmte Altersvorsorge.</p>
+      </div>
+    </div>
+ 
+    <details class="bg-details">
+      <summary>Regelsätze anpassen (nur nötig, wenn sich die Beträge ändern)</summary>
+      <p class="bg-details-text">Hier stehen die Regelsätze für 2026 in Euro pro Monat. Ändere sie nur, wenn
+      neue Beträge gelten.</p>
+      <div class="bg-grid">
+        <label class="pflegegrad-label" for="bg_rs_single">Alleinstehend / Alleinerziehend
+          <input type="number" id="bg_rs_single" min="0" step="1" value="563" />
+        </label>
+        <label class="pflegegrad-label" for="bg_rs_partner">Partner (je Person)
+          <input type="number" id="bg_rs_partner" min="0" step="1" value="506" />
+        </label>
+        <label class="pflegegrad-label" for="bg_rs_erw_weitere">Erwachsene 18 bis 24 im Haushalt
+          <input type="number" id="bg_rs_erw_weitere" min="0" step="1" value="451" />
+        </label>
+        <label class="pflegegrad-label" for="bg_rs_0_5">Kind 0 bis 5
+          <input type="number" id="bg_rs_0_5" min="0" step="1" value="357" />
+        </label>
+        <label class="pflegegrad-label" for="bg_rs_6_13">Kind 6 bis 13
+          <input type="number" id="bg_rs_6_13" min="0" step="1" value="390" />
+        </label>
+        <label class="pflegegrad-label" for="bg_rs_14_17">Jugendlicher 14 bis 17
+          <input type="number" id="bg_rs_14_17" min="0" step="1" value="471" />
+        </label>
+      </div>
+    </details>
+  </fieldset>
+ 
+  <div id="bg_fehler" class="bg-fehler" role="alert" hidden></div>
+ 
+  <div class="button-container">
+    <button type="button" id="bg_berechnen" class="button">Anspruch vorprüfen</button>
+    <button type="reset" id="bg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
+ 
+<section id="bg_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>

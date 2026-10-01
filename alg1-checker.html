@@ -13,6 +13,99 @@
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    /* ===== ALG-1-Anspruchscheck: Formular ===== */
+#alg-form .ac-feld { margin-bottom: 28px; }
+
+#alg-form .ac-hilfe {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #f4f7fc;
+  border-radius: 8px;
+  color: #51607a;
+  font-size: .875rem;
+  line-height: 1.6;
+}
+#alg-form .ac-hilfe p { margin: 0; }
+#alg-form .ac-hilfe strong { color: #1b2a4a; font-weight: 600; }
+#alg-form .ac-hilfe-intro { margin: 0 0 32px; background: #eaf0fc; color: #34425e; }
+
+.ac-fehler {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: #fdf3f2;
+  color: #a1281f;
+  border-radius: 8px;
+  font-size: .9rem;
+}
+.ac-fehler[hidden] { display: none; }
+
+/* ===== Ergebnis ===== */
+.ac-result {
+  --ac-blue: #1d4ed8;
+  --ac-blue-soft: #eaf0fc;
+  --ac-ink: #1b2a4a;
+  --ac-muted: #6b778c;
+  --ac-line: #e9eef6;
+  max-width: 720px;
+  margin: 40px 0 0;
+  padding: 48px 44px;
+  background: #fff;
+  border: 1px solid var(--ac-line);
+  border-radius: 14px;
+  color: var(--ac-ink);
+  font-variant-numeric: tabular-nums;
+}
+.ac-result h2, .ac-result h3 { margin: 0; font-weight: 600; color: var(--ac-ink); }
+
+.ac-status { padding: 24px 26px; border-radius: 10px; background: var(--ac-blue-soft); }
+.ac-status h2 { font-size: 1.3rem; line-height: 1.35; }
+.ac-status p { margin: 10px 0 0; color: #44526d; font-size: .95rem; line-height: 1.55; }
+.ac-status-nein { background: #f3f4f7; }
+.ac-status-nein h2 { color: #2d3748; }
+
+.ac-figures { display: flex; flex-wrap: wrap; gap: 28px 64px; margin-top: 40px; }
+.ac-figure-label { margin: 0 0 6px; color: var(--ac-muted); font-size: .9rem; }
+.ac-figure-value { margin: 0; font-size: 2.4rem; line-height: 1.15; font-weight: 600; color: var(--ac-blue); letter-spacing: -.01em; }
+.ac-figure-sub { margin: 6px 0 0; color: var(--ac-muted); font-size: .85rem; }
+
+.ac-section { margin-top: 44px; }
+.ac-section h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.ac-lead { margin: 0 0 12px; color: var(--ac-muted); font-size: .9rem; line-height: 1.55; }
+
+.ac-table { width: 100%; border-collapse: collapse; margin: 0; }
+.ac-table td { padding: 14px 0; border: 0; border-bottom: 1px solid var(--ac-line); background: transparent; font-size: .95rem; }
+.ac-table td:last-child { text-align: right; white-space: nowrap; padding-left: 16px; }
+.ac-table tr.ac-muted td:last-child { color: var(--ac-muted); }
+.ac-table tr.ac-sum td { font-weight: 600; }
+.ac-table tr.ac-total td { font-weight: 600; color: var(--ac-blue); border-bottom: 0; padding-top: 18px; }
+
+.ac-steps { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: ac; }
+.ac-steps li { position: relative; padding: 0 0 18px 40px; font-size: .95rem; line-height: 1.55; counter-increment: ac; }
+.ac-steps li::before {
+  content: counter(ac);
+  position: absolute; left: 0; top: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--ac-blue-soft); color: var(--ac-blue);
+  font-size: .8rem; font-weight: 600; text-align: center; line-height: 26px;
+}
+.ac-steps li:last-child { padding-bottom: 0; }
+.ac-steps strong { font-weight: 600; }
+
+.ac-notes { margin-top: 44px; padding: 20px 22px; background: #f4f7fc; border-radius: 10px; }
+.ac-notes p { margin: 0 0 10px; font-size: .875rem; line-height: 1.6; color: #44526d; }
+.ac-notes p:last-child { margin-bottom: 0; }
+
+.ac-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.ac-meta { margin: 28px 0 0; color: var(--ac-muted); font-size: .8rem; line-height: 1.5; }
+
+@media (max-width: 600px) {
+  .ac-result { padding: 28px 20px; margin-top: 28px; }
+  .ac-figure-value { font-size: 2rem; }
+  .ac-section, .ac-notes, .ac-figures { margin-top: 32px; }
+}
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -46,7 +139,6 @@
     Zur Übersicht: Existenzsicherung
   </a>
 
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
 
   <a href="#alg-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen ALG 1-Rechner springen</a>
 
@@ -80,63 +172,140 @@
   </div>
 
   <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span> | Es gelten die aktuellen Beitragsbemessungsgrenzen.</p>
+    <p><strong>Redaktionell & fachlich geprüft am:</strong> <span id="pruefdatum">29.09.2026</span> | Es gelten die aktuellen Beitragsbemessungsgrenzen.</p>
   </div>
 
 
 
 
-    <form id="alg-form" class="pflegegrad-form" onsubmit="return false;">
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1) Deine Daten</legend>
-
-        <label class="pflegegrad-label">
-          Dein Alter
-          <input type="number" id="alg_alter" min="15" max="67" placeholder="z. B. 45" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Wichtig für die maximale Bezugsdauer (ab 50/55/58 Jahren gibt es länger Geld).</p>
-
-        <label class="pflegegrad-label">
-          Hast du Kinder? (Kindergeldanspruch)
-          <select id="alg_kinder">
-            <option value="nein" selected>Nein (Leistungssatz 60%)</option>
-            <option value="ja">Ja (Leistungssatz 67%)</option>
-          </select>
-        </label>
-      </fieldset>
-
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2) Beschäftigung & Gehalt</legend>
-        
-        <label class="pflegegrad-label">
-          Versicherungspflichtige Monate (letzte 30 Monate)
-          <input type="number" id="alg_monate" min="0" max="30" placeholder="z. B. 24" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Mindestens 12 Monate sind nötig für den Anspruch.</p>
-
-        <label class="pflegegrad-label">
-          Brutto-Monatsgehalt (Durchschnitt letzte 12 Mon.)
-          <input type="number" id="alg_brutto" min="0" step="10" placeholder="z. B. 3500" />
-        </label>
-
-        <label class="pflegegrad-label">
-          Steuerklasse (grobe Einordnung)
-          <select id="alg_steuerklasse">
-            <option value="standard" selected>Klasse 1 / 4 (Standard)</option>
-            <option value="guenstig">Klasse 3 (Verheiratet/Besserverdiener)</option>
-            <option value="teuer">Klasse 5 / 6</option>
-          </select>
-        </label>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="alg_berechnen" class="button">Anspruch prüfen</button>
-        <button type="reset" id="alg_reset" class="button button-secondary">Zurücksetzen</button>
+    <form id="alg-form" class="pflegegrad-form" novalidate>
+ 
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1) Deine Daten</legend>
+ 
+    <div class="ac-hilfe ac-hilfe-intro">
+      <p><strong>Wann bekommst du Arbeitslosengeld I?</strong> Du musst in den letzten 30 Monaten vor deiner
+      Arbeitslosigkeit mindestens 12 Monate sozialversicherungspflichtig gearbeitet haben und dich bei der
+      Agentur für Arbeit arbeitslos melden. Wie lange du Geld bekommst, hängt von deiner Versicherungszeit
+      und deinem Alter ab. Dieser Check beantwortet beides in wenigen Minuten.</p>
+    </div>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_alter">
+        Dein Alter bei Beginn der Arbeitslosigkeit
+        <input type="number" id="alg_alter" inputmode="numeric" min="15" max="67" placeholder="z. B. 45" />
+      </label>
+      <div class="ac-hilfe">
+        <p>Ab 50, 55 und 58 Jahren kann das Arbeitslosengeld länger gezahlt werden, wenn du genug
+        Versicherungszeit hast. Maßgeblich ist dein Alter am ersten Tag der Arbeitslosigkeit.</p>
       </div>
-    </form>
-
-    <section id="alg_ergebnis"></section>
+    </div>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_kinder">
+        Hast du Kinder?
+        <select id="alg_kinder">
+          <option value="nein" selected>Nein (Leistungssatz 60&nbsp;%)</option>
+          <option value="ja">Ja (Leistungssatz 67&nbsp;%)</option>
+        </select>
+      </label>
+      <div class="ac-hilfe">
+        <p>Wähle „Ja“, wenn für mindestens ein Kind ein Anspruch auf Kindergeld oder Kinderfreibetrag besteht.
+        Das wirkt sich nur auf die Höhe aus, nicht auf den Anspruch selbst.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2) Versicherungszeiten</legend>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_monate">
+        Versicherungspflichtige Monate in den letzten 30 Monaten
+        <input type="number" id="alg_monate" inputmode="decimal" min="0" max="30" step="1" placeholder="z. B. 24" />
+      </label>
+      <div class="ac-hilfe">
+        <p>Zähle die Monate, in denen du Beiträge zur Arbeitslosenversicherung gezahlt hast, also normale
+        Anstellungen und Ausbildungen. Oft zählen auch Zeiten mit Krankengeld oder Mutterschaftsgeld.
+        Minijobs zählen nicht. 30 Tage ergeben einen Monat. Mindestens 12 Monate sind nötig.</p>
+      </div>
+    </div>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_monate60">
+        Versicherungspflichtige Monate in den letzten 5 Jahren, optional
+        <input type="number" id="alg_monate60" inputmode="decimal" min="0" max="60" step="1" placeholder="z. B. 48" />
+      </label>
+      <div class="ac-hilfe">
+        <p>Die Dauer deines Anspruchs richtet sich nach den Versicherungszeiten der letzten 5 Jahre.
+        Das schließt die 30 Monate von oben ein. Lässt du das Feld leer, rechnen wir vorsichtig
+        mit dem Wert von oben. Die Dauer kann dann in Wirklichkeit länger sein.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <fieldset class="pflegegrad-fieldset">
+    <legend>3) Ende deines Arbeitsverhältnisses</legend>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_ende">
+        Wie endet oder endete dein Job?
+        <select id="alg_ende">
+          <option value="ag" selected>Der Arbeitgeber hat gekündigt</option>
+          <option value="befristet">Mein befristeter Vertrag läuft aus</option>
+          <option value="aufhebung">Ich habe einen Aufhebungsvertrag unterschrieben</option>
+          <option value="eigen">Ich habe selbst gekündigt</option>
+          <option value="eigen_grund">Ich habe selbst gekündigt, mit wichtigem Grund</option>
+        </select>
+      </label>
+      <div class="ac-hilfe">
+        <p>Wer selbst kündigt oder einen Aufhebungsvertrag unterschreibt, ohne dass ein wichtiger Grund vorliegt,
+        muss mit einer Sperrzeit von bis zu 12 Wochen rechnen. Ein wichtiger Grund kann zum Beispiel
+        ausbleibender Lohn oder Mobbing sein. Das entscheidet die Agentur im Einzelfall.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <fieldset class="pflegegrad-fieldset">
+    <legend>4) Gehalt, optional für die Höhe</legend>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_brutto">
+        Durchschnittliches Brutto pro Monat (€)
+        <input type="number" id="alg_brutto" inputmode="decimal" min="0" step="10" placeholder="z. B. 3500" />
+      </label>
+      <div class="ac-hilfe">
+        <p>Durchschnitt der letzten 12 Monate inklusive Weihnachts- und Urlaubsgeld. Wenn du das Feld leer
+        lässt, prüfen wir nur den Anspruch und die Dauer.</p>
+      </div>
+    </div>
+ 
+    <div class="ac-feld">
+      <label class="pflegegrad-label" for="alg_steuerklasse">
+        Deine Lohnsteuerklasse
+        <select id="alg_steuerklasse">
+          <option value="sk1">Klasse 1 (ledig, geschieden, getrennt lebend)</option>
+          <option value="sk4" selected>Klasse 4 (verheiratet, beide verdienen ähnlich)</option>
+          <option value="sk3">Klasse 3 (verheiratet, höheres Einkommen)</option>
+          <option value="sk5">Klasse 5 (verheiratet, geringeres Einkommen)</option>
+          <option value="sk6">Klasse 6 (zweites Arbeitsverhältnis)</option>
+        </select>
+      </label>
+      <div class="ac-hilfe">
+        <p>Die Steuerklasse steht auf deiner Gehaltsabrechnung und beeinflusst die Höhe des Arbeitslosengeldes.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <div id="alg_fehler" class="ac-fehler" role="alert" hidden></div>
+ 
+  <div class="button-container">
+    <button type="button" id="alg_berechnen" class="button">Anspruch prüfen</button>
+    <button type="reset" id="alg_reset" class="button button-secondary">Zurücksetzen</button>
+  </div>
+</form>
+ 
+<section id="alg_ergebnis" aria-live="polite"></section>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
   <h2 id="promo-headline">Weitere Hilfsangebote</h2>
@@ -239,15 +408,14 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Online-Rechner von Sozial-Lotse",
-  "operatingSystem": "Web",
+  "name": "ALG 1 Anspruchscheck",
+  "url": "https://sozialrecht-lotse.de/alg1-checker/",
+  "description": "Kostenloser Check: Habe ich Anspruch auf Arbeitslosengeld I? Mit Anwartschaftszeit, Bezugsdauer nach Alter und Versicherungszeit sowie einer Schätzung der Höhe.",
   "applicationCategory": "FinanceApplication",
-  "description": "Kostenlose Online-Rechner zur unverbindlichen Orientierung in Sozial-, Gesundheits- und Mietrechtsfragen. Die Tools liefern vereinfachte Berechnungen und ersetzen keine individuelle Beratung.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-  }
+  "operatingSystem": "Web",
+  "inLanguage": "de-DE",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
 }
 </script>
 </body>

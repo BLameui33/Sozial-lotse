@@ -1,4 +1,3 @@
-// ueberstunden-check.js
 // Überstunden-Vergütungscheck basierend auf Arbeitsrecht (Anordnung, Tarif, Vertrag)
 
 /* --- Hilfsfunktionen --- */
@@ -34,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Grundlegende Validierung
         if (hours <= 0) {
-             out.innerHTML = `<div class="warning-box" style="background:#fff3cd; color:#856404;">Bitte gib die Anzahl der Überstunden an.</div>`;
+             out.innerHTML = `<div style="background:#fff3cd; color:#856404; padding: 15px; border-radius: 4px; border-left: 4px solid #ffeeba;">Bitte gib die Anzahl der Überstunden an.</div>`;
              return;
         }
 
@@ -46,102 +45,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 2. Prüfen des Anspruchs dem Grunde nach
         if (!isOrdered) {
-            // Keine Anordnung oder Billigung
             colorCode = "red";
             mainAction = "Kein Anspruch dem Grunde nach";
-            riskNote = "Du hast die Stunden **eigenmächtig** geleistet, ohne dass der Arbeitgeber sie verlangt oder gebilligt hat. In diesem Fall besteht leider kein gesetzlicher Anspruch auf Vergütung oder Freizeitausgleich.";
-            analysis.push("🚫 **Keine Anordnung:** Fehlt die Weisung oder die Duldung des Arbeitgebers, ist eine Vergütung schwer durchsetzbar.");
-            todos.push("Spreche mit deinem Chef, ob er die geleistete Arbeit nachträglich anerkennt. Sei darauf vorbereitet, dass sie nicht vergütet wird.");
-            todos.push("Dokumentiere in Zukunft **vorab** die Notwendigkeit von Mehrarbeit und hole die Genehmigung ein.");
+            riskNote = "Du hast die Stunden <strong>eigenmächtig</strong> geleistet, ohne dass der Arbeitgeber sie verlangt oder gebilligt hat. In diesem Fall besteht leider kein gesetzlicher Anspruch auf Vergütung oder Freizeitausgleich.";
+            analysis.push("<strong>Keine Anordnung:</strong> Fehlt die Weisung oder die Duldung des Arbeitgebers, ist eine Vergütung schwer durchsetzbar.");
+            todos.push("Sprich mit deinem Chef, ob er die geleistete Arbeit nachträglich anerkennt. Sei darauf vorbereitet, dass sie nicht vergütet wird.");
+            todos.push("Dokumentiere in Zukunft <strong>vorab</strong> die Notwendigkeit von Mehrarbeit und hole die Genehmigung ein.");
         } else {
-            // Anordnung liegt vor -> Anspruch besteht!
-            
-            // 3. Vergütungsart prüfen (Freizeit oder Auszahlung)
-            analysis.push(`✅ **Anordnung liegt vor:** Der Anspruch auf Vergütung oder Freizeitausgleich besteht.`);
+            // Anordnung liegt vor -> Anspruch besteht
+            analysis.push("<strong>Anordnung liegt vor:</strong> Der Anspruch auf Vergütung oder Freizeitausgleich besteht dem Grunde nach.");
 
+            // 3. Vergütungsart prüfen
             if (paymentType === "freizeit") {
                 mainAction = "Voraussichtlich Freizeitausgleich";
-                riskNote = `Der Vertrag sieht **Freizeitausgleich** vor. Du hast Anspruch auf **${hours} Stunden** bezahlte Freizeit.`;
-                analysis.push("⏳ **Vertraglich geregelt:** Die Stunden werden in der Regel 1:1 durch Freizeit ausgeglichen.");
-                todos.push("Plane den Ausgleich der Stunden mit deinem Vorgesetzten und halte die Vereinbarung schriftlich fest.");
+                riskNote = `Der Vertrag sieht <strong>Freizeitausgleich</strong> vor. Du hast Anspruch auf <strong>${hours} Stunden</strong> bezahlte Freizeit.`;
+                analysis.push("<strong>Vertraglich geregelt:</strong> Die Stunden werden in der Regel 1:1 durch Freizeit ausgeglichen.");
+                todos.push("Plane den Ausgleich der Stunden rechtzeitig mit deinem Vorgesetzten und halte die Vereinbarung schriftlich fest.");
             
             } else if (paymentType === "auszahlung") {
                 mainAction = "Voraussichtlich Auszahlung";
-                riskNote = `Der Vertrag sieht **Auszahlung** vor. Dein Anspruch liegt bei ${hours} Stunden * Stundensatz (plus Zuschlag).`;
-                analysis.push("💶 **Vertraglich geregelt:** Die Stunden sollten mit der nächsten Gehaltsabrechnung ausgezahlt werden.");
-                todos.push("Überprüfe deine nächste Lohnabrechnung genau auf die korrekte Erfassung der ${hours} Überstunden.");
+                riskNote = `Der Vertrag sieht <strong>Auszahlung</strong> vor. Dein Anspruch liegt bei ${hours} Stunden × Stundensatz (zzgl. etwaiger Zuschläge).`;
+                analysis.push("<strong>Vertraglich geregelt:</strong> Die Stunden sollten mit der nächsten Gehaltsabrechnung ausgezahlt werden.");
+                todos.push(`Überprüfe deine nächste Lohnabrechnung genau auf die korrekte Erfassung der ${hours} Überstunden.`);
             
             } else if (paymentType === "nicht_geregelt") {
-                mainAction = "Freizeit ODER Auszahlung (Prüfung nötig)";
-                riskNote = `Die Art der Abgeltung ist nicht klar geregelt. Nachrangig steht dem Arbeitnehmer die **Auszahlung** zu, wenn der Arbeitgeber den Freizeitausgleich nicht innerhalb der Fristen anordnet.`;
+                mainAction = "Freizeit ODER Auszahlung";
+                riskNote = "Die Art der Abgeltung ist nicht klar geregelt. Nachrangig steht dem Arbeitnehmer die <strong>Auszahlung</strong> zu, wenn der Arbeitgeber den Freizeitausgleich nicht anbietet.";
                 colorCode = "orange";
-                analysis.push("❓ **Unklare Regelung:** Forderung zur Klärung der Abgeltung an den Arbeitgeber stellen.");
-                todos.push("Stelle eine schriftliche Anfrage: Wann und wie sollen die Stunden abgegolten werden (Frist setzen).");
+                analysis.push("<strong>Unklare Regelung:</strong> Es bedarf einer aktiven Forderung zur Klärung der Abgeltung an den Arbeitgeber.");
+                todos.push("Stelle eine schriftliche Anfrage: Wann und wie sollen die Stunden abgegolten werden (konkrete Frist setzen).");
             }
 
-            // 4. Zuschlag prüfen (Zusätzlich zur normalen Vergütung)
+            // 4. Zuschlag prüfen
             if (bonusPercent > 0) {
-                const effectiveBonus = hasTariff ? bonusPercent : 0; // Annahme: vertraglicher Bonus ist seltener wirksam
-                analysis.push(`➕ **Überstundenzuschlag:** Vertraglich/Tariflich sind **${bonusPercent}%** Zuschlag geregelt.`);
+                analysis.push(`<strong>Überstundenzuschlag:</strong> Vertraglich/Tariflich sind <strong>${bonusPercent}%</strong> Zuschlag hinterlegt.`);
                 
                 if (hasTariff) {
-                    riskNote += ` **Der Zuschlag von ${bonusPercent}% ist durch den Tarifvertrag verbindlich.**`;
-                } else if (bonusPercent > 0 && paymentType === "auszahlung") {
-                    riskNote += ` **Der vertragliche Zuschlag sollte ebenfalls ausgezahlt werden.**`;
+                    riskNote += ` <strong>Der Zuschlag von ${bonusPercent}% ist durch den Tarifvertrag verbindlich.</strong>`;
+                } else if (paymentType === "auszahlung") {
+                    riskNote += ` <strong>Der vertragliche Zuschlag muss bei Auszahlung ebenfalls berechnet werden.</strong>`;
                 }
             }
         }
 
-
         // 5. To-Dos & Nachweis-Tipps (immer relevant)
-        todos.push("Führe eine **detaillierte Stundenaufzeichnung** (Beginn, Ende, Pausen, Tätigkeiten) als Nachweis.");
-        todos.push("Prüfe, ob du unter die Gruppe der **Besserverdiener** fällst (hohes Gehalt), bei denen Überstunden oft mit dem Grundgehalt 'abgegolten' sind.");
+        todos.push("Führe eine <strong>detaillierte Stundenaufzeichnung</strong> (Beginn, Ende, Pausen, Tätigkeiten) als Nachweis.");
+        todos.push("Prüfe, ob du unter die Gruppe der <strong>Besserverdiener</strong> fällst (Führungskräfte / hohes Gehalt), bei denen Überstunden oft rechtmäßig mit dem Grundgehalt abgegolten sind.");
 
+        // Styling Variablen für das Design
+        let statusStyle = "";
+        let statusLabel = "";
 
-        // Styling Variablen
-        let bgCol = "#d4edda"; 
-        let textCol = "#155724";
-        let icon = "🟢";
+        if (colorCode === "green") { 
+            statusStyle = "background-color: #e8f5e9; border-left: 6px solid #2e7d32; color: #1b5e20;";
+            statusLabel = "Anspruch positiv";
+        } else if (colorCode === "orange") { 
+            statusStyle = "background-color: #fff8e1; border-left: 6px solid #f57f17; color: #e65100;";
+            statusLabel = "Klärungsbedarf";
+        } else if (colorCode === "red") { 
+            statusStyle = "background-color: #ffebee; border-left: 6px solid #c62828; color: #b71c1c;";
+            statusLabel = "Anspruch kritisch";
+        }
 
-        if (colorCode === "orange") { bgCol = "#fff3cd"; textCol = "#856404"; icon = "🟠"; }
-        if (colorCode === "red") { bgCol = "#f8d7da"; textCol = "#721c24"; icon = "🔴"; }
-
-
-        // HTML Output
+        // HTML Output (Modernes, aufgeräumtes Design ohne Emojis)
         const resultHtml = `
-            <h2>Dein Ergebnis</h2>
-            <div id="ue_result_card" class="pflegegrad-result-card">
+            <div id="ue_result_card" style="font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; color: #333;">
+                <h2 style="margin-bottom: 15px; font-size: 1.5rem; color: #222;">Ergebnis der Überstunden-Prüfung</h2>
                 
-                <div style="background:${bgCol}; color:${textCol}; padding:20px; border-radius:8px; text-align:center; margin-bottom:20px; border:1px solid rgba(0,0,0,0.1);">
-                    <div style="font-size:3rem; line-height:1; margin-bottom:10px;">${icon}</div>
-                    <h3 style="margin:0; font-size:1.4rem;">${mainAction}</h3>
-                    <p style="margin:5px 0 0 0;">Anzahl Überstunden: <strong>${hours}</strong></p>
+                <div style="padding: 20px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px; ${statusStyle}">
+                    <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; opacity: 0.8;">${statusLabel}</div>
+                    <h3 style="margin: 0 0 10px 0; font-size: 1.4rem;">${mainAction}</h3>
+                    <p style="margin: 0; font-size: 1rem;">Erfasste Überstunden: <strong>${hours}</strong></p>
                 </div>
 
-                <h3>Analyse und Hinweise</h3>
-                <p>${riskNote}</p>
-                
-                <ul style="list-style-type: none; padding:0; margin-top:20px;">
-                    ${analysis.map(a => `<li style="margin-bottom:8px; padding-left:20px; position:relative;">${a}</li>`).join('')}
-                </ul>
-
-
-                <h3>Wichtige Schritte & Nachweis</h3>
-                <div class="highlight-box" style="background-color:#fff; border:1px solid #ddd; border-left:4px solid #2980b9;">
-                    <ul style="margin:0; padding-left:20px;">
-                        ${todos.map(t => `<li style="margin-bottom:8px;">${t}</li>`).join('')}
+                <div style="margin-bottom: 25px;">
+                    <h3 style="font-size: 1.2rem; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px;">Zusammenfassung & Bewertung</h3>
+                    <p style="line-height: 1.5;">${riskNote}</p>
+                    <ul style="list-style-type: disc; padding-left: 20px; line-height: 1.6; color: #444;">
+                        ${analysis.map(a => `<li style="margin-bottom: 8px;">${a}</li>`).join('')}
                     </ul>
-                    <p class="hinweis" style="margin-top:15px;">**Wichtig:** Du musst im Streitfall beweisen, dass du Überstunden geleistet hast. Eine lückenlose Zeiterfassung ist essentiell!</p>
                 </div>
 
-                <div class="button-container" style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-                    <button id="ue_pdf_btn" class="button">📄 Checkliste als PDF</button>
+                <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-left: 4px solid #0056b3; padding: 20px; border-radius: 4px; margin-bottom: 25px;">
+                    <h3 style="margin: 0 0 15px 0; font-size: 1.1rem; color: #0056b3;">Empfohlene Handlungsschritte</h3>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                        ${todos.map(t => `<li style="margin-bottom: 8px;">${t}</li>`).join('')}
+                    </ul>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6; font-size: 0.9rem; color: #6c757d;">
+                        <strong>Hinweis zur Beweislast:</strong> Im Streitfall musst du beweisen, dass die Überstunden geleistet und vom Arbeitgeber geduldet/angeordnet wurden.
+                    </div>
+                </div>
+
+                <div class="button-container" style="display: flex; margin-top: 20px;">
+                   
                 </div>
             </div>
         `;
 
         out.innerHTML = resultHtml;
-        out.scrollIntoView({ behavior: "smooth" });
+        out.scrollIntoView({ behavior: "smooth", block: "start" });
 
         // --- PDF EXPORT (STABILE KLON-METHODE) ---
         setTimeout(() => {
@@ -151,7 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if(pdfBtn && elementToPrint) {
                 pdfBtn.addEventListener("click", () => {
                     const originalText = pdfBtn.innerText;
-                    pdfBtn.innerText = "⏳ Wird erstellt...";
+                    pdfBtn.innerText = "Wird erstellt...";
+                    pdfBtn.style.opacity = "0.7";
                     
                     // Klonen & Isolieren
                     const clonedElement = elementToPrint.cloneNode(true);
@@ -163,10 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     clonedElement.style.left = '-9999px';
                     clonedElement.style.width = '800px'; 
                     clonedElement.style.backgroundColor = '#ffffff';
+                    clonedElement.style.padding = '20px';
                     document.body.appendChild(clonedElement);
 
                     const opt = {
-                        margin:       [0.5, 0.5],
+                        margin:       0.5,
                         filename:     'ueberstunden-check.pdf',
                         image:        { type: 'jpeg', quality: 0.98 },
                         html2canvas:  { scale: 2, useCORS: true, logging: false },
@@ -176,10 +180,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     html2pdf().from(clonedElement).set(opt).save().then(() => {
                         document.body.removeChild(clonedElement);
                         pdfBtn.innerText = originalText;
+                        pdfBtn.style.opacity = "1";
                     }).catch(err => {
                         console.error(err);
                         document.body.removeChild(clonedElement);
-                        pdfBtn.innerText = "Fehler!";
+                        pdfBtn.innerText = "Fehler beim Export!";
+                        pdfBtn.style.backgroundColor = "#dc3545";
                     });
                 });
             }

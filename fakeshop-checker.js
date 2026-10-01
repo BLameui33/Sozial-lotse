@@ -2,7 +2,7 @@
 // Tool zur Risikoeinschätzung von Online-Shops.
 // Hinweis: Algorithmus basiert auf Heuristiken, keine Garantie.
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function() {
     const inputs = {
         impressum: document.getElementById("fs_impressum"),
         domain: document.getElementById("fs_domain"),
@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const reset = document.getElementById("fs_reset");
     const out = document.getElementById("fs_ergebnis");
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", function() {
         out.innerHTML = ""; 
         
-        // Werte auslesen
         const val = {
             impressum: inputs.impressum.value,
             domain: inputs.domain.value,
@@ -29,141 +28,168 @@ document.addEventListener("DOMContentLoaded", () => {
             siegel: inputs.siegel.value
         };
 
-        // --- Logik & Scoring ---
-        // Score: 0 (Sicher) bis 100+ (Extrem gefährlich)
         let score = 0;
         let warnings = [];
         let positives = [];
-        let fatalFlags = []; // K.O. Kriterien
+        let fatalFlags = [];
 
         // 1. Impressum
         if (val.impressum === "nein") {
             score += 40;
-            warnings.push("Kein oder unvollständiges Impressum gefunden. Das ist ein starkes Warnsignal – prüfen Sie Anbieterangaben besonders kritisch.");
+            warnings.push("Kein oder unvollständiges Impressum identifiziert. Dies stellt ein signifikantes Warnsignal dar – Anbieterangaben sollten kritisch geprüft werden.");
         } else if (val.impressum === "ausland") {
             score += 20;
-            warnings.push("Impressum/Adresse wirkt außerhalb der EU: Im Problemfall kann die Rechtsdurchsetzung deutlich schwieriger sein.");
+            warnings.push("Impressum/Adresse befindet sich außerhalb der EU: Im Problemfall kann die Rechtsdurchsetzung erheblich erschwert sein.");
         } else {
-            positives.push("Impressum wirkt auf den ersten Blick vorhanden (trotzdem Angaben bei Unsicherheit gegenprüfen).");
+            positives.push("Impressum scheint vorhanden zu sein (Angaben sollten bei Unsicherheit dennoch unabhängig verifiziert werden).");
         }
 
         // 2. Domain
         if (val.domain === "komisch") {
             score += 20;
-            warnings.push("Die Internetadresse (URL) wirkt ungewöhnlich oder sehr „keyword-lastig“. Das kann ein Warnsignal sein.");
+            warnings.push("Die Internetadresse (URL) wirkt ungewöhnlich oder stark keyword-lastig. Dies kann auf eine nicht-seriöse Domain hindeuten.");
         }
 
         // 3. Preis
         if (val.preis === "billig") {
             score += 15;
-            warnings.push("Der Preis ist deutlich günstiger als bei vergleichbaren Shops. Prüfen Sie besonders sorgfältig.");
+            warnings.push("Der Preis liegt deutlich unter dem vergleichbarer Anbieter. Eine besonders sorgfältige Prüfung wird empfohlen.");
         } else if (val.preis === "unrealistisch") {
             score += 35;
-            warnings.push("Der Preis wirkt unrealistisch niedrig. Extrem-„Schnäppchen“ sind ein häufiges Lockmittel bei Fake-Shops.");
+            warnings.push("Der Preis wirkt unrealistisch niedrig. Extrem günstige Angebote stellen ein häufiges Lockmittel bei betrügerischen Shops dar.");
         }
 
-        // 4. Zahlung (Das wichtigste Kriterium!)
+        // 4. Zahlung
         if (val.zahlung === "vorkasse") {
             score += 50;
             fatalFlags.push("Nur Vorkasse möglich");
-            warnings.push("⚠️ <strong>Sehr starkes Warnsignal:</strong> An der Kasse ist nur Vorkasse/Überweisung möglich (oft trotz anderer Logos vorher). Das ist ein typisches Fake-Shop-Muster – hohes Verlustrisiko.");
+            warnings.push("<strong>Kritisches Warnsignal:</strong> An der Kasse ist ausschließlich Vorkasse/Überweisung möglich (häufig trotz abweichender Logos im Vorfeld). Dies entspricht einem typischen Muster bei betrügerischen Shops und birgt ein hohes Verlustrisiko.");
         } else {
-            positives.push("Sichere Zahlungsarten scheinen möglich (z.B. Rechnung/Lastschrift/PayPal mit Käuferschutz – abhängig vom Anbieter).");
+            positives.push("Sichere Zahlungsarten scheinen verfügbar zu sein (z.B. Rechnung/Lastschrift/PayPal mit Käuferschutz – abhängig vom jeweiligen Anbieter).");
         }
 
         // 5. Verfügbarkeit
         if (val.verfuegbar === "alles") {
             score += 10;
-            warnings.push("Alles in allen Größen/Farben verfügbar kann bei begehrter Ware unplausibel sein – je nach Produkt ein Warnsignal.");
+            warnings.push("Die Verfügbarkeit aller Varianten bei begehrter Ware kann unplausibel sein und stellt je nach Produkt ein Warnsignal dar.");
         }
 
         // 6. Siegel
         if (val.siegel === "bild") {
             score += 30;
-            warnings.push("Das Gütesiegel ist nur ein Bild und nicht verifizierbar (nicht klickbar). Das ist ein häufiges Fälschungsmerkmal.");
+            warnings.push("Das Gütesiegel ist lediglich als Bild eingebunden und nicht verifizierbar (nicht klickbar). Dies ist ein häufiges Fälschungsmerkmal.");
         } else if (val.siegel === "klickbar") {
-            score -= 10; // Bonus für echtes Siegel
-            positives.push("Gütesiegel wirkt verifizierbar (führt zum Zertifikat). Prüfen Sie dort, ob Shop/Domain wirklich übereinstimmen.");
+            score -= 10;
+            positives.push("Gütesiegel erscheint verifizierbar (verlinkt zum Zertifikat). Es sollte dort geprüft werden, ob Shop und Domain übereinstimmen.");
         }
 
         // --- Auswertung ---
-
         let headline = "";
-        let riskLevel = "green"; // green, yellow, orange, red
+        let riskLevel = "green";
         let summaryText = "";
         
-        // Risikostufen definieren
         if (score >= 50) {
             riskLevel = "red";
             headline = "Hohes Betrugsrisiko";
-            summaryText = "Es wurden mehrere starke Warnsignale gefunden. Ein Kauf ist risikoreich – besser nicht bestellen, bis der Shop eindeutig verifiziert ist.";
+            summaryText = "Es wurden mehrere signifikante Warnsignale identifiziert. Ein Kauf ist mit erheblichem Risiko verbunden – von einer Bestellung wird dringend abgeraten, bis der Shop eindeutig verifiziert werden kann.";
         } else if (score >= 25) {
             riskLevel = "orange";
-            headline = "Vorsicht: bitte gründlich prüfen";
-            summaryText = "Es gibt auffällige Merkmale. Prüfen Sie den Shop sehr genau und nutzen Sie nur sichere Zahlungsarten (keine Vorkasse).";
+            headline = "Erhöhtes Risiko: Gründliche Prüfung erforderlich";
+            summaryText = "Es bestehen auffällige Merkmale. Der Shop sollte eingehend geprüft und ausschließlich mit sicheren Zahlungsmethoden genutzt werden (keine Vorkasse).";
         } else if (score > 10) {
             riskLevel = "yellow";
-            headline = "Leichte Auffälligkeiten";
-            summaryText = "Der Shop wirkt überwiegend unauffällig, aber es gibt kleinere Warnzeichen. Kaufen Sie nur mit Käuferschutz/zahlungssicheren Methoden.";
+            headline = "Geringe Auffälligkeiten";
+            summaryText = "Der Shop wirkt überwiegend unauffällig, jedoch sind kleinere Warnzeichen vorhanden. Käufe sollten nur mit Käuferschutz oder zahlungssicheren Methoden getätigt werden.";
         } else {
             riskLevel = "green";
-            headline = "Wirkt derzeit unauffällig";
-            summaryText = "Basierend auf Ihren Angaben wurden keine typischen Fake-Shop-Muster gefunden. Eine Garantie gibt es dennoch nicht.";
+            headline = "Derzeit unauffällig";
+            summaryText = "Basierend auf Ihren Angaben wurden keine typischen Muster betrügerischer Shops identifiziert. Eine absolute Sicherheit kann dennoch nicht gewährleistet werden.";
         }
 
-        // Farben setzen
-        let bgCol = "#e2e3e5"; 
-        let textCol = "#383d41";
-        let icon = "✅";
+        let bgCol = "#f8f9fa"; 
+        let borderCol = "#dee2e6";
+        let textCol = "#495057";
+        let indicatorStyle = "background: #198754;";
 
-        if (riskLevel === "yellow") { bgCol = "#fff3cd"; textCol = "#856404"; icon = "🤔"; }
-        if (riskLevel === "orange") { bgCol = "#ffe5d0"; textCol = "#e67e22"; icon = "✋"; }
-        if (riskLevel === "red") { bgCol = "#f8d7da"; textCol = "#721c24"; icon = "⛔"; }
+        if (riskLevel === "yellow") { 
+            bgCol = "#fff9e6"; borderCol = "#ffd966"; textCol = "#664d03"; indicatorStyle = "background: #ffc107;";
+        }
+        if (riskLevel === "orange") { 
+            bgCol = "#fff5f0"; borderCol = "#ff9800"; textCol = "#bf360c"; indicatorStyle = "background: #ff9800;";
+        }
+        if (riskLevel === "red") { 
+            bgCol = "#fff0f0"; borderCol = "#dc3545"; textCol = "#721c24"; indicatorStyle = "background: #dc3545;";
+        }
 
-        // HTML zusammenbauen
-        const resultHtml = `
-            <h2>Ergebnis des Schnelltests</h2>
-            <div id="fs_result_card" class="result-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                
-                <div style="background:${bgCol}; color:${textCol}; padding:20px; border-radius:8px; text-align:center; margin-bottom:20px;">
-                    <div style="font-size:3rem; margin-bottom:10px;">${icon}</div>
-                    <h3 style="margin:0; font-size:1.5rem;">${headline}</h3>
-                    <p style="margin-top:10px; font-weight:bold;">${summaryText}</p>
-                    <p style="margin:10px 0 0 0; font-size:0.95em; opacity:0.9;">
-                        Hinweis: Automatisierte Risiko-Einschätzung anhand typischer Merkmale (keine Garantie).
-                    </p>
-                </div>
+        // --- HTML Output aufbauen (Array-Methode für maximale Linter-Kompatibilität) ---
+        const html = [];
+        
+        html.push('<div id="fs_result_card" style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 40px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">');
+        
+        // Header
+        html.push('  <div style="border-bottom: 2px solid #003366; padding-bottom: 20px; margin-bottom: 30px;">');
+        html.push('    <h2 style="margin: 0 0 8px 0; font-size: 1.75rem; font-weight: 600; color: #1f2937; letter-spacing: -0.025em;">Ergebnis der Risikoanalyse</h2>');
+        html.push('    <p style="margin: 0; font-size: 0.875rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Automatisierte Heuristik-basierte Einschätzung</p>');
+        html.push('  </div>');
 
-                ${warnings.length > 0 ? `
-                    <h3 style="color:#c0392b;">⚠️ Gefundene Risikofaktoren:</h3>
-                    <ul style="color:#c0392b; list-style-type: none; padding-left: 0;">
-                        ${warnings.map(w => `<li style="background:#fff0f0; padding:8px; border-left:3px solid #c0392b; margin-bottom:8px;">${w}</li>`).join('')}
-                    </ul>
-                ` : ''}
+        // Risk Card
+        html.push('  <div style="background: ' + bgCol + '; border: 1px solid ' + borderCol + '; border-radius: 10px; padding: 30px; margin-bottom: 35px; text-align: center;">');
+        html.push('    <div style="width: 12px; height: 12px; border-radius: 50%; ' + indicatorStyle + ' margin: 0 auto 16px auto;"></div>');
+        html.push('    <h3 style="margin: 0 0 12px 0; font-size: 1.5rem; font-weight: 600; color: ' + textCol + ';">' + headline + '</h3>');
+        html.push('    <p style="margin: 0 0 16px 0; font-size: 1.0625rem; font-weight: 500; color: ' + textCol + '; line-height: 1.6;">' + summaryText + '</p>');
+        html.push('    <p style="margin: 16px 0 0 0; font-size: 0.8125rem; color: ' + textCol + '; opacity: 0.75; font-style: italic;">Hinweis: Dies ist eine automatisierte Risiko-Einschätzung anhand typischer Merkmale. Eine Garantie kann nicht gegeben werden.</p>');
+        html.push('  </div>');
 
-                ${positives.length > 0 ? `
-                    <h3 style="color:#27ae60;">👍 Positive Merkmale:</h3>
-                    <ul style="color:#27ae60; list-style-type: none; padding-left: 0;">
-                        ${positives.map(p => `<li style="background:#f0fff4; padding:8px; border-left:3px solid #27ae60; margin-bottom:8px;">${p}</li>`).join('')}
-                    </ul>
-                ` : ''}
+        // Warnings
+        if (warnings.length > 0) {
+            html.push('  <div style="margin-bottom: 35px;">');
+            html.push('    <h4 style="margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 8px;">');
+            html.push('      <span style="display: inline-block; width: 24px; height: 24px; background: #dc3545; border-radius: 4px;"></span>');
+            html.push('      Identifizierte Risikofaktoren');
+            html.push('    </h4>');
+            html.push('    <ul style="margin: 0; padding: 0; list-style: none;">');
+            warnings.forEach(function(w) {
+                html.push('      <li style="background: #fef2f2; border-left: 4px solid #dc3545; padding: 16px 20px; margin-bottom: 12px; border-radius: 6px; color: #7f1d1d; line-height: 1.6; font-size: 0.9375rem;">' + w + '</li>');
+            });
+            html.push('    </ul>');
+            html.push('  </div>');
+        }
 
-                <div style="margin-top:20px; padding-top:20px; border-top:1px solid #eee;">
-                    <strong>Unser Tipp:</strong>
-                    ${riskLevel === "red" || riskLevel === "orange" 
-                        ? "Suchen Sie den Shop-Namen + Domain bei Google zusammen mit „Erfahrungen“, „Warnung“ oder „Fake“. Nutzen Sie nach Möglichkeit einen etablierten Shop oder bezahlen Sie nur mit Käuferschutz (keine Vorkasse). Wenn Sie bereits bezahlt haben: sofort Belege sichern und umgehend Bank/Zahlungsdienst kontaktieren, um eine Rückbuchung/Chargeback zu prüfen." 
-                        : "Bleiben Sie bei unbekannten Shops vorsichtig: bevorzugen Sie Käuferschutz (z.B. Rechnung/Lastschrift/Kreditkarte je nach Anbieter) und vermeiden Sie Überweisungen/Vorkasse, wenn Sie den Shop nicht sicher verifizieren können."}
-                </div>
-            </div>
-        `;
+        // Positives
+        if (positives.length > 0) {
+            html.push('  <div style="margin-bottom: 35px;">');
+            html.push('    <h4 style="margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 600; color: #1f2937; display: flex; align-items: center; gap: 8px;">');
+            html.push('      <span style="display: inline-block; width: 24px; height: 24px; background: #003366; border-radius: 4px;"></span>');
+            html.push('      Positive Indikatoren');
+            html.push('    </h4>');
+            html.push('    <ul style="margin: 0; padding: 0; list-style: none;">');
+            positives.forEach(function(p) {
+                html.push('      <li style="background: #eff6ff; border-left: 4px solid #003366; padding: 16px 20px; margin-bottom: 12px; border-radius: 6px; color: #1e40af; line-height: 1.6; font-size: 0.9375rem;">' + p + '</li>');
+            });
+            html.push('    </ul>');
+            html.push('  </div>');
+        }
 
-        out.innerHTML = resultHtml;
+        // Recommendation
+        html.push('  <div style="background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 24px; margin-top: 30px;">');
+        html.push('    <h4 style="margin: 0 0 12px 0; font-size: 1rem; font-weight: 600; color: #003366; text-transform: uppercase; letter-spacing: 0.05em;">Handlungsempfehlung</h4>');
+        
+        let recommendation = (riskLevel === "red" || riskLevel === "orange") 
+            ? "Suchen Sie den Shop-Namen zusammen mit der Domain bei Google in Kombination mit Begriffen wie 'Erfahrungen', 'Warnung' oder 'Fake'. Nutzen Sie nach Möglichkeit einen etablierten Anbieter oder bezahlen Sie ausschließlich mit Käuferschutz (keine Vorkasse). Falls bereits eine Zahlung getätigt wurde: Sichern Sie umgehend alle Belege und kontaktieren Sie sofort Ihre Bank oder den Zahlungsdienstleister, um eine Rückbuchung (Chargeback) zu prüfen." 
+            : "Bleiben Sie auch bei unauffälligen Shops vorsichtig: Bevorzugen Sie Zahlungsarten mit Käuferschutz (z.B. Rechnung, Lastschrift oder Kreditkarte – je nach Anbieter) und vermeiden Sie Überweisungen oder Vorkasse, sofern Sie den Shop nicht sicher verifizieren können.";
+        
+        html.push('    <p style="margin: 0; color: #4b5563; line-height: 1.6; font-size: 0.9375rem;">' + recommendation + '</p>');
+        html.push('  </div>');
+
+        html.push('</div>');
+
+        out.innerHTML = html.join('\n');
         out.scrollIntoView({ behavior: "smooth" });
     });
 
     if (reset) {
-        reset.addEventListener("click", () => {
-            setTimeout(() => { out.innerHTML = ""; }, 50);
+        reset.addEventListener("click", function() {
+            setTimeout(function() { out.innerHTML = ""; }, 50);
         });
     }
 });

@@ -8,6 +8,285 @@
   <link rel="canonical" href="https://sozialrecht-lotse.de/unterhaltsvorschuss-vorpruefung.html">
   <link rel="icon" href="/logo-lotse-fav.png">
   <link rel="stylesheet" href="/css/style.css">
+
+  <style>/* --- UVG Formular Styling: Schlicht, edel, modern --- */
+
+:root {
+  --uvg-primary: #2563eb;
+  --uvg-primary-hover: #1d4ed8;
+  --uvg-bg-light: #f8fafc;
+  --uvg-card-bg: #ffffff;
+  --uvg-border: #e2e8f0;
+  --uvg-text-main: #1e293b;
+  --uvg-text-muted: #64748b;
+  --uvg-radius: 12px;
+  
+  --uvg-status-pos-bg: #eff6ff;
+  --uvg-status-pos-text: #1d4ed8;
+  --uvg-status-warn-bg: #fffbeb;
+  --uvg-status-warn-text: #b45309;
+  --uvg-status-neg-bg: #fef2f2;
+  --uvg-status-neg-text: #b91c1c;
+}
+
+.uvg-form {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--uvg-card-bg);
+  padding: 2.5rem;
+  border-radius: var(--uvg-radius);
+  border: 1px solid var(--uvg-border);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--uvg-text-main);
+  box-sizing: border-box;
+}
+
+.uvg-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 2.5rem 0;
+}
+
+.uvg-fieldset:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+.uvg-legend {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--uvg-text-main);
+  margin-bottom: 1.5rem;
+  padding: 0;
+  letter-spacing: -0.01em;
+}
+
+.uvg-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.uvg-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--uvg-text-main);
+}
+
+.uvg-input,
+.uvg-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--uvg-text-main);
+  background-color: var(--uvg-bg-light);
+  border: 1px solid var(--uvg-border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.uvg-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%64748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.uvg-input:focus,
+.uvg-select:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: var(--uvg-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Formularhilfe / Erklärtext Styling */
+.uvg-hint {
+  font-size: 0.825rem;
+  color: var(--uvg-text-muted);
+  margin-top: 0.4rem;
+  line-height: 1.4;
+}
+
+/* Buttons */
+.uvg-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.uvg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.uvg-btn-primary {
+  background-color: var(--uvg-primary);
+  color: #ffffff;
+}
+
+.uvg-btn-primary:hover {
+  background-color: var(--uvg-primary-hover);
+}
+
+.uvg-btn-secondary {
+  background-color: transparent;
+  color: var(--uvg-text-muted);
+  border-color: var(--uvg-border);
+}
+
+.uvg-btn-secondary:hover {
+  background-color: var(--uvg-bg-light);
+  color: var(--uvg-text-main);
+}
+
+/* --- Ergebniskarte Styling --- */
+
+.uvg-result-section {
+  max-width: 680px;
+  margin: 1.5rem auto 0 auto;
+}
+
+.uvg-card {
+  background: var(--uvg-card-bg);
+  border: 1px solid var(--uvg-border);
+  border-radius: var(--uvg-radius);
+  padding: 2rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.uvg-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.25rem 0;
+  color: var(--uvg-text-main);
+}
+
+.uvg-status-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.uvg-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.badge-pos {
+  background-color: var(--uvg-status-pos-bg);
+  color: var(--uvg-status-pos-text);
+}
+
+.badge-warn {
+  background-color: var(--uvg-status-warn-bg);
+  color: var(--uvg-status-warn-text);
+}
+
+.badge-neg {
+  background-color: var(--uvg-status-neg-bg);
+  color: var(--uvg-status-neg-text);
+}
+
+.uvg-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.uvg-summary-table td {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--uvg-border);
+  color: var(--uvg-text-main);
+}
+
+.uvg-summary-table tr:last-child td {
+  border-bottom: none;
+}
+
+.uvg-summary-table td:first-child {
+  color: var(--uvg-text-muted);
+}
+
+.uvg-summary-table td:last-child {
+  text-align: right;
+  font-weight: 500;
+}
+
+.uvg-explanation {
+  background-color: var(--uvg-bg-light);
+  padding: 1.25rem;
+  border-radius: 8px;
+  font-size: 0.925rem;
+  line-height: 1.5;
+  color: var(--uvg-text-main);
+  margin-bottom: 1.5rem;
+}
+
+.uvg-steps-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.uvg-steps-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--uvg-text-main);
+  line-height: 1.6;
+}
+
+.uvg-disclaimer {
+  font-size: 0.8rem;
+  color: var(--uvg-text-muted);
+  margin-top: 1.25rem;
+  line-height: 1.4;
+}
+
+/* Mobile Optimierungen */
+@media (max-width: 600px) {
+  .uvg-form, .uvg-card {
+    padding: 1.5rem;
+  }
+  
+  .uvg-actions {
+    flex-direction: column;
+  }
+
+  .uvg-summary-table td {
+    display: block;
+    padding: 0.25rem 0;
+  }
+
+  .uvg-summary-table td:first-child {
+    font-size: 0.8rem;
+  }
+
+  .uvg-summary-table td:last-child {
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+}</style>
 </head>
 <body>
   <header class="site-header">
@@ -82,83 +361,76 @@
     <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
-    <form id="uvg-form" class="pflegegrad-form" aria-describedby="uvg_ergebnis" novalidate>
-      <!-- 1) Kind & Haushalt -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Kind &amp; Haushalt</legend>
+    <form id="uvg-form" class="uvg-form" aria-describedby="uvg_ergebnis" novalidate>
+  
+  <!-- 1. Lebenssituation & Kind -->
+  <fieldset class="uvg-fieldset">
+    <legend class="uvg-legend">1. Lebenssituation &amp; Kind</legend>
 
-        <label class="pflegegrad-label" for="uvg_kind_alter">
-          Alter des Kindes (Jahre)
-          <input type="number" id="uvg_kind_alter" min="0" max="25" step="1" placeholder="z. B. 7" />
-        </label>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_kind_alter">Wie alt ist dein Kind?</label>
+      <input type="number" id="uvg_kind_alter" class="uvg-input" min="0" max="25" step="1" placeholder="z. B. 7" />
+      <span class="uvg-hint">Unterhaltsvorschuss gibt es grundsätzlich für Kinder unter 18 Jahren.</span>
+    </div>
 
-        <label class="pflegegrad-label" for="uvg_alleinerziehend">
-          Kind lebt überwiegend bei <strong>einem</strong> Elternteil (alleinerziehend)?
-          <select id="uvg_alleinerziehend">
-            <option value="ja" selected>Ja</option>
-            <option value="nein">Nein (beide Eltern im selben Haushalt)</option>
-          </select>
-        </label>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_alleinerziehend">Erziehst du dein Kind überwiegend allein?</label>
+      <select id="uvg_alleinerziehend" class="uvg-select">
+        <option value="ja" selected>Ja, ich bin alleinerziehend</option>
+        <option value="nein">Nein, wir wohnen zusammen als Paar / Eltern</option>
+      </select>
+      <span class="uvg-hint">Die Hilfe richtet sich ausschließlich an Haushalte, in denen das Kind bei einem Elternteil lebt.</span>
+    </div>
+  </fieldset>
 
-        <p class="hinweis">
-          UVG ist grundsätzlich für <strong>alleinerziehende</strong> Haushalte gedacht.
-        </p>
-      </fieldset>
+  <!-- 2. Unterhalt des anderen Elternteils -->
+  <fieldset class="uvg-fieldset">
+    <legend class="uvg-legend">2. Unterhalt des anderen Elternteils</legend>
 
-      <!-- 2) Unterhalt des anderen Elternteils -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Unterhalt durch den anderen Elternteil</legend>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_zahlverhalten">Zahlt der andere Elternteil Unterhalt?</label>
+      <select id="uvg_zahlverhalten" class="uvg-select">
+        <option value="nein" selected>Nein, gar nicht</option>
+        <option value="unreg">Unregelmäßig oder sehr wenig</option>
+        <option value="regel">Regelmäßig und ausreichend</option>
+      </select>
+      <span class="uvg-hint">Der Vorschuss springt ein, wenn der eigentliche Unterhalt ausbleibt oder zu gering ist.</span>
+    </div>
 
-        <label class="pflegegrad-label" for="uvg_zahlverhalten">
-          Zahlt der andere Elternteil?
-          <select id="uvg_zahlverhalten">
-            <option value="nein" selected>Nein</option>
-            <option value="unreg">Unregelmäßig / zu wenig</option>
-            <option value="regel">Regelmäßig (ausreichend)</option>
-          </select>
-        </label>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_betrag">Wie viel Unterhalt kommt monatlich im Schnitt an?</label>
+      <input type="number" id="uvg_betrag" class="uvg-input" min="0" step="10" placeholder="0 €" />
+      <span class="uvg-hint">Falls aktuell gar nichts gezahlt wird, trage hier einfach 0 ein.</span>
+    </div>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="uvg_betrag">
-          Durchschnittliche Zahlung pro Monat (falls vorhanden)
-          <input type="number" id="uvg_betrag" min="0" step="10" placeholder="z. B. 0 oder 120" />
-        </label>
+  <!-- 3. Einkommen & Unterstützung -->
+  <fieldset class="uvg-fieldset">
+    <legend class="uvg-legend">3. Einkommen &amp; Grundsicherungsgeld</legend>
 
-        <p class="hinweis">
-          Für den Rechner reicht eine grobe Angabe. Bei <strong>keinen</strong> oder <strong>klar zu niedrigen</strong> Zahlungen
-          ist UVG eher denkbar.
-        </p>
-      </fieldset>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_eltern_netto">Dein monatliches Nettoeinkommen (geschätzt)</label>
+      <input type="number" id="uvg_eltern_netto" class="uvg-input" min="0" step="50" placeholder="z. B. 1400" />
+      <span class="uvg-hint">Wichtig bei Kindern ab 12 Jahren: Eigenes Einkommen kann den Anspruch absichern.</span>
+    </div>
 
-      <!-- 3) Einkommen betreuender Elternteil -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Einkommen betreuender Elternteil</legend>
+    <div class="uvg-group">
+      <label class="uvg-label" for="uvg_buergergeld">Bezieht dein Haushalt Grundsicherungsgeld (SGB II)?</label>
+      <select id="uvg_buergergeld" class="uvg-select">
+        <option value="nein" selected>Nein</option>
+        <option value="ja">Ja</option>
+      </select>
+      <span class="uvg-hint">Bei Kindern zwischen 12 und 17 Jahren gelten Sonderregeln bezüglich des Grundsicherungsgeld-Bezugs.</span>
+    </div>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="uvg_eltern_netto">
-          Eigenes Netto-Einkommen (Monat, geschätzt)
-          <input type="number" id="uvg_eltern_netto" min="0" step="50" placeholder="z. B. 1.200" />
-        </label>
+  <div class="uvg-actions">
+    <button type="button" id="uvg_check" class="uvg-btn uvg-btn-primary">Vorprüfung starten</button>
+    <button type="reset" id="uvg_reset" class="uvg-btn uvg-btn-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
 
-        <label class="pflegegrad-label" for="uvg_buergergeld">
-          Bezieht der Haushalt Grundsicherungsgeld (SGB II)?
-          <select id="uvg_buergergeld">
-            <option value="nein" selected>Nein</option>
-            <option value="ja">Ja</option>
-          </select>
-        </label>
-
-        <div class="hint-box" style="margin-top:.4rem;">
-          <strong>Sonderregel (12–17 Jahre):</strong> Hier wird u. a. geschaut, ob
-          <em>kein SGB-II-Bezug</em> besteht oder mind. ca. <em>600&nbsp;€ eigenes Einkommen</em> vorhanden ist.
-        </div>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="uvg_check" class="button">Vorprüfung starten</button>
-        <button type="reset" id="uvg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
-
-    <section id="uvg_ergebnis" aria-live="polite"></section>
+<section id="uvg_ergebnis" class="uvg-result-section" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>

@@ -30,6 +30,152 @@
       }
     }
   </script>
+  <style>/* --- Inkasso-Sofortcheck: Schlicht, edel, blau & weißraumorientiert --- */
+
+:root {
+  --ik-primary: #2563eb;
+  --ik-primary-dark: #1e40af;
+  --ik-bg-light: #f8fafc;
+  --ik-card-bg: #ffffff;
+  --ik-border: #e2e8f0;
+  --ik-text-main: #1e293b;
+  --ik-text-muted: #64748b;
+  --ik-radius: 12px;
+
+  --ik-status-notice-bg: #eff6ff;
+  --ik-status-notice-text: #1d4ed8;
+  --ik-status-warn-bg: #fffbeb;
+  --ik-status-warn-text: #b45309;
+  --ik-status-alert-bg: #fef2f2;
+  --ik-status-alert-text: #b91c1c;
+}
+
+.ik-card {
+  max-width: 680px;
+  margin: 2rem auto 0 auto;
+  background: var(--ik-card-bg);
+  border: 1px solid var(--ik-border);
+  border-radius: var(--ik-radius);
+  padding: 2.25rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ik-text-main);
+  box-sizing: border-box;
+}
+
+.ik-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  color: var(--ik-text-main);
+  letter-spacing: -0.01em;
+}
+
+.ik-section-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.75rem 0;
+  color: var(--ik-text-main);
+}
+
+/* Status Banners (Keine Akzentstreifen / border-left) */
+.ik-status-banner {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.ik-status-notice {
+  background-color: var(--ik-status-notice-bg);
+  color: var(--ik-status-notice-text);
+}
+
+.ik-status-warn {
+  background-color: var(--ik-status-warn-bg);
+  color: var(--ik-status-warn-text);
+}
+
+.ik-status-alert {
+  background-color: var(--ik-status-alert-bg);
+  color: var(--ik-status-alert-text);
+}
+
+.ik-status-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem 0;
+}
+
+.ik-status-text {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ik-text-danger {
+  color: var(--ik-status-alert-text);
+}
+
+/* Listen */
+.ik-list {
+  margin: 0 0 1.5rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ik-text-main);
+}
+
+.ik-list li {
+  margin-bottom: 0.6rem;
+}
+
+.ik-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Strategie-Box */
+.ik-strategy-box {
+  background-color: var(--ik-bg-light);
+  border: 1px solid var(--ik-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.ik-strategy-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--ik-primary);
+  margin-bottom: 0.35rem;
+}
+
+.ik-strategy-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  color: var(--ik-text-main);
+}
+
+/* Disclaimer */
+.ik-disclaimer {
+  font-size: 0.8rem;
+  color: var(--ik-text-muted);
+  margin: 1.75rem 0 0 0;
+  line-height: 1.4;
+  text-align: center;
+  border-top: 1px solid var(--ik-border);
+  padding-top: 1.25rem;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 600px) {
+  .ik-card {
+    padding: 1.5rem;
+  }
+}</style>
 </head>
 <body>
   <header class="site-header">

@@ -15,6 +15,110 @@
   <meta property="og:title" content="Mehrbedarfe beim Grundsicherungsgeld 2026 – schnell berechnen">
   <meta property="og:description" content="Alleinerziehend, Schwangerschaft & optionale Pauschalen – mit frei anpassbaren Regelsätzen. Ergebnis: unverbindliche Orientierung.">
   <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Mehrbedarf-Rechner Grundsicherung",
+  "url": "https://sozialrecht-lotse.de/mehrbedarfe-orientierung.html",
+  "description": "Kostenloser Rechner für Mehrbedarfe in der Grundsicherung (früher Bürgergeld): Alleinerziehende, Schwangerschaft, Warmwasser, Ernährung und mehr, inklusive Gesamtbedarf des Haushalts.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "de-DE",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+}
+</script>
+
+<style>
+  /* ===== Mehrbedarf-Rechner: Formular ===== */
+#mb-form .mb-feld { margin-bottom: 28px; }
+#mb-form .mb-feld[hidden] { display: none; }
+#mb-form .mb-frage { margin: 0 0 10px; font-weight: 600; }
+
+#mb-form .mb-grid {
+  display: grid;
+  gap: 12px 16px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+#mb-form .mb-hilfe {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #f4f7fc;
+  border-radius: 8px;
+  color: #51607a;
+  font-size: .875rem;
+  line-height: 1.6;
+}
+#mb-form .mb-hilfe p { margin: 0; }
+#mb-form .mb-hilfe strong { color: #1b2a4a; font-weight: 600; }
+#mb-form .mb-hilfe-intro { margin: 0 0 32px; background: #eaf0fc; color: #34425e; }
+
+#mb-form .mb-details { margin-top: 8px; padding: 14px 16px; background: #f4f7fc; border-radius: 8px; }
+#mb-form .mb-details summary { cursor: pointer; color: #1d4ed8; font-size: .9rem; font-weight: 600; }
+#mb-form .mb-details[open] summary { margin-bottom: 10px; }
+#mb-form .mb-details-text { margin: 0 0 16px; color: #51607a; font-size: .875rem; line-height: 1.6; }
+
+.mb-fehler {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: #fdf3f2;
+  color: #a1281f;
+  border-radius: 8px;
+  font-size: .9rem;
+}
+.mb-fehler[hidden] { display: none; }
+
+/* ===== Ergebnis ===== */
+.mb-result {
+  --mb-blue: #1d4ed8;
+  --mb-blue-soft: #eaf0fc;
+  --mb-ink: #1b2a4a;
+  --mb-muted: #6b778c;
+  --mb-line: #e9eef6;
+  max-width: 720px;
+  margin: 40px 0 0;
+  padding: 48px 44px;
+  background: #fff;
+  border: 1px solid var(--mb-line);
+  border-radius: 14px;
+  color: var(--mb-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mb-result h2, .mb-result h3 { margin: 0; font-weight: 600; color: var(--mb-ink); }
+
+.mb-hero-label { margin: 0 0 10px; color: var(--mb-muted); font-size: .95rem; font-weight: 400; }
+.mb-hero-value { margin: 0; font-size: 3.1rem; line-height: 1.1; font-weight: 600; color: var(--mb-blue); letter-spacing: -.01em; }
+.mb-hero-sub { margin: 12px 0 0; color: var(--mb-muted); font-size: .95rem; }
+.mb-empty { padding: 22px 24px; background: #f3f4f7; border-radius: 10px; }
+.mb-empty p { margin: 8px 0 0; color: #44526d; font-size: .92rem; line-height: 1.55; }
+
+.mb-section { margin-top: 44px; }
+.mb-section h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.mb-lead { margin: 0 0 12px; color: var(--mb-muted); font-size: .9rem; line-height: 1.55; }
+
+.mb-table { width: 100%; border-collapse: collapse; margin: 0; }
+.mb-table td { padding: 14px 0; border: 0; border-bottom: 1px solid var(--mb-line); background: transparent; font-size: .95rem; vertical-align: top; }
+.mb-table td:last-child { text-align: right; white-space: nowrap; padding-left: 16px; }
+.mb-table .mb-detail { display: block; margin-top: 3px; color: var(--mb-muted); font-size: .8rem; line-height: 1.4; }
+.mb-table tr.mb-sum td { font-weight: 600; }
+.mb-table tr.mb-total td { font-weight: 600; color: var(--mb-blue); border-bottom: 0; padding-top: 18px; }
+
+.mb-notes { margin-top: 44px; padding: 20px 22px; background: #f4f7fc; border-radius: 10px; }
+.mb-notes p { margin: 0 0 10px; font-size: .875rem; line-height: 1.6; color: #44526d; }
+.mb-notes p:last-child { margin-bottom: 0; }
+
+.mb-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.mb-meta { margin: 28px 0 0; color: var(--mb-muted); font-size: .8rem; line-height: 1.5; }
+
+@media (max-width: 600px) {
+  .mb-result { padding: 28px 20px; margin-top: 28px; }
+  .mb-hero-value { font-size: 2.4rem; }
+  .mb-section, .mb-notes { margin-top: 32px; }
+}
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -36,7 +140,7 @@
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
+    Keine Werbung
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
@@ -48,7 +152,6 @@
     Zur Übersicht: Existenzsicherung
   </a>
 
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
 
   <a href="#mb-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen Mehrbedarfs-Rechner springen</a>
 
@@ -86,143 +189,205 @@
   </div>
 
   <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
+    <p><strong>Redaktionell & fachlich geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
     <form id="mb-form" class="pflegegrad-form" aria-describedby="mb_ergebnis" novalidate>
-      <!-- 1) Haushalt (Regelsätze / Basis) -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Haushalt &amp; Regelsätze (Basis)</legend>
-
-        <label class="pflegegrad-label" for="mb_haushalt">
-          Haushaltsform
-          <select id="mb_haushalt">
-            <option value="single" selected>Alleinstehend / Alleinerziehend</option>
-            <option value="paar">Partnerhaushalt (zwei Erwachsene)</option>
-          </select>
-        </label>
-
-        <div class="pflegegrad-label">
-          Weitere Erwachsene (18–24, nicht Partner)
-          <input type="number" id="mb_erw_weitere" min="0" max="6" step="1" value="0" />
-        </div>
-
-        <h3>Kinder (Anzahl nach Altersgruppen)</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));">
-          <label class="pflegegrad-label">0–5 Jahre
-            <input type="number" id="mb_k_0_5" min="0" max="10" step="1" value="0" />
-          </label>
-          <label class="pflegegrad-label">6–13 Jahre
-            <input type="number" id="mb_k_6_13" min="0" max="10" step="1" value="0" />
-          </label>
-          <label class="pflegegrad-label">14–17 Jahre
-            <input type="number" id="mb_k_14_17" min="0" max="10" step="1" value="0" />
-          </label>
-        </div>
-
-        <h3>Monatliche Regelsätze (€/Person) – anpassbar</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-          <label class="pflegegrad-label">Erwachsener alleinstehend
-            <input type="number" id="mb_rs_single" min="0" step="1" value="563" />
-          </label>
-          <label class="pflegegrad-label">Erwachsener Partnerhaushalt
-            <input type="number" id="mb_rs_partner" min="0" step="1" value="506" />
-          </label>
-          <label class="pflegegrad-label">Weitere Erwachsene (18–24)
-            <input type="number" id="mb_rs_erw_weitere" min="0" step="1" value="471" />
-          </label>
-          <label class="pflegegrad-label">Kind 0–5
-            <input type="number" id="mb_rs_0_5" min="0" step="1" value="357" />
-          </label>
-          <label class="pflegegrad-label">Kind 6–13
-            <input type="number" id="mb_rs_6_13" min="0" step="1" value="390" />
-          </label>
-          <label class="pflegegrad-label">Kind 14–17
-            <input type="number" id="mb_rs_14_17" min="0" step="1" value="471" />
-          </label>
-        </div>
-
-        <label class="pflegegrad-label" style="margin-top:.6rem;" for="mb_warmmiete">
-          Warmmiete (optional, nur für Gesamtbedarf)
-          <input type="number" id="mb_warmmiete" min="0" step="10" placeholder="z. B. 950" />
-        </label>
-        <p class="hinweis">
-          Hinweis: Für <strong>Mehrbedarfe</strong> wird grundsätzlich vom <em>maßgeblichen Regelsatz</em> ausgegangen. Die Warmmiete fließt hier
-          nur in eine <em>Gesamtbedarfs-Orientierung</em> ein (keine Angemessenheitsprüfung).
-        </p>
-      </fieldset>
-
-      <!-- 2) Mehrbedarfe -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Mehrbedarfe (vereinfacht)</legend>
-
-        <h3>Alleinerziehenden-Mehrbedarf</h3>
-        <div class="hinweis">
-          Du kannst automatisch schätzen lassen (aus Kinderzahl/Alter) oder einen Prozentsatz wählen.
-          In der Praxis gelten <strong>gestaffelte Prozentsätze</strong> nach Umfang der Alleinerziehung.
-        </div>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-          <label class="pflegegrad-label" for="mb_ae_flag">Alleinerziehend?
-            <select id="mb_ae_flag">
-              <option value="nein" selected>Nein</option>
-              <option value="ja">Ja</option>
-            </select>
-          </label>
-          <label class="pflegegrad-label" for="mb_ae_mode">AE-Mehrbedarf (Schätzung/%) 
-            <select id="mb_ae_mode">
-              <option value="auto" selected>Automatisch schätzen</option>
-              <option value="12">12&nbsp;% (klein)</option>
-              <option value="24">24&nbsp;% (mittel)</option>
-              <option value="36">36&nbsp;% (typisch)</option>
-              <option value="48">48&nbsp;% (hoch)</option>
-              <option value="60">60&nbsp;% (sehr hoch)</option>
-            </select>
-          </label>
-          <label class="pflegegrad-label" for="mb_ae_basis">Bemessungsgrundlage (maßgeblicher Regelsatz, €)
-            <input type="number" id="mb_ae_basis" min="0" step="1" value="563" />
-          </label>
-        </div>
-
-        <h3>Schwangerschafts-Mehrbedarf</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-          <label class="pflegegrad-label" for="mb_schw_flag">Schwangerschaft (ab ca. 13. Woche)
-            <select id="mb_schw_flag">
-              <option value="nein" selected>Nein</option>
-              <option value="ja">Ja</option>
-            </select>
-          </label>
-          <label class="pflegegrad-label" for="mb_schw_pct">% vom maßgeblichen Regelsatz
-            <input type="number" id="mb_schw_pct" min="0" max="50" step="1" value="17" />
-          </label>
-          <label class="pflegegrad-label" for="mb_schw_basis">Bemessungsgrundlage (maßgeblicher Regelsatz, €)
-            <input type="number" id="mb_schw_basis" min="0" step="1" value="563" />
-          </label>
-        </div>
-
-        <h3>Optionale Pauschalen (frei)</h3>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
-          <label class="pflegegrad-label" for="mb_ernaehrung">Kostenaufwändige Ernährung (€/Monat)
-            <input type="number" id="mb_ernaehrung" min="0" step="5" value="0" />
-          </label>
-          <label class="pflegegrad-label" for="mb_warmwasser">Dezentrale Warmwasserbereitung (gesamt, €/Monat)
-            <input type="number" id="mb_warmwasser" min="0" step="1" value="0" />
-          </label>
-          <label class="pflegegrad-label" for="mb_sonstig">Sonstige Mehrbedarfe (frei, €/Monat)
-            <input type="number" id="mb_sonstig" min="0" step="5" value="0" />
-          </label>
-        </div>
-        <p class="hinweis">
-          Die automatische AE-Schätzung ist bewusst grob. Für konkrete Fälle bitte Bescheid und Gesetzestext prüfen.
-        </p>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="mb_berechnen" class="button">Mehrbedarfe berechnen</button>
-        <button type="reset" id="mb_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+ 
+  <!-- 1) Haushalt -->
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1. Dein Haushalt</legend>
+ 
+    <div class="mb-hilfe mb-hilfe-intro">
+      <p><strong>Was ist ein Mehrbedarf?</strong> Der Regelsatz deckt den normalen Lebensunterhalt.
+      Ein Mehrbedarf ist ein Zuschlag, wenn du wegen deiner Lebenssituation dauerhaft höhere Kosten hast,
+      zum Beispiel als Alleinerziehende, in der Schwangerschaft oder bei einer ärztlich verordneten Spezialernährung.
+      Beantworte einfach die Fragen. Den Rest rechnet der Rechner aus.</p>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_haushalt">
+        Wie lebst du?
+        <select id="mb_haushalt">
+          <option value="single" selected>Alleinstehend</option>
+          <option value="ae">Alleinerziehend (mit Kind oder Kindern)</option>
+          <option value="paar">Als Paar (mit oder ohne Kinder)</option>
+        </select>
+      </label>
+      <div class="mb-hilfe">
+        <p>Als Paar zählen Ehe- und Lebenspartner sowie Partner, die zusammen wirtschaften. Alleinerziehend bist du,
+        wenn du ohne Partner mit mindestens einem minderjährigen Kind im Haushalt lebst.</p>
       </div>
-    </form>
-
-    <section id="mb_ergebnis" aria-live="polite"></section>
+    </div>
+ 
+    <div class="mb-feld">
+      <p class="mb-frage">Wie viele Kinder leben im Haushalt?</p>
+      <div class="mb-grid">
+        <label class="pflegegrad-label" for="mb_k_0_5">0 bis 5 Jahre
+          <input type="number" id="mb_k_0_5" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="mb_k_6_13">6 bis 13 Jahre
+          <input type="number" id="mb_k_6_13" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="mb_k_14_15">14 bis 15 Jahre
+          <input type="number" id="mb_k_14_15" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+        <label class="pflegegrad-label" for="mb_k_16_17">16 bis 17 Jahre
+          <input type="number" id="mb_k_16_17" inputmode="numeric" min="0" max="10" step="1" value="0" />
+        </label>
+      </div>
+      <div class="mb-hilfe">
+        <p>Trage die Kinder nach ihrem Alter ein. Der Regelsatz ist je nach Alter unterschiedlich hoch.
+        Die Aufteilung bei 14 bis 17 Jahren brauchen wir für den Alleinerziehenden-Zuschlag.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld" id="mb_ae_wrap" hidden>
+      <label class="pflegegrad-label" for="mb_ae_u7">
+        Wie viele deiner Kinder sind jünger als 7 Jahre?
+        <input type="number" id="mb_ae_u7" inputmode="numeric" min="0" max="10" step="1" value="0" />
+      </label>
+      <div class="mb-hilfe">
+        <p>Mit einem Kind unter 7 Jahren bekommst du einen höheren Zuschlag. Wir haben den Wert aus den Altersangaben
+        oben übernommen. Ändere ihn, wenn ein Kind bereits 6 Jahre alt ist.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_erw_weitere">
+        Volljährige Kinder (18 bis 24 Jahre) im Haushalt
+        <input type="number" id="mb_erw_weitere" inputmode="numeric" min="0" max="6" step="1" value="0" />
+      </label>
+      <div class="mb-hilfe">
+        <p>Gemeint sind erwachsene Kinder unter 25, die noch bei dir wohnen und Leistungen bekommen.
+        Sie erhalten einen eigenen, etwas niedrigeren Regelsatz.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <!-- 2) Mehrbedarfe -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2. Besondere Lebenssituation</legend>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_schw_flag">
+        Bist du schwanger?
+        <select id="mb_schw_flag">
+          <option value="nein" selected>Nein</option>
+          <option value="ja">Ja, mehr als 12 Wochen</option>
+        </select>
+      </label>
+      <div class="mb-hilfe">
+        <p>Ab der 13. Schwangerschaftswoche gibt es 17&nbsp;% des Regelsatzes zusätzlich, bis zum Ende des
+        Monats der Geburt. Als Nachweis dient der Mutterpass.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_ww_flag">
+        Wird dein Warmwasser mit Strom erwärmt?
+        <select id="mb_ww_flag">
+          <option value="nein" selected>Nein, Warmwasser kommt über die Heizung</option>
+          <option value="ja">Ja, mit Boiler oder Durchlauferhitzer</option>
+        </select>
+      </label>
+      <div class="mb-hilfe">
+        <p>Wenn das Warmwasser über Strom aus der Wohnung erzeugt wird, zahlt das Jobcenter dafür einen kleinen
+        Zuschlag pro Person. Er richtet sich nach dem Alter. Wird das Warmwasser mit der Heizung erwärmt und
+        über die Nebenkosten bezahlt, gibt es ihn nicht.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_beh_flag">
+        Hast du eine Behinderung und bekommst Hilfen für Beruf oder Schule?
+        <select id="mb_beh_flag">
+          <option value="nein" selected>Nein</option>
+          <option value="ja">Ja</option>
+        </select>
+      </label>
+      <div class="mb-hilfe">
+        <p>Wer wegen einer Behinderung Leistungen zur Teilhabe am Arbeitsleben oder zur Schulbildung erhält,
+        kann 35&nbsp;% des Regelsatzes zusätzlich bekommen. Frag im Zweifel bei deinem Jobcenter nach.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_ernaehrung">
+        Kostenaufwändige Ernährung (€ pro Monat), optional
+        <input type="number" id="mb_ernaehrung" inputmode="decimal" min="0" step="5" value="" placeholder="z. B. 40" />
+      </label>
+      <div class="mb-hilfe">
+        <p>Nur bei einer Krankheit, die eine besondere Ernährung nötig macht, zum Beispiel Zöliakie. Dazu brauchst du
+        eine ärztliche Bescheinigung. Das Jobcenter legt die Höhe im Einzelfall fest. Trage hier den Betrag ein,
+        den du erwartest.</p>
+      </div>
+    </div>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_sonstig">
+        Weitere laufende Mehrkosten (€ pro Monat), optional
+        <input type="number" id="mb_sonstig" inputmode="decimal" min="0" step="5" value="" placeholder="z. B. 25" />
+      </label>
+      <div class="mb-hilfe">
+        <p>Für dauerhafte, unabweisbare Kosten, die der Regelsatz nicht abdeckt, zum Beispiel bestimmte
+        Hygieneartikel bei einer Erkrankung. Das Jobcenter prüft jeden Einzelfall.</p>
+      </div>
+    </div>
+  </fieldset>
+ 
+  <!-- 3) Gesamtbedarf -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>3. Miete, optional</legend>
+ 
+    <div class="mb-feld">
+      <label class="pflegegrad-label" for="mb_warmmiete">
+        Warmmiete (€ pro Monat)
+        <input type="number" id="mb_warmmiete" inputmode="decimal" min="0" step="10" value="" placeholder="z. B. 950" />
+      </label>
+      <div class="mb-hilfe">
+        <p>Warmmiete ist die Miete inklusive Nebenkosten und Heizung. Wenn du sie einträgst, zeigen wir dir
+        zusätzlich deinen Gesamtbedarf. Das Jobcenter übernimmt die Miete nur, soweit sie angemessen ist.
+        Das prüft dieser Rechner nicht.</p>
+      </div>
+    </div>
+ 
+    <details class="mb-details">
+      <summary>Regelsätze anpassen (nur nötig, wenn sich die Beträge ändern)</summary>
+      <p class="mb-details-text">Hier stehen die Regelsätze für 2026 in Euro pro Monat. Ändere sie nur, wenn das Jobcenter
+      neue Beträge festlegt.</p>
+      <div class="mb-grid">
+        <label class="pflegegrad-label" for="mb_rs_single">Alleinstehend / Alleinerziehend
+          <input type="number" id="mb_rs_single" min="0" step="1" value="563" />
+        </label>
+        <label class="pflegegrad-label" for="mb_rs_partner">Partner (je Person)
+          <input type="number" id="mb_rs_partner" min="0" step="1" value="506" />
+        </label>
+        <label class="pflegegrad-label" for="mb_rs_erw_weitere">Erwachsene 18 bis 24 im Haushalt
+          <input type="number" id="mb_rs_erw_weitere" min="0" step="1" value="451" />
+        </label>
+        <label class="pflegegrad-label" for="mb_rs_0_5">Kind 0 bis 5
+          <input type="number" id="mb_rs_0_5" min="0" step="1" value="357" />
+        </label>
+        <label class="pflegegrad-label" for="mb_rs_6_13">Kind 6 bis 13
+          <input type="number" id="mb_rs_6_13" min="0" step="1" value="390" />
+        </label>
+        <label class="pflegegrad-label" for="mb_rs_14_17">Jugendlicher 14 bis 17
+          <input type="number" id="mb_rs_14_17" min="0" step="1" value="471" />
+        </label>
+      </div>
+    </details>
+  </fieldset>
+ 
+  <div id="mb_fehler" class="mb-fehler" role="alert" hidden></div>
+ 
+  <div class="button-container">
+    <button type="button" id="mb_berechnen" class="button">Mehrbedarfe berechnen</button>
+    <button type="reset" id="mb_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
+ 
+<section id="mb_ergebnis" aria-live="polite"></section>
 
     
     <section aria-label="Wie wird gerechnet?" style="margin-top:1.25rem">

@@ -25,6 +25,161 @@
   }
 }
 </script>
+<style>
+  /* Hochwertiges, schlichtes Design ohne border-left und ohne Emojis */
+  .pflegegrad-form {
+    max-width: 720px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .pflegegrad-fieldset {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    background-color: #ffffff;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+  }
+
+  .pflegegrad-fieldset legend {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #0f172a;
+    padding: 0 8px;
+    background: #ffffff;
+  }
+
+  .pflegegrad-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    margin-top: 16px;
+    color: #1e293b;
+  }
+
+  .pflegegrad-label input,
+  .pflegegrad-label select {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .pflegegrad-label input:focus,
+  .pflegegrad-label select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  /* Checkbox-Styling für Alleinerziehend */
+  .checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    padding: 12px;
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .checkbox-wrapper input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .checkbox-wrapper span {
+    font-weight: 500;
+    color: #0369a1;
+    font-size: 0.95rem;
+  }
+
+  /* Optisch abgehobene, kleinere Hilfe-Texte */
+  .hinweis {
+    font-size: 0.85rem;
+    color: #475569;
+    background-color: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  
+
+  /* Ergebnis-Ansicht: Schlicht, hochwertig, viel Weißraum, blaue Akzente */
+  .pflegegrad-result-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 32px;
+    margin-top: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  .pflegegrad-result-card h2 {
+    margin-top: 0;
+    color: #0f172a;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+  }
+
+  .pflegegrad-result-card h3 {
+    color: #2563eb;
+    font-size: 1.1rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .pflegegrad-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+  }
+
+  .pflegegrad-tabelle th {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #2563eb;
+    color: #1e293b;
+    font-weight: 600;
+  }
+
+  .pflegegrad-tabelle td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .pflegegrad-tabelle tr:last-child td {
+    border-bottom: none;
+  }
+
+  .pflegegrad-tabelle strong {
+    color: #0f172a;
+  }
+
+  /* Hilfsklasse zum Ausblenden */
+  .visually-hidden {
+    display: none !important;
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -46,7 +201,7 @@
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
+    Keine Werbung
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
@@ -58,7 +213,6 @@
     Zur Übersicht: Familie, Wohnen & Bildung
   </a>
 
-  <p><em>Fachlich geprüft | Stand: 12.08.2026</em></p>
 
   <a href="#eg-form" class="button jump-button" style="margin-bottom: 20px; display: inline-block;">Direkt zum kostenlosen Elterngeld-Rechner springen</a>
 
@@ -96,102 +250,132 @@
   </div>
 
   <div class="highlight-box pruefdatum-box" role="note" aria-label="Redaktionell geprüft" style="margin-top: 15px; margin-bottom: 30px;">
-    <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
+    <p><strong>Redaktionell & fachlich geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
 
     <form id="eg-form" class="pflegegrad-form" aria-describedby="eg_ergebnis" novalidate>
-      <!-- 1. Grundeinstellungen -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Grundeinstellungen</legend>
+  <!-- 1. Grundeinstellungen -->
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1. Grundeinstellungen</legend>
 
-        <label class="pflegegrad-label" for="eg_ersatzrate">
-          Ersatzrate (vereinfacht, Standard 65&nbsp;%)
-          <input type="number" id="eg_ersatzrate" min="50" max="80" step="0.5" value="65" />
-        </label>
-        <p class="hinweis">
-          Gesetzlich gestaffelt (ca. 65–67&nbsp;%) – hier als fixer Satz (50–80&nbsp;% einstellbar).
-        </p>
-      </fieldset>
+    <label class="checkbox-wrapper" for="eg_alleinerziehend">
+      <input type="checkbox" id="eg_alleinerziehend" />
+      <span>Ich bin alleinerziehend</span>
+    </label>
+    <p class="hinweis">
+      Als alleinerziehender Elternteil haben Sie Anspruch auf bis zu 14 Monate Basiselterngeld allein. Der Rechner passt die Berechnung und die Hinweise automatisch für Sie an.
+    </p>
 
-      <!-- 2. Elternteil A -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Elternteil A</legend>
+    <label class="pflegegrad-label" for="eg_ersatzrate">
+      Ersatzrate (Standard: 65 %)
+      <input type="number" id="eg_ersatzrate" min="50" max="80" step="0.5" value="65" />
+    </label>
+    <p class="hinweis">
+      Das Elterngeld ersetzt einen Teil des wegfallenden Einkommens. Gesetzlich sind es meist 65 bis 67 %, bei niedrigerem Einkommen auch mehr. Für diese vereinfachte Rechnung können Sie den Wert anpassen.
+    </p>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="a_variante">
-          Elterngeld-Variante
-          <select id="a_variante">
-            <option value="basis" selected>Basiselterngeld</option>
-            <option value="plus">ElterngeldPlus</option>
-          </select>
-        </label>
+  <!-- 2. Elternteil A (Hauptantragsteller) -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2. Ihr Profil (antragstellender Elternteil)</legend>
 
-        <label class="pflegegrad-label" for="a_netto_vorher">
-          Durchschnittliches Netto <em>vor Geburt</em> (letzte 12 Monate)
-          <input type="number" id="a_netto_vorher" min="0" step="10" placeholder="z. B. 2.200" />
-        </label>
+    <label class="pflegegrad-label" for="a_variante">
+      Gewählte Elterngeld-Variante
+      <select id="a_variante">
+        <option value="basis" selected>Basiselterngeld</option>
+        <option value="plus">ElterngeldPlus</option>
+      </select>
+    </label>
+    <p class="hinweis">
+      Basiselterngeld wird für bis zu 12 Monate gezahlt (alleinerziehend bis zu 14 Monate). ElterngeldPlus ist ideal für Teilzeit: Der monatliche Betrag ist halbiert, aber die Bezugsdauer verdoppelt sich.
+    </p>
 
-        <label class="pflegegrad-label" for="a_netto_waehrend">
-          Geplantes Netto während Bezugsmonaten (Teilzeit) – optional
-          <input type="number" id="a_netto_waehrend" min="0" step="10" placeholder="z. B. 900 (oder leer lassen)" />
-        </label>
+    <label class="pflegegrad-label" for="a_netto_vorher">
+      Durchschnittliches monatliches Nettoeinkommen vor der Geburt
+      <input type="number" id="a_netto_vorher" min="0" step="10" placeholder="z. B. 2200" />
+    </label>
+    <p class="hinweis">
+      Grundlage ist das bereinigte Nettoeinkommen der letzten 12 Monate vor der Geburt des Kindes.
+    </p>
 
-        <label class="pflegegrad-label" for="a_monate">
-          Monate der Inanspruchnahme (0–14 bei Basis, 0–24 bei Plus)
-          <input type="number" id="a_monate" min="0" max="24" step="1" value="12" />
-        </label>
-      </fieldset>
+    <label class="pflegegrad-label" for="a_netto_waehrend">
+      Geplantes monatliches Nettoeinkommen während des Bezugs (Teilzeit)
+      <input type="number" id="a_netto_waehrend" min="0" step="10" placeholder="z. B. 900 (oder leer lassen)" />
+    </label>
+    <p class="hinweis">
+      Tragen Sie hier Ihr voraussichtliches Teilzeit-Netto ein. Lassen Sie das Feld leer oder bei 0, wenn Sie in dieser Zeit nicht arbeiten möchten.
+    </p>
 
-      <!-- 3. Elternteil B -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Elternteil B</legend>
+    <label class="pflegegrad-label" for="a_monate">
+      Geplante Bezugsdauer in Monaten
+      <input type="number" id="a_monate" min="0" max="24" step="1" value="12" />
+    </label>
+    <p class="hinweis" id="hinweis-a-monate">
+      Basiselterngeld: max. 12 Monate (plus 2 Partnermonate). ElterngeldPlus: max. 24 Monate.
+    </p>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="b_variante">
-          Elterngeld-Variante
-          <select id="b_variante">
-            <option value="basis">Basiselterngeld</option>
-            <option value="plus" selected>ElterngeldPlus</option>
-          </select>
-        </label>
+  <!-- 3. Elternteil B (Optional) -->
+  <fieldset class="pflegegrad-fieldset" id="eg-feld-b">
+    <legend>3. Profil des zweiten Elternteils (optional)</legend>
 
-        <label class="pflegegrad-label" for="b_netto_vorher">
-          Durchschnittliches Netto <em>vor Geburt</em> (letzte 12 Monate)
-          <input type="number" id="b_netto_vorher" min="0" step="10" placeholder="z. B. 2.000" />
-        </label>
+    <label class="pflegegrad-label" for="b_variante">
+      Gewählte Elterngeld-Variante
+      <select id="b_variante">
+        <option value="basis">Basiselterngeld</option>
+        <option value="plus" selected>ElterngeldPlus</option>
+      </select>
+    </label>
+    <p class="hinweis">
+      Falls kein zweiter Elternteil Anspruch anmeldet, lassen Sie diesen Abschnitt einfach leer oder ignorieren Sie ihn.
+    </p>
 
-        <label class="pflegegrad-label" for="b_netto_waehrend">
-          Geplantes Netto während Bezugsmonaten (Teilzeit) – optional
-          <input type="number" id="b_netto_waehrend" min="0" step="10" placeholder="z. B. 1.200 (oder leer lassen)" />
-        </label>
+    <label class="pflegegrad-label" for="b_netto_vorher">
+      Durchschnittliches monatliches Nettoeinkommen vor der Geburt
+      <input type="number" id="b_netto_vorher" min="0" step="10" placeholder="z. B. 2000" />
+    </label>
+    <p class="hinweis">
+      Grundlage ist das bereinigte Nettoeinkommen der letzten 12 Monate vor der Geburt des Kindes.
+    </p>
 
-        <label class="pflegegrad-label" for="b_monate">
-          Monate der Inanspruchnahme (0–14 bei Basis, 0–24 bei Plus)
-          <input type="number" id="b_monate" min="0" max="24" step="1" value="12" />
-        </label>
-      </fieldset>
+    <label class="pflegegrad-label" for="b_netto_waehrend">
+      Geplantes monatliches Nettoeinkommen während des Bezugs (Teilzeit)
+      <input type="number" id="b_netto_waehrend" min="0" step="10" placeholder="z. B. 1200 (oder leer lassen)" />
+    </label>
+    <p class="hinweis">
+      Tragen Sie hier das voraussichtliche Teilzeit-Netto ein. Leer oder 0 bedeutet „nicht arbeiten“ in den Bezugsmonaten.
+    </p>
 
-      <!-- 4. Vergleich -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>4. Vergleich „arbeiten vs. Elterngeld“ (optional)</legend>
+    <label class="pflegegrad-label" for="b_monate">
+      Geplante Bezugsdauer in Monaten
+      <input type="number" id="b_monate" min="0" max="24" step="1" value="0" />
+    </label>
+    <p class="hinweis">
+      Basiselterngeld: max. 14 Monate (insgesamt für beide Eltern). ElterngeldPlus: max. 24 Monate.
+    </p>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="eg_netto_heute">
-          Heutiges Netto (gemeinsam), zum Vergleich pro Monat
-          <input type="number" id="eg_netto_heute" min="0" step="50" placeholder="z. B. 3.800" />
-        </label>
+  <!-- 4. Vergleich -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>4. Vergleich: „Aktuelles Einkommen vs. Elterngeld“ (optional)</legend>
 
-        <p class="hinweis">
-          Wir vergleichen die <strong>Gesamtzahlung/Monat</strong> aus Elterngeld (A+B)
-          mit eurem heutigen gemeinsamen <strong>Netto</strong>. Nur als grobe Orientierung.
-        </p>
-      </fieldset>
+    <label class="pflegegrad-label" for="eg_netto_heute">
+      Aktuelles gemeinsames oder einzelnes monatliches Nettoeinkommen (zum Vergleich)
+      <input type="number" id="eg_netto_heute" min="0" step="50" placeholder="z. B. 3800" />
+    </label>
+    <p class="hinweis">
+      Hiermit vergleichen wir die voraussichtliche Elterngeld-Zahlung mit Ihrem heutigen Netto. Dies dient nur als grobe finanzielle Orientierung.
+    </p>
+  </fieldset>
 
-      <div class="button-container">
-        <button type="button" id="eg_berechnen" class="button">Elterngeld berechnen</button>
-        <button type="reset" id="eg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
+  <div class="button-container">
+    <button type="button" id="eg_berechnen" class="button">Elterngeld berechnen</button>
+    <button type="reset" id="eg_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
 
-    <section id="eg_ergebnis" aria-live="polite"></section>
+<section id="eg_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>

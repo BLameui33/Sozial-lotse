@@ -11,6 +11,103 @@
   <link rel="stylesheet" href="/css/style.css">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+  /* --- Grundlegendes Design für das Formular --- */
+  .pflegegrad-form {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #333;
+  }
+
+  .pflegegrad-fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+
+  .pflegegrad-fieldset legend {
+    font-weight: 600;
+    background: #2c3e50;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+  }
+
+  .pflegegrad-label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .pflegegrad-label input, 
+  .pflegegrad-label select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border: 1px solid #ccd1d9;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .pflegegrad-label input:focus, 
+  .pflegegrad-label select:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  /* --- Optisch abgehobene Erklärungen zur Nutzerführung --- */
+  .erklaerung {
+    font-size: 0.85rem;
+    color: #4a5568;
+    background-color: #f8fafc;
+    border-left: 4px solid #3498db;
+    padding: 10px 15px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border-radius: 0 6px 6px 0;
+    line-height: 1.5;
+  }
+
+  /* --- Buttons --- */
+  .button-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .button {
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+  }
+
+  .button:hover {
+    background-color: #2980b9;
+  }
+
+  .button-secondary {
+    background-color: #95a5a6;
+  }
+
+  .button-secondary:hover {
+    background-color: #7f8c8d;
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -32,7 +129,7 @@
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
-    Sofort-PDF
+    Rechner & Ratgeber
   </div>
   <div class="usp-item">
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="#2e7d32"/></svg>
@@ -82,59 +179,76 @@
   </div>
 
     <form id="az-form" class="pflegegrad-form" onsubmit="return false;">
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1) Tägliche Arbeitszeit (ohne Pausen)</legend>
+  
+  <fieldset class="pflegegrad-fieldset">
+    <legend>1) Tägliche Arbeitszeit</legend>
 
-        <label class="pflegegrad-label">
-          Deine tatsächliche tägliche Arbeitszeit (in Stunden)
-          <input type="number" id="az_stunden" min="1" max="14" step="0.5" placeholder="z. B. 9.5" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Gib die reine Arbeitszeit ohne bezahlte/unbezahlte Pausen an.</p>
-        
-        <label class="pflegegrad-label">
-          Ist deine Arbeitszeit auf 6 Monate/24 Wochen ausgeglichen?
-          <select id="az_ausgleich">
-            <option value="ja" selected>Ja (Über 8h wird ausgeglichen)</option>
-            <option value="nein">Nein (Arbeite oft länger als 8h ohne Ausgleich)</option>
-          </select>
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Länger als 10 Stunden täglich ist nie erlaubt.</p>
-      </fieldset>
+    <label class="pflegegrad-label">
+      Deine tatsächliche tägliche Arbeitszeit (in Stunden)
+      <input type="number" id="az_stunden" min="1" max="14" step="0.5" placeholder="z. B. 8.5" />
+    </label>
+    <div class="erklaerung">
+      <strong>Erklärung:</strong> Gib hier die reine Arbeitszeit ein, in der du deinem Arbeitgeber zur Verfügung stehst. 
+      Wichtig: Gesetzliche Pausenzeiten zählen nicht zur Arbeitszeit und müssen hier abgezogen werden.
+    </div>
+    
+    <label class="pflegegrad-label">
+      Wird deine Mehrarbeit rechtzeitig ausgeglichen?
+      <select id="az_ausgleich">
+        <option value="ja" selected>Ja (Über 8h wird innerhalb von 6 Monaten ausgeglichen)</option>
+        <option value="nein">Nein (Ich arbeite oft länger als 8h ohne Freizeitausgleich)</option>
+      </select>
+    </label>
+    <div class="erklaerung">
+      <strong>Hintergrund:</strong> Das Gesetz sieht einen 8-Stunden-Tag vor. Du darfst zwar bis zu 10 Stunden arbeiten, 
+      aber nur, wenn die Stundenanzahl innerhalb von 6 Monaten (oder 24 Wochen) im Durchschnitt wieder bei 8 Stunden täglich liegt.
+    </div>
+  </fieldset>
 
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2) Ruhezeit & Schicht</legend>
-        
-        <label class="pflegegrad-label">
-          Pause innerhalb der Arbeitszeit (Gesamtdauer in Minuten)
-          <input type="number" id="az_pause" min="0" max="180" step="5" value="30" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Gesetzliches Minimum: 30 min bei > 6h Arbeit, 45 min bei > 9h Arbeit.</p>
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2) Pausen, Ruhezeit & Branche</legend>
+    
+    <label class="pflegegrad-label">
+      Wie lange machst du am Tag Pause? (Gesamtdauer in Minuten)
+      <input type="number" id="az_pause" min="0" max="180" step="5" value="30" />
+    </label>
+    <div class="erklaerung">
+      <strong>Hinweis:</strong> Wenn du mehr als 6 Stunden arbeitest, musst du mindestens 30 Minuten Pause machen. 
+      Arbeitest du mehr als 9 Stunden, sind sogar 45 Minuten Pause gesetzlich vorgeschrieben. Du kannst die Pause auch 
+      in 15-Minuten-Blöcke aufteilen.
+    </div>
 
-        <label class="pflegegrad-label">
-          Ruhezeit zwischen Ende & Beginn der nächsten Schicht (in Stunden)
-          <input type="number" id="az_ruhezeit" min="0" max="24" step="0.5" value="11" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Gesetzliches Minimum: 11 Stunden ununterbrochene Ruhezeit.</p>
-        
-        <label class="pflegegrad-label">
-          Arbeitest du in einer der folgenden Branchen (Sonderregelung)?
-          <select id="az_sonder">
-            <option value="nein" selected>Nein (Reguläre Branche)</option>
-            <option value="krankenhaus">Krankenhaus/Pflege (Verkürzung auf 10h möglich)</option>
-            <option value="gastgewerbe">Gastgewerbe (Verkürzung auf 10h möglich)</option>
-            <option value="schicht">Regelmäßige Schicht-/Nachtarbeit</option>
-          </select>
-        </label>
-      </fieldset>
+    <label class="pflegegrad-label">
+      Ruhezeit zwischen deinen Schichten (in Stunden)
+      <input type="number" id="az_ruhezeit" min="0" max="24" step="0.5" value="11" />
+    </label>
+    <div class="erklaerung">
+      <strong>Was ist die Ruhezeit?</strong> Das ist die ununterbrochene Freizeit zwischen dem Ende deines Arbeitstages 
+      und dem Beginn am nächsten Tag. Normalerweise brauchst du zwingend 11 Stunden am Stück, um dich zu erholen.
+    </div>
+    
+    <label class="pflegegrad-label">
+      Arbeitest du in einer Branche mit Sonderregelungen?
+      <select id="az_sonder">
+        <option value="nein" selected>Nein (Reguläre Branche / Büro / Industrie)</option>
+        <option value="krankenhaus">Krankenhaus, Pflege oder Betreuung</option>
+        <option value="gastgewerbe">Gastronomie oder Hotelgewerbe</option>
+        <option value="schicht">Regelmäßige Schicht- oder Nachtarbeit</option>
+      </select>
+    </label>
+    <div class="erklaerung">
+      <strong>Warum ist das wichtig?</strong> In manchen Berufen (z. B. im Krankenhaus oder in der Gastro) darf die 
+      strenge 11-Stunden-Ruhezeit auf 10 Stunden verkürzt werden, wenn dies zeitnah ausgeglichen wird.
+    </div>
+  </fieldset>
 
-      <div class="button-container">
-        <button type="button" id="az_berechnen" class="button">Konformität prüfen</button>
-        <button type="reset" id="az_reset" class="button button-secondary">Zurücksetzen</button>
-      </div>
-    </form>
+  <div class="button-container">
+    <button type="button" id="az_berechnen" class="button">Konformität prüfen</button>
+    <button type="reset" id="az_reset" class="button button-secondary">Zurücksetzen</button>
+  </div>
+</form>
 
-    <section id="az_ergebnis"></section>
+<section id="az_ergebnis" style="max-width: 700px; margin: 0 auto;"></section>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
   <h2 id="promo-headline">Weitere Hilfsangebote</h2>

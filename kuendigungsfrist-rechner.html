@@ -27,6 +27,284 @@
   }
 }
 </script>
+<style>
+  /* Grundlegendes Reset & Typografie für den Rechner */
+  .kf-wrapper {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #334155;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem; /* Verhindert, dass es am Mobilbildschirmrand klebt */
+    line-height: 1.6;
+    box-sizing: border-box;
+  }
+
+  /* Sicherstellen, dass Padding niemals die Breite sprengt */
+  .kf-wrapper *, .kf-wrapper *::before, .kf-wrapper *::after {
+    box-sizing: border-box;
+  }
+
+  /* Formular Layout */
+  .kf-form {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem; /* Etwas kompakter auf Mobilgeräten */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .kf-form {
+      padding: 2rem; /* Mehr Luft auf Desktop/Tablet */
+    }
+  }
+
+  .kf-form legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .kf-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobil: Alles untereinander */
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .kf-grid {
+      grid-template-columns: 1fr 1fr; /* Ab Tablet: Nebeneinander wo sinnvoll */
+    }
+    .kf-full-width {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Formularfelder */
+  .kf-label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 0.25rem;
+  }
+
+  .kf-input, .kf-select {
+    width: 100%; /* Garantiert volle Breite ohne Überstand */
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem; /* 16px verhindert Auto-Zoom auf iOS */
+    color: #1e293b;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+    -webkit-appearance: none; /* Entfernt hässliche Standard-Styles auf iOS */
+  }
+
+  .kf-input:focus, .kf-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  .kf-hint {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  /* Checkbox Styling */
+  .kf-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+
+  .kf-checkbox-wrapper:hover {
+    background-color: #f1f5f9;
+  }
+
+  .kf-checkbox-wrapper input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: #2563eb;
+    cursor: pointer;
+    flex-shrink: 0; /* Verhindert das Zusammendrücken der Checkbox */
+  }
+
+  /* Trennlinie */
+  .kf-divider {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 1.5rem 0;
+  }
+
+  /* Buttons */
+  .kf-button-container {
+    display: flex;
+    flex-direction: column; /* Mobil: Untereinander für bessere Daumen-Bedienung */
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .kf-button-container {
+      flex-direction: row; /* Desktop: Nebeneinander */
+    }
+  }
+
+  .kf-btn {
+    width: 100%; /* Mobil: Volle Breite */
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .kf-btn {
+      width: auto; /* Desktop: Nur so breit wie der Text */
+    }
+  }
+
+  .kf-btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .kf-btn-primary:hover {
+    background-color: #1d4ed8;
+  }
+
+  .kf-btn-secondary {
+    background-color: #ffffff;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+  }
+
+  .kf-btn-secondary:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+  }
+
+  /* Ergebnis Bereich */
+  .kf-result-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem; /* Mobil angepasst */
+    margin-top: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    animation: kfFadeIn 0.4s ease-out;
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .kf-result-card {
+      padding: 2.5rem;
+    }
+  }
+
+  @keyframes kfFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .kf-result-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .kf-result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+
+  .kf-result-table th {
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .kf-result-table td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .kf-result-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .kf-text-blue {
+    color: #1e40af;
+    font-weight: 700;
+  }
+
+  .kf-text-slate {
+    color: #334155;
+    font-weight: 600;
+  }
+
+  /* Info Boxen */
+  .kf-info-box {
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .kf-info-box p {
+    margin: 0;
+    color: #1e3a8a;
+    font-size: 0.95rem;
+  }
+
+  .kf-warning-box {
+    background-color: #fffbeb;
+    border-left: 4px solid #d97706;
+    padding: 1.25rem;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .kf-warning-box p {
+    margin: 0;
+    color: #92400e;
+    font-size: 0.95rem;
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -101,48 +379,61 @@
     <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span></p>
   </div>
 
-    <form id="kf-form" class="pflegegrad-form" onsubmit="return false;">
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>Vertragsdaten</legend>
+    <div class="kf-wrapper">
+  <form id="kf-form" class="kf-form" onsubmit="return false;">
+    <fieldset>
+      <legend>Vertragsdaten</legend>
 
-        <label class="pflegegrad-label">
-          Dauer der Beschäftigung (in Jahren)
-          <input type="number" id="kf_jahre" min="0" max="60" step="0.5" placeholder="z. B. 5.5" />
-        </label>
-        <p class="hinweis" style="margin-top:-10px;">Bitte gib die vollen Jahre an (z.B. 0 für unter 1 Jahr).</p>
-
-        <label class="pflegegrad-label" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
-          <input type="checkbox" id="kf_probezeit" style="width:auto; transform:scale(1.2);">
-          <span>Ich befinde mich noch in der Probezeit (max. 6 Monate)</span>
-        </label>
-
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
-
-        <label class="pflegegrad-label">
-          Steht im Arbeitsvertrag eine <strong>feste</strong> Frist? (Optional)
-          <select id="kf_vertrag">
-            <option value="gesetzlich" selected>Keine Angabe / Es gelten die gesetzlichen Fristen</option>
-            <option value="verweis">Vertrag verweist auf gesetzliche Fristen</option>
-            <option value="custom">Vertrag nennt explizit eine feste Dauer (z.B. "3 Monate")</option>
-          </select>
-        </label>
-
-        <div id="div_custom_input" style="display:none; margin-top:10px;">
-             <label class="pflegegrad-label">
-                Manuelle Eingabe (Text)
-                <input type="text" id="kf_custom_text" placeholder="z. B. 3 Monate zum Quartalsende" />
-             </label>
+      <div class="kf-grid">
+        <!-- Dauer der Beschäftigung -->
+        <div class="kf-full-width">
+          <label class="kf-label" for="kf_jahre">
+            Dauer der Beschäftigung (in Jahren)
+            <input type="number" id="kf_jahre" class="kf-input" min="0" max="60" step="0.5" placeholder="z. B. 5.5" inputmode="decimal" />
+          </label>
+          <p class="kf-hint">Bitte gib die vollen Jahre an (z. B. 0 für unter 1 Jahr).</p>
         </div>
-      </fieldset>
 
-      <div class="button-container">
-        <button type="button" id="kf_berechnen" class="button">Frist berechnen</button>
-        <button type="reset" id="kf_reset" class="button button-secondary">Zurücksetzen</button>
+        <!-- Probezeit Checkbox -->
+        <div class="kf-full-width">
+          <label class="kf-checkbox-wrapper" for="kf_probezeit">
+            <input type="checkbox" id="kf_probezeit">
+            <span>Ich befinde mich noch in der Probezeit (max. 6 Monate)</span>
+          </label>
+        </div>
+
+        <hr class="kf-divider kf-full-width">
+
+        <!-- Vertragsfrist Auswahl -->
+        <div class="kf-full-width">
+          <label class="kf-label" for="kf_vertrag">
+            Steht im Arbeitsvertrag eine feste Frist? (Optional)
+            <select id="kf_vertrag" class="kf-select">
+              <option value="gesetzlich" selected>Keine Angabe / Es gelten die gesetzlichen Fristen</option>
+              <option value="verweis">Vertrag verweist auf gesetzliche Fristen</option>
+              <option value="custom">Vertrag nennt explizit eine feste Dauer (z. B. "3 Monate")</option>
+            </select>
+          </label>
+        </div>
+
+        <!-- Manuelles Textfeld (initial ausgeblendet) -->
+        <div id="div_custom_input" class="kf-full-width" style="display: none;">
+          <label class="kf-label" for="kf_custom_text">
+            Manuelle Eingabe der Frist
+            <input type="text" id="kf_custom_text" class="kf-input" placeholder="z. B. 3 Monate zum Quartalsende" />
+          </label>
+        </div>
       </div>
-    </form>
 
-    <section id="kf_ergebnis"></section>
+      <div class="kf-button-container">
+        <button type="button" id="kf_berechnen" class="kf-btn kf-btn-primary">Frist berechnen</button>
+        <button type="reset" id="kf_reset" class="kf-btn kf-btn-secondary">Zurücksetzen</button>
+      </div>
+    </fieldset>
+  </form>
+
+  <section id="kf_ergebnis"></section>
+</div>
 
     <section class="promo-teaser" aria-labelledby="promo-headline" role="region">
   <h2 id="promo-headline">Weitere Hilfsangebote</h2>

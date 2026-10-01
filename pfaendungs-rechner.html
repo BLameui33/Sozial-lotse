@@ -28,6 +28,310 @@
   }
 }
 </script>
+<style>/* --- Pfändungsrechner: Edles, schlichtes Design mit blauen Akzenten --- */
+
+:root {
+  --pr-primary: #2563eb;
+  --pr-primary-dark: #1e40af;
+  --pr-bg-light: #f8fafc;
+  --pr-card-bg: #ffffff;
+  --pr-border: #e2e8f0;
+  --pr-text-main: #1e293b;
+  --pr-text-muted: #64748b;
+  --pr-radius: 12px;
+
+  --pr-status-notice-bg: #eff6ff;
+  --pr-status-notice-text: #1d4ed8;
+  --pr-status-warn-bg: #fffbeb;
+  --pr-status-warn-text: #b45309;
+  --pr-status-alert-bg: #fef2f2;
+  --pr-status-alert-text: #b91c1c;
+
+  --pr-success-text: #15803d;
+  --pr-danger-text: #b91c1c;
+}
+
+/* Card Container */
+.pr-card {
+  max-width: 680px;
+  margin: 2rem auto 0 auto;
+  background: var(--pr-card-bg);
+  border: 1px solid var(--pr-border);
+  border-radius: var(--pr-radius);
+  padding: 2.25rem;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--pr-text-main);
+  box-sizing: border-box;
+}
+
+.pr-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--pr-text-main);
+  letter-spacing: -0.01em;
+}
+
+.pr-card-intro {
+  font-size: 0.9rem;
+  color: var(--pr-text-muted);
+  margin: 0 0 1.75rem 0;
+  line-height: 1.5;
+}
+
+/* Formularelemente */
+.pr-field-group {
+  margin-bottom: 1.5rem;
+}
+
+.pr-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--pr-text-main);
+}
+
+.pr-input-prefix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pr-input,
+.pr-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--pr-border);
+  border-radius: 8px;
+  background-color: var(--pr-card-bg);
+  color: var(--pr-text-main);
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pr-input-prefix .pr-input {
+  padding-right: 2.25rem;
+}
+
+.pr-unit {
+  position: absolute;
+  right: 1rem;
+  color: var(--pr-text-muted);
+  font-weight: 500;
+}
+
+.pr-input:focus,
+.pr-select:focus {
+  outline: none;
+  border-color: var(--pr-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.pr-hint {
+  font-size: 0.8rem;
+  color: var(--pr-text-muted);
+  margin: 0.4rem 0 0 0;
+  line-height: 1.4;
+}
+
+/* Buttons */
+.pr-button-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.pr-btn {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.pr-btn-primary {
+  background-color: var(--pr-primary);
+  color: #ffffff;
+}
+
+.pr-btn-primary:hover {
+  background-color: var(--pr-primary-dark);
+}
+
+.pr-btn-secondary {
+  background-color: transparent;
+  border-color: var(--pr-border);
+  color: var(--pr-text-muted);
+}
+
+.pr-btn-secondary:hover {
+  background-color: var(--pr-bg-light);
+  color: var(--pr-text-main);
+}
+
+/* Status Banner (Kein border-left) */
+.pr-status-banner {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.pr-status-notice {
+  background-color: var(--pr-status-notice-bg);
+  color: var(--pr-status-notice-text);
+}
+
+.pr-status-warn {
+  background-color: var(--pr-status-warn-bg);
+  color: var(--pr-status-warn-text);
+}
+
+.pr-status-alert {
+  background-color: var(--pr-status-alert-bg);
+  color: var(--pr-status-alert-text);
+}
+
+.pr-status-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem 0;
+}
+
+.pr-status-text {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Grid Ergebnisse */
+.pr-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pr-result-box {
+  background-color: var(--pr-bg-light);
+  border: 1px solid var(--pr-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.pr-box-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--pr-text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.pr-box-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.pr-box-unpfaendbar .pr-box-amount {
+  color: var(--pr-success-text);
+}
+
+.pr-box-pfaendbar .pr-box-amount {
+  color: var(--pr-danger-text);
+}
+
+.pr-box-sub {
+  font-size: 0.775rem;
+  color: var(--pr-text-muted);
+  line-height: 1.3;
+}
+
+/* Details & Rechtliche Hinweise */
+.pr-details-box,
+.pr-legal-notes {
+  background-color: var(--pr-bg-light);
+  border: 1px solid var(--pr-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.pr-details-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--pr-text-main);
+}
+
+.pr-details-text {
+  font-size: 0.875rem;
+  color: var(--pr-text-main);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pr-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--pr-text-main);
+}
+
+.pr-list li {
+  margin-bottom: 0.5rem;
+}
+
+.pr-list li:last-child {
+  margin-bottom: 0;
+}
+
+.pr-text-danger {
+  color: var(--pr-status-alert-text);
+}
+
+/* Disclaimer & Links */
+.pr-disclaimer {
+  font-size: 0.8rem;
+  color: var(--pr-text-muted);
+  margin: 1.75rem 0 0 0;
+  line-height: 1.4;
+  text-align: center;
+  border-top: 1px solid var(--pr-border);
+  padding-top: 1.25rem;
+}
+
+.pr-disclaimer a {
+  color: var(--pr-primary);
+  text-decoration: underline;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+  .pr-card {
+    padding: 1.5rem;
+  }
+
+  .pr-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-button-row {
+    flex-direction: column;
+  }
+
+  .pr-btn {
+    width: 100%;
+  }
+}</style>
 </head>
 <body>
   <header class="site-header">
@@ -101,42 +405,54 @@
     <p><strong>Redaktionell geprüft am:</strong> <span id="pruefdatum">12.08.2026</span> | Basiert auf der aktuellen Pfändungstabelle nach § 850c ZPO.</p>
   </div>
 
-    <form id="pfaendung-form" class="pflegegrad-form" aria-describedby="pfaendung_ergebnis" novalidate>
-      
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>Ihre finanzielle Situation</legend>
+    <form id="pfaendung-form" class="pr-form" aria-describedby="pfaendung_ergebnis" novalidate>
+  <div class="pr-card">
+    <h2 class="pr-card-title">Pfändungsfreibetrag berechnen</h2>
+    <p class="pr-card-intro">
+      Ermitteln Sie den gesetzlich geschützten Freibetrag für Arbeitseinkommen gemäß § 850c ZPO (gültig ab 01. Juli 2026).
+    </p>
 
-        <label class="pflegegrad-label" for="pfaend_netto">
-          1. Ihr monatliches Nettoeinkommen
-          <input type="number" id="pfaend_netto" min="0" step="10" placeholder="z. B. 2100" />
-        </label>
-        <p class="hinweis" style="margin-top:-5px; margin-bottom:15px; font-size:0.85em; color:#666;">
-          Einkommen nach Abzug von Steuern und Sozialabgaben. Unpfändbare Zulagen (wie Erschwerniszulagen oder ein Teil des Weihnachtsgeldes) zählen nicht mit!
-        </p>
-
-        <label class="pflegegrad-label" for="pfaend_personen">
-          2. Unterhaltspflichtige Personen
-          <select id="pfaend_personen">
-            <option value="0" selected>0 Personen (Ich bin alleinstehend / habe keine Kinder)</option>
-            <option value="1">1 Person (z.B. 1 Kind oder unterhaltsberechtigte(r) Ehepartner:in)</option>
-            <option value="2">2 Personen</option>
-            <option value="3">3 Personen</option>
-            <option value="4">4 Personen</option>
-            <option value="5">5 oder mehr Personen</option>
-          </select>
-        </label>
-        <p class="hinweis" style="margin-top:-5px; margin-bottom:15px; font-size:0.85em; color:#666;">
-          Zählen Sie hier Kinder, für die Sie unterhaltspflichtig sind (auch wenn sie nicht bei Ihnen leben), sowie Ehepartner ohne eigenes Einkommen.
-        </p>
-      </fieldset>
-
-      <div class="button-container">
-        <button type="button" id="pfaendung_berechnen" class="button">Freibetrag berechnen</button>
-        <button type="reset" id="pfaendung_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+    <!-- 1. Einkommen -->
+    <div class="pr-field-group">
+      <label class="pr-label" for="pfaend_netto">
+        Monatliches Nettoeinkommen
+      </label>
+      <div class="pr-input-prefix">
+        <input type="number" id="pfaend_netto" class="pr-input" min="0" step="10" placeholder="z. B. 2400" />
+        <span class="pr-unit">€</span>
       </div>
-    </form>
+      <p class="pr-hint">
+        Nettogehalt nach Abzug von Steuern und Sozialabgaben. Unpfändbare Bezüge (z. B. Überstundenzulagen zur Hälfte, Aufwandsentschädigungen) sind zuvor abzuziehen.
+      </p>
+    </div>
 
-    <section id="pfaendung_ergebnis" aria-live="polite"></section>
+    <!-- 2. Unterhaltspflichtige Personen -->
+    <div class="pr-field-group">
+      <label class="pr-label" for="pfaend_personen">
+        Unterhaltsberechtigte Personen
+      </label>
+      <select id="pfaend_personen" class="pr-select">
+        <option value="0" selected>0 Personen (alleinstehend / keine Unterhaltspflichten)</option>
+        <option value="1">1 Person (z. B. 1 Kind oder Ehepartner ohne eigenes Einkommen)</option>
+        <option value="2">2 Personen</option>
+        <option value="3">3 Personen</option>
+        <option value="4">4 Personen</option>
+        <option value="5">5 oder mehr Personen</option>
+      </select>
+      <p class="pr-hint">
+        Berücksichtigt werden Ehepartner sowie leibliche oder adoptierte Kinder, gegenüber denen eine gesetzliche Unterhaltspflicht besteht und an die <strong>tatsächlich Unterhalt geleistet wird</strong>.
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="pr-button-row">
+      <button type="button" id="pfaendung_berechnen" class="pr-btn pr-btn-primary">Freibetrag berechnen</button>
+      <button type="reset" id="pfaendung_reset" class="pr-btn pr-btn-secondary">Zurücksetzen</button>
+    </div>
+  </div>
+</form>
+
+<section id="pfaendung_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
