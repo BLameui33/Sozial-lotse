@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (bezug === "keiner") {
             out.innerHTML = `
                 <div class="warning-box" style="background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; padding:20px; border-radius:8px;">
-                    <h3>❌ Kein Anspruch über BuT</h3>
+                    <h3>Kein Anspruch über BuT</h3>
                     <p>BuT-Leistungen stehen nur Familien zu, die Sozialleistungen (KiZ, Wohngeld, Grundsicherungsgeld etc.) beziehen. Dein Einkommen scheint dafür aktuell zu hoch zu sein.</p>
                 </div>`;
             return;
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isLikely = (bezug !== "keiner");
             tripHtml = `
                 <div class="highlight-box" style="border-left: 4px solid #e67e22; margin-top:20px;">
-                    <h3>🚌 Klassenfahrt-Check</h3>
+                    <h3>Klassenfahrt-Check</h3>
                     <p>Kosten: <strong>${tripCosts > 0 ? tripCosts.toFixed(2) + " €" : "Nicht angegeben"}</strong></p>
                     <p><strong>Ergebnis:</strong> ${isLikely ? "Übernahme wahrscheinlich <strong>VOLLSTÄNDIG</strong>" : "Keine Übernahme"}</p>
                     <p style="font-size:0.9em; color:#555;">Handlungsschritte: 1. Bestätigung der Schule holen. 2. Antrag beim zuständigen Amt (Jobcenter oder Wohngeldstelle) stellen. 3. Abtretungserklärung an Schule möglich.</p>
@@ -81,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const possible = (hasProblems && (institution === "schule" || institution === "ausbildung"));
             tutoringHtml = `
                 <div class="highlight-box" style="border-left: 4px solid #9b59b6; margin-top:20px;">
-                    <h3>📚 Lernförderung-Vorcheck</h3>
-                    <p>Status: ${possible ? "✅ <strong>Möglich</strong>" : "❌ <strong>Schwierig</strong>"}</p>
+                    <h3>Lernförderung-Vorcheck</h3>
+                    <p>Status: ${possible ? "<strong>Möglich</strong>" : "<strong>Schwierig</strong>"}</p>
                     <p>${possible ? "Da Schulprobleme vorliegen, kann Nachhilfe bezahlt werden." : "Nachhilfe über BuT wird meist nur bei Versetzungsgefahr genehmigt, nicht zur reinen Notenverbesserung."}</p>
                     <p style="font-size:0.9em; color:#555;">Nächster Schritt: Der Fachlehrer muss schriftlich bestätigen, dass die Lernförderung notwendig ist, um das Lernziel zu erreichen.</p>
                 </div>
