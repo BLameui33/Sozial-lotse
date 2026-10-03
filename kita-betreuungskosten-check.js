@@ -129,7 +129,7 @@ function anwendeGeschwisterrabatt(monatsBetraege, rabatt2, rabatt3plus) {
   return { netto, rabattSum };
 }
 
-// --- Ergebnisausgabe (verständlich für Laien) ---
+// --- Ergebnisausgabe ---
 function baueErgebnis(region, einkommen, kinder, params, result) {
   function alterLabel(code) {
     if (code === "u3") return "Krippe (0–3 J.)";
@@ -182,21 +182,12 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
   else if (params.free.u3) befreiungText = "Krippe beitragsfrei";
   else if (params.free.ue3) befreiungText = "Kindergarten beitragsfrei";
 
-  // Info-Box nur anzeigen, wenn mindestens 2 Kinder vorhanden sind
+  // Kurzer Geschwister-Rabatt Hinweis
   let rabattInfoBox = '';
   if (kinder.length > 1) {
     rabattInfoBox = `
-      <div class="info-box" style="background:#e3f2fd; border-left:4px solid #2196f3; margin-top:12px; padding:12px;">
-        <strong>Wie funktioniert der Geschwister-Rabatt?</strong><br>
-        <span class="hinweis">
-          In den meisten Kommunen wird das <strong>teuerste Kind voll bezahlt</strong>. 
-          Geschwister-Rabatte werden nur auf die günstigeren Kinder angewendet. 
-          Der Rabatt greift also erst beim zweiten und dritten Kind – nicht beim teuersten.
-          <br><br>
-          <strong>Hinweis:</strong> Manche Kommunen sortieren die Kinder stattdessen nach Alter 
-          (ältestes Kind = voll, jüngste Kinder = Rabatt). Das ist regional unterschiedlich – 
-          prüfen Sie hierzu Ihre lokale Satzung.
-        </span>
+      <div class="info-box" style="background:#e3f2fd; border-left:4px solid #2196f3; margin-top:15px; padding:10px 12px;">
+        <strong>Geschwister-Rabatt:</strong> In den meisten Kommunen zahlt das teuerste Kind voll; der Rabatt greift erst ab dem zweiten Kind. Je nach regionaler Satzung kann die Sortierung stattdessen nach Alter erfolgen.
       </div>
     `;
   }
@@ -232,13 +223,6 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
       </table>
       </div>
 
-      ${rabattInfoBox}
-
-      <p class="hinweis" style="font-size:0.85em; margin-top:10px;">
-        <em>„Auf 12 Monate umgelegt" bedeutet: Wenn Ihr Kind z. B. nur 10 Monate im Jahr Betreuung bekommt 
-        (z. B. wegen Schließzeiten), dann rechnen wir die Kosten aufs ganze Jahr um – das ist realistischer für Ihr Haushaltsbudget.</em>
-      </p>
-
       <h3>Zusammenfassung</h3>
       <table class="pflegegrad-tabelle">
         <thead>
@@ -254,41 +238,24 @@ function baueErgebnis(region, einkommen, kinder, params, result) {
         </tbody>
       </table>
 
-      <div class="info-box" style="background:#f5f5f5; margin-top:15px;">
-        <h3 style="margin-top:0;">Verwendete Berechnungsgrundlagen</h3>
-        <p class="hinweis" style="margin-bottom:5px;">
-          <strong>Stundensätze:</strong> Krippe ${euro(params.rates.u3)}, 
-          Kindergarten ${euro(params.rates.ue3)}, 
-          Hort ${euro(params.rates.hort)}
-        </p>
-        <p class="hinweis" style="margin-bottom:5px;">
-          <strong>Geschwister-Rabatte:</strong> 
-          2. Kind ${params.rabatt2}% günstiger, 
-          ab dem 3. Kind ${params.rabatt3}% günstiger
-          ${params.rabatt3 === 100 ? " (= beitragsfrei)" : ""}
-        </p>
-        <p class="hinweis" style="margin-bottom:5px;">
-          <strong>Beitragsfreiheit:</strong> ${befreiungText}
-        </p>
-        <p class="hinweis" style="margin-bottom:0;">
-          <strong>Höchstgrenze pro Kind:</strong> ${params.capPerKind > 0 ? euro(params.capPerKind) + " pro Monat" : "keine Begrenzung"}
-        </p>
+      ${rabattInfoBox}
+
+      <p class="hinweis" style="font-size:0.85em; margin-top:10px;">
+        <em>* „Auf 12 Monate umgelegt“ verteilt betreuungskoordinierte Schließ- oder Fehlzeiten gleichmäßig auf das Gesamtjahr für Ihre Budgetplanung.</em>
+      </p>
+
+      <div class="info-box" style="background:#f5f5f5; margin-top:15px; padding:10px 12px;">
+        <h3 style="margin-top:0; margin-bottom:6px;">Berechnungsgrundlagen</h3>
+        <p class="hinweis" style="margin:2px 0;"><strong>Stundensätze:</strong> Krippe ${euro(params.rates.u3)}, Kindergarten ${euro(params.rates.ue3)}, Hort ${euro(params.rates.hort)}</p>
+        <p class="hinweis" style="margin:2px 0;"><strong>Geschwister-Rabatte:</strong> 2. Kind: −${params.rabatt2}%, ab 3. Kind: −${params.rabatt3}%${params.rabatt3 === 100 ? " (beitragsfrei)" : ""}</p>
+        <p class="hinweis" style="margin:2px 0;"><strong>Beitragsfreiheit:</strong> ${befreiungText}</p>
+        <p class="hinweis" style="margin:2px 0;"><strong>Höchstgrenze pro Kind:</strong> ${params.capPerKind > 0 ? euro(params.capPerKind) + " / Monat" : "keine"}</p>
       </div>
 
-      <div class="info-box warning" style="border-left: 4px solid #ff9800; margin-top:15px;">
-        <h3 style="margin-top:0;">Wichtig: Dies ist nur eine Schätzung</h3>
-        <p class="hinweis">
-          Jede Kommune und jeder Kita-Träger hat eigene Regeln. Zum Beispiel:
-        </p>
-        <ul class="hinweis" style="padding-left:20px; margin-top:5px;">
-          <li>Feste Betreuungszeit-Pakete (z. B. nur 25 / 35 / 45 Stunden zur Auswahl)</li>
-          <li>Beitragsfreiheit ab einem bestimmten Alter (z. B. 3 Jahre in vielen Bundesländern)</li>
-          <li>Ferien- oder Schließzeiten, die den Beitrag nicht mindern</li>
-          <li>Geschwister-Regelungen, die anders sortiert sind (z. B. nach Alter statt nach Kosten)</li>
-        </ul>
-        <p class="hinweis" style="margin-top:8px; margin-bottom:0;">
-          <strong>Verbindlich ist ausschließlich der schriftliche Gebührenbescheid Ihrer Kommune oder Ihres Trägers.</strong> 
-          Diese Berechnung dient nur Ihrer persönlichen Budgetplanung.
+      <div class="info-box warning" style="border-left: 4px solid #ff9800; margin-top:15px; padding:10px 12px;">
+        <h3 style="margin-top:0; margin-bottom:6px;">Hinweis zur Genauigkeit</h3>
+        <p class="hinweis" style="margin:0;">
+          Dies ist eine unverbindliche Berechnung zur Orientierung. Maßgeblich ist ausschließlich der finale Gebührenbescheid Ihrer Kommune oder Ihres Trägers.
         </p>
       </div>
     </div>
