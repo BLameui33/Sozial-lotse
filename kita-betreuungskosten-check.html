@@ -25,6 +25,22 @@
   }
 }
 </script>
+<style>
+    /* Styling für die Hilfetexte zur besseren Abgrenzung und kleineren Darstellung */
+    .pflegegrad-form .hinweis {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: #4a5568;
+      background-color: #f4f6f8;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 8px 0 14px 0;
+    }
+    .pflegegrad-form ul.hinweis {
+      padding-left: 28px;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -102,130 +118,132 @@
   </div>
 
     <form id="kita-form" class="pflegegrad-form" aria-describedby="kt_ergebnis" novalidate>
-      <!-- 1) Haushalt & Region -->
-      <fieldset class="pflegegrad-fieldset active-step">
-        <legend>1. Haushalt &amp; Region</legend>
+  
 
-        <label class="pflegegrad-label" for="kt_region">
-          Wohnort / Kommune
-          <input type="text" id="kt_region" placeholder="z. B. Berlin, München, Musterstadt" />
-        </label>
+  <!-- 1) Haushalt & Region -->
+  <fieldset class="pflegegrad-fieldset active-step">
+    <legend>1. Haushalt &amp; Region</legend>
 
-        <label class="pflegegrad-label" for="kt_netto">
-          Haushalts-Nettoeinkommen pro Monat (in Euro)
-          <input type="number" id="kt_netto" min="0" step="50" placeholder="z. B. 3.200" />
-        </label>
+    <label class="pflegegrad-label" for="kt_region">
+      Wohnort / Kommune
+      <input type="text" id="kt_region" placeholder="z. B. Berlin, München, Musterstadt" />
+    </label>
 
-        <p class="hinweis">
-          <strong>Tipp:</strong> Geben Sie hier das <strong>gemeinsame Nettoeinkommen</strong> aller im Haushalt lebenden Personen ein (Haupt- und Nebeneinkünfte nach Steuern). Viele Kommunen richten ihre Kita-Gebühren nach diesem Wert. Falls Sie Wohngeld oder Kinderzuschlag beziehen, ist die Betreuung in der Regel komplett beitragsfrei – siehe Hinweis oben.
-        </p>
-      </fieldset>
+    <label class="pflegegrad-label" for="kt_netto">
+      Haushalts-Nettoeinkommen pro Monat (in Euro)
+      <input type="number" id="kt_netto" min="0" step="50" placeholder="z. B. 3.200" />
+    </label>
 
-      <!-- 2) Kinder & Betreuungsumfang -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>2. Ihre Kinder &amp; Betreuungsumfang</legend>
+    <p class="hinweis">
+      <strong>Tipp:</strong> Tragen Sie hier das <strong>gemeinsame Nettoeinkommen</strong> aller Personen in Ihrem Haushalt ein. Dazu zählen alle Einkünfte nach Abzug von Steuern (auch Nebeneinkünfte). Die meisten Städte und Gemeinden nutzen diese Summe als Grundlage für die Kita-Gebühren. Wenn Sie Wohngeld oder den Kinderzuschlag bekommen, ist die Kinderbetreuung für Sie meistens vollständig kostenfrei.
+    </p>
+  </fieldset>
 
-        <label class="pflegegrad-label" for="kt_kinder_anz">
-          Anzahl der Kinder in Kita, Krippe oder Hort
-          <input type="number" id="kt_kinder_anz" min="0" max="8" step="1" value="2" />
-        </label>
+  <!-- 2) Kinder & Betreuungsumfang -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>2. Ihre Kinder &amp; Betreuungsumfang</legend>
 
-        <div id="kt_kinder_liste" class="hinweis" style="margin-top:.6rem;"></div>
+    <label class="pflegegrad-label" for="kt_kinder_anz">
+      Anzahl der Kinder in Kita, Krippe oder Hort
+      <input type="number" id="kt_kinder_anz" min="0" max="8" step="1" value="2" />
+    </label>
 
-        <p class="hinweis">
-          <strong>So funktioniert es:</strong> Für jedes Kind geben Sie gleich das Alter und die Betreuungsstunden pro Woche ein. Der Rechner erkennt automatisch, ob es sich um eine Krippe (unter 3 Jahre), einen Kindergarten (3–6 Jahre) oder einen Hort (Schulkind) handelt.
-        </p>
-        <p class="hinweis">
-          <strong>Zu den Betreuungsstunden:</strong> Typische Werte sind <strong>25 Stunden</strong> (Halbtag), <strong>35 Stunden</strong> (3/4-Tag) oder <strong>45 Stunden</strong> (Ganztag). Der Rechner rechnet die Wochenstunden automatisch in Monatsstunden um.
-        </p>
-      </fieldset>
+    <div id="kt_kinder_liste" class="hinweis" style="margin-top:.6rem;"></div>
 
-      <!-- 3) Parameter / Satzungselemente -->
-      <fieldset class="pflegegrad-fieldset">
-        <legend>3. Gebühren-Sätze &amp; Rabatte Ihrer Kommune</legend>
+    <p class="hinweis">
+      <strong>So funktioniert es:</strong> Tragen Sie gleich für jedes Kind einfach das Alter und die wöchentlichen Betreuungsstunden ein. Unser Rechner ordnet Ihr Kind dann ganz automatisch der passenden Kategorie zu: Krippe (unter 3 Jahre), Kindergarten (3 bis 6 Jahre) oder Hort (Schulkind).
+    </p>
+    <p class="hinweis">
+      <strong>Zu den Betreuungsstunden:</strong> Gebräuchliche Zeiten sind zum Beispiel <strong>25 Stunden</strong> (halbtags), <strong>35 Stunden</strong> (dreivierteltags) oder <strong>45 Stunden</strong> (ganztags). Sie tragen einfach die Stunden pro Woche ein, der Rechner rechnet diese von alleine in Monatsstunden um.
+    </p>
+  </fieldset>
 
-        <p class="hinweis">
-          <strong>Wie komme ich an diese Werte?</strong> Die folgenden Felder sind mit typischen Durchschnittswerten deutscher Kommunen vorbelegt. Sie finden die exakten Werte in der <strong>Kita-Gebührensatzung</strong> Ihrer Stadt oder auf der Website Ihres Jugendamtes. Wenn Sie die Werte nicht kennen, lassen Sie einfach die Voreinstellungen stehen – das Ergebnis ist dann eine gute grobe Schätzung.
-        </p>
+  <!-- 3) Parameter / Satzungselemente -->
+  <fieldset class="pflegegrad-fieldset">
+    <legend>3. Gebühren-Sätze &amp; Rabatte Ihrer Kommune</legend>
 
-        <h3>Was kostet eine Betreuungsstunde in Ihrer Kita?</h3>
-        <p class="hinweis">
-          <strong>Hinweis:</strong> Krippenplätze (U3) sind meist teurer als Kindergartenplätze (Ü3), da der Betreuungsschlüssel höher ist. Hortplätze sind in der Regel am günstigsten.
-        </p>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label" for="kt_rate_u3">Krippe (U3) – Euro pro Stunde
-            <input type="number" id="kt_rate_u3" min="0" step="0.05" value="2.50" />
-          </label>
-          <label class="pflegegrad-label" for="kt_rate_ue3">Kindergarten (Ü3) – Euro pro Stunde
-            <input type="number" id="kt_rate_ue3" min="0" step="0.05" value="1.80" />
-          </label>
-          <label class="pflegegrad-label" for="kt_rate_hort">Hort (Schulkind) – Euro pro Stunde
-            <input type="number" id="kt_rate_hort" min="0" step="0.05" value="1.20" />
-          </label>
-        </div>
+    <p class="hinweis">
+      <strong>Wie komme ich an diese Werte?</strong> Wir haben die nachfolgenden Felder bereits mit üblichen Durchschnittswerten aus Deutschland ausgefüllt. Die genauen Zahlen für Ihren Wohnort finden Sie in der <strong>Kita-Gebührensatzung</strong> Ihrer Gemeinde oder auf der Internetseite Ihres Jugendamtes. Falls Sie die genauen Angaben nicht zur Hand haben, belassen Sie die Werte einfach so – Sie erhalten trotzdem eine verlässliche Orientierung.
+    </p>
 
-        <h3>Ihre Einkommensgruppe (Beitragsstaffel)</h3>
-        <p class="hinweis">
-          <strong>Was ist das?</strong> Kommunen staffeln ihre Kita-Beiträge nach Einkommen. Je höher das Einkommen, desto höher der Beitrag. Mit diesem Wert können Sie Ihren Beitragssatz anpassen:
-        </p>
-        <ul class="hinweis" style="padding-left: 20px; margin: 5px 0 15px 0;">
-          <li><strong>0,70</strong> = Sie zahlen weniger als der Durchschnitt (niedrige Einkommensgruppe)</li>
-          <li><strong>1,00</strong> = Sie zahlen den durchschnittlichen Beitrag (mittlere Einkommensgruppe)</li>
-          <li><strong>1,30</strong> = Sie zahlen mehr als der Durchschnitt (hohe Einkommensgruppe)</li>
-        </ul>
-        <div class="pflegegrad-label">
-          <label for="kt_income_mult">Ihr Beitragssatz im Vergleich zum Durchschnitt</label>
-          <input type="number" id="kt_income_mult" min="0.3" max="2" step="0.05" value="1.00" />
-        </div>
+    <h3>Was kostet eine Betreuungsstunde in Ihrer Kita?</h3>
+    <p class="hinweis">
+      <strong>Hinweis:</strong> Betreuungsplätze für Kleinkinder unter 3 Jahren (Krippe) kosten meist etwas mehr als Kindergartenplätze für ältere Kinder, weil dort mehr Erzieherinnen und Erzieher pro Kind benötigt werden. Hortplätze für Schulkinder sind meistens am günstigsten.
+    </p>
+    <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+      <label class="pflegegrad-label" for="kt_rate_u3">Krippe (U3) – Euro pro Stunde
+        <input type="number" id="kt_rate_u3" min="0" step="0.05" value="2.50" />
+      </label>
+      <label class="pflegegrad-label" for="kt_rate_ue3">Kindergarten (Ü3) – Euro pro Stunde
+        <input type="number" id="kt_rate_ue3" min="0" step="0.05" value="1.80" />
+      </label>
+      <label class="pflegegrad-label" for="kt_rate_hort">Hort (Schulkind) – Euro pro Stunde
+        <input type="number" id="kt_rate_hort" min="0" step="0.05" value="1.20" />
+      </label>
+    </div>
 
-        <h3>Geschwister-Ermäßigung</h3>
-        <p class="hinweis">
-          <strong>Wie funktioniert das?</strong> In den meisten Kommunen zahlen Sie für das zweite Kind weniger als für das erste. Ab dem dritten Kind ist die Betreuung oft sogar komplett kostenlos. Die Rabatte gelten für die <strong>Betreuungskosten</strong> (nicht für das Essensgeld).
-        </p>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label" for="kt_rabatt2">Ermäßigung für das 2. Kind (in Prozent)
-            <input type="number" id="kt_rabatt2" min="0" max="100" step="1" value="30" />
-          </label>
-          <label class="pflegegrad-label" for="kt_rabatt3">Ermäßigung ab dem 3. Kind (in Prozent)
-            <input type="number" id="kt_rabatt3" min="0" max="100" step="1" value="100" />
-          </label>
-        </div>
-        <p class="hinweis">
-          <strong>Beispiel:</strong> Bei „30 %" zahlt das zweite Kind nur 70 % des normalen Beitrags. Bei „100 %" ist das Kind komplett beitragsfrei. Das teuerste Kind wird immer voll berechnet, die Rabatte gelten für die günstigeren Kinder.
-        </p>
+    <h3>Ihre Einkommensgruppe (Beitragsstaffel)</h3>
+    <p class="hinweis">
+      <strong>Was ist das?</strong> Viele Städte teilen die Beiträge nach dem Einkommen ein: Wer mehr verdient, zahlt in der Regel einen höheren Satz. Mit diesem Faktor passen Sie die Berechnung an Ihre persönliche Einkommensstufe an:
+    </p>
+    <ul class="hinweis">
+      <li><strong>0,70</strong> = Sie liegen in einer niedrigeren Einkommensgruppe (weniger als der Durchschnitt)</li>
+      <li><strong>1,00</strong> = Sie liegen im gewöhnlichen Durchschnitt (mittlere Einkommensgruppe)</li>
+      <li><strong>1,30</strong> = Sie liegen in einer höheren Einkommensgruppe (mehr als der Durchschnitt)</li>
+    </ul>
+    <div class="pflegegrad-label">
+      <label for="kt_income_mult">Ihr Beitragssatz im Vergleich zum Durchschnitt</label>
+      <input type="number" id="kt_income_mult" min="0.3" max="2" step="0.05" value="1.00" />
+    </div>
 
-        <h3>Beitragsfreie Altersgruppen</h3>
-        <p class="hinweis">
-          <strong>Hinweis:</strong> In vielen Bundesländern (z. B. Berlin, Hamburg, Niedersachsen, Hessen) sind bestimmte Altersgruppen komplett von Kita-Gebühren befreit. Setzen Sie das Häkchen, falls das auf Ihr Bundesland zutrifft.
-        </p>
-        <div class="pflegegrad-label">
-          <label><input type="checkbox" id="kt_befrei_ue3" /> Kindergarten-Kinder (Ü3) sind in meiner Kommune beitragsfrei</label>
-        </div>
-        <div class="pflegegrad-label">
-          <label><input type="checkbox" id="kt_befrei_u3" /> Krippen-Kinder (U3) sind in meiner Kommune beitragsfrei</label>
-        </div>
+    <h3>Geschwister-Ermäßigung</h3>
+    <p class="hinweis">
+      <strong>Wie funktioniert das?</strong> Bei mehreren Kindern gewähren fast alle Gemeinden Rabatte: Für das zweite Kind zahlen Sie gewöhnlich deutlich weniger als für das erste. Ab dem dritten Kind entfallen die Gebühren sehr häufig ganz. Bitte beachten Sie: Diese Ermäßigung gilt nur für die reinen <strong>Betreuungskosten</strong>, nicht für das Verpflegungsgeld.
+    </p>
+    <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+      <label class="pflegegrad-label" for="kt_rabatt2">Ermäßigung für das 2. Kind (in Prozent)
+        <input type="number" id="kt_rabatt2" min="0" max="100" step="1" value="30" />
+      </label>
+      <label class="pflegegrad-label" for="kt_rabatt3">Ermäßigung ab dem 3. Kind (in Prozent)
+        <input type="number" id="kt_rabatt3" min="0" max="100" step="1" value="100" />
+      </label>
+    </div>
+    <p class="hinweis">
+      <strong>Beispiel:</strong> Ein Wert von „30 %" bedeutet, dass Sie für das zweite Kind nur 70 % der regulären Gebühr zahlen. Bei „100 %" ist die Betreuung völlig beitragsfrei. Der volle Betrag wird stets für das Kind mit den höchsten Betreuungskosten berechnet; die Vergünstigungen greifen dann bei den weiteren Kindern.
+    </p>
 
-        <h3>Höchstgrenze &amp; Essensgeld</h3>
-        <p class="hinweis">
-          <strong>Zum Essensgeld:</strong> Die Kosten für das Mittagessen werden fast immer zusätzlich zum Betreuungsbeitrag erhoben. Der Rechner addiert diesen Betrag am Ende zur Gesamtsumme hinzu.
-        </p>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
-          <label class="pflegegrad-label" for="kt_cap_kind">Höchstbeitrag pro Kind im Monat (0 = keine Begrenzung)
-            <input type="number" id="kt_cap_kind" min="0" step="5" value="0" />
-          </label>
-          <label class="pflegegrad-label" for="kt_essen">Essensgeld pro Kind im Monat
-            <input type="number" id="kt_essen" min="0" step="1" value="80" />
-          </label>
-        </div>
-      </fieldset>
+    <h3>Beitragsfreie Altersgruppen</h3>
+    <p class="hinweis">
+      <strong>Hinweis:</strong> In etlichen Bundesländern (wie Berlin, Hamburg, Niedersachsen oder Hessen) gibt es gesetzliche Beitragsbefreiungen für bestimmte Altersstufen. Wählen Sie diese Option aus, wenn Ihr Wohnort solche gebührenfreien Jahre anbietet.
+    </p>
+    <div class="pflegegrad-label">
+      <label><input type="checkbox" id="kt_befrei_ue3" /> Kindergarten-Kinder (Ü3) sind in meiner Kommune beitragsfrei</label>
+    </div>
+    <div class="pflegegrad-label">
+      <label><input type="checkbox" id="kt_befrei_u3" /> Krippen-Kinder (U3) sind in meiner Kommune beitragsfrei</label>
+    </div>
 
-      <div class="button-container">
-        <button type="button" id="kt_berechnen" class="button">Betreuungskosten berechnen</button>
-        <button type="reset" id="kt_reset" class="button button-secondary">Eingaben zurücksetzen</button>
-      </div>
-    </form>
+    <h3>Höchstgrenze &amp; Essensgeld</h3>
+    <p class="hinweis">
+      <strong>Zum Essensgeld:</strong> Die Verpflegungskosten für das Mittagessen fallen in der Regel unabhängig von der Betreuungsgebühr an. Unser Rechner rechnet diese Verpflegungspauschale am Ende automatisch zu den Gesamtkosten dazu.
+    </p>
+    <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+      <label class="pflegegrad-label" for="kt_cap_kind">Höchstbeitrag pro Kind im Monat (0 = keine Begrenzung)
+        <input type="number" id="kt_cap_kind" min="0" step="5" value="0" />
+      </label>
+      <label class="pflegegrad-label" for="kt_essen">Essensgeld pro Kind im Monat
+        <input type="number" id="kt_essen" min="0" step="1" value="80" />
+      </label>
+    </div>
+  </fieldset>
 
-    <section id="kt_ergebnis" aria-live="polite"></section>
+  <div class="button-container">
+    <button type="button" id="kt_berechnen" class="button">Betreuungskosten berechnen</button>
+    <button type="reset" id="kt_reset" class="button button-secondary">Eingaben zurücksetzen</button>
+  </div>
+</form>
+
+<section id="kt_ergebnis" aria-live="polite"></section>
 
     <div class="warning-box">
       <p>
