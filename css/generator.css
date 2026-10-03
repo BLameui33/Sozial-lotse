@@ -859,3 +859,477 @@ html, body {
   }
 }
 
+
+/* =========================================
+   Generatoren – Angleichung an das neue Design
+   Neu 03.10.2026
+   ========================================= */
+
+:root {
+  --hairline: #e2e7ee;
+  --hairline-blue: #d8e3f0;
+  --hairline-neutral: #dfe3e8;
+  --soft-shadow: 0 1px 2px rgba(16, 24, 40, 0.03),
+                 0 8px 24px rgba(16, 24, 40, 0.05);
+}
+
+::selection {
+  background: rgba(0, 112, 243, 0.14) !important;
+  color: #10243e !important;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0, 112, 243, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* --- Header: weiß, Hairline, keine Glanzlinie --- */
+
+.site-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #edf1f6 !important;
+  box-shadow: none !important;
+}
+
+.site-header::before { display: none !important; }
+
+.site-logo {
+  background-image: linear-gradient(90deg, #004e92, #0070f3) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  font-weight: 700 !important;
+}
+
+.site-logo,
+.site-logo:hover { transform: none !important; text-shadow: none !important; }
+
+.site-logo::before,
+.site-logo::after { display: none !important; }
+
+/* --- Container: weiße Karte, ruhiger Schatten --- */
+
+.page-container {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px rgba(23, 37, 60, 0.05),
+              var(--soft-shadow) !important;
+  border-radius: 12px !important;
+}
+
+.page-container:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px rgba(23, 37, 60, 0.06),
+              var(--soft-shadow) !important;
+}
+
+/* --- Überschriften: Linien-System wie auf den Info-Seiten --- */
+
+h1 {
+  animation: none !important;
+  background-image: linear-gradient(90deg, #004e92, #0070f3) !important;
+  background-size: auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-wrap: balance !important;
+}
+
+/* Signatur-Linie UNTER der H1 */
+h1::after {
+  content: "" !important;
+  display: block !important;
+  width: 120px !important;
+  height: 2px !important;
+  margin: 1.15rem auto 0 auto !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 112, 243, 0),
+    rgba(0, 112, 243, 0.9) 50%,
+    rgba(0, 112, 243, 0)
+  ) !important;
+}
+
+h2 {
+  padding-left: 0 !important;
+  color: #163b64 !important;
+}
+
+h2::after {
+  content: "" !important;
+  display: block !important;
+  width: 72px !important;
+  height: 2px !important;
+  margin-top: 0.55rem !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0)) !important;
+  opacity: 0.75 !important;
+}
+
+/* Im Popup keine Linie unter der Überschrift */
+.popup-content h2::after { display: none !important; }
+
+/* --- Fieldsets: weiße Karten, Legend als Micro-Label --- */
+
+fieldset {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 10px !important;
+}
+
+fieldset:hover {
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+}
+
+legend {
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #5a7186 !important;
+  font-weight: 600 !important;
+  padding: 0 0.45rem !important;
+}
+
+/* --- Formularfelder: präzise & wertig --- */
+
+label { color: #3d4753 !important; }
+label small { color: #6b7683 !important; }
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  background: #fcfdfe !important;
+  border: 1px solid #d7dfe9 !important;
+  border-radius: 8px !important;
+  padding: 0.6rem 0.7rem !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: #0070f3 !important;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.12) !important;
+}
+
+.checkbox-group label { border-radius: 8px !important; }
+.checkbox-group label:hover { background: #f7fafc !important; }
+.checkbox-group input[type="checkbox"] {
+  accent-color: #0070f3 !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Ausklappbare Unterfelder: eigene kleine Karte */
+.sub-details {
+  background: #fbfcfd !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 8px !important;
+  padding: 1rem 1.2rem !important;
+}
+
+/* --- Hinweisboxen: weiß + Hairline, klarer Text --- */
+
+.info-box,
+.highlight-box,
+.kl-sources-box {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+  border-radius: 8px !important;
+  color: #2f2f2f !important;
+}
+
+.warning-box,
+.info-box.warning {
+  background: #fcfcfd !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-neutral) !important;
+  color: #2f2f2f !important;
+}
+
+.info-box > :first-child,
+.highlight-box > :first-child,
+.warning-box > :first-child,
+.kl-sources-box > :first-child { margin-top: 0 !important; }
+
+.info-box strong,
+.highlight-box strong,
+.warning-box strong { color: #10243e !important; }
+
+/* Prüfdatum: keine Box, nur Meta-Zeile */
+.highlight-box.pruefdatum-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0.5rem 0 0 !important;
+  border-radius: 0 !important;
+  color: #8a939e !important;
+  letter-spacing: 0.02em !important;
+}
+
+.highlight-box.pruefdatum-box p { margin: 0 !important; }
+
+/* --- Buttons: crisp, ohne Shimmer & Lift --- */
+
+.button-group { border-top: 1px solid #e8edf2 !important; }
+
+button {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+button:active { transform: none !important; }
+
+.button-primary {
+  background: #0070f3 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 1px 2px rgba(0, 89, 201, 0.22) !important;
+}
+
+.button-primary::before { display: none !important; }
+
+.button-primary:hover {
+  background: #0059c9 !important;
+  transform: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 4px 12px rgba(0, 89, 201, 0.24) !important;
+}
+
+.button-secondary,
+.button.button-secondary {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  color: #1a5276 !important;
+}
+
+.button-secondary:hover,
+.button.button-secondary:hover {
+  background: #f7f9fb !important;
+  color: #123c63 !important;
+}
+
+/* Danger: sachliches, gedämpftes Rot */
+.button-danger {
+  background: #c4453e !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+              0 1px 2px rgba(150, 40, 35, 0.22) !important;
+}
+
+.button-danger:hover {
+  background: #ad3a34 !important;
+  transform: none !important;
+}
+
+#createPdfBtn {
+  background: #0070f3 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 1px 2px rgba(0, 89, 201, 0.22) !important;
+}
+
+#createPdfBtn:hover {
+  background: #0059c9 !important;
+  transform: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 4px 12px rgba(0, 89, 201, 0.24) !important;
+}
+
+/* Jump-Button: einheitliches Blau, kein Pfeil */
+.button.jump-button {
+  background: #0070f3 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 10px rgba(0, 112, 243, 0.18) !important;
+}
+
+.button.jump-button:hover {
+  background: #0059c9 !important;
+  box-shadow: 0 4px 14px rgba(0, 112, 243, 0.22) !important;
+}
+
+.button.jump-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* --- Popup: weiße Karte, blauer Submit --- */
+
+.popup-overlay {
+  background: rgba(16, 24, 40, 0.45) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.popup-content {
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 0 0 1px var(--hairline),
+              0 20px 50px rgba(16, 24, 40, 0.18) !important;
+}
+
+.popup-content h2 { color: #16324f !important; }
+.popup-content p { color: #3d4753 !important; }
+
+.popup-content input[type="submit"] {
+  background: #0070f3 !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 1px 2px rgba(0, 89, 201, 0.22) !important;
+}
+
+.popup-content input[type="submit"]:hover {
+  background: #0059c9 !important;
+}
+
+.popup-close-button {
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  color: #4a5560 !important;
+}
+
+.popup-close-button:hover {
+  background: #f7f9fb !important;
+  color: #2f2f2f !important;
+}
+
+/* --- Details/Accordion --- */
+
+details {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 10px !important;
+}
+
+details[open] {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+}
+
+summary { color: #16324f !important; }
+details[open] summary { color: #0f2a43 !important; }
+summary::after { color: #7d94ab !important; }
+details[open] summary::after { color: #0070f3 !important; }
+details p { color: #3d4753 !important; }
+
+/* --- Quellen, USP, Badge --- */
+
+.kl-sources-box a { color: #0070f3 !important; font-weight: 500 !important; }
+
+.usp-item {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 6px !important;
+  color: #33546f !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.usp-item svg { fill: #0070f3 !important; }
+
+.category-badge {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 6px !important;
+  color: #4a6785 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  padding: 0.35rem 0.8rem !important;
+}
+
+.category-badge:hover {
+  transform: none !important;
+  background: #f7fafc !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+}
+
+/* --- Footer --- */
+
+footer {
+  background: transparent !important;
+  border-top: 1px solid #eceff3 !important;
+  color: #68727f !important;
+}
+
+footer a { color: #33546f !important; }
+footer a:hover { color: #0070f3 !important; }
+
+/* --- Weißraum-Rhythmus auf Desktop --- */
+
+@media (min-width: 900px) {
+  .page-container { padding: 3.5rem 3.25rem !important; }
+  h2 { margin-top: 3.2rem !important; }
+}
+
+/* --- Scrollbar: dezent --- */
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #d3dbe4;
+  border-radius: 999px;
+  border: 2px solid #f8f9fb;
+}
+::-webkit-scrollbar-thumb:hover { background: #bcc7d3; }
+
+
+/* =========================================
+   Vertrauens- & Lesbarkeits-Feinschliff
+   (ans ENDE beider Dateien)
+   ========================================= */
+
+/* Besuchte Links nicht lila – sofort professioneller */
+a:visited:not(.button):not(.site-logo):not(.category-badge) {
+  color: #0059c9 !important;
+}
+a:visited:not(.button):not(.site-logo):not(.category-badge):hover {
+  color: #004e92 !important;
+}
+
+/* Prüf-/Meta-Zeile: WCAG-sicherer Kontrast */
+.highlight-box.pruefdatum-box,
+.highlight-box.pruefdatum-box p {
+  color: #6b7280 !important;
+}
+
+/* Listenpunkte einheitlich im Markenblau */
+ul li::marker {
+  color: rgba(0, 112, 243, 0.7) !important;
+}
+
+/* Fieldsets: kein Luftloch unter der Legend */
+fieldset { padding-top: 1.6rem !important; }
+fieldset > label:first-of-type,
+fieldset > .checkbox-group:first-child,
+fieldset > p:first-of-type { margin-top: 0.2rem !important; }
+
+/* Lange Legenden sauber umbrechen */
+legend {
+  line-height: 1.6 !important;
+  max-width: 100% !important;
+  text-wrap: balance !important;
+}
+
+/* Placeholder dezent, Details unten bündig */
+input::placeholder,
+textarea::placeholder { color: #9aa4af !important; }
+details p:last-child { margin-bottom: 0 !important; }
+

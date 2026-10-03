@@ -1845,6 +1845,526 @@ html, body {
 }
 
 
+/* =========================================
+   Schlichtes Neues Design
+   Neu 03.10.2026
+   ========================================= */
+
+/* --- 1) Sicherungs-Re-Asserts (falls Mittel-Block fehlt) --- */
+
+h1 {
+  animation: none !important;
+  background-size: auto !important;
+}
+
+.page-container::before,
+.site-header::before,
+.site-logo::before,
+.site-logo::after { display: none !important; }
+
+.site-logo,
+.site-logo:hover { transform: none !important; text-shadow: none !important; }
+
+.button::before { display: none !important; }
+
+.page-container:hover,
+.highlight-box:hover,
+.info-box:hover,
+.warning-box:hover,
+.kl-fall:hover,
+.usp-item:hover,
+.category-badge:hover { transform: none !important; }
+
+/* Kein Leerraum-Loch über Überschriften in Boxen */
+.highlight-box > :first-child,
+.info-box > :first-child,
+.warning-box > :first-child,
+.kl-sources-box > :first-child,
+.promo-teaser > :first-child,
+.highlight-box h2,
+.info-box h2,
+.warning-box h2,
+.kl-sources-box h2 { margin-top: 0 !important; }
+
+.highlight-box p, .info-box p, .warning-box p, .kl-sources-box p,
+.highlight-box li, .info-box li, .warning-box li, .kl-sources-box li {
+  color: #2f2f2f !important;
+}
+
+.highlight-box strong,
+.info-box strong,
+.warning-box strong { color: #10243e !important; }
+
+/* --- 2) Typografische Feinheiten --- */
+
+/* Kleine zentrierte Linie über der H1 = editorialer Akzent */
+h1::before {
+  content: "" !important;
+  display: block !important;
+  width: 44px !important;
+  height: 2px !important;
+  margin: 0 auto 1.15rem auto !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0.25)) !important;
+}
+
+h1 { text-wrap: balance !important; }
+
+/* H2-Linie: einheitlich & ruhig */
+h2::before { display: none !important; }
+h2::after {
+  content: "" !important;
+  display: block !important;
+  width: 72px !important;
+  height: 2px !important;
+  margin-top: 0.55rem !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0)) !important;
+  opacity: 0.75 !important;
+  transition: none !important;
+}
+h2:hover::after { width: 72px !important; }
+
+h3 {
+  color: #1f3a58 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Links: elegante Unterstreichung statt harter Umschaltung */
+a:not(.button):not(.site-logo):not(.category-badge) {
+  text-underline-offset: 2.5px !important;
+  text-decoration-thickness: 1px !important;
+}
+a:not(.button):not(.site-logo):not(.category-badge):hover {
+  text-decoration-color: rgba(0, 112, 243, 0.55) !important;
+}
+
+::selection {
+  background: rgba(0, 112, 243, 0.14) !important;
+  color: #10243e !important;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0, 112, 243, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* --- 3) Linien-Hierarchie & Akzente --- */
+
+/* Ergebniskarte: feiner Top-Akzent (oben, nicht links!) */
+.pflegegrad-result-card {
+  box-shadow: inset 0 2px 0 0 rgba(0, 112, 243, 0.85),
+              inset 0 0 0 1px #d8e3f0 !important;
+}
+
+/* Micro-Labels: Legenden & Wizard-Fortschritt als kleine Kapitälchen-Zeile */
+.pflegegrad-fieldset legend,
+.wizard-progress {
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #5a7186 !important;
+  font-weight: 600 !important;
+}
+
+.pflegegrad-fieldset legend { padding: 0 0.45rem !important; }
+
+/* Kategorie-Badge: editorial statt Pill-Optik */
+.category-badge {
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  color: #4a6785 !important;
+  padding: 0.35rem 0.8rem !important;
+}
+
+/* --- 4) Tabellen: echter Premium-Schliff --- */
+
+.pflegegrad-tabelle th {
+  background: transparent !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: #5a7186 !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #dfe6ee !important;
+  padding: 0.55rem 0.65rem !important;
+}
+
+.pflegegrad-tabelle td {
+  border-bottom: 1px solid #edf1f5 !important;
+  padding: 0.8rem 0.65rem !important;
+  color: #38424e !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.pflegegrad-tabelle tbody tr:nth-child(even) td {
+  background: #fafcfe !important;
+}
+
+.pflegegrad-tabelle tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+/* --- 5) Formulare: präzise & wertig --- */
+
+.pflegegrad-label select,
+.pflegegrad-fieldset select,
+.pflegegrad-fieldset input[type="number"],
+.pflegegrad-fieldset input[type="text"] {
+  background: #fcfdfe !important;
+  border: 1px solid #d7dfe9 !important;
+  border-radius: 8px !important;
+  padding: 0.6rem 0.7rem !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.pflegegrad-label select:focus,
+.pflegegrad-fieldset select:focus,
+.pflegegrad-fieldset input:focus {
+  outline: none !important;
+  border-color: #0070f3 !important;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.12) !important;
+}
+
+/* --- 6) Details/Accordion verfeinern --- */
+
+details { border-radius: 10px !important; }
+
+summary {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #16324f !important;
+}
+
+details[open] summary { color: #0f2a43 !important; }
+
+summary::after {
+  color: #7d94ab !important;
+  font-weight: 400 !important;
+}
+
+details[open] summary::after { color: #0070f3 !important; }
+
+details p { animation: none !important; }
+
+/* --- 7) Buttons: crisp statt flach --- */
+
+.button {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 1px 2px rgba(0, 89, 201, 0.22) !important;
+}
+
+.button:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 4px 12px rgba(0, 89, 201, 0.24) !important;
+}
+
+/* Jump-Button: dezenter Pfeil als Qualitätsdetail */
+.button.jump-button::after {
+  display: inline-block !important;
+  content: "→" !important;
+  margin-left: 0.5rem !important;
+  background: none !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transform: none !important;
+  transition: transform 0.15s ease !important;
+}
+
+.button.jump-button:hover::after {
+  animation: none !important;
+  transform: translateX(3px) !important;
+}
+
+/* --- 8) USP-Chips & Prüfdatum verfeinern --- */
+
+.usp-item {
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  padding: 0.45rem 0.85rem !important;
+}
+
+.usp-item:hover { background: #f7fafc !important; }
+
+.highlight-box.pruefdatum-box {
+  letter-spacing: 0.02em !important;
+}
+
+/* --- 9) Weißraum-Rhythmus auf Desktop --- */
+
+@media (min-width: 900px) {
+  .page-container { padding: 3.5rem 3.25rem !important; }
+  h2 { margin-top: 3.6rem !important; }
+}
+
+/* --- 10) Scrollbar: dezent & wertig --- */
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #d3dbe4;
+  border-radius: 999px;
+  border: 2px solid #f8f9fb;
+}
+::-webkit-scrollbar-thumb:hover { background: #bcc7d3; }
+
+/* =========================================
+   Feinschliff 2 – H1-Signatur unter dem Titel
+   & Jump-Button ohne Pfeil
+   (ans ENDE der CSS hängen)
+   ========================================= */
+
+/* Linie ÜBER der H1 wieder entfernen */
+h1::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Signatur-Linie UNTER der H1 – bewusst länger als bei H2 */
+h1::after {
+  content: "" !important;
+  display: block !important;
+  width: 120px !important;
+  height: 2px !important;
+  margin: 1.15rem auto 0 auto !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 112, 243, 0),
+    rgba(0, 112, 243, 0.9) 50%,
+    rgba(0, 112, 243, 0)
+  ) !important;
+}
+
+/* Pfeil im Jump-Button entfernen */
+.button.jump-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* =========================================
+   Oberflächen-Update: Schluss mit Pastell-"Knete"
+   Weiße Flächen + feine Hairline + kleinere Radien
+   (ans ENDE der CSS hängen)
+   ========================================= */
+
+:root {
+  --hairline: #e2e7ee;
+  --hairline-blue: #d8e3f0;
+  --hairline-neutral: #dfe3e8;
+}
+
+/* Große Container-Rundung etwas erwachsener */
+.page-container {
+  border-radius: 12px !important;
+}
+
+/* Alle Hinweis-Boxen: weiß + feine Linie + kleiner Radius */
+.highlight-box,
+.info-box,
+.warning-box,
+.info-box.warning,
+.info-box.danger,
+.info-box.error,
+.error-box,
+.kl-sources-box {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+  border-radius: 8px !important;
+}
+
+/* Warnhinweise: minimal neutralerer Rahmen, fast weiß */
+.warning-box,
+.info-box.warning,
+.info-box.danger,
+.info-box.error,
+.error-box {
+  background: #fcfcfd !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-neutral) !important;
+}
+
+/* Kein Hover-Anheben, kein Ring-Wechsel */
+.highlight-box:hover,
+.info-box:hover,
+.kl-sources-box:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+}
+
+.warning-box:hover,
+.info-box.warning:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-neutral) !important;
+}
+
+/* Prüfdatum: keine Box mehr, nur noch feine Meta-Zeile */
+.highlight-box.pruefdatum-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0.5rem 0 0 !important;
+  border-radius: 0 !important;
+  color: #8a939e !important;
+}
+
+.highlight-box.pruefdatum-box p {
+  margin: 0 !important;
+}
+
+/* USP-Chips: weiß + Hairline statt Pastell-Pills */
+.usp-item {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 6px !important;
+  color: #33546f !important;
+}
+
+.usp-item:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+}
+
+.usp-item svg {
+  fill: #0070f3 !important;
+}
+
+/* Kategorie-Badge: gleiche Logik */
+.category-badge {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 6px !important;
+  color: #33546f !important;
+}
+
+.category-badge:hover {
+  transform: none !important;
+}
+
+/* Details/Accordion: weiß + Hairline */
+details {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 8px !important;
+}
+
+details[open] {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+}
+
+/* Promo-Teaser: weiße Karte */
+.promo-teaser {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 10px !important;
+}
+
+.promo-teaser .free-help {
+  background: #fbfcfd !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 8px !important;
+}
+
+/* Checkliste, Fallbeispiele, Rechner-Karten */
+.kl-checklist {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 8px !important;
+}
+
+.kl-fallbeispiele {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 10px !important;
+}
+
+.kl-fall {
+  background: #fbfcfd !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 8px !important;
+}
+
+.pflegegrad-fieldset {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+  border-radius: 10px !important;
+}
+
+.pflegegrad-result-card {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px var(--hairline-blue) !important;
+  border-radius: 10px !important;
+}
+
+/* Sekundär-Buttons analog: weiß + Hairline */
+.button-secondary,
+.button.button-secondary {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px var(--hairline) !important;
+}
+
+.button-secondary:hover,
+.button.button-secondary:hover {
+  background: #f7f9fb !important;
+}
+
+/* =========================================
+   Vertrauens- & Lesbarkeits-Feinschliff
+   (ans ENDE beider Dateien)
+   ========================================= */
+
+/* Besuchte Links nicht lila – sofort professioneller */
+a:visited:not(.button):not(.site-logo):not(.category-badge) {
+  color: #0059c9 !important;
+}
+a:visited:not(.button):not(.site-logo):not(.category-badge):hover {
+  color: #004e92 !important;
+}
+
+/* Prüf-/Meta-Zeile: WCAG-sicherer Kontrast */
+.highlight-box.pruefdatum-box,
+.highlight-box.pruefdatum-box p {
+  color: #6b7280 !important;
+}
+
+/* Listenpunkte einheitlich im Markenblau */
+ul li::marker {
+  color: rgba(0, 112, 243, 0.7) !important;
+}
+
+/* Fieldsets: kein Luftloch unter der Legend */
+fieldset { padding-top: 1.6rem !important; }
+fieldset > label:first-of-type,
+fieldset > .checkbox-group:first-child,
+fieldset > p:first-of-type { margin-top: 0.2rem !important; }
+
+/* Lange Legenden sauber umbrechen */
+legend {
+  line-height: 1.6 !important;
+  max-width: 100% !important;
+  text-wrap: balance !important;
+}
+
+/* Placeholder dezent, Details unten bündig */
+input::placeholder,
+textarea::placeholder { color: #9aa4af !important; }
+details p:last-child { margin-bottom: 0 !important; }
+
+
 
 
 

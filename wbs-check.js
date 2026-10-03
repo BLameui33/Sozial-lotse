@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         Ein Anspruch auf den regulären Wohnberechtigungsschein besteht voraussichtlich <strong>nicht</strong>.
                     </p>
                 </div>
-                <div style="background-color: #fff3e0; padding: 15px; font-size: 0.9em; margin-bottom: 15px;">
+                <div style="background-color: #fff; padding: 15px; font-size: 0.9em; margin-bottom: 15px;">
                     <strong>Tipp:</strong> Viele Länder vergeben Scheine für höhere Einkommen: Berlin (WBS 160/180/220),
                     NRW (Einkommensgruppe B), Brandenburg (WBSplus +40 %/+60 %), Niedersachsen (EK-Gruppe B),
                     Sachsen (zweite Einkommensgrenze, z. B. 23.640 € für 1 Person).
