@@ -1363,3 +1363,346 @@ details p:last-child { margin-bottom: 0 !important; }
     border-radius: 6px !important;
   }
 }
+
+/* Variante B – gestaffelte Linien-Hierarchie */
+h1::after { width: 160px !important; height: 2px !important; }
+h2::after { width: 112px !important; height: 2px !important; }
+
+h3::after {
+  content: "" !important;
+  display: block !important;
+  width: 56px !important;
+  height: 2px !important;
+  margin-top: 0.5rem !important;
+  border-radius: 999px !important;
+  opacity: 0.55 !important;
+  background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0)) !important;
+}
+
+/* In dichten H3-Stapeln bleibt es clean ohne Punkt */
+.faq-section h3::before,
+.kl-fall h3::before { display: none !important; }
+
+/* Alternative, falls dir der Punkt zu rund ist – Mini-Strich:*/
+h3::before {
+  width: 14px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+  vertical-align: 0.3em !important;
+}
+
+
+
+/* =========================================
+   Lesespalte + blaue Anker-Punkte
+   
+   ========================================= */
+
+
+.page-container p, .page-container li,
+.info-box p, .info-box li,
+.highlight-box p, .highlight-box li,
+.warning-box p, .warning-box li,
+.kl-sources-box li {
+  max-width: none !important;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.page-container ul,
+.info-box ul,
+.highlight-box ul,
+.warning-box ul {
+  list-style: none !important;
+  padding-left: 0.2rem !important;
+}
+
+.page-container ul li,
+.info-box ul li,
+.highlight-box ul li,
+.warning-box ul li {
+  position: relative !important;
+  padding-left: 1.15rem !important;
+}
+
+.page-container ul li::before,
+.info-box ul li::before,
+.highlight-box ul li::before,
+.warning-box ul li::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0.62em !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 2px !important;
+  background: rgba(0, 112, 243, 0.85) !important;
+}
+
+.kl-checklist li::before { display: none !important; }
+
+/* =========================================
+   Text-Struktur: Register-Optik & Ruhe
+  
+   ========================================= */
+
+.page-container li > strong:first-child,
+.info-box li > strong:first-child,
+.highlight-box li > strong:first-child,
+.warning-box li > strong:first-child {
+  display: block !important;
+  margin-bottom: 0.15rem !important;
+}
+
+.page-container p { margin-bottom: 1.45rem !important; }
+.page-container ul,
+.page-container ol { margin-bottom: 1.6rem !important; }
+
+.page-container p,
+.page-container li,
+.info-box p, .highlight-box p, .warning-box p {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* =========================================
+   Hinweis-Boxen: eine ruhige Box-Familie
+   Inhalt = normaler Text, Disclaimer = Fußnoten-Typografie
+   ========================================= */
+
+/* Stufe 1: Inhalts-Boxen – weiße Karte, normale Textgröße
+   (stellt zugleich unbeabsichtigt geschrumpfte Texte zurück) */
+.info-box,
+.highlight-box,
+.kl-sources-box {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px #d8e3f0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  padding: 1.45rem 1.6rem !important;
+  margin: 2rem 0 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+  color: #2f2f2f !important;
+}
+
+/* Stufe 2: Disclaimer & Meta-Hinweise – BLEIBEN Boxen,
+   aber mit Fußnoten-Typografie (kleiner, grauer, enger) */
+.warning-box,
+.info-box.warning,
+.page-container :is(.info-box, .highlight-box):is(
+  [style*="fff8e1" i], [style*="fff3f3" i],
+  [style*="ffebee" i], [style*="fce4ec" i],
+  [style*="ff9800" i], [style*="e53935" i]
+),
+.page-container .info-box:not([style]):not(:has(h2, h3, ul, ol, table, p + p)) {
+  background: #fbfcfd !important;
+  box-shadow: inset 0 0 0 1px #e4e8ee !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  padding: 1rem 1.25rem !important;
+  margin: 1.4rem 0 !important;
+  font-size: 0.86rem !important;
+  line-height: 1.6 !important;
+  color: #55606c !important;
+}
+
+.warning-box strong,
+.info-box.warning strong,
+.page-container :is(.info-box, .highlight-box):is(
+  [style*="fff8e1" i], [style*="fff3f3" i]
+) strong,
+.page-container .info-box:not([style]):not(:has(h2, h3, ul, ol, table, p + p)) strong {
+  color: #3c4650 !important;
+}
+
+/* Ausnahme: Warnboxen mit echtem Inhalt (Überschrift/Liste) = volle Karte */
+.warning-box:has(h2, h3, ul, ol, table),
+.info-box.warning:has(h2, h3, ul, ol, table) {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px #d8e3f0 !important;
+  padding: 1.45rem 1.6rem !important;
+  margin: 2rem 0 !important;
+  font-size: 0.98rem !important;
+  color: #2f2f2f !important;
+}
+
+
+
+/* Details definitiv weiß */
+details, details[open] { background: #ffffff !important; }
+summary { background: transparent !important; }
+
+/* Meta-Zeile (Prüfdatum) wieder klein & grau */
+.highlight-box.pruefdatum-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0.6rem 0 0 !important;
+  max-width: fit-content !important;
+  font-size: 0.8rem !important;
+  line-height: 1.5 !important;
+  color: #6b7280 !important;
+}
+
+.highlight-box.pruefdatum-box p { margin: 0 !important; }
+.highlight-box.pruefdatum-box strong { color: #46515c !important; }
+
+
+/* =========================================
+   Editorial-Footer: "Wer hat diese Inhalte erstellt?"
+   greift per Inline-Signatur ODER Klasse editorial-footer
+   ========================================= */
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) {
+  background: transparent !important;
+  border-top: 1px solid #e6ebf1 !important;
+  padding: 2.5rem 1.25rem 0.5rem !important;
+  margin-top: 4rem !important;
+  text-align: center !important;
+  font-family: inherit !important;
+}
+
+/* Überschrift wird zum Micro-Label wie Legenden & Tabellenköpfe */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) h3 {
+  margin: 0 0 0.9rem 0 !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #5a7186 !important;
+}
+
+/* Kein H3-Punkt vor dieser zentrierten Zeile */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) h3::before {
+  display: none !important;
+}
+
+/* Fließtext: ruhig, zentriert, begrenzt */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p {
+  margin: 0 auto 1rem auto !important;
+  max-width: 68ch !important;
+  font-size: 0.9rem !important;
+  line-height: 1.65 !important;
+  color: #55606c !important;
+}
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p strong {
+  color: #3c4650 !important;
+}
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p em {
+  color: #6b7280 !important;
+}
+
+/* Links: Markenblau, ohne fette Unterstreich-Optik */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) a {
+  color: #0070f3 !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+}
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) a:hover {
+  color: #0059c9 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+/* Die Lotsen-Karte wird zur ruhigen Hairline-Karte der Box-Familie */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) div[style*="d1d5db" i] {
+  max-width: 560px !important;
+  margin: 1.5rem auto !important;
+  background: #fbfcfd !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #e4e8ee !important;
+  border-radius: 10px !important;
+  padding: 1rem 1.25rem !important;
+}
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) div[style*="d1d5db" i] p {
+  margin: 0 !important;
+}
+
+/* Feedback-Zeile: kleine graue Meta-Zeile unter einer Hairline */
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p[style*="eaeaea" i] {
+  margin: 1.5rem auto 0 auto !important;
+  padding-top: 1.1rem !important;
+  border-top: 1px solid #e6ebf1 !important;
+  max-width: 560px !important;
+  font-size: 0.8rem !important;
+  color: #6b7280 !important;
+}
+
+:is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p[style*="eaeaea" i] a {
+  color: #4a5560 !important;
+  text-decoration: underline !important;
+}
+
+/* =========================================
+   Ausgleichs-Block: gleicht beide Dateien ab
+   (ans ENDE BEIDER Dateien)
+   ========================================= */
+
+/* 1) H3: Mini-Strich VOR der Überschrift, Linie darunter aus
+      (der content-Teil fehlte in der generator.css komplett) */
+h3::after { display: none !important; }
+h3::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 14px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+  background: rgba(0, 112, 243, 0.5) !important;
+  margin-right: 0.55rem !important;
+  vertical-align: 0.3em !important;
+}
+
+/* 2) Boxen mit alter roter/oranger Inline-Kante ABER echtem Inhalt
+      (Überschrift/Liste) bleiben volle Karten – Farbe allein entscheidet nicht */
+.page-container :is(.info-box, .highlight-box):is(
+  [style*="fff8e1" i], [style*="fff3f3" i],
+  [style*="ffebee" i], [style*="fce4ec" i],
+  [style*="ff9800" i], [style*="e53935" i]
+):has(h2, h3, ul, ol, table) {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px #d8e3f0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  padding: 1.45rem 1.6rem !important;
+  margin: 2rem 0 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+  color: #2f2f2f !important;
+}
+
+/* 3) Prüfdatum-Zeile klein & grau (fehlte in der style.css) */
+.highlight-box.pruefdatum-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0.6rem 0 0 !important;
+  max-width: fit-content !important;
+  font-size: 0.8rem !important;
+  line-height: 1.5 !important;
+  color: #6b7280 !important;
+}
+.highlight-box.pruefdatum-box p { margin: 0 !important; }
+.highlight-box.pruefdatum-box strong { color: #46515c !important; }
+
+/* 4) Feinschliff-Teile, die bisher nur in der style.css standen */
+a:visited:not(.button):not(.site-logo):not(.category-badge) { color: #0059c9 !important; }
+a:visited:not(.button):not(.site-logo):not(.category-badge):hover { color: #004e92 !important; }
+ul li::marker { color: rgba(0, 112, 243, 0.7) !important; }
+fieldset { padding-top: 1.6rem !important; }
+fieldset > label:first-of-type,
+fieldset > .checkbox-group:first-child,
+fieldset > p:first-of-type { margin-top: 0.2rem !important; }
+legend { line-height: 1.6 !important; max-width: 100% !important; text-wrap: balance !important; }
+input::placeholder,
+textarea::placeholder { color: #9aa4af !important; }
+details p:last-child { margin-bottom: 0 !important; }
