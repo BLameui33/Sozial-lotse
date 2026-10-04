@@ -816,48 +816,6 @@ html, body {
   box-sizing: inherit !important; /* Zwingt alle Elemente, Ränder richtig zu berechnen */
 }
 
-/* ==========================================
-   MOBILE TOUCH-TARGETS FÜR CHECKBOXEN
-   ========================================== */
-
-/* 1. Das gesamte Label zu einer großen, bequemen Klickfläche machen */
-.checkbox-group label {
-  display: flex !important;
-  align-items: flex-start !important; 
-  gap: 14px !important;               
-  padding: 12px 10px !important;      
-  cursor: pointer;
-  user-select: none;                  
-  transition: background-color 0.2s ease;
-}
-
-/* 2. Die Checkbox selbst massiv vergrößern und einfärben */
-.checkbox-group input[type="checkbox"] {
-  width: 18px !important;             /* Perfekte Größe für Smartphones */
-  height: 18px !important;
-  min-width: 18px !important;         
-  min-height: 18px !important;
-  flex-shrink: 0 !important;          
-  margin-top: 2px !important;         
-  cursor: pointer;
-  
-  accent-color: #0066cc !important; 
-}
-
-/* 3. Text im Label leicht optimieren */
-.checkbox-group label br + small {
-  display: block !important;
-  margin-top: 4px !important;         
-  font-size: 13px !important;
-}
-
-
-@media (max-width: 768px) {
-  .checkbox-group label:active {
-    background-color: rgba(0, 102, 204, 0.08); 
-    border-radius: 6px;
-  }
-}
 
 
 /* =========================================
@@ -1333,3 +1291,75 @@ input::placeholder,
 textarea::placeholder { color: #9aa4af !important; }
 details p:last-child { margin-bottom: 0 !important; }
 
+/* ==========================================================
+   Checkbox-Gruppen – mobil sauber umbrechend
+   Ersatz für problematische ältere Checkbox-Regeln
+   ========================================================== */
+
+.checkbox-group {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Label wird zur vollen, umbrechenden Klickfläche */
+.checkbox-group label {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  margin-top: 0.4rem !important;
+  padding: 0.8rem 0.8rem 0.8rem 2.7rem !important;
+
+  border-radius: 8px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  white-space: normal !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Checkbox links fest verankern */
+.checkbox-group input[type="checkbox"] {
+  position: absolute !important;
+  left: 0.85rem !important;
+  top: 0.95rem !important;
+
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+
+  margin: 0 !important;
+  accent-color: #0070f3 !important;
+  cursor: pointer;
+}
+
+/* Tastatur-Fokus sichtbar lassen */
+.checkbox-group input[type="checkbox"]:focus-visible {
+  outline: 2px solid rgba(0, 112, 243, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* Hover nur für Geräte mit Maus */
+@media (hover: hover) {
+  .checkbox-group label:hover {
+    background: #f7fafc !important;
+  }
+}
+
+/* Mobile Feedback beim Antippen */
+@media (max-width: 768px) {
+  .checkbox-group label:active {
+    background-color: rgba(0, 102, 204, 0.08) !important;
+    border-radius: 6px !important;
+  }
+}
