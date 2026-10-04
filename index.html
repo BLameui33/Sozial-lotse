@@ -37,7 +37,7 @@
   --transition: all 0.25s ease;
 }
 
-/* --- Grundlayout --- */
+
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.8;
@@ -48,7 +48,7 @@ body {
   font-size: 1.05rem;
 }
 
-/* --- Header --- */
+
 .site-header {
   background-color: var(--white);
   padding: 0.8rem 1rem;
@@ -84,7 +84,7 @@ body {
   display: inline-block;
 }
 
-/* Hover-Effekt: heller Farbverlauf + leichtes Anheben */
+
 .site-logo:hover {
   transform: translateY(-1px);
   background: linear-gradient(90deg, #0054a6, #339af0);
@@ -93,7 +93,7 @@ body {
   text-shadow: 0 1px 6px rgba(0, 112, 243, 0.15);
 }
 
-/* Optional: leichtes Unterstatement beim Scrollen (keine JS nötig) */
+
 @supports (position: sticky) {
   .site-header {
     position: sticky;
@@ -102,7 +102,7 @@ body {
   }
 }
 
-/* Mobile Anpassung */
+
 @media (max-width: 700px) {
   .site-header {
     padding: 0.4rem 0.8rem; 
@@ -113,7 +113,7 @@ body {
   }
 }
 
-/* --- Hauptcontainer --- */
+
 .page-container {
   max-width: 1100px;
   margin: 3rem auto;
@@ -128,7 +128,7 @@ body {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 14px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Überschriften --- */
+
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1.8rem;
@@ -186,7 +186,7 @@ h3 {
   color: var(--primary-dark);
 }
 
-/* --- Info-Boxen --- */
+
 .intro-text,
 .model-info,
 .privacy-short-info {
@@ -212,7 +212,7 @@ h3 {
   color: var(--accent);
 }
 
-/* --- Kategorien & Tools --- */
+
 .category-section {
   margin-bottom: 2.5rem;
   background: #fcfdfe;
@@ -223,7 +223,7 @@ h3 {
 }
 
 .category-section h2 {
-  margin-top: 0; /* Reset, da es jetzt in einer Card sitzt */
+  margin-top: 0; 
   font-size: 1.6rem;
   margin-bottom: 1.5rem;
   color: var(--accent);
@@ -231,13 +231,13 @@ h3 {
   font-weight: 700;
 }
 
-/* --- 3. TOOL-LISTE ALS 2-SPALTEN GRID --- */
+
 .tool-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
   display: grid;
-  /* Erstellt automatisch 2 Spalten auf Desktop & Tablet, schaltet mobil auf 1 Spalte */
+  
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 1rem; 
 }
@@ -246,7 +246,7 @@ h3 {
   background-color: var(--white);
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  margin-bottom: 0; /* Margin entfernen, da das Grid den Abstand regelt */
+  margin-bottom: 0; 
   padding: 1.1rem 1.2rem;
   transition: var(--transition);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
@@ -281,12 +281,12 @@ h3 {
   font-size: 0.88rem;
   color: #555;
   line-height: 1.5;
-  margin-top: auto; /* Drückt die Beschreibung nach unten, falls Links unterschiedlich lang sind */
+  margin-top: auto; 
 }
 
 
 
-/* --- Spendenhinweis --- */
+
 .spendenhinweis {
   background: #f0f7ff;
   border: 1px solid #d0e6ff;
@@ -331,7 +331,7 @@ h3 {
   box-shadow: 0 6px 15px rgba(0, 112, 243, 0.35);
 }
 
-/* --- How it works section --- */
+
 .how-it-works-section {
   padding: 3rem 1rem;
   background-color: #f8fbff;
@@ -379,7 +379,7 @@ h3 {
   margin-bottom: 0.5rem;
 }
 
-/* --- Hervorgehobene Wörter --- */
+
 .highlight-word {
   background-color: var(--primary-light);
   color: var(--primary-dark);
@@ -392,7 +392,7 @@ h3 {
   margin-right: 4px;
 }
 
-/* --- RESPONSIV ANPASSUNG FÜR SMARTPHONES --- */
+
 @media (max-width: 700px) {
   .page-container {
     padding: 1.2rem;
@@ -403,12 +403,12 @@ h3 {
   }
 
   .tool-list {
-    grid-template-columns: 1fr; /* Auf Handys wieder 1-spaltig */
+    grid-template-columns: 1fr; 
     gap: 0.8rem;
   }
 }
 
-/* --- Footer --- */
+
 footer {
   text-align: center;
   padding: 3rem 0 2rem 0;
@@ -430,7 +430,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* --- Responsiv --- */
+
 @media (max-width: 700px) {
   .page-container {
     padding: 1.5rem;
@@ -464,7 +464,7 @@ footer a:hover {
 }
 
 
-/* --- Beispiel-Dokument-Bereich --- */
+
 .example-document {
   text-align: center;
   background-color: #f8fbff;
@@ -496,13 +496,13 @@ footer a:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* sanfter Hover-Effekt */
+
 .example-document img:hover {
   transform: scale(1.02);
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* Mobiloptimierung */
+
 @media (max-width: 700px) {
   .example-document {
     padding: 1rem;
@@ -511,9 +511,9 @@ footer a:hover {
     max-width: 100%;
   }
 }
-/* === GRUND-DESIGN LOTSE === */
+
         .lotse-wrapper {
-            max-width: 800px; /* Etwas breiter für die 3 Boxen */
+            max-width: 800px; 
             margin: 40px auto;
             padding: 40px;
             background-color: #ffffff;
@@ -523,7 +523,7 @@ footer a:hover {
             border-top: 6px solid #0056b3; 
         }
 
-        /* === KOPFZEILE & ERKLÄRUNG === */
+        
         .lotse-header {
             text-align: center;
             margin-bottom: 30px;
@@ -550,7 +550,7 @@ footer a:hover {
             font-weight: 600;
         }
 
-        /* === ANTWORT-CONTAINER === */
+        
         #lotse-antworten {
             display: flex;
             flex-direction: column;
@@ -558,14 +558,14 @@ footer a:hover {
             margin-bottom: 30px;
         }
 
-        /* === LAYOUT FÜR DIE STARTSEITE (3 BOXEN) === */
+        
         #lotse-antworten.is-start-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
 
-        /* === STANDARD BUTTON-DESIGN === */
+        
         .lotse-btn {
             padding: 16px 24px;
             background-color: #f8f9fa;
@@ -590,7 +590,7 @@ footer a:hover {
             box-shadow: 0 6px 15px rgba(0, 86, 179, 0.2);
         }
 
-        /* === SPEZIELLES DESIGN FÜR START-BOXEN === */
+        
         .is-start-grid .lotse-btn {
             flex-direction: column;
             padding: 30px 20px;
@@ -604,7 +604,7 @@ footer a:hover {
             display: block;
         }
 
-        /* === ZURÜCK-BUTTON === */
+        
         .lotse-footer {
             text-align: center;
             border-top: 1px solid #eee;
@@ -631,7 +631,7 @@ footer a:hover {
    TOPIC NAVIGATOR – Modernes Schwebendes Bottom-Widget
    ========================================================================== */
 
-/* Haupt-Container (Schwebendes Bottom-Widget) */
+
 .topic-navigator {
   position: fixed;
   bottom: 20px;
@@ -656,7 +656,7 @@ footer a:hover {
 
   box-sizing: border-box;
 
-  /* --- STANDARDMÄSSIG UNSICHTBAR & LEICHT NACH UNTEN VERSETZT --- */
+  
   opacity: 0;
   visibility: hidden;
   transform: translate(-50%, 20px);
@@ -664,7 +664,7 @@ footer a:hover {
   transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
 }
 
-/* --- WIRD AKTIV, WENN BEI DEN KATEGORIEN (Gleitet sanft hoch) --- */
+
 .topic-navigator.is-visible {
   opacity: 1;
   visibility: visible;
@@ -672,7 +672,7 @@ footer a:hover {
   pointer-events: auto;
 }
 
-/* Dezent beschriftet */
+
 .topic-navigator label {
   font-size: 0.725rem;
   font-weight: 700;
@@ -683,7 +683,7 @@ footer a:hover {
   flex-shrink: 0;
 }
 
-/* Das Select-Feld in Pillen-Optik */
+
 .topic-navigator select {
   flex: 1;
   min-width: 0;
@@ -712,19 +712,19 @@ footer a:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Scroll-Abstand für Ziel-Kategorien (auf den Header oben abgestimmt) */
+
 .category-section {
   scroll-margin-top: 70px;
 }
 
-/* Platz am Seitenende, damit das Footer-Ende nicht verdeckt wird */
+
 footer {
   padding-bottom: 90px !important;
 }
 
 @media (max-width: 600px) {
   .topic-navigator {
-    bottom: 14px; /* Noch etwas näher am unteren Rand auf Mobilgeräten */
+    bottom: 14px; 
     width: calc(100% - 24px);
     padding: 6px 10px 6px 14px;
   }
@@ -751,8 +751,8 @@ footer {
 .usp-item {
     display: flex;
     align-items: center;
-    background: #f0f7ff; /* Sehr helles Blau passend zum Design */
-    color: #0056b3;      /* Dein Logo-Blau */
+    background: #f0f7ff; 
+    color: #0056b3;      
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -764,10 +764,10 @@ footer {
     margin-right: 6px;
     width: 16px;
     height: 16px;
-    fill: #2e7d32; /* Ein dezentes Grün für die Haken */
+    fill: #2e7d32; 
 }
 
-/* Desktop-Standard (hast du schon) */
+
 .usp-bar {
     display: flex;
     justify-content: center;
@@ -776,18 +776,18 @@ footer {
     margin: 15px 0 25px 0;
 }
 
-/* Mobile Optimierung (Neu hinzufügen) */
+
 @media (max-width: 600px) {
     .usp-bar {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Zwei gleich breite Spalten */
+        grid-template-columns: 1fr 1fr; 
         gap: 8px;
         padding: 0 10px;
     }
 
     .usp-item {
-        justify-content: center; /* Zentriert Inhalt in der Kachel */
-        font-size: 0.75rem;      /* Etwas kleiner auf dem Handy */
+        justify-content: center; 
+        font-size: 0.75rem;      
         padding: 8px 4px;
         text-align: center;
     }
@@ -796,6 +796,248 @@ footer {
         width: 14px;
         height: 14px;
     }
+}
+
+
+
+.site-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #edf1f6 !important;
+  box-shadow: none !important;
+}
+.site-header::before { display: none !important; }
+.site-logo,
+.site-logo:hover { transform: none !important; text-shadow: none !important; }
+
+
+.page-container {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px rgba(23, 37, 60, 0.05),
+              0 8px 24px rgba(16, 24, 40, 0.05) !important;
+  border-radius: 12px !important;
+}
+.page-container:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px rgba(23, 37, 60, 0.06),
+              0 8px 24px rgba(16, 24, 40, 0.05) !important;
+}
+
+
+h1::after {
+  content: "";
+  display: block;
+  width: 160px;
+  height: 2px;
+  margin: 1.1rem auto 0 auto;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+              rgba(0, 112, 243, 0), rgba(0, 112, 243, 0.9) 50%, rgba(0, 112, 243, 0));
+}
+
+
+h2 { display: block !important; padding-bottom: 0 !important; }
+h2::after {
+  position: static !important;
+  display: block !important;
+  width: 112px !important;
+  height: 2px !important;
+  margin-top: 0.55rem !important;
+  border-radius: 999px !important;
+  clip-path: none !important;
+  transition: none !important;
+  opacity: 0.75 !important;
+  background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0)) !important;
+}
+h2:hover::after,
+.category-section:hover h2::after { width: 112px !important; }
+
+
+.lotse-header h2::after,
+.spendenhinweis h2::after {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+h3 { color: #1f3a58 !important; }
+h3::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(0, 112, 243, 0.5);
+  margin-right: 0.55rem;
+  vertical-align: 0.3em;
+}
+
+
+.intro-text,
+.project-mission,
+.model-info,
+.privacy-short-info {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #d8e3f0 !important;
+  border-radius: 10px !important;
+  color: #2f2f2f !important;
+}
+.intro-text:hover,
+.project-mission:hover,
+.model-info:hover,
+.privacy-short-info:hover {
+  transform: none !important;
+  box-shadow: inset 0 0 0 1px #d8e3f0 !important;
+}
+.project-mission strong,
+.privacy-short-info strong { color: #10243e !important; }
+
+
+.usp-item {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #e2e7ee !important;
+  border-radius: 6px !important;
+  color: #33546f !important;
+}
+
+
+.category-section {
+  background: #ffffff !important;
+  box-shadow: inset 0 0 0 1px #e2e7ee !important;
+  border-radius: 12px !important;
+}
+.tool-list li {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #e2e7ee !important;
+  border-radius: 10px !important;
+}
+.tool-list li:hover {
+  transform: none !important;
+  background: #f7fafc !important;
+  box-shadow: inset 0 0 0 1px #cfdff0 !important;
+}
+.tool-list a { color: #1d3a5a !important; }
+.tool-list a:hover { color: #0070f3 !important; }
+.tool-list small { color: #6b7683 !important; }
+
+
+.lotse-wrapper {
+  background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #e2e7ee,
+              0 8px 24px rgba(16, 24, 40, 0.05) !important;
+  border-radius: 12px !important;
+}
+.lotse-btn {
+  background: #ffffff !important;
+  border: 1px solid #d7dfe9 !important;
+  border-radius: 10px !important;
+  color: #2f2f2f !important;
+}
+.lotse-btn:hover {
+  background: #f2f7fd !important;
+  border-color: #cfdff0 !important;
+  color: #10243e !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+#lotse-frage { color: #16324f !important; }
+#lotse-zurueck:hover { background: #f2f5f8 !important; }
+
+
+.spendenhinweis {
+  background: #fbfcfd !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 1px #e4e8ee !important;
+  border-radius: 12px !important;
+}
+.spendenhinweis h2 { color: #16324f !important; }
+.spendenhinweis p { color: #4a5560 !important; }
+.spendenhinweis input[type="submit"] {
+  background: #0070f3 !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 1px 2px rgba(0, 89, 201, 0.22) !important;
+}
+.spendenhinweis input[type="submit"]:hover {
+  background: #0059c9 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
+              0 4px 12px rgba(0, 89, 201, 0.24) !important;
+}
+
+
+footer {
+  background: transparent !important;
+  border-top: 1px solid #eceff3 !important;
+  color: #68727f !important;
+}
+
+/* -----------------------------------------
+   Topic-Navigator: deutlich wahrnehmbar
+   ----------------------------------------- */
+
+/* Schluss mit Halbtransparent + Blur: volle Deckung, klarer Rand,
+   kräftigerer Schatten = die Leiste "steht" jetzt über dem Inhalt */
+.topic-navigator {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  padding: 10px 12px 10px 16px !important;
+  bottom: 16px !important;
+  box-shadow: inset 0 0 0 1px #cfdff0,
+              0 12px 32px rgba(16, 24, 40, 0.18),
+              0 2px 8px rgba(16, 24, 40, 0.10) !important;
+}
+
+
+.topic-navigator label { color: #4a5560 !important; }
+.topic-navigator label::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0070f3;
+  margin-right: 0.45rem;
+  vertical-align: 0.05em;
+}
+
+
+.topic-navigator select {
+  border: 1px solid #c3d3e4 !important;
+  border-radius: 10px !important;
+  background-color: #fbfcfe !important;
+  color: #10243e !important;
+  box-shadow: none !important;
+}
+
+
+@media (max-width: 600px) {
+  .topic-navigator { border-radius: 12px !important; }
+}
+
+/* USP-Grid-Fix: Das 2-Spalten-Grid stand außerhalb der Media-Query
+   und galt dadurch auch auf Desktop – hier auf mobil begrenzt */
+@media (min-width: 601px) {
+  .usp-bar {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+  .usp-item {
+    font-size: 0.8rem !important;
+    padding: 0.45rem 0.85rem !important;
+    text-align: left !important;
+  }
 }
   </style>
 </head>
@@ -1597,10 +1839,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!select || !sections.length) return;
 
-  // 1. Klick-Aktion: Schneidet ein eventuelles '#' automatisch ab
+  
   select.addEventListener("change", (e) => {
     const rawValue = e.target.value;
-    const cleanId = rawValue.replace(/^#/, ""); // Entfernt das '#' am Anfang
+    const cleanId = rawValue.replace(/^#/, ""); 
     const targetElement = document.getElementById(cleanId);
     
     if (targetElement) {
@@ -1608,7 +1850,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 2. Scrollspy: Findet die passende Option, egal ob mit oder ohne '#' im value
+  
   function updateDropdownOnScroll() {
     const scrollPosition = window.scrollY || window.pageYOffset;
     let currentSectionId = "";
@@ -1622,14 +1864,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Sonderfall: Ganz unten auf der Seite
+    
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
       if (sections.length > 0) {
         currentSectionId = sections[sections.length - 1].id;
       }
     }
 
-    // Passende Option suchen (prüft "alg1" UND "#alg1")
+    
     if (currentSectionId) {
       const matchingOption = Array.from(select.options).find(
         (opt) => opt.value === currentSectionId || opt.value === `#${currentSectionId}`
@@ -1667,7 +1909,7 @@ window.addEventListener('scroll', () => {
     const firstRect = firstSection.getBoundingClientRect();
     const lastRect = lastSection.getBoundingClientRect();
 
-    // Rechnet aus, ob der Nutzer im Bereich der Kategorien ist
+    
     const inCategoryArea = (firstRect.top < window.innerHeight - 100) && (lastRect.bottom > 100);
 
     if (inCategoryArea) {

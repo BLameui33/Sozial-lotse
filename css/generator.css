@@ -16,7 +16,7 @@
   --transition: all 0.25s ease;
 }
 
-/* --- Grundlayout --- */
+
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.8;
@@ -27,7 +27,7 @@ body {
   font-size: 1.05rem;
 }
 
-/* --- Header --- */
+
 .site-header {
   background-color: var(--white);
   padding: 1rem 2rem;
@@ -52,7 +52,7 @@ body {
   color: var(--primary);
 }
 
-/* --- Hauptcontainer --- */
+
 .page-container {
   max-width: 1000px;
   width: 95% !important;
@@ -73,7 +73,7 @@ body {
     0 14px 40px rgba(0,0,0,0.1);
 }
 
-/* --- Überschriften --- */
+
 h1 {
   font-size: 2.4rem;
   margin-bottom: 2rem;
@@ -92,7 +92,7 @@ h2 {
   margin-bottom: 1rem;
   color: var(--accent);
   font-weight: 600;
- /* border-left: 4px solid var(--primary);*/
+ 
   padding-left: 0.8rem;
 }
 
@@ -100,7 +100,7 @@ strong {
   color: black;
 }
 
-/* --- Fieldsets --- */
+
 fieldset {
   border: 1px solid #e4e8ec;
   border-radius: var(--radius);
@@ -121,7 +121,7 @@ legend {
   padding: 0 0.6em;
 }
 
-/* --- Labels & Inputs --- */
+
 label {
   display: block;
   margin-top: 1.2rem;
@@ -167,7 +167,7 @@ textarea {
   resize: vertical;
 }
 
-/* --- Checkboxgruppen --- */
+
 .checkbox-group {
   margin-top: 1.2rem;
 }
@@ -186,11 +186,11 @@ textarea {
   accent-color: var(--primary);
 }
 
-/* --- Subdetails (ausklappbare Felder) --- */
+
 .sub-details {
   display: none;
   margin-left: 1.3rem;
-  /* border-left: 3px solid #e5eaf0; */
+  
   padding-left: 1.2rem;
   margin-top: 0.8rem;
   margin-bottom: 1rem;
@@ -198,7 +198,7 @@ textarea {
   border-radius: 6px;
 }
 
-/* --- Info-/Warnboxen --- */
+
 .info-box,
 .highlight-box,
 .warning-box {
@@ -212,20 +212,20 @@ textarea {
 
 .info-box {
   background-color: #eef9ff;
-  /* border-left: 6px solid var(--primary); */
+  
 }
 
 .highlight-box {
 background-color: #eef9ff;
-  /* border-left: 6px solid var(--primary); */
+  
 }
 
 .warning-box {
   background-color: #fff9e6;
-  /* border-left: 6px solid #f0ad4e; */
+  
 }
 
-/* --- Button-Gruppe --- */
+
 .button-group {
   margin-top: 2.8rem;
   padding-top: 1.8rem;
@@ -247,7 +247,7 @@ button {
   isolation: isolate;
 }
 
-/* --- Buttons --- */
+
 .button-primary {
   background-color: var(--primary);
   color: #fff;
@@ -292,7 +292,7 @@ button {
   background-color: #c9302c;
 }
 
-/* Nur der PDF-Erstellen-Button wird überschrieben */
+
 #createPdfBtn {
   background-color: var(--primary) !important;
   color: #fff !important;
@@ -306,7 +306,7 @@ button {
 }
 
 
-/* --- Footer --- */
+
 footer {
   text-align: center;
   padding: 2.5rem 0;
@@ -328,7 +328,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* --- Textumbruch für lange Wörter auf kleinen Displays --- */
+
 h1, h2, h3, p, li, td, th {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -336,7 +336,7 @@ h1, h2, h3, p, li, td, th {
 }
 
 
-/* --- Responsiv --- */
+
 @media (max-width: 700px) {
   .page-container {
     margin: 1rem;
@@ -367,7 +367,7 @@ h1, h2, h3, p, li, td, th {
   z-index: 10;
 }
 
-/* dezente Glanzlinie am oberen Rand */
+
 .site-header::before {
   content: "";
   position: absolute;
@@ -380,7 +380,7 @@ h1, h2, h3, p, li, td, th {
   border-top-right-radius: 4px;
 }
 
-/* Schriftzug / Logo */
+
 .site-logo {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 1.8rem;
@@ -394,7 +394,7 @@ h1, h2, h3, p, li, td, th {
   transition: all 0.25s ease;
 }
 
-/* Hover-Effekt: heller Farbverlauf + leichtes Anheben */
+
 .site-logo:hover {
   transform: translateY(-1px);
   background: linear-gradient(90deg, #0054a6, #339af0);
@@ -403,7 +403,7 @@ h1, h2, h3, p, li, td, th {
   text-shadow: 0 1px 6px rgba(0, 112, 243, 0.15);
 }
 
-/* Optional: leichtes Unterstatement beim Scrollen (keine JS nötig) */
+
 @supports (position: sticky) {
   .site-header {
     position: sticky;
@@ -412,7 +412,7 @@ h1, h2, h3, p, li, td, th {
   }
 }
 
-/* Mobile Anpassung */
+
 @media (max-width: 700px) {
   .site-header {
     padding: 1.2rem 1rem;
@@ -425,10 +425,10 @@ h1, h2, h3, p, li, td, th {
 
 
 .highlight-box.pruefdatum-box {
-  font-size: 0.75rem;        /* deutlich kleinerer Text */
-  padding: 0.4rem 0.6rem;    /* schmalere Box */
-  margin: 0.5rem 0;          /* weniger Außenabstand */
-  max-width: fit-content;   /* Box nur so breit wie der Inhalt */
+  font-size: 0.75rem;        
+  padding: 0.4rem 0.6rem;    
+  margin: 0.5rem 0;          
+  max-width: fit-content;   
 }
 
 .highlight-box.pruefdatum-box p {
@@ -436,7 +436,7 @@ h1, h2, h3, p, li, td, th {
   line-height: 1.3;
 }
 
-/* Kategorie-Banner für Unterseiten (Rücklink zur Hub-Seite) */
+
 .category-badge {
     display: inline-flex;
     align-items: center;
@@ -496,7 +496,7 @@ h1, h2, h3, p, li, td, th {
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover nur für Geräte mit Maus */
+
 @media (hover: hover) {
   .button.jump-button:hover {
     background-color: #3390ff;
@@ -504,7 +504,7 @@ h1, h2, h3, p, li, td, th {
   }
 }
 
-/* Active (kein Wackeln) */
+
 .button.jump-button:active {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
@@ -515,7 +515,7 @@ h1, h2, h3, p, li, td, th {
   .button.jump-button {
     width: 100% !important;
     max-width: 100%;
-    box-sizing: border-box;   /* 🔥 DAS fixt das Rechts-Rutschen */
+    box-sizing: border-box;   
 
     font-size: 15px;
     padding: 14px;
@@ -547,7 +547,7 @@ summary::-webkit-details-marker {
   display: none;
 }
 
-/* Pfeil */
+
 summary::after {
   content: "▾";
   position: absolute;
@@ -568,12 +568,12 @@ details p {
 .highlight-box {
   background: #f4f9ff;
   border: 1px solid #d6e9ff;
-  /* border-left: 4px solid #4da3ff; */
+  
   border-radius: 10px;
   padding: 20px;
 }
 
-/* Buttons darin */
+
 .button.button-secondary {
   display: inline-block;
   margin: 6px 8px 6px 0;
@@ -623,7 +623,7 @@ details p {
   color: #1d5c99;
 }
 .info-box.warning {
-  /* border-left: 4px solid #4da3ff !important; */
+  
   background: #f4f9ff;
   border-radius: 8px;
 }
@@ -648,8 +648,8 @@ details p {
 .usp-item {
     display: flex;
     align-items: center;
-    background: #f0f7ff; /* Sehr helles Blau passend zum Design */
-    color: #0056b3;      /* Dein Logo-Blau */
+    background: #f0f7ff; 
+    color: #0056b3;      
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -661,10 +661,10 @@ details p {
     margin-right: 6px;
     width: 16px;
     height: 16px;
-    fill: #2e7d32; /* Ein dezentes Grün für die Haken */
+    fill: #2e7d32; 
 }
 
-/* Desktop-Standard (hast du schon) */
+
 .usp-bar {
     display: flex;
     justify-content: center;
@@ -673,18 +673,18 @@ details p {
     margin: 15px 0 25px 0;
 }
 
-/* Mobile Optimierung (Neu hinzufügen) */
+
 @media (max-width: 600px) {
     .usp-bar {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Zwei gleich breite Spalten */
+        grid-template-columns: 1fr 1fr; 
         gap: 8px;
         padding: 0 10px;
     }
 
     .usp-item {
-        justify-content: center; /* Zentriert Inhalt in der Kachel */
-        font-size: 0.75rem;      /* Etwas kleiner auf dem Handy */
+        justify-content: center; 
+        font-size: 0.75rem;      
         padding: 8px 4px;
         text-align: center;
     }
@@ -695,7 +695,7 @@ details p {
     }
 }
 
-/* ─── HEADER: Von schlicht zu charakterstark ─── */
+
 
 .site-header {
   padding: 0 !important;
@@ -705,14 +705,14 @@ details p {
   justify-content: center;
 }
 
-/* Schmale Akzentlinie oben – bleibt, wird aber feiner */
+
 .site-header::before {
   height: 3px !important;
   background: linear-gradient(90deg, #003d80 0%, #0070f3 50%, #60b0ff 100%) !important;
   opacity: 0.85;
 }
 
-/* Logo-Wrapper: gibt dem einfachen <a> mehr Charakter */
+
 .site-logo {
   display: inline-flex;
   align-items: center;
@@ -722,19 +722,19 @@ details p {
   font-weight: 800 !important;
   letter-spacing: -0.03em !important;
 
-  /* Gradient-Text */
+  
   background: linear-gradient(135deg, #003d80 0%, #0070f3 55%, #3b9eff 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
 
-  /* Subtile Kapsel im Hintergrund */
+  
   position: relative;
   border-radius: 999px;
   transition: all 0.3s ease !important;
 }
 
-/* Hintergrund-Kapsel beim Hover */
+
 .site-logo::before {
   content: "";
   position: absolute;
@@ -750,7 +750,7 @@ details p {
   opacity: 1;
 }
 
-/* Kleines Kompass/Lotse-Icon vor dem Namen */
+
 
 
 .site-logo:hover::after {
@@ -763,8 +763,8 @@ details p {
   transform: translateY(-1px) !important;
 }
 
-/* Tagline unter dem Logo – optional, HTML nicht nötig */
-/* Falls du eine Tagline ergänzen möchtest, einfach ein <span class="header-tagline"> ins HTML */
+
+
 .header-tagline {
   display: block;
   font-size: 0.72rem;
@@ -778,7 +778,7 @@ details p {
 }
 
 
-/* ─── Responsive ─── */
+
 @media (max-width: 700px) {
   .site-logo {
     font-size: 1.35rem !important;
@@ -786,7 +786,7 @@ details p {
   }
 }
 
-/* Ersetze die Klassennamen mit denen, die du im HTML für die Boxen nutzt */
+
 .info-box, 
 .warning-box, 
 .highlight-box {
@@ -798,22 +798,22 @@ header, .site-header {
   max-width: 100% !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  padding-left: 15px !important;  /* Schützt Logos/Texte vor dem Bildschirmrand */
-  padding-right: 15px !important; /* Schützt Logos/Texte vor dem Bildschirmrand */
+  padding-left: 15px !important;  
+  padding-right: 15px !important; 
   box-sizing: border-box !important;
 }
 
 html, body {
   width: 100% !important;
   max-width: 100% !important;
-  overflow-x: hidden !important; /* Verhindert das seitliche Wischen komplett */
+  overflow-x: hidden !important; 
   margin: 0 !important;
   padding: 0 !important;
   box-sizing: border-box !important;
 }
 
 *, *:before, *:after {
-  box-sizing: inherit !important; /* Zwingt alle Elemente, Ränder richtig zu berechnen */
+  box-sizing: inherit !important; 
 }
 
 
@@ -841,7 +841,7 @@ html, body {
   outline-offset: 2px !important;
 }
 
-/* --- Header: weiß, Hairline, keine Glanzlinie --- */
+
 
 .site-header {
   background: #ffffff !important;
@@ -865,7 +865,7 @@ html, body {
 .site-logo::before,
 .site-logo::after { display: none !important; }
 
-/* --- Container: weiße Karte, ruhiger Schatten --- */
+
 
 .page-container {
   background: #ffffff !important;
@@ -881,7 +881,7 @@ html, body {
               var(--soft-shadow) !important;
 }
 
-/* --- Überschriften: Linien-System wie auf den Info-Seiten --- */
+
 
 h1 {
   animation: none !important;
@@ -893,7 +893,7 @@ h1 {
   text-wrap: balance !important;
 }
 
-/* Signatur-Linie UNTER der H1 */
+
 h1::after {
   content: "" !important;
   display: block !important;
@@ -925,10 +925,10 @@ h2::after {
   opacity: 0.75 !important;
 }
 
-/* Im Popup keine Linie unter der Überschrift */
+
 .popup-content h2::after { display: none !important; }
 
-/* --- Fieldsets: weiße Karten, Legend als Micro-Label --- */
+
 
 fieldset {
   background: #ffffff !important;
@@ -950,7 +950,7 @@ legend {
   padding: 0 0.45rem !important;
 }
 
-/* --- Formularfelder: präzise & wertig --- */
+
 
 label { color: #3d4753 !important; }
 label small { color: #6b7683 !important; }
@@ -983,7 +983,7 @@ select:focus {
   height: 18px !important;
 }
 
-/* Ausklappbare Unterfelder: eigene kleine Karte */
+
 .sub-details {
   background: #fbfcfd !important;
   border: 0 !important;
@@ -992,7 +992,7 @@ select:focus {
   padding: 1rem 1.2rem !important;
 }
 
-/* --- Hinweisboxen: weiß + Hairline, klarer Text --- */
+
 
 .info-box,
 .highlight-box,
@@ -1020,7 +1020,7 @@ select:focus {
 .highlight-box strong,
 .warning-box strong { color: #10243e !important; }
 
-/* Prüfdatum: keine Box, nur Meta-Zeile */
+
 .highlight-box.pruefdatum-box {
   background: transparent !important;
   box-shadow: none !important;
@@ -1033,7 +1033,7 @@ select:focus {
 
 .highlight-box.pruefdatum-box p { margin: 0 !important; }
 
-/* --- Buttons: crisp, ohne Shimmer & Lift --- */
+
 
 .button-group { border-top: 1px solid #e8edf2 !important; }
 
@@ -1075,7 +1075,7 @@ button:active { transform: none !important; }
   color: #123c63 !important;
 }
 
-/* Danger: sachliches, gedämpftes Rot */
+
 .button-danger {
   background: #c4453e !important;
   color: #ffffff !important;
@@ -1101,7 +1101,7 @@ button:active { transform: none !important; }
               0 4px 12px rgba(0, 89, 201, 0.24) !important;
 }
 
-/* Jump-Button: einheitliches Blau, kein Pfeil */
+
 .button.jump-button {
   background: #0070f3 !important;
   border-radius: 10px !important;
@@ -1118,7 +1118,7 @@ button:active { transform: none !important; }
   display: none !important;
 }
 
-/* --- Popup: weiße Karte, blauer Submit --- */
+
 
 .popup-overlay {
   background: rgba(16, 24, 40, 0.45) !important;
@@ -1164,7 +1164,7 @@ button:active { transform: none !important; }
   color: #2f2f2f !important;
 }
 
-/* --- Details/Accordion --- */
+
 
 details {
   background: #ffffff !important;
@@ -1184,7 +1184,7 @@ summary::after { color: #7d94ab !important; }
 details[open] summary::after { color: #0070f3 !important; }
 details p { color: #3d4753 !important; }
 
-/* --- Quellen, USP, Badge --- */
+
 
 .kl-sources-box a { color: #0070f3 !important; font-weight: 500 !important; }
 
@@ -1219,7 +1219,7 @@ details p { color: #3d4753 !important; }
   box-shadow: inset 0 0 0 1px var(--hairline) !important;
 }
 
-/* --- Footer --- */
+
 
 footer {
   background: transparent !important;
@@ -1230,14 +1230,14 @@ footer {
 footer a { color: #33546f !important; }
 footer a:hover { color: #0070f3 !important; }
 
-/* --- Weißraum-Rhythmus auf Desktop --- */
+
 
 @media (min-width: 900px) {
   .page-container { padding: 3.5rem 3.25rem !important; }
   h2 { margin-top: 3.2rem !important; }
 }
 
-/* --- Scrollbar: dezent --- */
+
 
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -1254,7 +1254,7 @@ footer a:hover { color: #0070f3 !important; }
    (ans ENDE beider Dateien)
    ========================================= */
 
-/* Besuchte Links nicht lila – sofort professioneller */
+
 a:visited:not(.button):not(.site-logo):not(.category-badge) {
   color: #0059c9 !important;
 }
@@ -1262,31 +1262,31 @@ a:visited:not(.button):not(.site-logo):not(.category-badge):hover {
   color: #004e92 !important;
 }
 
-/* Prüf-/Meta-Zeile: WCAG-sicherer Kontrast */
+
 .highlight-box.pruefdatum-box,
 .highlight-box.pruefdatum-box p {
   color: #6b7280 !important;
 }
 
-/* Listenpunkte einheitlich im Markenblau */
+
 ul li::marker {
   color: rgba(0, 112, 243, 0.7) !important;
 }
 
-/* Fieldsets: kein Luftloch unter der Legend */
+
 fieldset { padding-top: 1.6rem !important; }
 fieldset > label:first-of-type,
 fieldset > .checkbox-group:first-child,
 fieldset > p:first-of-type { margin-top: 0.2rem !important; }
 
-/* Lange Legenden sauber umbrechen */
+
 legend {
   line-height: 1.6 !important;
   max-width: 100% !important;
   text-wrap: balance !important;
 }
 
-/* Placeholder dezent, Details unten bündig */
+
 input::placeholder,
 textarea::placeholder { color: #9aa4af !important; }
 details p:last-child { margin-bottom: 0 !important; }
@@ -1303,7 +1303,7 @@ details p:last-child { margin-bottom: 0 !important; }
   box-sizing: border-box !important;
 }
 
-/* Label wird zur vollen, umbrechenden Klickfläche */
+
 .checkbox-group label {
   display: block !important;
   position: relative !important;
@@ -1327,7 +1327,7 @@ details p:last-child { margin-bottom: 0 !important; }
   transition: background-color 0.2s ease;
 }
 
-/* Checkbox links fest verankern */
+
 .checkbox-group input[type="checkbox"] {
   position: absolute !important;
   left: 0.85rem !important;
@@ -1343,20 +1343,20 @@ details p:last-child { margin-bottom: 0 !important; }
   cursor: pointer;
 }
 
-/* Tastatur-Fokus sichtbar lassen */
+
 .checkbox-group input[type="checkbox"]:focus-visible {
   outline: 2px solid rgba(0, 112, 243, 0.5) !important;
   outline-offset: 2px !important;
 }
 
-/* Hover nur für Geräte mit Maus */
+
 @media (hover: hover) {
   .checkbox-group label:hover {
     background: #f7fafc !important;
   }
 }
 
-/* Mobile Feedback beim Antippen */
+
 @media (max-width: 768px) {
   .checkbox-group label:active {
     background-color: rgba(0, 102, 204, 0.08) !important;
@@ -1364,7 +1364,7 @@ details p:last-child { margin-bottom: 0 !important; }
   }
 }
 
-/* Variante B – gestaffelte Linien-Hierarchie */
+
 h1::after { width: 160px !important; height: 2px !important; }
 h2::after { width: 112px !important; height: 2px !important; }
 
@@ -1379,11 +1379,11 @@ h3::after {
   background: linear-gradient(90deg, #0070f3, rgba(0, 112, 243, 0)) !important;
 }
 
-/* In dichten H3-Stapeln bleibt es clean ohne Punkt */
+
 .faq-section h3::before,
 .kl-fall h3::before { display: none !important; }
 
-/* Alternative, falls dir der Punkt zu rund ist – Mini-Strich:*/
+
 h3::before {
   width: 14px !important;
   height: 2px !important;
@@ -1516,7 +1516,7 @@ h3::before {
   color: #3c4650 !important;
 }
 
-/* Ausnahme: Warnboxen mit echtem Inhalt (Überschrift/Liste) = volle Karte */
+
 .warning-box:has(h2, h3, ul, ol, table),
 .info-box.warning:has(h2, h3, ul, ol, table) {
   background: #ffffff !important;
@@ -1529,11 +1529,11 @@ h3::before {
 
 
 
-/* Details definitiv weiß */
+
 details, details[open] { background: #ffffff !important; }
 summary { background: transparent !important; }
 
-/* Meta-Zeile (Prüfdatum) wieder klein & grau */
+
 .highlight-box.pruefdatum-box {
   background: transparent !important;
   box-shadow: none !important;
@@ -1565,7 +1565,7 @@ summary { background: transparent !important; }
   font-family: inherit !important;
 }
 
-/* Überschrift wird zum Micro-Label wie Legenden & Tabellenköpfe */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) h3 {
   margin: 0 0 0.9rem 0 !important;
   font-size: 0.78rem !important;
@@ -1575,12 +1575,12 @@ summary { background: transparent !important; }
   color: #5a7186 !important;
 }
 
-/* Kein H3-Punkt vor dieser zentrierten Zeile */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) h3::before {
   display: none !important;
 }
 
-/* Fließtext: ruhig, zentriert, begrenzt */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p {
   margin: 0 auto 1rem auto !important;
   max-width: 68ch !important;
@@ -1597,7 +1597,7 @@ summary { background: transparent !important; }
   color: #6b7280 !important;
 }
 
-/* Links: Markenblau, ohne fette Unterstreich-Optik */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) a {
   color: #0070f3 !important;
   font-weight: 500 !important;
@@ -1611,7 +1611,7 @@ summary { background: transparent !important; }
   text-underline-offset: 3px !important;
 }
 
-/* Die Lotsen-Karte wird zur ruhigen Hairline-Karte der Box-Familie */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) div[style*="d1d5db" i] {
   max-width: 560px !important;
   margin: 1.5rem auto !important;
@@ -1626,7 +1626,7 @@ summary { background: transparent !important; }
   margin: 0 !important;
 }
 
-/* Feedback-Zeile: kleine graue Meta-Zeile unter einer Hairline */
+
 :is(.editorial-footer, div[style*="2px solid #e0e0e0" i]) p[style*="eaeaea" i] {
   margin: 1.5rem auto 0 auto !important;
   padding-top: 1.1rem !important;
@@ -1678,7 +1678,7 @@ h3::before {
   color: #2f2f2f !important;
 }
 
-/* 3) Prüfdatum-Zeile klein & grau (fehlte in der style.css) */
+
 .highlight-box.pruefdatum-box {
   background: transparent !important;
   box-shadow: none !important;
@@ -1694,7 +1694,7 @@ h3::before {
 .highlight-box.pruefdatum-box p { margin: 0 !important; }
 .highlight-box.pruefdatum-box strong { color: #46515c !important; }
 
-/* 4) Feinschliff-Teile, die bisher nur in der style.css standen */
+
 a:visited:not(.button):not(.site-logo):not(.category-badge) { color: #0059c9 !important; }
 a:visited:not(.button):not(.site-logo):not(.category-badge):hover { color: #004e92 !important; }
 ul li::marker { color: rgba(0, 112, 243, 0.7) !important; }
