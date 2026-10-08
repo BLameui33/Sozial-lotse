@@ -134,7 +134,7 @@
     const meta = `<p class="ac-meta">Prüfung vom ${datum}, Rechtsstand ${CONFIG.jahr}. Dies ist eine Orientierung und keine Rechtsberatung. Verbindlich entscheidet die Agentur für Arbeit.</p>`;
     const aktionen = (extra = "") => `
       <div class="ac-actions">
-        <button type="button" id="ac_pdf_btn" class="button">Ergebnis als PDF speichern</button>
+        
         ${extra}
       </div>`;
 
