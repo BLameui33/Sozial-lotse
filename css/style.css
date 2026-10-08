@@ -2738,93 +2738,63 @@ input, select, textarea {
    ========================================= */
 
 
-.page-container p,
-.page-container li,
-.info-box p, .info-box li,
-.highlight-box p, .highlight-box li,
-.warning-box p, .warning-box li,
-.kl-sources-box li {
+
+
+/* --- Desktop --- */
+:is(.page-container, .info-box, .highlight-box, .kl-sources-box)
+:is(p, li):not(
+  :is(.warning-box, .info-box.warning, .pruefdatum-box, .editorial-footer,
+      div[style*="2px solid #e0e0e0" i], fieldset, details, .checkbox-group,
+      .kl-checklist, table,
+      .info-box:not([style]):not(:has(h2, h3, ul, ol, table, p + p))) *
+):not([style*="color" i]):not([style*="font-size" i]) {
   hyphens: manual !important;
   -webkit-hyphens: manual !important;
   font-size: 1.02rem !important;
   line-height: 1.8 !important;
   color: #2b3440 !important;
-  text-wrap: pretty !important;     
-  overflow-wrap: break-word !important; 
+  text-wrap: pretty !important;
+  overflow-wrap: break-word !important;
 }
 
-.page-container p {
-  margin-bottom: 1.6rem !important;
-}
-
+.page-container > p { margin-bottom: 1.6rem !important; }
 
 .info-box p + p,
-.highlight-box p + p,
-.warning-box p + p {
-  margin-top: 1.1rem !important;
-}
+.highlight-box p + p { margin-top: 1.1rem !important; }
 
-
-.page-container h2 { margin-top: 3rem !important; }
-.page-container h3 { margin-top: 2.4rem !important; }
-
+/* Abstand nur, wenn die Überschrift nicht am Anfang eines Containers steht */
+.page-container h2:not(:first-child) { margin-top: 3rem !important; }
+.page-container h3:not(:first-child) { margin-top: 2.4rem !important; }
 
 .page-container strong,
 .info-box strong,
-.highlight-box strong,
-.warning-box strong {
+.highlight-box strong {
   font-weight: 600 !important;
 }
 
-
+/* --- Smartphone --- */
 @media (max-width: 600px) {
 
-  .page-container p,
-  .page-container li,
-  .info-box p, .info-box li,
-  .highlight-box p, .highlight-box li,
-  .warning-box p, .warning-box li,
-  .kl-sources-box li {
-    /* Trennung wieder erlauben: bei schmaler Spalte vermeidet sie
-       große Lücken und ausgefranste Zeilenenden */
+  :is(.page-container, .info-box, .highlight-box, .kl-sources-box)
+  :is(p, li):not(
+    :is(.warning-box, .info-box.warning, .pruefdatum-box, .editorial-footer,
+        div[style*="2px solid #e0e0e0" i], fieldset, details, .checkbox-group,
+        .kl-checklist, table,
+        .info-box:not([style]):not(:has(h2, h3, ul, ol, table, p + p))) *
+  ):not([style*="color" i]):not([style*="font-size" i]) {
     hyphens: auto !important;
     -webkit-hyphens: auto !important;
-    hyphenate-limit-chars: 7 3 3;   
-
-    font-size: 1rem !important;     
-    line-height: 1.7 !important;    
-    text-align: left !important;    
+    hyphenate-limit-chars: 7 3 3;
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    text-align: left !important;
   }
 
-  .page-container p {
-    margin-bottom: 1.3rem !important;
-  }
+  .page-container > p { margin-bottom: 1.3rem !important; }
 
   .info-box p + p,
-  .highlight-box p + p,
-  .warning-box p + p {
-    margin-top: 0.9rem !important;
-  }
+  .highlight-box p + p { margin-top: 0.9rem !important; }
 
-  
-  .page-container h2 { margin-top: 2.2rem !important; }
-  .page-container h3 { margin-top: 1.8rem !important; }
-
-  
-  .page-container li,
-  .info-box li,
-  .highlight-box li,
-  .warning-box li {
-    margin-bottom: 0.55rem !important;
-  }
+  .page-container h2:not(:first-child) { margin-top: 2.2rem !important; }
+  .page-container h3:not(:first-child) { margin-top: 1.8rem !important; }
 }
-
-
-
-
-
-
-
-
-
-
