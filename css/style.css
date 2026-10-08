@@ -2737,7 +2737,7 @@ input, select, textarea {
    Lesefluss: Desktop (volle Breite) + Smartphone
    ========================================= */
 
-/* --- Basis (Desktop): ruhige Zeilen, keine Trennstriche --- */
+
 .page-container p,
 .page-container li,
 .info-box p, .info-box li,
@@ -2749,26 +2749,26 @@ input, select, textarea {
   font-size: 1.02rem !important;
   line-height: 1.8 !important;
   color: #2b3440 !important;
-  text-wrap: pretty !important;     /* vermeidet einzelne Wörter in der letzten Zeile */
-  overflow-wrap: break-word !important; /* verhindert Überlaufen bei sehr langen Wörtern/URLs */
+  text-wrap: pretty !important;     
+  overflow-wrap: break-word !important; 
 }
 
 .page-container p {
   margin-bottom: 1.6rem !important;
 }
 
-/* Absätze innerhalb von Boxen etwas klarer trennen */
+
 .info-box p + p,
 .highlight-box p + p,
 .warning-box p + p {
   margin-top: 1.1rem !important;
 }
 
-/* Überschriften: mehr Luft nach oben, damit Abschnitte atmen */
+
 .page-container h2 { margin-top: 3rem !important; }
 .page-container h3 { margin-top: 2.4rem !important; }
 
-/* Fett dezenter, damit Absätze nicht wuchtig wirken */
+
 .page-container strong,
 .info-box strong,
 .highlight-box strong,
@@ -2776,7 +2776,7 @@ input, select, textarea {
   font-weight: 600 !important;
 }
 
-/* --- Smartphone: schmale Spalte --- */
+
 @media (max-width: 600px) {
 
   .page-container p,
@@ -2789,11 +2789,11 @@ input, select, textarea {
        große Lücken und ausgefranste Zeilenenden */
     hyphens: auto !important;
     -webkit-hyphens: auto !important;
-    hyphenate-limit-chars: 7 3 3;   /* nur Wörter ab 7 Zeichen, je min. 3 davor/danach */
+    hyphenate-limit-chars: 7 3 3;   
 
-    font-size: 1rem !important;     /* nicht kleiner als 16px, gut lesbar */
-    line-height: 1.7 !important;    /* auf schmaler Spalte etwas kompakter */
-    text-align: left !important;    /* kein Blocksatz, vermeidet Lücken */
+    font-size: 1rem !important;     
+    line-height: 1.7 !important;    
+    text-align: left !important;    
   }
 
   .page-container p {
@@ -2806,11 +2806,11 @@ input, select, textarea {
     margin-top: 0.9rem !important;
   }
 
-  /* Überschriften: kleinere Abstände, sonst wirkt es auf dem Handy leer */
+  
   .page-container h2 { margin-top: 2.2rem !important; }
   .page-container h3 { margin-top: 1.8rem !important; }
 
-  /* Listen: etwas weniger Abstand zwischen den Punkten */
+  
   .page-container li,
   .info-box li,
   .highlight-box li,
