@@ -136,29 +136,67 @@
           Kindergeld ist komplett pfändungsfrei! Es muss jedoch separat auf der Bescheinigung ausgewiesen werden.
         </p>
 
-                <p class="hinweis" style="margin-bottom:8px; font-size:0.9em;">
-          <strong>Weitere pfändungsfreie Zahlungen auf dem Konto</strong> (monatlicher Betrag in €, leer lassen wenn nicht zutreffend):
-        </p>
-        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
-          <label class="pflegegrad-label" for="pkonto_pflegegeld">Pflegegeld / Blindengeld / Mehrbedarf wegen Behinderung oder Gesundheitsschaden
-            <input type="text" inputmode="decimal" id="pkonto_pflegegeld" placeholder="z.B. 347,00" />
-          </label>
-          <label class="pflegegrad-label" for="pkonto_elterngeld">Elterngeld (unpfändbarer Sockelbetrag, max. 300 €)
-            <input type="text" inputmode="decimal" id="pkonto_elterngeld" placeholder="z.B. 300,00" />
-          </label>
-          <label class="pflegegrad-label" for="pkonto_kinderzuschlag">Kinderzuschlag
-            <input type="text" inputmode="decimal" id="pkonto_kinderzuschlag" placeholder="z.B. 297,00" />
-          </label>
-          <label class="pflegegrad-label" for="pkonto_bedarfsgemeinschaft">Bürgergeld/Grundsicherungsgeld / Sozialhilfe für Haushaltsangehörige (z.B. Partner, Kinder)
-            <input type="text" inputmode="decimal" id="pkonto_bedarfsgemeinschaft" placeholder="z.B. 563,00" />
-          </label>
-          <label class="pflegegrad-label" for="pkonto_arbeitseinkommen">Unpfändbare Einkommensteile (§ 850a ZPO: z.B. Aufwandsentschädigung, Erschwerniszulage, Hälfte der Überstundenvergütung)
-            <input type="text" inputmode="decimal" id="pkonto_arbeitseinkommen" placeholder="z.B. 150,00" />
-          </label>
-        </div>
-        <p class="hinweis" style="margin-top:5px; margin-bottom:15px; font-size:0.85em; color:#666;">
-          Die anerkannte Stelle prüft diese Beträge anhand Ihrer Nachweise (z.B. Pflegegeld-Bescheid, Kontoauszug).
-        </p>
+            <!-- ERSATZ für den zuvor eingefügten Block (Zusatzfelder-Sektion) -->
+<div class="pkonto-zusatz" style="margin: 30px 0 40px 0; padding-top: 18px; border-top: 1px solid #e5e7eb;">
+  <h3 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 600; color: #333;">Weitere pfändungsfreie Zahlungen <span style="font-weight: normal; color: #777;">(optional)</span></h3>
+  <p class="hinweis" style="margin: 0 0 8px 0; font-size: 0.85em; color: #666;">
+    Monatlicher Betrag in €. Nicht zutreffende Felder einfach leer lassen.
+  </p>
+
+  <details style="margin-bottom: 16px;">
+    <summary style="cursor: pointer; color: #0d47a1; font-size: 0.9em;">
+      Was gehört hierher?
+    </summary>
+    <div style="margin-top: 8px; color: #555; line-height: 1.5; font-size: 0.88em; padding-left: 12px; border-left: 2px solid #e5e7eb;">
+      <p style="margin: 0 0 6px 0;">
+        Manche Leistungen auf Ihrem Konto sind ganz oder teilweise vor Pfändung geschützt, zählen aber nicht automatisch zum Grundfreibetrag. Damit die Bank sie freigibt, müssen sie auf der Bescheinigung stehen.
+      </p>
+      <ul style="margin: 0 0 6px 0; padding-left: 18px;">
+        <li><strong>Pflegegeld / Blindengeld / Mehrbedarf:</strong> Leistungen, die einen Mehrbedarf wegen Behinderung oder Gesundheitsschaden ausgleichen.</li>
+        <li><strong>Elterngeld:</strong> Nur der Sockelbetrag ist geschützt (in der Regel 300 €, bei ElterngeldPlus 150 €, bei Mehrlingen mehr). Bitte nur diesen Teil eintragen.</li>
+        <li><strong>Kinderzuschlag:</strong> Zusätzliche Leistung der Familienkasse für Familien mit geringem Einkommen.</li>
+        <li><strong>Leistungen für Haushaltsangehörige:</strong> Bürgergeld/Grundsicherungsgeld oder Sozialhilfe, die für Partner oder Kinder auf Ihr Konto überwiesen wird.</li>
+        <li><strong>Unpfändbare Einkommensteile (§ 850a ZPO):</strong> z.B. Aufwandsentschädigungen, Erschwerniszulagen oder die Hälfte der Überstundenvergütung.</li>
+      </ul>
+      <p style="margin: 0;">
+        Für jeden Betrag brauchen Sie einen Nachweis (z.B. Bescheid oder Kontoauszug). Die anerkannte Stelle prüft die Angaben.
+      </p>
+    </div>
+  </details>
+
+  <div style="display: grid; gap: 14px 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: end;">
+
+    <div style="display: flex; flex-direction: column; gap: 3px;">
+      <label for="pkonto_pflegegeld" style="font-size: 0.92em;">Pflegegeld / Blindengeld / Mehrbedarf</label>
+      <input type="text" inputmode="decimal" id="pkonto_pflegegeld" placeholder="z.B. 347,00" style="width: 100%; box-sizing: border-box;" />
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 3px;">
+      <label for="pkonto_elterngeld" style="font-size: 0.92em;">Elterngeld (Sockelbetrag, meist max. 300 €)</label>
+      <input type="text" inputmode="decimal" id="pkonto_elterngeld" placeholder="z.B. 300,00" style="width: 100%; box-sizing: border-box;" />
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 3px;">
+      <label for="pkonto_kinderzuschlag" style="font-size: 0.92em;">Kinderzuschlag</label>
+      <input type="text" inputmode="decimal" id="pkonto_kinderzuschlag" placeholder="z.B. 297,00" style="width: 100%; box-sizing: border-box;" />
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 3px;">
+      <label for="pkonto_bedarfsgemeinschaft" style="font-size: 0.92em;">Leistungen für Haushaltsangehörige (Bürgergeld/Grundsicherungsgeld)</label>
+      <input type="text" inputmode="decimal" id="pkonto_bedarfsgemeinschaft" placeholder="z.B. 563,00" style="width: 100%; box-sizing: border-box;" />
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 3px;">
+      <label for="pkonto_arbeitseinkommen" style="font-size: 0.92em;">Unpfändbare Einkommensteile (§ 850a ZPO)</label>
+      <input type="text" inputmode="decimal" id="pkonto_arbeitseinkommen" placeholder="z.B. 150,00" style="width: 100%; box-sizing: border-box;" />
+    </div>
+
+  </div>
+
+  <p class="hinweis" style="margin: 12px 0 0 0; font-size: 0.82em; color: #777;">
+    Die anerkannte Stelle prüft diese Beträge anhand Ihrer Nachweise.
+  </p>
+</div>
 
         <label class="pflegegrad-label" for="pkonto_nachzahlung">
           Erwarten Sie eine Nachzahlung von Sozialleistungen?

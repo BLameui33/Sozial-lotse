@@ -1,7 +1,14 @@
 // pkonto-bescheinigung.js – Freibetrag berechnen & § 903 ZPO PDF generieren
 
 // Hilfsfunktionen
-function n(el){ if(!el) return 0; const raw=(el.value||"").toString().replace(",","."); const v=Number(raw); return Number.isFinite(v)?v:0; }
+function n(el){
+  if(!el) return 0;
+  let raw=(el.value||"").toString().replace(/[€\s]/g,"");
+  // Deutsches Format: "1.347,50" -> "1347.50"; "347,00" -> "347.00"
+  if (raw.includes(",")) raw = raw.replace(/\./g,"").replace(",",".");
+  const v=Number(raw);
+  return Number.isFinite(v)?v:0;
+}
 function euro(v){ const x=Number.isFinite(v)?v:0; return x.toFixed(2).replace(".",",")+" €"; }
 
 function errorBox(msgs){
@@ -259,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(z => z.betrag > 0);
 
     if (unterhalt === 0 && kindergeld === 0 && nachzahlung === "nein" && zusatz.length === 0) {
-      errors.push("Sie haben keine Erhöhungsgründe angegeben (0 Unterhalt, 0 Kindergeld, keine Nachzahlung). In diesem Fall gilt automatisch der gesetzliche Grundfreibetrag. Sie benötigen für Ihre Bank keine zusätzliche Bescheinigung!");
+      errors.push("Sie haben keine Erhöhungsgründe angegeben (0 Unterhalt, 0 Kindergeld, keine Nachzahlung, keine weiteren Zahlungen mit Betrag). In diesem Fall gilt automatisch der gesetzliche Grundfreibetrag. Sie benötigen für Ihre Bank keine zusätzliche Bescheinigung!");
     }
 
     const name = (nameInp.value || "").trim();
@@ -268,8 +275,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const bank = (bankInp.value || "").trim();
     const iban = (ibanInp.value || "").trim();
     
-    if (!name || !geburtsdatum || !adresse || !bank || !iban) {
-      errors.push("Bitte füllen Sie alle Datenfelder (Name, Adresse, Bank, IBAN) aus. Diese müssen zwingend auf das amtliche Formular gedruckt werden, damit die Bank den Schutz aktiviert.");
+    const fehlend = [];
+    if (!name) fehlend.push("Vor- und Nachname");
+    if (!geburtsdatum) fehlend.push("Geburtsdatum");
+    if (!adresse) fehlend.push("Adresse");
+    if (!bank) fehlend.push("Name der Bank");
+    if (!iban) fehlend.push("IBAN");
+    if (fehlend.length > 0) {
+      errors.push("Bitte ergänzen Sie in Schritt 2 noch: <strong>" + fehlend.join(", ") + "</strong>. Diese Daten müssen auf das Formular gedruckt werden, damit die Bank den Schutz aktiviert.");
     }
 
     if (errors.length > 0){
