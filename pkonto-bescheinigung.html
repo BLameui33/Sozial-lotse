@@ -136,6 +136,30 @@
           Kindergeld ist komplett pfändungsfrei! Es muss jedoch separat auf der Bescheinigung ausgewiesen werden.
         </p>
 
+                <p class="hinweis" style="margin-bottom:8px; font-size:0.9em;">
+          <strong>Weitere pfändungsfreie Zahlungen auf dem Konto</strong> (monatlicher Betrag in €, leer lassen wenn nicht zutreffend):
+        </p>
+        <div style="display:grid; gap:.6rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+          <label class="pflegegrad-label" for="pkonto_pflegegeld">Pflegegeld / Blindengeld / Mehrbedarf wegen Behinderung oder Gesundheitsschaden
+            <input type="text" inputmode="decimal" id="pkonto_pflegegeld" placeholder="z.B. 347,00" />
+          </label>
+          <label class="pflegegrad-label" for="pkonto_elterngeld">Elterngeld (unpfändbarer Sockelbetrag, max. 300 €)
+            <input type="text" inputmode="decimal" id="pkonto_elterngeld" placeholder="z.B. 300,00" />
+          </label>
+          <label class="pflegegrad-label" for="pkonto_kinderzuschlag">Kinderzuschlag
+            <input type="text" inputmode="decimal" id="pkonto_kinderzuschlag" placeholder="z.B. 297,00" />
+          </label>
+          <label class="pflegegrad-label" for="pkonto_bedarfsgemeinschaft">Bürgergeld/Grundsicherungsgeld / Sozialhilfe für Haushaltsangehörige (z.B. Partner, Kinder)
+            <input type="text" inputmode="decimal" id="pkonto_bedarfsgemeinschaft" placeholder="z.B. 563,00" />
+          </label>
+          <label class="pflegegrad-label" for="pkonto_arbeitseinkommen">Unpfändbare Einkommensteile (§ 850a ZPO: z.B. Aufwandsentschädigung, Erschwerniszulage, Hälfte der Überstundenvergütung)
+            <input type="text" inputmode="decimal" id="pkonto_arbeitseinkommen" placeholder="z.B. 150,00" />
+          </label>
+        </div>
+        <p class="hinweis" style="margin-top:5px; margin-bottom:15px; font-size:0.85em; color:#666;">
+          Die anerkannte Stelle prüft diese Beträge anhand Ihrer Nachweise (z.B. Pflegegeld-Bescheid, Kontoauszug).
+        </p>
+
         <label class="pflegegrad-label" for="pkonto_nachzahlung">
           Erwarten Sie eine Nachzahlung von Sozialleistungen?
           <select id="pkonto_nachzahlung">

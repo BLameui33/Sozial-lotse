@@ -38,10 +38,19 @@ const ZPO_WERTE = {
   kindergeldProKind: 259.00         // Aktueller Kindergeldsatz für das Jahr 2026
 };
 
+// Weitere pfändungsfreie Leistungen (frei eingebbare Monatsbeträge)
+const ZUSATZ_FELDER = [
+  { id: "pkonto_pflegegeld",           label: "Pflegegeld / Mehrbedarf (Gesundheitsschaden)" },
+  { id: "pkonto_elterngeld",           label: "Elterngeld (unpfändbarer Sockelbetrag)" },
+  { id: "pkonto_kinderzuschlag",       label: "Kinderzuschlag" },
+  { id: "pkonto_bedarfsgemeinschaft",  label: "Sozialleistungen für Haushaltsangehörige" },
+  { id: "pkonto_arbeitseinkommen",     label: "Unpfändbare Einkommensteile (§ 850a ZPO)" }
+];
+
 // -------------------------------------------------------------------
 // KERN-LOGIK: Berechnung des erhöhten Freibetrags
 // -------------------------------------------------------------------
-function berechnePkonto(unterhalt, kindergeld) {
+function berechnePkonto(unterhalt, kindergeld, zusatz = []) {
   let freibetrag = ZPO_WERTE.grundfreibetrag;
   let zuschlagUnterhalt = 0;
   let zuschlagKindergeld = 0;
@@ -60,7 +69,10 @@ function berechnePkonto(unterhalt, kindergeld) {
     zuschlagKindergeld = kindergeld * ZPO_WERTE.kindergeldProKind;
   }
 
-  freibetrag += zuschlagUnterhalt + zuschlagKindergeld;
+  // Weitere pfändungsfreie Leistungen
+  const zuschlagZusatz = zusatz.reduce((s, z) => s + z.betrag, 0);
+
+  freibetrag += zuschlagUnterhalt + zuschlagKindergeld + zuschlagZusatz;
 
   return {
     grundfreibetrag: ZPO_WERTE.grundfreibetrag,
@@ -68,6 +80,8 @@ function berechnePkonto(unterhalt, kindergeld) {
     zuschlagUnterhalt: zuschlagUnterhalt,
     kindergeldAnzahl: kindergeld,
     zuschlagKindergeld: zuschlagKindergeld,
+    zusatzPosten: zusatz,
+    zuschlagZusatz: zuschlagZusatz,
     gesamt: freibetrag
   };
 }
@@ -123,42 +137,40 @@ function generierePDF(daten, berechnung) {
   cursorY += (textLines.length * 6) + 5;
 
   // Tabelle der Beträge
-  doc.rect(marginX, cursorY, 170, 50); // Äußerer Rahmen
+  const zeilen = [];
+  zeilen.push(["Gesetzlicher Grundfreibetrag", berechnung.grundfreibetrag]);
+  if (berechnung.zuschlagUnterhalt > 0) {
+    zeilen.push([`Unterhaltspflicht für ${berechnung.unterhaltPersonen} Person(en)`, berechnung.zuschlagUnterhalt]);
+  }
+  if (berechnung.zuschlagKindergeld > 0) {
+    zeilen.push([`Kindergeldbezug für ${berechnung.kindergeldAnzahl} Kind(er)`, berechnung.zuschlagKindergeld]);
+  }
+  berechnung.zusatzPosten.forEach(z => zeilen.push([z.label, z.betrag]));
+
+  const tabellenHoehe = Math.max(50, 14 + zeilen.length * 8 + 18);
+
+  doc.rect(marginX, cursorY, 170, tabellenHoehe); // Äußerer Rahmen
   doc.line(marginX, cursorY + 10, marginX + 170, cursorY + 10); // Header Linie
-  
+
   doc.setFont("helvetica", "bold");
   doc.text("Grund", marginX + 5, cursorY + 7);
   doc.text("Monatlicher Betrag", marginX + 120, cursorY + 7);
-  
+
   doc.setFont("helvetica", "normal");
   let tableY = cursorY + 17;
-
-  // Grundfreibetrag
-  doc.text("Gesetzlicher Grundfreibetrag", marginX + 5, tableY);
-  doc.text(euro(berechnung.grundfreibetrag), marginX + 155, tableY, { align: "right" });
-  tableY += 8;
-
-  // Unterhalt
-  if (berechnung.zuschlagUnterhalt > 0) {
-    doc.text(`Unterhaltspflicht für ${berechnung.unterhaltPersonen} Person(en)`, marginX + 5, tableY);
-    doc.text(euro(berechnung.zuschlagUnterhalt), marginX + 155, tableY, { align: "right" });
+  zeilen.forEach(([text, betrag]) => {
+    doc.text(text, marginX + 5, tableY);
+    doc.text(euro(betrag), marginX + 155, tableY, { align: "right" });
     tableY += 8;
-  }
-
-  // Kindergeld
-  if (berechnung.zuschlagKindergeld > 0) {
-    doc.text(`Kindergeldbezug für ${berechnung.kindergeldAnzahl} Kind(er)`, marginX + 5, tableY);
-    doc.text(euro(berechnung.zuschlagKindergeld), marginX + 155, tableY, { align: "right" });
-    tableY += 8;
-  }
+  });
 
   // Summen-Linie
-  doc.line(marginX, cursorY + 40, marginX + 170, cursorY + 40);
+  doc.line(marginX, cursorY + tabellenHoehe - 10, marginX + 170, cursorY + tabellenHoehe - 10);
   doc.setFont("helvetica", "bold");
-  doc.text("Neuer pfändungsfreier Gesamtbetrag:", marginX + 5, cursorY + 47);
-  doc.text(euro(berechnung.gesamt), marginX + 155, cursorY + 47, { align: "right" });
+  doc.text("Neuer pfändungsfreier Gesamtbetrag:", marginX + 5, cursorY + tabellenHoehe - 3);
+  doc.text(euro(berechnung.gesamt), marginX + 155, cursorY + tabellenHoehe - 3, { align: "right" });
 
-  cursorY += 60;
+  cursorY += tabellenHoehe + 10;
 
   // Nachzahlungen Sondervermerk
   if (daten.nachzahlung === "ja") {
@@ -170,6 +182,12 @@ function generierePDF(daten, berechnung) {
     const nzLines = doc.splitTextToSize(nzText, 170);
     doc.text(nzLines, marginX, cursorY);
     cursorY += (nzLines.length * 6) + 5;
+  }
+
+  // Seitenumbruch-Schutz für den Stempelbereich
+  if (cursorY > 297 - 90) {
+    doc.addPage();
+    cursorY = 25;
   }
 
   // Block 3: Ausstellende Stelle (Stempel)
@@ -236,7 +254,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const kindergeld = parseInt(kindergeldInp.value, 10);
     const nachzahlung = nachzahlungInp.value;
 
-    if (unterhalt === 0 && kindergeld === 0 && nachzahlung === "nein") {
+    const zusatz = ZUSATZ_FELDER
+      .map(f => ({ label: f.label, betrag: Math.max(0, n(document.getElementById(f.id))) }))
+      .filter(z => z.betrag > 0);
+
+    if (unterhalt === 0 && kindergeld === 0 && nachzahlung === "nein" && zusatz.length === 0) {
       errors.push("Sie haben keine Erhöhungsgründe angegeben (0 Unterhalt, 0 Kindergeld, keine Nachzahlung). In diesem Fall gilt automatisch der gesetzliche Grundfreibetrag. Sie benötigen für Ihre Bank keine zusätzliche Bescheinigung!");
     }
 
@@ -262,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.disabled = true;
 
     const daten = { name, geburtsdatum, adresse, bank, iban, nachzahlung };
-    const berechnung = berechnePkonto(unterhalt, kindergeld);
+    const berechnung = berechnePkonto(unterhalt, kindergeld, zusatz);
 
     loadJsPDF(() => {
       generierePDF(daten, berechnung);
